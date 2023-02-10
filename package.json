@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "cypress": "^12.5.1",
-    "jest": "^29.4.2"
+    "jest": "^29.4.2",
+    "prisma": "^4.10.1"
   }
 }
