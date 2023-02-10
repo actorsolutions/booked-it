@@ -1,11 +1,11 @@
-
+import { useSession, signIn, signOut } from "next-auth/react"
+import {LoginButton} from "@/components/Auth/LoginButton";
 
 export default function Home() {
   return (
     <main className={'container'}>
-      <div className={'card'}>
-      <p>Hello World</p>
-      </div>
+      <LoginButton />
+
 
     </main>
   )
