@@ -1,12 +1,17 @@
-import { useSession, signIn, signOut } from "next-auth/react"
-import {LoginButton} from "@/components/Auth/LoginButton";
+'use client'
+import {UserProvider} from "@auth0/nextjs-auth0/client";
+
+
+
+import {LandingPage} from "@/components/Auth/LandingPage";
 
 export default function Home() {
   return (
     <main className={'container'}>
-      <LoginButton />
+        <UserProvider>
 
-
+            <LandingPage />
+        </UserProvider>
     </main>
   )
 }
