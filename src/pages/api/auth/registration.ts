@@ -1,3 +1,4 @@
+import { PrismaClient } from '@prisma/client'
 /***
  * Hook for Auth0 to send user information for prisma
  * */
