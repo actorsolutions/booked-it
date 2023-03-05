@@ -5,26 +5,23 @@ import {NextApiRequest, NextApiResponse} from "next";
  * */
 
 const Registration = async(req:NextApiRequest,res:NextApiResponse)=>{
-    console.log("hitting reg")
-    const {email,secret} = JSON.parse(req.body);
+    const {sid,email} = JSON.parse(req.body);
     const prisma = new PrismaClient();
-    console.log(secret)
-    if(secret === process.env.AUTH0_HOOK_SECRET){
-        try {
-            const newUser = await prisma.user.create({
-                data:{email},
-            })
-            console.log('Creating User!')
-        }catch(err){
-            console.log(err)
-        }finally{
-            await prisma.$disconnect();
-        }
-        res.send({received:true});
-    }else{
-        console.log("No secret!");
-        res.status(500)
+    console.log(email,sid)
+    const user = await prisma.user.findUnique({
+        where: {
+            email
+        },
+    })
+
+    if(!user){
+        const newUser = await prisma.user.create({
+            data: { email,sid },
+        })
+        res.status(200).json({newUser})
     }
+    res.status(200).json({user})
+
 
 
 }

@@ -11,6 +11,7 @@ datasource db {
 }
 model User {
   id        Int      @id @default(autoincrement())
+  sid       String   @unique
   email     String   @unique @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   Audition Audition[]
