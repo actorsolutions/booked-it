@@ -11,24 +11,17 @@ datasource db {
 }
 model User {
   id        Int      @id @default(autoincrement())
-  email     String   @db.VarChar(255)
+  sid       String   @unique
+  email     String   @unique @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  password  String
-  Profile   Profile?
-}
-
-model Profile {
-  id     Int     @id @default(autoincrement())
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  userId   Int  @unique
-  User   User    @relation(fields: [userId], references: [id])
   Audition Audition[]
 }
 
+
 model Audition {
   id      Int      @id @default(autoincrement())
-  profileId Int    @unique
-  Profile   Profile @relation(fields: [profileId], references: [id])
+  userId Int    @unique
+  User   User @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now()) @db.Timestamp(6)
   date      DateTime
   project   String
