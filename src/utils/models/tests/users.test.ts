@@ -38,7 +38,7 @@ describe("It Tests the Users Model", () => {
     const user = await users.findById(0);
     expect(user).toEqual(expectedResponse);
   });
-  it("returns a  user, doesn't signup", async () => {
+  it("returns a user, doesn't signup", async () => {
     const expectedResponse = {
       id: 0,
       sid: "FakeSid",
