@@ -2,11 +2,22 @@ import { Users } from "../../../utils/models/Users";
 import { PrismaClient } from "@prisma/client";
 
 describe("It Tests the Users Model", () => {
-  it("returns an already added user", async () => {
-    const prisma = new PrismaClient();
-    const fakeData = { email: "zdenardi@gmail.com", sid: "9009038" };
-    const users = new Users(prisma.user);
-    const user = await users.signUpOrSignIn(fakeData);
-    expect(user.id).toEqual(8);
+  it("returns a user from email", async () => {
+    const expectedResponse = {
+      id: 0,
+      sid: "FakeSid",
+      email: "test@email.com",
+      createdAt: 0,
+    };
+    const mockPrisma = {
+      findUnique: async () => {
+        return new Promise((resolve) => {
+          resolve(expectedResponse);
+        });
+      },
+    };
+    const users = new Users(mockPrisma as unknown as PrismaClient["user"]);
+    const user = await users.findByEmail("test@email.com");
+    expect(user).toEqual(expectedResponse);
   });
 });
