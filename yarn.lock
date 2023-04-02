@@ -1151,6 +1151,18 @@ acorn@^8.8.0:
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.8.2.tgz"
   integrity sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==
 
+ag-grid-community@^29.1.0:
+  version "29.1.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-29.1.0.tgz#acf74ecb9018d9ee3b2a7e468ffba595e6621606"
+  integrity sha512-QJZi1qP7fpK/sxXbEFZWR3/Jf3HVRK0Xm3Tw55tn0ehNdkuSxRBOmOvjE3lPWqgRlT2rcL1xmjdqM4mpB1fobQ==
+
+ag-grid-react@^29.1.0:
+  version "29.1.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-29.1.0.tgz#06d75de91f753a865650ba3b01e2f6bc016a4590"
+  integrity sha512-csAT+PEodEjJ1GhBrx0kVAgkfm8eafsxA8ugSEM+iiSGwc13mPS2Qrye3yz/Wp0vf7ho1CDJgnZraWfSBER42Q==
+  dependencies:
+    prop-types "^15.8.1"
+
 aggregate-error@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/aggregate-error/-/aggregate-error-3.1.0.tgz#92670ff50f5359bdb7a3e0d40d0ec30c5737687a"

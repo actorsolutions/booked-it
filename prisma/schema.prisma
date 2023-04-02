@@ -29,5 +29,15 @@ model Audition {
   callBackDate DateTime?
   casting  Json
   notes    String?
+  type AuditionType
 }
 
+enum AuditionType {
+    Television
+    Film
+    Student
+    Theater
+    Industrial
+    Commercial
+    NewMedia
+}
