@@ -9,7 +9,10 @@ export class Users {
   // eslint-disable-next-line no-unused-vars
   constructor(private readonly prismaUser: PrismaClient["user"]) {}
 
-  // Signup a new user
+  /**
+   * Signs up / Returns user based on email.
+   * @param data
+   */
   async signUpOrSignIn(data: Signup): Promise<User> {
     const alreadyAdded = await this.findByEmail(data.email);
     if (!alreadyAdded) {
