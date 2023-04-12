@@ -23,10 +23,10 @@ model Audition {
   userId Int    @unique
   User   User @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  date      DateTime
+  date      Int
   project   String
   company  String?
-  callBackDate DateTime?
+  callBackDate Int?
   casting  Json
   notes    String?
   type AuditionType
