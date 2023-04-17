@@ -27,17 +27,7 @@ model Audition {
   project   String
   company  String?
   callBackDate Int?
-  casting  Json
+  casting  Json?
   notes    String?
-  type AuditionType
-}
-
-enum AuditionType {
-    Television
-    Film
-    Student
-    Theater
-    Industrial
-    Commercial
-    NewMedia
+  type     String
 }

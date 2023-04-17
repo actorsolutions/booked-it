@@ -1,5 +1,5 @@
 import { Audition } from "../Auditions";
-import { AuditionType, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 describe("It Tests the Auditions Model", () => {
   it("returns an audition with id", async () => {
@@ -38,7 +38,7 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: undefined,
-      type: "Television" as AuditionType,
+      type: "Television",
     };
     const expectedResponse = {
       id: 0,
@@ -49,7 +49,7 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "No notes Added",
-      type: "Television" as AuditionType,
+      type: "Television",
     };
     const mockPrisma = {
       upsert: async () => {
@@ -59,11 +59,10 @@ describe("It Tests the Auditions Model", () => {
       },
     };
 
-    const audition = await Audition.save(
-      auditionData,
-      mockPrisma as unknown as PrismaClient["audition"]
-    );
-    expect(audition).toEqual(expectedResponse);
+    const audition = new Audition(auditionData);
+    expect(
+      await audition.save(mockPrisma as unknown as PrismaClient["audition"])
+    ).toEqual(expectedResponse);
   });
   it("Finds all auditions with UserId", async () => {
     const auditions = [
@@ -76,7 +75,7 @@ describe("It Tests the Auditions Model", () => {
         callbackDate: undefined,
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
-        type: "Film" as AuditionType,
+        type: "Film",
       },
       {
         id: 1,
@@ -87,7 +86,7 @@ describe("It Tests the Auditions Model", () => {
         callbackDate: undefined,
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
-        type: "Theater" as AuditionType,
+        type: "Theater",
       },
     ];
     const mockPrisma = {
@@ -113,7 +112,7 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: undefined,
       casting: [{ name: "Test testerson", company: "Tester Casting" }],
       notes: "Notes!",
-      type: "Film" as AuditionType,
+      type: "Film",
     };
 
     const mockPrisma = {
@@ -128,5 +127,42 @@ describe("It Tests the Auditions Model", () => {
       mockPrisma as unknown as PrismaClient["audition"]
     );
     expect(deletedAudition).toEqual(audition);
+  });
+  it("Creates an audition and returns it", async () => {
+    const expectedResponse = {
+      id: 0,
+      userId: 0,
+      date: 0,
+      project: "FakeCompany",
+      company: "FakeProject",
+      callbackDate: 0,
+      casting: [{ name: "FakeCasting", company: "Casting" }],
+      notes: "No notes Added",
+      type: "Television",
+    };
+    const auditionData = {
+      id: 1,
+      userId: 0,
+      date: 0,
+      project: "FakeCompany",
+      company: "FakeProject",
+      callbackDate: 0,
+      casting: [{ name: "FakeCasting", company: "Casting" }],
+      notes: undefined,
+      type: "Television",
+    };
+    const mockPrisma = {
+      create: async () => {
+        return new Promise((resolve) => {
+          resolve(expectedResponse);
+        });
+      },
+    };
+
+    const newAudition = await Audition.create(
+      auditionData,
+      mockPrisma as unknown as PrismaClient["audition"]
+    );
+    expect(newAudition).toEqual(expectedResponse);
   });
 });
