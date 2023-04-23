@@ -7,8 +7,8 @@ export const AuditionsController = async (
 ) => {
   if (req.method === "GET") {
     const prisma = new PrismaClient();
-
-    const userId = parseInt(req.body.userId as string);
+    console.log(req.query);
+    const userId = parseInt(req.query.userId as string);
 
     const auditions = await Audition.findByUserId(userId, prisma["audition"]);
     if (auditions) {

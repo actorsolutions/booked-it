@@ -1,9 +1,10 @@
-import 'bootstrap/dist/css/bootstrap.css'
-
+import "bootstrap/dist/css/bootstrap.css";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -14,5 +15,5 @@ export default function RootLayout({
       <head />
       <body>{children}</body>
     </html>
-  )
+  );
 }

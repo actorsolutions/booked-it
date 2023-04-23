@@ -11,26 +11,37 @@ export const LandingPage = () => {
 
   const [auditions, setAuditions] = useState([]);
   const [columnDefs, setColumnDefs] = useState([
-    { field: "make", filter: true },
-    { field: "model", filter: true },
-    { field: "price" },
+    { field: "project", filter: true },
+    { field: "company", filter: true },
+    { field: "type" },
   ]);
   useEffect(() => {
-    SignUpOrSignIn(user).then((response) => {
+    SignUpOrSignIn({
+      email: user?.email as string,
+      sid: user?.sid as string,
+    }).then((response) => {
       const registeredUser = response.user;
-      getAuditionsByEmail(registeredUser.id.toString()).then((response) => {
+      // getAuditionsByEmail(registeredUser.id.toString()).then((response) => {
+      getAuditionsByEmail("0").then((response) => {
+        console.log("Get Auditions");
         setAuditions(response.auditions);
       });
     });
-  }, [auditions]);
+  }, [user]);
+
   if (user) {
+    console.log(user);
     return (
       <>
         <h1>Welcome {user.name}</h1>
         <p>Email - {user.email}</p>
         <a href={"/api/auth/logout"}>Logout</a>
-
-        {/*<AgGridReact rowData={auditions} columnDefs={columnDefs}></AgGridReact>*/}
+        <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
+          <AgGridReact
+            rowData={auditions}
+            columnDefs={columnDefs}
+          ></AgGridReact>
+        </div>
       </>
     );
   }
