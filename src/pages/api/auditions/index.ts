@@ -5,7 +5,6 @@ export const AuditionsController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  console.log("Yes!");
   if (req.method === "GET") {
     const prisma = new PrismaClient();
 
