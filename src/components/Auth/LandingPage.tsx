@@ -1,35 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
-import { LoginButton } from "@/components/Auth/LoginButton";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { getAuditionsByEmail } from "@/api/auditions";
+import { getAuditions } from "@/api/auditions";
 import { SignUpOrSignIn } from "@/api/auth";
 import { AgGridReact } from "ag-grid-react";
 
 export const LandingPage = () => {
-  const { user, error, isLoading } = useUser();
+  const { user } = useUser();
 
   const [auditions, setAuditions] = useState([]);
-  const [columnDefs, setColumnDefs] = useState([
+  const [columnDefs] = useState([
     { field: "project", filter: true },
     { field: "company", filter: true },
     { field: "type" },
   ]);
   useEffect(() => {
-    SignUpOrSignIn({
-      email: user?.email as string,
-      sid: user?.sid as string,
-    }).then((response) => {
-      console.log(response);
-      const registeredUser = response.user;
-      // getAuditionsByEmail(registeredUser.id.toString()).then((response) => {
-      getAuditionsByEmail("0").then((response) => {
-        console.log("Get Auditions");
+    SignUpOrSignIn().then(() => {
+      getAuditions().then((response) => {
         setAuditions(response.auditions);
       });
     });
   }, [user]);
-
   if (user) {
     return (
       <>

@@ -1,15 +1,18 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { Audition } from "../../../utils/models/Auditions";
-export const AuditionsController = async (
+import { getSession } from "@auth0/nextjs-auth0";
+
+const AuditionsController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   const method = req.method;
   if (method === "GET") {
+  const session = await getSession(req, res);
+  if (req.method === "GET") {
     const prisma = new PrismaClient();
-    const userId = parseInt(req.query.userId as string);
-
+    const userId = parseInt(session?.user.id);
     const auditions = await Audition.findByUserId(userId, prisma["audition"]);
     if (auditions) {
       console.log("Sending Auditions");

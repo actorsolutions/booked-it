@@ -9,21 +9,14 @@ interface createData {
   callBackDate?: number;
 }
 
-export const getAuditionsByUserId = async (userId: string) => {
-  const userIdParams = new URLSearchParams({ userId });
-  const response = await fetch(`/api/auditions?${userIdParams}`, {
+// Get Auditions from server, gets userId from session in server
+export const getAuditions = async () => {
+  const response = await fetch(`/api/auditions`, {
     method: "GET",
   });
   return await response.json();
 };
 
-export const getAuditionsByEmail = async (userId: string) => {
-  const userIdParams = new URLSearchParams({ userId });
-  const response = await fetch(`/api/auditions?${userIdParams}`, {
-    method: "GET",
-  });
-  return await response.json();
-};
 
 export const createAudition = async (data: createData) => {
   return await fetch("/api/auditions", {
