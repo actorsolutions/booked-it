@@ -20,6 +20,7 @@ export const LandingPage = () => {
       email: user?.email as string,
       sid: user?.sid as string,
     }).then((response) => {
+      console.log(response);
       const registeredUser = response.user;
       // getAuditionsByEmail(registeredUser.id.toString()).then((response) => {
       getAuditionsByEmail("0").then((response) => {
@@ -30,7 +31,6 @@ export const LandingPage = () => {
   }, [user]);
 
   if (user) {
-    console.log(user);
     return (
       <>
         <h1>Welcome {user.name}</h1>
