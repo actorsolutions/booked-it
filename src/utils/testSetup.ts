@@ -1,11 +1,36 @@
-import { createServer, RequestListener, Server } from "http";
+import { createServer, RequestListener } from "http";
 import { NextApiHandler } from "next";
 import { apiResolver } from "next/dist/server/api-utils/node";
 import request from "supertest";
 import { PrismaClient } from "@prisma/client";
 
-export const testClient = (handler: NextApiHandler) => {
-  const listener: RequestListener = (req, res) => {
+interface User {
+  name: string;
+  sid: string;
+  email: string;
+  id: string;
+}
+interface AuthConfig {
+  user: User;
+  accessToken: string;
+  accessTokenScope: string;
+  idToken: string;
+  token_type: string;
+}
+export const SESSION_DATA: AuthConfig = {
+  user: {
+    name: "Test User",
+    sid: "0000000",
+    email: "test@test.com",
+    id: "0",
+  },
+  accessToken: "somanytokens",
+  accessTokenScope: "openid profile email",
+  idToken: "tokeeeens",
+  token_type: "Bearer",
+};
+export const testClient = async (handler: NextApiHandler) => {
+  const listener: RequestListener = async (req, res) => {
     return apiResolver(
       req,
       res,

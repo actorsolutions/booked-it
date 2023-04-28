@@ -8,32 +8,21 @@ const AuditionsController = async (
   res: NextApiResponse
 ) => {
   const method = req.method;
-  if (method === "GET") {
   const session = await getSession(req, res);
-  if (req.method === "GET") {
+  const userId = parseInt(session?.user.id);
+  if (method === "GET" && session) {
     const prisma = new PrismaClient();
-    const userId = parseInt(session?.user.id);
     const auditions = await Audition.findByUserId(userId, prisma["audition"]);
     if (auditions) {
-      console.log("Sending Auditions");
       res.status(200).json({ auditions });
-    } else {
-      res.status(200).json({ auditions: [] });
     }
   }
   if (method === "POST") {
     const prisma = new PrismaClient();
-    const {
-      id,
-      userId,
-      date,
-      project,
-      company,
-      casting,
-      notes,
-      type,
-      callBackDate,
-    } = req.body;
+    const session = await getSession(req, res);
+    const userId = parseInt(session?.user.id);
+    const { id, date, project, company, casting, notes, type, callBackDate } =
+      req.body;
     const auditionData = {
       id,
       userId,
@@ -49,7 +38,7 @@ const AuditionsController = async (
       auditionData,
       prisma["audition"]
     );
-    res.status(200).json({ createdAudition });
+    res.status(200).json(createdAudition);
   }
 };
 
