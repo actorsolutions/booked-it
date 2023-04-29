@@ -3,6 +3,12 @@ import { Audition } from "../../models/Auditions";
 import { getSession } from "@auth0/nextjs-auth0";
 import { prisma } from "../../utils/prisma";
 
+/**
+ * Gets all Auditions based on UserID and sends them
+ * @param req
+ * @param res
+ * @param db
+ */
 export const getAuditions = async (
   req: NextApiRequest,
   res: NextApiResponse,
@@ -18,6 +24,12 @@ export const getAuditions = async (
   }
 };
 
+/**
+ * Adds Audition
+ * @param req
+ * @param res
+ * @param db
+ */
 export const addAudition = async (
   req: NextApiRequest,
   res: NextApiResponse,

@@ -9,6 +9,14 @@ interface RouteHandlerParams {
   PUT?: HttpHandler;
   DELETE?: HttpHandler;
 }
+
+/**
+ * Handles Route Controllers, will send 405 when method of request isn't allowed
+ * @param request
+ * @param response
+ * @param handlers
+ * @constructor
+ */
 export const RouteHandler = async (
   request: NextApiRequest,
   response: NextApiResponse,
