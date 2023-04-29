@@ -1,9 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../utils/prismaClient";
 import { Audition } from "../../../utils/models/Auditions";
 import { getSession } from "@auth0/nextjs-auth0";
+import {
+  RouteHandler,
+  getAudition,
+  addAudition,
+} from "../../../utils/handlers";
 
-export const prisma = new PrismaClient();
 const AuditionsController = async (
   req: NextApiRequest,
   res: NextApiResponse,
@@ -14,6 +18,8 @@ const AuditionsController = async (
   const userId = parseInt(session?.user.id);
 
   if (method === "GET" && session) {
+    const session = await getSession(req, res);
+    const userId = parseInt(session?.user.id);
     const auditions = await Audition.findByUserId(userId, db);
     if (auditions) {
       res.status(200).send({ auditions });
@@ -42,4 +48,13 @@ const AuditionsController = async (
   }
 };
 
-export default AuditionsController;
+// export default AuditionsController;
+
+const AuditionsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await RouteHandler(req, res, {
+    GET: getAudition,
+    POST: addAudition,
+  });
+};
+
+export default AuditionsHandler;
