@@ -7,17 +7,16 @@ import {
   getAudition,
   addAudition,
 } from "../../../utils/handlers";
+import { prisma } from "../../../utils/prisma";
 
 const AuditionsController = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  db = prisma["audition"]
+  db = prisma.audition
 ) => {
   const method = req.method;
-  const session = await getSession(req, res);
-  const userId = parseInt(session?.user.id);
 
-  if (method === "GET" && session) {
+  if (method === "GET") {
     const session = await getSession(req, res);
     const userId = parseInt(session?.user.id);
     const auditions = await Audition.findByUserId(userId, db);
