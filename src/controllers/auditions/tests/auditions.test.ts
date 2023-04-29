@@ -2,6 +2,7 @@ import { getAuditions, addAudition } from "../../auditions/index";
 import { NextApiRequest, NextApiResponse } from "next";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 let finalStatusCode: any, finalBody: any;
+
 describe("Audition Controller Tests", () => {
   it("Should return an array of auditions", async () => {
     const auditionsArray = [
@@ -91,6 +92,7 @@ describe("Audition Controller Tests", () => {
     const fakeReq = {
       method: "GET",
       headers: { cookie: `appSession=${session}` },
+      body: audition,
     };
     const fakeResp = {
       json: (json: any) => json,
