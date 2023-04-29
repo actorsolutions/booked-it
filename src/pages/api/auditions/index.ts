@@ -1,13 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
 import { Audition } from "../../../utils/models/Auditions";
 import { getSession } from "@auth0/nextjs-auth0";
+import { prisma } from "../../../utils/prisma";
 
-export const prisma = new PrismaClient();
 const AuditionsController = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  db = prisma["audition"]
+  db = prisma.audition
 ) => {
   const method = req.method;
   const session = await getSession(req, res);
