@@ -16,8 +16,6 @@ const afterRefetch = (
   if (newSession) {
     return newSession as Promise<Session>;
   }
-  console.log("REQ HERE");
-  console.log(req);
   return session;
 };
 export default handleAuth({
