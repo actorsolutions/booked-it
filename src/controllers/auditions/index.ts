@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Audition } from "../../models/Auditions";
 import { getSession } from "@auth0/nextjs-auth0";
-import { prisma } from "../../prismaClient";
-export const getAudition = async (
+import { prisma } from "../../utils/prisma";
+
+export const getAuditions = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  db = prisma["audition"]
+  db = prisma.audition
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
@@ -20,14 +21,13 @@ export const getAudition = async (
 export const addAudition = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  db = prisma["audition"]
+  db = prisma.audition
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
-  const { id, date, project, company, casting, notes, type, callBackDate } =
+  const { date, project, company, casting, notes, type, callBackDate } =
     req.body;
   const auditionData = {
-    id,
     userId,
     date,
     project,

@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-export { getAudition, addAudition } from "./auditions";
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 type HttpHandler = (request: NextApiRequest, response: NextApiResponse) => void;
 

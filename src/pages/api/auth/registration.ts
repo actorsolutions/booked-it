@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Users } from "@/utils/models/Users";
+import { Users } from "@/models/Users";
 import { getSession, updateSession } from "@auth0/nextjs-auth0";
 import { prisma } from "../../../utils/prisma";
 
