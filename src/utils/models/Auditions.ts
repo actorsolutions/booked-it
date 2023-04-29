@@ -10,6 +10,7 @@ interface AuditionData {
   casting?: Prisma.JsonArray;
   notes?: string;
   type: string;
+  createdAt?: string;
 }
 
 export class Audition {
@@ -22,6 +23,7 @@ export class Audition {
   casting?: string;
   notes?: string;
   type: string;
+  createdAt?: string;
 
   // eslint-disable-next-line no-unused-vars
   constructor(data: AuditionData) {
@@ -35,6 +37,7 @@ export class Audition {
       casting,
       notes,
       type,
+      createdAt,
     } = data;
     this.id = id;
     this.userId = userId;
@@ -45,6 +48,7 @@ export class Audition {
     this.casting = JSON.stringify(casting);
     this.notes = notes || undefined;
     this.type = type;
+    this.createdAt = createdAt;
   }
 
   // Find Audition by Id

@@ -6,6 +6,7 @@ import {
 } from "@auth0/nextjs-auth0";
 import { NextApiRequest, NextApiResponse } from "next";
 
+// Creates session
 const afterRefetch = (
   req: NextApiRequest,
   res: NextApiResponse,
