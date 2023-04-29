@@ -68,7 +68,7 @@ const sanitizeDB = async (
 };
 
 /**
- *
+ * Sanitizes and sends prisma in a one comfy function
  * @param clearTables
  */
 export const setup = async (

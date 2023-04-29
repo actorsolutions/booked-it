@@ -7,6 +7,13 @@ interface UserParams {
   email: string;
   sid: string;
 }
+
+/**
+ * Registers a user/ Signs in an already registered user and adds localDB.user.id to the session data.
+ * @param req
+ * @param res
+ * @constructor
+ */
 const Registration = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession(req, res);
   if (req.method === "POST") {
