@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 let finalStatusCode: any, finalBody: any;
 
-describe("Audition Controller Tests", () => {
+describe("Auditions Controller Tests", () => {
   it("Should return an array of auditions", async () => {
     const auditionsArray = [
       {
