@@ -3,22 +3,25 @@ import { PrismaClient } from "@prisma/client";
 import { Audition } from "../../../utils/models/Auditions";
 import { getSession } from "@auth0/nextjs-auth0";
 
+export const prisma = new PrismaClient();
 const AuditionsController = async (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
+  db = prisma["audition"]
 ) => {
   const method = req.method;
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
+
   if (method === "GET" && session) {
-    const prisma = new PrismaClient();
-    const auditions = await Audition.findByUserId(userId, prisma["audition"]);
+    const auditions = await Audition.findByUserId(userId, db);
     if (auditions) {
-      res.status(200).json({ auditions });
+      res.status(200).send({ auditions });
+    } else {
+      res.status(500).send({ error: "No Audition" });
     }
   }
-  if (method === "POST") {
-    const prisma = new PrismaClient();
+  if (method === "POST" && session) {
     const session = await getSession(req, res);
     const userId = parseInt(session?.user.id);
     const { id, date, project, company, casting, notes, type, callBackDate } =
@@ -34,11 +37,8 @@ const AuditionsController = async (
       type,
       callBackDate,
     };
-    const createdAudition = await Audition.create(
-      auditionData,
-      prisma["audition"]
-    );
-    res.status(200).json(createdAudition);
+    const createdAudition = await Audition.create(auditionData, db);
+    res.status(200).send(createdAudition);
   }
 };
 
