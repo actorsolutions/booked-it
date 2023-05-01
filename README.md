@@ -9,7 +9,8 @@ Jest tests when the time comes.
 
 Make sure those are gitignore
 ## Prisma 
-Whatever DATABASE_URL is in your env.template needs to exist on your local postgres. 
+Whatever DATABASE_URL is in your env.template needs to exist on your local postgres AND make sure it's in a .env NOT JUST .env.local
+
 
 Migrate DB
 ```
