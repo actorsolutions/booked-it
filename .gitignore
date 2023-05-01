@@ -40,4 +40,4 @@ next-env.d.ts
 .env.local
 /.env
 /.idea/inspectionProfiles/Project_Default.xml
-/env.local
+/.env.local
