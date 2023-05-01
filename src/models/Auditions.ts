@@ -1,7 +1,11 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 
-interface AuditionData {
+interface AuditionData extends createData {
   id: number;
+}
+
+interface createData {
+  id?: number;
   userId: number;
   date: number;
   project: string;
@@ -61,7 +65,7 @@ export class Audition {
     return await db.findMany({ where: { userId: userId } });
   }
 
-  static async create(data: AuditionData, db: PrismaClient["audition"]) {
+  static async create(data: createData, db: PrismaClient["audition"]) {
     return db.create({ data: { ...data } });
   }
   // Create / UpDate Audition
