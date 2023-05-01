@@ -61,7 +61,7 @@ export class Audition {
     userId: number,
     db: PrismaClient["audition"]
   ) {
-    return await db.findUnique({ where: { id } });
+    return await db.findUnique({ where: { id, userId } });
   }
 
   // Find Auditions by User id

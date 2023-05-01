@@ -24,6 +24,7 @@ describe("It Tests the Auditions Model", () => {
 
     const audition = await Audition.findById(
       0,
+      0,
       mockPrisma as unknown as PrismaClient["audition"]
     );
     expect(audition).toEqual(expectedResponse);
