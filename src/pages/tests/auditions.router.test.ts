@@ -25,7 +25,7 @@ describe("Audition Router integration tests", () => {
       },
     });
   });
-  it("Find Audition", async () => {
+  it("Find Auditions", async () => {
     const request = await testClient(AuditionsController);
     const session = await generateSessionCookie(SESSION_DATA, {
       secret: process.env.AUTH0_SECRET as string,

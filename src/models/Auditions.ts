@@ -56,7 +56,11 @@ export class Audition {
   }
 
   // Find Audition by Id
-  static async findById(id: number, db: PrismaClient["audition"]) {
+  static async findById(
+    id: number,
+    userId: number,
+    db: PrismaClient["audition"]
+  ) {
     return await db.findUnique({ where: { id } });
   }
 
@@ -68,7 +72,7 @@ export class Audition {
   static async create(data: createData, db: PrismaClient["audition"]) {
     return db.create({ data: { ...data } });
   }
-  // Create / UpDate Audition
+  // Create / Update Audition
   async save(db: PrismaClient["audition"]) {
     return db.upsert({
       where: { id: this.id },

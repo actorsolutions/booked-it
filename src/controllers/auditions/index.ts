@@ -52,3 +52,49 @@ export const addAudition = async (
   const createdAudition = await Audition.create(auditionData, db);
   res.status(200).send(createdAudition);
 };
+
+export const getAudition = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  db = prisma.audition
+) => {
+  const session = await getSession(req, res);
+  const userId = parseInt(session?.user.id);
+  const { id } = req.query;
+  if (req.body.userId != userId) {
+    res.status(401).send({ message: "Unauthorized" });
+  }
+  const audition = await Audition.findById(parseInt(id as string), userId, db);
+  res.status(200).send(audition);
+};
+
+export const updateAudition = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  db = prisma.audition
+) => {
+  const session = await getSession(req, res);
+  const userId = parseInt(session?.user.id);
+  const audition = new Audition(req.body);
+  if (req.body.userId != userId) {
+    return res.status(401).send({ message: "Unauthorized" });
+  } else {
+    await audition.save(db);
+    return res.status(200).send(audition);
+  }
+};
+
+export const deleteAudition = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  db = prisma.audition
+) => {
+  const session = await getSession(req, res);
+  const userId = parseInt(session?.user.id);
+
+  if (userId != req.body.userId) {
+    return res.status(401).send({ message: "Unauthorized" });
+  }
+  const deletedAudition = await Audition.delete(req.body, db);
+  res.status(200).send({ message: "Deleted!", deletedAudition });
+};
