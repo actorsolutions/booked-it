@@ -2,7 +2,23 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+
+
+Check out the env.template to make sure you have all .env entries that you need, if you are using webstorm you also need to add these to your
+Jest tests when the time comes.
+
+Make sure those are gitignore
+## Prisma
+Whatever DATABASE_URL is in your env.template needs to exist on your local postgres AND make sure it's in a .env NOT JUST .env.local
+
+
+Migrate DB
+```
+prisma migrate dev
+prisma generate
+```
+
+Running the development server:
 
 ```bash
 npm run dev
@@ -12,6 +28,10 @@ yarn dev
 pnpm dev
 ```
 
+
+
+NextJS default readme pass this line
+------------------------
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
