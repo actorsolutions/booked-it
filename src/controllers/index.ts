@@ -1,2 +1,2 @@
 // /api/Audition controllers
-export { getAuditions, addAudition } from "./auditions";
+export { getAuditions, addAudition, getAudition, updateAudition, deleteAudition } from "./auditions";
