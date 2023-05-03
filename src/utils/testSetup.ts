@@ -11,6 +11,7 @@ interface User {
   email: string;
   id: string;
 }
+
 interface AuthConfig {
   user: User;
   accessToken: string;
@@ -18,6 +19,7 @@ interface AuthConfig {
   idToken: string;
   token_type: string;
 }
+
 export const SESSION_DATA: AuthConfig = {
   user: {
     name: "Test User",
@@ -30,7 +32,7 @@ export const SESSION_DATA: AuthConfig = {
   idToken: "tokeeeens",
   token_type: "Bearer",
 };
-export const testClient = async (handler: NextApiHandler, query={}) => {
+export const testClient = async (handler: NextApiHandler, query = {}) => {
   const listener: RequestListener = async (req, res) => {
     return apiResolver(
       req,

@@ -71,10 +71,7 @@ export class Audition {
    * @param id - id of sought after audition record
    * @param db - instance of database being used
    */
-  static async findById(
-    id: number,
-    db: PrismaClient["audition"]
-  ) {
+  static async findById(id: number, db: PrismaClient["audition"]) {
     return await db.findUnique({ where: { id } });
   }
 
@@ -115,11 +112,15 @@ export class Audition {
    * @param userId - id of user associated with audition
    * @param db - instance of database used
    */
-  static async delete(id: number, userId: number, db: PrismaClient["audition"]) {
+  static async delete(
+    id: number,
+    userId: number,
+    db: PrismaClient["audition"]
+  ) {
     return await db.deleteMany({
       where: {
         id,
-        userId
+        userId,
       },
     });
   }

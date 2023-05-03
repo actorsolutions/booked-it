@@ -3,7 +3,7 @@ import { RouteHandler } from "../../../middleware/handlers";
 import {
   getAudition,
   updateAudition,
-  deleteAudition
+  deleteAudition,
 } from "../../../controllers/auditions/index";
 
 /**
