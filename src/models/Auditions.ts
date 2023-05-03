@@ -58,7 +58,6 @@ export class Audition {
   // Find Audition by Id
   static async findById(
     id: number,
-    userId: number,
     db: PrismaClient["audition"]
   ) {
     return await db.findUnique({ where: { id } });

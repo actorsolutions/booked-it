@@ -1,10 +1,17 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { RouteHandler } from "../../../middleware/handlers";
 import {
-  deleteAudition,
   getAudition,
   updateAudition,
-} from "@/controllers/auditions";
+  deleteAudition
+} from "../../../controllers/auditions/index";
+
+/**
+ * Controller for a dynamic route that using a specific audition [id]
+ * @param req
+ * @param res
+ * @constructor
+ */
 
 const AuditionController = async (
   req: NextApiRequest,
@@ -16,3 +23,5 @@ const AuditionController = async (
     DELETE: deleteAudition,
   });
 };
+
+export default AuditionController;

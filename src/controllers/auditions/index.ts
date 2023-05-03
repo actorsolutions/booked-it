@@ -61,10 +61,10 @@ export const getAudition = async (
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
   const { id } = req.query;
-  if (req.body.userId != userId) {
+  const audition = await Audition.findById(parseInt(id as string), db);
+  if (audition?.userId != userId) {
     res.status(401).send({ message: "Unauthorized" });
   }
-  const audition = await Audition.findById(parseInt(id as string), userId, db);
   res.status(200).send(audition);
 };
 

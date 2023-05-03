@@ -35,7 +35,7 @@ export const testClient = async (handler: NextApiHandler) => {
     return apiResolver(
       req,
       res,
-      undefined,
+        {id: 0},
       handler,
       {
         previewModeEncryptionKey: "",
