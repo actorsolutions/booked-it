@@ -64,9 +64,9 @@ export const getAudition = async (
   const { id } = req.query;
   const audition = await Audition.findById(parseInt(id as string), db);
   if (audition?.userId != userId) {
-    res.status(401).send({ message: "Unauthorized" });
+   return res.status(401).send({ message: "Unauthorized" });
   }
-  res.status(200).send(audition);
+  return res.status(200).send(audition);
 };
 
 export const updateAudition = async (
@@ -92,10 +92,11 @@ export const deleteAudition = async (
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
+  const { id } = req.query;
+  const deletedAudition = await Audition.delete(parseInt(id as string), userId, db);
 
-  if (userId != req.body.userId) {
-    return res.status(401).send({ message: "Unauthorized" });
+  if (deletedAudition.count = 0) {
+    return res.status(500).send({ message: "Failed to delete" });
   }
-  const deletedAudition = await Audition.delete(req.body, db);
-  res.status(200).send({ message: "Deleted!", deletedAudition });
+   return res.status(200).send({ message: "Deleted!" });
 };

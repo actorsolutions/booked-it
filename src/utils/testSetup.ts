@@ -30,12 +30,12 @@ export const SESSION_DATA: AuthConfig = {
   idToken: "tokeeeens",
   token_type: "Bearer",
 };
-export const testClient = async (handler: NextApiHandler) => {
+export const testClient = async (handler: NextApiHandler, query={}) => {
   const listener: RequestListener = async (req, res) => {
     return apiResolver(
       req,
       res,
-        {id: 0},
+      query,
       handler,
       {
         previewModeEncryptionKey: "",

@@ -60,7 +60,7 @@ export class Audition {
     id: number,
     db: PrismaClient["audition"]
   ) {
-    return await db.findUnique({ where: { id, userId } });
+    return await db.findUnique({ where: { id } });
   }
 
   // Find Auditions by User id
@@ -79,10 +79,19 @@ export class Audition {
       create: this,
     });
   }
-  static async delete(id: number, db: PrismaClient["audition"]) {
-    return db.delete({
+
+  /**
+   * Deletes audition after validating user, must use DeleteMany to
+   * be able to filter by both id and userId
+   * @param id
+   * @param userId
+   * @param db
+   */
+  static async delete(id: number, userId: number, db: PrismaClient["audition"]) {
+    return await db.deleteMany({
       where: {
         id,
+        userId
       },
     });
   }
