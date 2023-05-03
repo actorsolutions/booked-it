@@ -13,6 +13,8 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "This is a note",
       type: "Film",
+      status: "Scheduled",
+      archived: false,
     };
     const mockPrisma = {
       findUnique: async () => {
@@ -39,6 +41,8 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: undefined,
       type: "Television",
+      status: "Scheduled",
+      archived: false,
     };
     const expectedResponse = {
       id: 0,
@@ -50,6 +54,8 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "No notes Added",
       type: "Television",
+      status: "Scheduled",
+      archived: false,
     };
     const mockPrisma = {
       upsert: async () => {
@@ -76,6 +82,8 @@ describe("It Tests the Auditions Model", () => {
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
         type: "Film",
+        status: "Scheduled",
+        archived: false,
       },
       {
         id: 1,
@@ -87,6 +95,8 @@ describe("It Tests the Auditions Model", () => {
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
         type: "Theater",
+        status: "Scheduled",
+        archived: false,
       },
     ];
     const mockPrisma = {
@@ -113,10 +123,12 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "Test testerson", company: "Tester Casting" }],
       notes: "Notes!",
       type: "Film",
+      status: "Scheduled",
+      archived: false,
     };
 
     const mockPrisma = {
-      delete: async () => {
+      deleteMany: async () => {
         return new Promise((resolve) => {
           resolve(audition);
         });
@@ -140,6 +152,8 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "No notes Added",
       type: "Television",
+      status: "Scheduled",
+      archived: false,
     };
     const auditionData = {
       id: 1,
@@ -151,6 +165,8 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: undefined,
       type: "Television",
+      status: "Scheduled",
+      archived: false,
     };
     const mockPrisma = {
       create: async () => {
