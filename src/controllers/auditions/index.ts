@@ -9,6 +9,7 @@ import { prisma } from "../../utils/prisma";
  * @param res
  * @param db
  */
+
 export const getAuditions = async (
   req: NextApiRequest,
   res: NextApiResponse,

@@ -1,26 +1,26 @@
-import {Audition} from "../Auditions";
-import {PrismaClient} from "@prisma/client";
+import { Audition } from "../Auditions";
+import { PrismaClient } from "@prisma/client";
 
 describe("It Tests the Auditions Model", () => {
-    it("Returns an audition with id", async () => {
-        const expectedResponse = {
-            id: 0,
-            userId: 0,
-            date: 0,
-            project: "FakeCompany",
-            company: "FakeProject",
-            callbackDate: 0,
-            casting: [{name: "FakeCasting", company: "Casting"}],
-            notes: "This is a note",
-            type: "Film",
-        };
-        const mockPrisma = {
-            findUnique: async () => {
-                return new Promise((resolve) => {
-                    resolve(expectedResponse);
-                });
-            },
-        };
+  it("returns an audition with id", async () => {
+    const expectedResponse = {
+      id: 0,
+      userId: 0,
+      date: 0,
+      project: "FakeCompany",
+      company: "FakeProject",
+      callbackDate: 0,
+      casting: [{ name: "FakeCasting", company: "Casting" }],
+      notes: "This is a note",
+      type: "Film",
+    };
+    const mockPrisma = {
+      findUnique: async () => {
+        return new Promise((resolve) => {
+          resolve(expectedResponse);
+        });
+      },
+    };
 
         const audition = await Audition.findById(
             expectedResponse.id,

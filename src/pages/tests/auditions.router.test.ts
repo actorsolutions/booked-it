@@ -7,7 +7,7 @@ import {
 } from "../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
-describe("Audition Router integration tests", () => {
+describe("Auditions Router integration tests", () => {
   beforeEach(async () => {
     let test: IntegrationTestParams;
     test = await setup(["audition"]);
@@ -91,4 +91,24 @@ describe("Audition Router integration tests", () => {
     delete createdAudition.createdAt;
     expect(createdAudition).toEqual(expected);
   });
+});
+describe("Audition Router integration tests", () => {
+  beforeEach(async () => {
+    let test: IntegrationTestParams;
+    test = await setup(["audition"]);
+    const { prisma } = test;
+    await prisma.audition.create({
+      data: {
+        date: 0,
+        id: 0,
+        notes: "Here is a note",
+        project: "Test Project",
+        type: "Television",
+        userId: 0,
+        company: "Test Company",
+        createdAt: "2023-04-28T21:50:11.638Z",
+      },
+    });
+  });
+  // Tyler will work here
 });
