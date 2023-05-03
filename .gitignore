@@ -25,9 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env*.local
-
+.env*
 # vercel
 .vercel
 
@@ -35,9 +33,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#local
-.env
-.env.local
 /.env
 /.idea/inspectionProfiles/Project_Default.xml
 /env.local

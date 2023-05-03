@@ -12,10 +12,18 @@ Make sure those are gitignore
 Whatever DATABASE_URL is in your env.template needs to exist on your local postgres AND make sure it's in a .env NOT JUST .env.local
 
 
-Migrate DB
+### Migrate DB
 ```
 prisma migrate dev
 prisma generate
+```
+
+### Test DB
+
+Copy and paste your working .env.local and make a .env.test, this will be your test information
+```
+yarn migrate:test
+yarn seed:test
 ```
 
 Running the development server:
