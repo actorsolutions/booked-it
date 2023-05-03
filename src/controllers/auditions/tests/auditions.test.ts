@@ -191,7 +191,6 @@ describe("Audition Controller Tests", () => {
       fakeResp as never as NextApiResponse,
       mockDb as never
     );
-    // @ts-ignore
     expect(finalBody).toEqual(audition);
     expect(finalStatusCode).toEqual(200);
   });
