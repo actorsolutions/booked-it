@@ -1,9 +1,9 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 
-interface AuditionData extends createData {
-  id: number;
-}
-
+/**
+ * Defines the Database representation of an Audition, starting with
+ * a form of the object for Audition creation where id is optional
+ */
 interface createData {
   id?: number;
   userId: number;
@@ -17,6 +17,17 @@ interface createData {
   createdAt?: string;
 }
 
+/**
+ * Extends the interface for Audition creation to the more general
+ * form of the AuditionData object where id is required
+ */
+interface AuditionData extends createData {
+  id: number;
+}
+
+/**
+ * Business logic for manipulating & transacting AuditionData
+ */
 export class Audition {
   id: number;
   userId: number;
@@ -55,7 +66,11 @@ export class Audition {
     this.createdAt = createdAt;
   }
 
-  // Find Audition by Id
+  /**
+   * Method for finding a particular audition record by its id
+   * @param id - id of sought after audition record
+   * @param db - instance of database being used
+   */
   static async findById(
     id: number,
     db: PrismaClient["audition"]
@@ -63,15 +78,28 @@ export class Audition {
     return await db.findUnique({ where: { id } });
   }
 
-  // Find Auditions by User id
+  /**
+   * Method for finding all auditions associated with a particular user
+   * @param userId - id of user within sought after audition records
+   * @param db - instance of database being used
+   */
   static async findByUserId(userId: number, db: PrismaClient["audition"]) {
     return await db.findMany({ where: { userId: userId } });
   }
 
+  /**
+   * Method used to create a new audition
+   * @param data - audition data for creation
+   * @param db - instance of database being used
+   */
   static async create(data: createData, db: PrismaClient["audition"]) {
     return db.create({ data: { ...data } });
   }
-  // Create / Update Audition
+
+  /**
+   * Method used to either update or create (upsert) an audition in one step
+   * @param db - instance of database being used
+   */
   async save(db: PrismaClient["audition"]) {
     return db.upsert({
       where: { id: this.id },
@@ -83,9 +111,9 @@ export class Audition {
   /**
    * Deletes audition after validating user, must use DeleteMany to
    * be able to filter by both id and userId
-   * @param id
-   * @param userId
-   * @param db
+   * @param id - id of audition
+   * @param userId - id of user associated with audition
+   * @param db - instance of database used
    */
   static async delete(id: number, userId: number, db: PrismaClient["audition"]) {
     return await db.deleteMany({
