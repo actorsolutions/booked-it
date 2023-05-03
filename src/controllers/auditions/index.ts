@@ -95,8 +95,9 @@ export const deleteAudition = async (
   const { id } = req.query;
   const deletedAudition = await Audition.delete(parseInt(id as string), userId, db);
 
-  if (deletedAudition.count = 0) {
+  if (deletedAudition.count > 0) {
+    return res.status(200).send({ message: "Deleted!" });
+  } else {
     return res.status(500).send({ message: "Failed to delete" });
   }
-   return res.status(200).send({ message: "Deleted!" });
 };
