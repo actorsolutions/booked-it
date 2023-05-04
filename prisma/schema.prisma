@@ -30,5 +30,7 @@ model Audition {
   casting  Json?
   notes    String?
   type     String
+  status   String
+  archived Boolean    @default(false)
 }
 

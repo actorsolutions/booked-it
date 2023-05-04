@@ -71,7 +71,7 @@ export class Audition {
         this.type = type;
         this.createdAt = createdAt;
         this.status = status;
-        this.archived = archived
+        this.archived = archived;
     }
 
     /**

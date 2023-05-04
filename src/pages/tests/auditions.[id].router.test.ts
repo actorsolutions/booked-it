@@ -40,6 +40,8 @@ describe("Audition [id] integration tests", () => {
         userId: 0,
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
+        status: 'Scheduled',
+        archived: false
       },
     });
   });
@@ -61,6 +63,8 @@ describe("Audition [id] integration tests", () => {
       project: "Test Project",
       type: "Television",
       userId: 0,
+      status: 'Scheduled',
+      archived: false
     };
 
     const res = await request
@@ -108,6 +112,8 @@ describe("Audition [id] integration tests", () => {
       project: "UPDATED PROJECT",
       type: "Television",
       userId: 0,
+      status: 'Scheduled',
+      archived: false
     };
 
     const res = await request
@@ -170,6 +176,8 @@ describe("Audition [id] integration tests", () => {
       userId: 0,
       company: "BAD Company",
       createdAt: "2023-04-28T21:50:11.638Z",
+      status: 'Scheduled',
+      archived: false
     };
 
     const res = await request

@@ -7,6 +7,8 @@ interface createData {
   notes: string;
   type: string;
   callBackDate?: number;
+  status: string;
+  archived: boolean;
 }
 
 // Get Auditions from server, gets userId from session in server

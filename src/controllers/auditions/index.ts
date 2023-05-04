@@ -38,7 +38,7 @@ export const addAudition = async (
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
-  const { date, project, company, casting, notes, type, callBackDate } =
+  const { date, project, company, casting, notes, type, callBackDate, status, archived } =
     req.body;
   const auditionData = {
     userId,
@@ -49,6 +49,8 @@ export const addAudition = async (
     notes,
     type,
     callBackDate,
+    status,
+    archived
   };
   const createdAudition = await Audition.create(auditionData, db);
   res.status(200).send(createdAudition);
