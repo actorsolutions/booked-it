@@ -16,6 +16,9 @@ const TEST_AUDITION = {
   userId: 0,
   company: "Test Company",
   createdAt: "2023-04-28T21:50:11.638Z",
+  status: 'Scheduled',
+  archived: false
+
 };
 
 describe("Audition [id] integration tests", () => {
