@@ -7,7 +7,7 @@ import {
 } from "../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
-describe("Audition Router integration tests", () => {
+describe("Auditions Router integration tests", () => {
   beforeEach(async () => {
     let test: IntegrationTestParams;
     test = await setup(["audition"]);
@@ -25,7 +25,7 @@ describe("Audition Router integration tests", () => {
       },
     });
   });
-  it("Find Audition", async () => {
+  it("Find Auditions", async () => {
     const request = await testClient(AuditionsController);
     const session = await generateSessionCookie(SESSION_DATA, {
       secret: process.env.AUTH0_SECRET as string,

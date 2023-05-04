@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 // eslint-disable-next-line no-unused-vars
 type HttpHandler = (request: NextApiRequest, response: NextApiResponse) => void;
