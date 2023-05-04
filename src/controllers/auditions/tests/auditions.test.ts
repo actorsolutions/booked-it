@@ -6,6 +6,7 @@ import {
   deleteAudition,
 } from "../../auditions/index";
 import { NextApiRequest, NextApiResponse } from "next";
+import { SESSION_DATA } from "@/utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
 let finalStatusCode: any, finalBody: any;
@@ -25,14 +26,7 @@ describe("Auditions Controller Tests", () => {
       },
     ];
     const session = await generateSessionCookie(
-      {
-        user: {
-          name: "Test User",
-          sid: "0000000",
-          email: "test@test.com",
-          id: "0",
-        },
-      },
+      { SESSION_DATA },
       {
         secret: process.env.AUTH0_SECRET as string,
       }
@@ -84,14 +78,7 @@ describe("Auditions Controller Tests", () => {
     };
 
     const session = await generateSessionCookie(
-      {
-        user: {
-          name: "Test User",
-          sid: "0000000",
-          email: "test@test.com",
-          id: "0",
-        },
-      },
+      { SESSION_DATA },
       {
         secret: process.env.AUTH0_SECRET as string,
       }
@@ -147,9 +134,7 @@ describe("Audition Controller Tests", () => {
     };
 
     const session = await generateSessionCookie(
-      {
-        user: { id: "0" },
-      },
+      { SESSION_DATA },
       {
         secret: process.env.AUTH0_SECRET as string,
       }
@@ -202,14 +187,7 @@ describe("Audition Controller Tests", () => {
     };
 
     const session = await generateSessionCookie(
-      {
-        user: {
-          name: "Test User",
-          sid: "0000000",
-          email: "test@test.com",
-          id: "0",
-        },
-      },
+      { SESSION_DATA },
       {
         secret: process.env.AUTH0_SECRET as string,
       }
@@ -262,14 +240,7 @@ describe("Audition Controller Tests", () => {
     };
 
     const session = await generateSessionCookie(
-      {
-        user: {
-          name: "Test User",
-          sid: "0000000",
-          email: "test@test.com",
-          id: "0",
-        },
-      },
+      { SESSION_DATA },
       {
         secret: process.env.AUTH0_SECRET as string,
       }
