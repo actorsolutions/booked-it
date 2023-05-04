@@ -21,7 +21,7 @@ model User {
 model Audition {
   id      Int      @id @default(autoincrement())
   userId Int
-  User   User @relation(fields: [userId], references: [id])
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   date      Int
   project   String
