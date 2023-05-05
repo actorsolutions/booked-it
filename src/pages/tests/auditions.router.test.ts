@@ -10,8 +10,15 @@ import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 describe("Auditions Router integration tests", () => {
   beforeEach(async () => {
     let test: IntegrationTestParams;
-    test = await setup(["audition"]);
+    test = await setup(['audition', 'user' ]);
     const { prisma } = test;
+    await prisma.user.create({
+      data: {
+        id: 0,
+        sid: "0000000",
+        email: "test@test.com",
+      },
+    });
     await prisma.audition.create({
       data: {
         date: 0,
@@ -22,6 +29,8 @@ describe("Auditions Router integration tests", () => {
         userId: 0,
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
+        status: 'Scheduled',
+        archived: false
       },
     });
   });
@@ -43,6 +52,8 @@ describe("Auditions Router integration tests", () => {
           type: "Television",
           userId: 0,
           createdAt: "2023-04-28T21:50:11.638Z",
+          status: 'Scheduled',
+          archived: false
         },
       ],
     };
@@ -55,7 +66,7 @@ describe("Auditions Router integration tests", () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(expected);
   });
-  it("Should create a audition", async () => {
+  it("Should create an audition", async () => {
     const session = await generateSessionCookie(SESSION_DATA, {
       secret: process.env.AUTH0_SECRET as string,
     });
@@ -69,6 +80,8 @@ describe("Auditions Router integration tests", () => {
       notes: "Here is a note",
       project: "Created Project",
       type: "Television",
+      status: 'Scheduled',
+      archived: false
     };
     const expected = {
       callBackDate: null,
@@ -80,6 +93,8 @@ describe("Auditions Router integration tests", () => {
       project: "Created Project",
       type: "Television",
       userId: 0,
+      status: 'Scheduled',
+      archived: false
     };
 
     const res = await request

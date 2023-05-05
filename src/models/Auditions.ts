@@ -71,7 +71,7 @@ export class Audition {
         this.type = type;
         this.createdAt = createdAt;
         this.status = status;
-        this.archived = archived
+        this.archived = archived;
     }
 
     /**
@@ -98,7 +98,7 @@ export class Audition {
      * @param db - instance of database being used
      */
     static async create(data: createData, db: PrismaClient["audition"]) {
-        return db.create({data: {...data}});
+        return db.create({data});
     }
 
     /**

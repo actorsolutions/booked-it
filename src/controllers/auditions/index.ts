@@ -38,9 +38,10 @@ export const addAudition = async (
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
-  const { date, project, company, casting, notes, type, callBackDate } =
+  const { id, date, project, company, casting, notes, type, callBackDate, status, archived } =
     req.body;
   const auditionData = {
+    id,
     userId,
     date,
     project,
@@ -49,6 +50,8 @@ export const addAudition = async (
     notes,
     type,
     callBackDate,
+    status,
+    archived
   };
   const createdAudition = await Audition.create(auditionData, db);
   res.status(200).send(createdAudition);
@@ -93,13 +96,13 @@ export const deleteAudition = async (
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
   const { id } = req.query;
-  const deletedAudition = await Audition.delete(
+  const deleteConfirmation = await Audition.delete(
     parseInt(id as string),
     userId,
     db
   );
 
-  if (deletedAudition.count > 0) {
+  if (deleteConfirmation.count == 1) {
     return res.status(200).send({ message: "Deleted!" });
   } else {
     return res.status(500).send({ message: "Failed to delete" });

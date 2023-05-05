@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { RouteHandler } from "../../../middleware/handlers";
-import { getAuditions, addAudition } from "@/controllers";
+import { getAuditions, addAudition } from "../../../controllers";
 
 /**
  * Controller for root route of /api/auditions

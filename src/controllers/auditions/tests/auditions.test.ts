@@ -6,7 +6,7 @@ import {
   deleteAudition,
 } from "../../auditions/index";
 import { NextApiRequest, NextApiResponse } from "next";
-import { SESSION_DATA } from "@/utils/testSetup";
+import { SESSION_DATA } from "../../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
 let finalStatusCode: any, finalBody: any;
@@ -23,10 +23,12 @@ describe("Auditions Controller Tests", () => {
         casting: undefined,
         notes: "Here is a note",
         type: "Television",
+        status: 'Scheduled',
+        archived: false
       },
     ];
     const session = await generateSessionCookie(
-      { SESSION_DATA },
+      SESSION_DATA,
       {
         secret: process.env.AUTH0_SECRET as string,
       }
@@ -75,16 +77,18 @@ describe("Auditions Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "Television",
+      status: 'Scheduled',
+      archived: false
     };
 
     const session = await generateSessionCookie(
-      { SESSION_DATA },
+      SESSION_DATA,
       {
         secret: process.env.AUTH0_SECRET as string,
       }
     );
     const fakeReq = {
-      method: "GET",
+      method: "POST",
       headers: { cookie: `appSession=${session}` },
       body: audition,
     };
@@ -126,15 +130,18 @@ describe("Audition Controller Tests", () => {
     const audition = {
       userId: 0,
       date: 0,
+      id: 0,
       project: "Test Project",
       company: "Test Company",
       casting: undefined,
       notes: "Here is a note",
       type: "Television",
+      status: 'Scheduled',
+      archived: false
     };
 
     const session = await generateSessionCookie(
-      { SESSION_DATA },
+      SESSION_DATA,
       {
         secret: process.env.AUTH0_SECRET as string,
       }
@@ -184,16 +191,18 @@ describe("Audition Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "Television",
+      status: 'Scheduled',
+      archived: false
     };
 
     const session = await generateSessionCookie(
-      { SESSION_DATA },
+      SESSION_DATA,
       {
         secret: process.env.AUTH0_SECRET as string,
       }
     );
     const fakeReq = {
-      method: "DELETE",
+      method: "PUT",
       headers: { cookie: `appSession=${session}` },
       body: audition,
       query: { id: 0 },
@@ -232,15 +241,18 @@ describe("Audition Controller Tests", () => {
     const audition = {
       userId: 0,
       date: 0,
+      id: 0,
       project: "Test Project",
       company: "Test Company",
       casting: undefined,
       notes: "Here is a note",
       type: "Television",
+      status: 'Scheduled',
+      archived: false
     };
 
     const session = await generateSessionCookie(
-      { SESSION_DATA },
+        SESSION_DATA,
       {
         secret: process.env.AUTH0_SECRET as string,
       }
@@ -267,9 +279,9 @@ describe("Audition Controller Tests", () => {
       cookie: `appSession=${session}`,
     };
     const mockDb = {
-      delete: async () => {
+      deleteMany: async () => {
         return new Promise((resolve) => {
-          resolve(audition);
+          resolve({message: "", count: 1});
         });
       },
     };
@@ -278,10 +290,7 @@ describe("Audition Controller Tests", () => {
       fakeResp as never as NextApiResponse,
       mockDb as never
     );
-    expect(finalBody).toEqual({
-      message: "Deleted!",
-      deletedAudition: audition,
-    });
+    expect(finalBody).toEqual({ message: "Deleted!" });
     expect(finalStatusCode).toEqual(200);
   });
 });
