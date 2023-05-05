@@ -1,10 +1,10 @@
-import AuditionController from "../api/auditions/[id]";
+import AuditionController from "../../api/auditions/[id]";
 import {
   IntegrationTestParams,
   setup,
   testClient,
   SESSION_DATA,
-} from "../../utils/testSetup";
+} from "../../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
 const TEST_AUDITION = {
