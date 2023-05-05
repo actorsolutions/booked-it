@@ -19,6 +19,36 @@ interface createData {
     archived: boolean;
 }
 
+const auditionStatuses ={
+    submitted:'submitted',
+    scheduled:'scheduled',
+    auditioned:'auditioned',
+    callback:'callback',
+    booked:'booked'
+}
+
+const auditionTypes={
+    television:'television',
+    film:'film',
+    student:'student',
+    theater:'theater',
+    industrial:'industrial',
+    commercial:'commercial',
+    newMedia:'newMedia'
+}
+
+/**
+ * Makes sure value is a part of object representing Prisma Enum
+ * @param enumList
+ * @param value
+ */
+const validateEnum = (enumList:{},value:string)=>{
+    if(Object.values(enumList).includes(value)){
+        return value;
+    }else{
+        throw Error('Invalid Status')
+    }
+}
 /**
  * Extends the interface for Audition creation to the more general
  * form of the AuditionData object where id is required
@@ -46,7 +76,6 @@ export class Audition {
 
     // eslint-disable-next-line no-unused-vars
     constructor(data: AuditionData) {
-
         const {
             id,
             userId,
@@ -61,24 +90,6 @@ export class Audition {
             status,
             type
         } = data;
-        const auditionTypes ={
-            submitted:'submitted',
-            scheduled:'scheduled',
-            auditioned:'auditioned',
-            callback:'callback',
-            booked:'booked'
-        }
-
-        const auditionStatuses={
-            television:'television',
-            film:'film',
-            student:'student',
-            theater:'theater',
-            industrial:'industrial',
-            commercial:'commercial',
-            newMedia:'newMedia'
-        }
-
         this.id = id;
         this.userId = userId;
         this.date = date;
@@ -90,17 +101,9 @@ export class Audition {
         this.createdAt = createdAt;
         this.archived = archived;
 
-        if(Object.values(auditionStatuses).includes(status)){
-            this.status = status as audition_statuses;
-        }else{
-            throw Error('Invalid Status')
-        }
+        this.status = validateEnum(auditionStatuses,status) as audition_statuses;
+        this.type = validateEnum(auditionTypes,type) as audition_types;
 
-        if(Object.values(auditionTypes).includes(type)){
-            this.type = type as audition_types;
-        }else{
-            throw Error('Invalid Type')
-        }
     }
 
     /**
@@ -123,12 +126,15 @@ export class Audition {
 
     /**
      * Method used to create a new audition
-     * @param data - audition data for creation
+     * @param createData - audition data for creation
      * @param db - instance of database being used
      */
-    static async create(data: createData, db: PrismaClient["audition"]) {
-        const audition = new Audition(data);
-        return db.create(audition);
+    static async create(createData: createData, db: PrismaClient["audition"]) {
+        return db.create({data:{
+                ...createData,
+                status:validateEnum(auditionStatuses,createData.status) as audition_statuses,
+                type:validateEnum(auditionTypes,createData.type) as audition_types
+            }});
     }
 
     /**
