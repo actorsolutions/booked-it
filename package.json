@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "dotenv -e .env.local ts-node src/utils/seedDb.ts",
-    "migrate:test": "dotenv -e .env.test -- npx prisma migrate deploy",
+    "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev",
     "seed:test": "dotenv -e .env.test ts-node src/utils/seedDb.ts"
   },
   "type": "module",

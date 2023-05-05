@@ -1,10 +1,10 @@
-import AuditionController from "../api/auditions/[id]";
+import AuditionController from "../../api/auditions/[id]";
 import {
   IntegrationTestParams,
   setup,
   testClient,
   SESSION_DATA,
-} from "../../utils/testSetup";
+} from "../../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
 const TEST_AUDITION = {
@@ -12,11 +12,11 @@ const TEST_AUDITION = {
   id: 0,
   notes: "Here is a note",
   project: "Test Project",
-  type: "Television",
+  type: "television",
   userId: 0,
   company: "Test Company",
   createdAt: "2023-04-28T21:50:11.638Z",
-  status: 'Scheduled',
+  status: 'scheduled',
   archived: false
 
 };
@@ -39,11 +39,11 @@ describe("Audition [id] integration tests", () => {
         id: 0,
         notes: "Here is a note",
         project: "Test Project",
-        type: "Television",
+        type: "television",
         userId: 0,
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
-        status: 'Scheduled',
+        status: 'scheduled',
         archived: false
       },
     });
@@ -64,9 +64,9 @@ describe("Audition [id] integration tests", () => {
       id: 0,
       notes: "Here is a note",
       project: "Test Project",
-      type: "Television",
+      type: "television",
       userId: 0,
-      status: 'Scheduled',
+      status: 'scheduled',
       archived: false
     };
 
@@ -113,9 +113,9 @@ describe("Audition [id] integration tests", () => {
       id: 0,
       notes: "THIS IS A DIFFERENT NOTE",
       project: "UPDATED PROJECT",
-      type: "Television",
+      type: "television",
       userId: 0,
-      status: 'Scheduled',
+      status: 'scheduled',
       archived: false
     };
 

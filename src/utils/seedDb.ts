@@ -34,6 +34,7 @@ async function main() {
       userId: 0,
       date: 1682976446,
       type: "Theater",
+      status:'auditioned'
     },
   });
   console.log(`${audition} created`);

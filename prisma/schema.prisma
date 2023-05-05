@@ -29,8 +29,25 @@ model Audition {
   callBackDate Int?
   casting  Json?
   notes    String?
-  type     String
-  status   String
+  type     audition_types
+  status   audition_statuses
   archived Boolean    @default(false)
 }
 
+enum audition_types{
+    television
+    film
+    student
+    theater
+    industrial
+    commercial
+    newMedia
+}
+
+enum audition_statuses{
+    submitted
+    scheduled
+    auditioned
+    callback
+    booked
+}

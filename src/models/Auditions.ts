@@ -1,4 +1,4 @@
-import {PrismaClient, Prisma} from "@prisma/client";
+import {PrismaClient, Prisma,audition_types,audition_statuses} from "@prisma/client";
 
 /**
  * Defines the Database representation of an Audition, starting with
@@ -39,13 +39,14 @@ export class Audition {
     callbackDate?: number;
     casting?: string;
     notes?: string;
-    type: string;
+    type: audition_types;
     createdAt?: string;
-    status: string;
+    status: audition_statuses;
     archived: boolean;
 
     // eslint-disable-next-line no-unused-vars
     constructor(data: AuditionData) {
+
         const {
             id,
             userId,
@@ -55,11 +56,29 @@ export class Audition {
             callbackDate,
             casting,
             notes,
-            type,
             createdAt,
+            archived,
             status,
-            archived
+            type
         } = data;
+        const auditionTypes ={
+            submitted:'submitted',
+            scheduled:'scheduled',
+            auditioned:'auditioned',
+            callback:'callback',
+            booked:'booked'
+        }
+
+        const auditionStatuses={
+            television:'television',
+            film:'film',
+            student:'student',
+            theater:'theater',
+            industrial:'industrial',
+            commercial:'commercial',
+            newMedia:'newMedia'
+        }
+
         this.id = id;
         this.userId = userId;
         this.date = date;
@@ -68,10 +87,20 @@ export class Audition {
         this.callbackDate = callbackDate || undefined;
         this.casting = JSON.stringify(casting);
         this.notes = notes || undefined;
-        this.type = type;
         this.createdAt = createdAt;
-        this.status = status;
         this.archived = archived;
+
+        if(Object.values(auditionStatuses).includes(status)){
+            this.status = status as audition_statuses;
+        }else{
+            throw Error('Invalid Status')
+        }
+
+        if(Object.values(auditionTypes).includes(type)){
+            this.type = type as audition_types;
+        }else{
+            throw Error('Invalid Type')
+        }
     }
 
     /**
@@ -98,7 +127,8 @@ export class Audition {
      * @param db - instance of database being used
      */
     static async create(data: createData, db: PrismaClient["audition"]) {
-        return db.create({data});
+        const audition = new Audition(data);
+        return db.create(audition);
     }
 
     /**
