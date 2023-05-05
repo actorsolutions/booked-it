@@ -1,10 +1,10 @@
-import AuditionsController from "../api/auditions";
+import AuditionsController from "../../api/auditions";
 import {
   IntegrationTestParams,
   setup,
   testClient,
   SESSION_DATA,
-} from "../../utils/testSetup";
+} from "../../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
 describe("Auditions Router integration tests", () => {
