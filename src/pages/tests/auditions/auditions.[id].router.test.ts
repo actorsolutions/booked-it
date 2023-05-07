@@ -4,6 +4,7 @@ import {
   setup,
   testClient,
   SESSION_DATA,
+    tearDown
 } from "../../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
@@ -22,8 +23,9 @@ const TEST_AUDITION = {
 };
 
 describe("Audition [id] integration tests", () => {
+  let test: IntegrationTestParams;
+
   beforeEach(async () => {
-    let test: IntegrationTestParams;
     test = await setup(["audition", "user"]);
     const { prisma } = test;
     await prisma.user.create({
@@ -48,6 +50,9 @@ describe("Audition [id] integration tests", () => {
       },
     });
   });
+  afterEach(async()=>{
+    await tearDown(test)
+  })
   it("should get a particular audition", async () => {
     const request = await testClient(AuditionController, {
       id: TEST_AUDITION.id,
