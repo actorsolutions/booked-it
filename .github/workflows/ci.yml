@@ -44,7 +44,7 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - run: yarn migrate
-      - run: prisma generate
+      - run: yarn generate
 
       - run: yarn jest
 
