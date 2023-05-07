@@ -6,7 +6,7 @@ import {
   SESSION_DATA,
 } from "../../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
-
+import {audition_types,audition_statuses} from "@prisma/client"
 describe("Auditions Router integration tests", () => {
   beforeEach(async () => {
     let test: IntegrationTestParams;
@@ -25,11 +25,11 @@ describe("Auditions Router integration tests", () => {
         id: 0,
         notes: "Here is a note",
         project: "Test Project",
-        type: "Television",
+        type: "television" as audition_types,
         userId: 0,
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
-        status: 'Scheduled',
+        status: "booked" as audition_statuses,
         archived: false
       },
     });
@@ -49,10 +49,10 @@ describe("Auditions Router integration tests", () => {
           id: 0,
           notes: "Here is a note",
           project: "Test Project",
-          type: "Television",
+          type: "television",
           userId: 0,
           createdAt: "2023-04-28T21:50:11.638Z",
-          status: 'Scheduled',
+          status: 'booked',
           archived: false
         },
       ],
@@ -79,8 +79,8 @@ describe("Auditions Router integration tests", () => {
       id: 1,
       notes: "Here is a note",
       project: "Created Project",
-      type: "Television",
-      status: 'Scheduled',
+      type: "television",
+      status: 'booked',
       archived: false
     };
     const expected = {
@@ -91,9 +91,9 @@ describe("Auditions Router integration tests", () => {
       id: 1,
       notes: "Here is a note",
       project: "Created Project",
-      type: "Television",
+      type: "television",
       userId: 0,
-      status: 'Scheduled',
+      status: 'booked',
       archived: false
     };
 
@@ -107,3 +107,4 @@ describe("Auditions Router integration tests", () => {
     expect(createdAudition).toEqual(expected);
   });
 });
+
