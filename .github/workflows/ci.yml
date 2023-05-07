@@ -41,7 +41,6 @@ jobs:
         with:
           cache: 'yarn'
 
-      - uses: nrwl/nx-set-shas@v3
       - run: yarn install --frozen-lockfile
 
       - run: prisma migrate dev --name init
