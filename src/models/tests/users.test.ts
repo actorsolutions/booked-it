@@ -1,4 +1,4 @@
-import { Users } from "@/utils/models/Users";
+import { Users } from "../Users";
 import { PrismaClient } from "@prisma/client";
 
 describe("It Tests the Users Model", () => {

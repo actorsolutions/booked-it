@@ -4,12 +4,14 @@ import {
   setup,
   testClient,
   SESSION_DATA,
+    tearDown
 } from "../../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 import {audition_types,audition_statuses} from "@prisma/client"
 describe("Auditions Router integration tests", () => {
+  let test: IntegrationTestParams;
+
   beforeEach(async () => {
-    let test: IntegrationTestParams;
     test = await setup(['audition', 'user' ]);
     const { prisma } = test;
     await prisma.user.create({
@@ -34,6 +36,9 @@ describe("Auditions Router integration tests", () => {
       },
     });
   });
+  afterEach(async()=>{
+    await tearDown(test)
+  })
   it("Find Auditions", async () => {
     const request = await testClient(AuditionsController);
     const session = await generateSessionCookie(SESSION_DATA, {
