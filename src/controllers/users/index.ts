@@ -11,11 +11,10 @@ export const getUserByEmail = async (
     const session = await getSession(req, res);
     const email = session?.user.email;
     const user = await Users.findByEmail(email, db);
-    if (user) {
-        res.status(200).send(user)
-    } else {
-        res.status(500).send({error: 'No User with that email.'})
+    if (!user) {
+       return res.status(500).send({message: 'No User with that email.'})
     }
+     return res.status(200).send(user)
 };
 
 export const getUserById = async (
@@ -26,7 +25,7 @@ export const getUserById = async (
     const { id } = req.query;
     const user = await Users.findById(parseInt(id as string), db);
     if (!user) {
-        return res.status(401).send({ message: "Unauthorized" });
+        return res.status(500).send({ message: 'No User found' });
     }
     return res.status(200).send(user)
 };
