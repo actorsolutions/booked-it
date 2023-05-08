@@ -16,7 +16,9 @@ interface UserParams {
  */
 const Registration = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession(req, res);
-  if (req.method === "POST" && session) {
+  RouteHandler({
+  POST: SignUpSignOn
+  })
     const { sid, email } = session?.user as UserParams;
     const users = new Users(prisma.user);
     const user = await Users.signUpOrSignIn({ email, sid });
