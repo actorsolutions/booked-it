@@ -31,4 +31,17 @@ export const getUserById = async (
         return res.status(401).send({ message: "Unauthorized" });
     }
     return res.status(200).send(user)
+};
+
+export const registerOrSignInUser = async (
+    req: NextApiRequest,
+    res: NextApiResponse,
+    db = prisma.user
+) => {
+    const session = await getSession(req, res);
+    const id = parseInt(session?.user.id);
+    const { email, sid } = req.body;
+    const userData = { id, email, sid }
+    const registeredUser = await Users.signUpOrSignIn(userData, db)
+    res.status(200).send(registeredUser)
 }
