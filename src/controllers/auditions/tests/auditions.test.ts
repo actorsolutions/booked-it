@@ -76,8 +76,8 @@ describe("Auditions Controller Tests", () => {
       company: "Test Company",
       casting: undefined,
       notes: "Here is a note",
-      type: "Television",
-      status: 'Scheduled',
+      type: "television",
+      status: 'scheduled',
       archived: false
     };
 
@@ -190,8 +190,8 @@ describe("Audition Controller Tests", () => {
       company: "Test Company",
       casting: undefined,
       notes: "Here is a note",
-      type: "Television",
-      status: 'Scheduled',
+      type: "television",
+      status: 'scheduled',
       archived: false
     };
 

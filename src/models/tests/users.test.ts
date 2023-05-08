@@ -1,5 +1,5 @@
 import { Users } from "../Users";
-import {PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 describe("It Tests the Users Model", () => {
   it("returns a user from email", async () => {
