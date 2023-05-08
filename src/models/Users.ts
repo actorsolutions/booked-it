@@ -1,34 +1,72 @@
-import { PrismaClient, User } from "@prisma/client";
+import {PrismaClient, User} from "@prisma/client";
 
-type Signup = {
+/**
+ * Defines the Database representation of a User, starting with
+ * a form of the object for User creation where id is optional
+ */
+interface createData {
+  id?: number,
+  email: string,
+  sid: string
+}
+
+/**
+ * Extends the interface for User creation to the more general
+ * form of the UserData object where id is required
+ */
+interface UserData extends createData {
+  id: number;
+}
+
+/**
+ * Business logic for manipulating & transacting UserData
+ */
+export class Users {
+  id: number;
   email: string;
   sid: string;
-};
 
-export class Users {
   // eslint-disable-next-line no-unused-vars
-  constructor(private readonly prismaUser: PrismaClient["user"]) {}
+  constructor(data: UserData) {
+    const {
+      id,
+      email,
+      sid
+    } = data;
+    this.id = id;
+    this.email = email;
+    this.sid = sid;
+  }
+
+  /**
+   * Method for finding a particular User record by its id
+   * @param id - id of sought after user record
+   * @param db - instance of database being used
+   */
+  static async findById(id: number, db: PrismaClient["user"]) {
+    return await db.findUnique({ where: { id } });
+  }
+
+  /**
+   * Method for finding a particular User record by its email
+   * @param email - email of sought after user record
+   * @param db - instance of database being used
+   */
+  static async findByEmail(email: string, db: PrismaClient["user"]) {
+    return await db.findUnique({ where: { email: email } });
+  }
 
   /**
    * Signs up / Returns user based on email.
-   * @param data
+   * @param data - user data for query
+   * @param db - instance of database being used
    */
-  async signUpOrSignIn(data: Signup): Promise<User> {
-    const alreadyAdded = await this.findByEmail(data.email);
+  static async signUpOrSignIn(data: UserData, db: PrismaClient["user"]): Promise<User> {
+    const alreadyAdded = await Users.findByEmail(data.email, db);
     if (!alreadyAdded) {
-      return this.prismaUser.create({ data });
+      return db.create({ data });
     } else {
       return alreadyAdded;
     }
-  }
-
-  // Find user by Id
-  async findById(id: number) {
-    return this.prismaUser.findUnique({ where: { id } });
-  }
-
-  // Find by Email
-  async findByEmail(email: string) {
-    return this.prismaUser.findUnique({ where: { email } });
   }
 }
