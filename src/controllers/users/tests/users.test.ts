@@ -156,7 +156,6 @@ describe('Users controller tests', () => {
         expect(finalBody).toEqual(user);
         expect(finalStatusCode).toEqual(200)
     });
-
     it('should sign in an existing user', async () => {
         const user = {
             id: 0,
@@ -203,5 +202,47 @@ describe('Users controller tests', () => {
         );
         expect(finalBody).toEqual(user);
         expect(finalStatusCode).toEqual(200)
+    });
+    it('should throw an error if there is no active session', async () => {
+        const user = {
+            id: 0,
+            email: 'test@test.com',
+            sid: '0000000'
+        };
+
+        const fakeReq = {
+            method: "POST",
+            headers: { cookie: `appSession=` },
+            body: user,
+        };
+        const fakeResp = {
+            json: (json: any) => json,
+            send: (send: any) => send,
+            status: (code: any) => {
+                finalStatusCode = code;
+                return {
+                    send: (body: any) => {
+                        finalBody = body;
+                    },
+                };
+            },
+            getHeader: (header: any) => header,
+            setHeader: (header: any) => header,
+            cookie: `appSession=`,
+        };
+        const mockDb = {
+            findUnique: async () => {
+                return new Promise((resolve) => {
+                    resolve(user);
+                });
+            },
+        };
+        await registerOrSignInUser(
+            fakeReq as never as NextApiRequest,
+            fakeResp as never as NextApiResponse,
+            mockDb as never
+        );
+        expect(finalBody.message).toEqual('Please sign in');
+        expect(finalStatusCode).toEqual(500)
     })
 })
