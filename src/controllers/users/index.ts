@@ -11,8 +11,8 @@ export const getUserByEmail = async (
     const session = await getSession(req, res);
     const email = session?.user.email;
     const user = await Users.findByEmail(email, db);
-    if (email) {
-        res.status(200).send({ user })
+    if (user) {
+        res.status(200).send(user)
     } else {
         res.status(500).send({error: 'No User with that email.'})
     }
@@ -23,11 +23,9 @@ export const getUserById = async (
     res: NextApiResponse,
     db = prisma.user
 ) => {
-    const session = await getSession(req, res);
-    const userId = parseInt(session?.user.id);
     const { id } = req.query;
     const user = await Users.findById(parseInt(id as string), db);
-    if (user?.id != userId) {
+    if (!user) {
         return res.status(401).send({ message: "Unauthorized" });
     }
     return res.status(200).send(user)
@@ -39,9 +37,14 @@ export const registerOrSignInUser = async (
     db = prisma.user
 ) => {
     const session = await getSession(req, res);
-    const id = parseInt(session?.user.id);
-    const { email, sid } = req.body;
-    const userData = { id, email, sid }
-    const registeredUser = await Users.signUpOrSignIn(userData, db)
-    res.status(200).send(registeredUser)
+    if (!session) {
+        res.status(500).send({message: 'Please sign in'})
+    } else {
+        const id = parseInt(session.user.id);
+        const { email, sid } = req.body;
+        const userData = { id, email, sid }
+        const registeredUser = await Users.signUpOrSignIn(userData, db)
+        res.status(200).send(registeredUser)
+    }
+
 }

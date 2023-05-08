@@ -1,4 +1,4 @@
-import {PrismaClient, Prisma,audition_types,audition_statuses} from "@prisma/client";
+import {PrismaClient, Prisma, audition_types, audition_statuses} from "@prisma/client";
 
 /**
  * Defines the Database representation of an Audition, starting with
