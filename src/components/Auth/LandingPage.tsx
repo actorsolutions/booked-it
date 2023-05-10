@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { getAuditions } from "@/apiCalls/auditions";
-import { SignUpOrSignIn } from "@/apiCalls/auth";
+import { getAuditions } from "../../apiCalls/auditions";
+import { SignUpOrSignIn } from "../../apiCalls/auth";
 import { AgGridReact } from "ag-grid-react";
 
 export const LandingPage = () => {
@@ -36,5 +36,5 @@ export const LandingPage = () => {
       </>
     );
   }
-  return <a href={"apiCalls/auth/login"}>Login</a>;
+  return <a href={"api/auth/login"}>Login</a>;
 };

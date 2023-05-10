@@ -15,7 +15,7 @@ async function main() {
     data: {
       id: 0,
       email: "test.user@email.com",
-      sid: "U8rykxJ1n1cftGDPPPW3LNRws55-pF1a",
+      sid: "yHUibwiDg07oH9stoJy-teytzUTpNDe3",
     },
   });
   console.log(`${user} created`);
@@ -34,7 +34,7 @@ async function main() {
       userId: 0,
       date: 1682976446,
       type: "theater",
-      status:'auditioned'
+      status: "auditioned",
     },
   });
   console.log(`${audition} created`);
