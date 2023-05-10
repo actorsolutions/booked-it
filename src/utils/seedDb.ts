@@ -33,7 +33,8 @@ async function main() {
       notes: "Test note",
       userId: 0,
       date: 1682976446,
-      type: "Theater",
+      type: "theater",
+      status:'auditioned'
     },
   });
   console.log(`${audition} created`);

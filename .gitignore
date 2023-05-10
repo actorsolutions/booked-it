@@ -37,3 +37,4 @@ next-env.d.ts
 /.env
 /.idea/inspectionProfiles/Project_Default.xml
 /env.local
+/prisma/migrations/migration_lock.toml

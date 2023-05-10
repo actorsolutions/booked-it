@@ -84,3 +84,10 @@ export const setup = async (
 export type IntegrationTestParams = {
   prisma: PrismaClient;
 };
+
+export const tearDown = async(
+    _test : IntegrationTestParams
+)=>{
+  await _test.prisma.$disconnect();
+}
+

@@ -1,4 +1,4 @@
-import { Users } from "@/utils/models/Users";
+import { Users } from "../Users";
 import { PrismaClient } from "@prisma/client";
 
 describe("It Tests the Users Model", () => {
@@ -16,8 +16,9 @@ describe("It Tests the Users Model", () => {
         });
       },
     };
-    const users = new Users(mockPrisma as unknown as PrismaClient["user"]);
-    const user = await users.findByEmail("test@email.com");
+
+    const user = await Users.findByEmail(expectedResponse.email,
+        mockPrisma as unknown as PrismaClient["user"]);
     expect(user).toEqual(expectedResponse);
   });
   it("returns a user from id", async () => {
@@ -34,12 +35,12 @@ describe("It Tests the Users Model", () => {
         });
       },
     };
-    const users = new Users(mockPrisma as unknown as PrismaClient["user"]);
-    const user = await users.findById(0);
+    const user = await Users.findById(expectedResponse.id,
+        mockPrisma as unknown as PrismaClient["user"]);
     expect(user).toEqual(expectedResponse);
   });
   it("returns a user, doesn't signup", async () => {
-    const expectedResponse = {
+    const TEST_USER = {
       id: 0,
       sid: "FakeSid",
       email: "test@email.com",
@@ -48,16 +49,14 @@ describe("It Tests the Users Model", () => {
     const mockPrisma = {
       findUnique: async () => {
         return new Promise((resolve) => {
-          resolve(expectedResponse);
+          resolve(TEST_USER);
         });
       },
     };
-    const users = new Users(mockPrisma as unknown as PrismaClient["user"]);
-    const user = await users.signUpOrSignIn({
-      email: "test@email.com",
-      sid: "FakeSid",
-    });
-    expect(user).toEqual(expectedResponse);
+    const user = await Users.signUpOrSignIn(
+        TEST_USER,
+        mockPrisma as unknown as PrismaClient["user"]);
+    expect(user).toEqual(TEST_USER);
   });
   it("creates a user", async () => {
     const expectedResponse = {
@@ -78,11 +77,12 @@ describe("It Tests the Users Model", () => {
         });
       },
     };
-    const users = new Users(mockPrisma as unknown as PrismaClient["user"]);
-    const user = await users.signUpOrSignIn({
+    const user = await Users.signUpOrSignIn({
+      id: 1,
       email: "test2@email.com",
       sid: "FakeSid",
-    });
+    },
+        mockPrisma as unknown as PrismaClient["user"]);
     expect(user).toEqual(expectedResponse);
   });
 });

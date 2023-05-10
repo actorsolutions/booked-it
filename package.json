@@ -8,8 +8,12 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "dotenv -e .env.local ts-node src/utils/seedDb.ts",
-    "migrate:test": "dotenv -e .env.test -- npx prisma migrate deploy",
-    "seed:test": "dotenv -e .env.test ts-node src/utils/seedDb.ts"
+    "migrate": "npx prisma migrate dev --schema ./prisma/schema.prisma",
+    "generate": "npx prisma generate --schema ./prisma/schema.prisma",
+    "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev",
+    "seed:test": "dotenv -e .env.test ts-node src/utils/seedDb.ts",
+    "test": "DOTENV_CONFIG_PATH=./.env.test jest --setupFiles dotenv/config"
+
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.2.1",

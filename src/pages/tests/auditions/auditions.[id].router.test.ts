@@ -4,6 +4,7 @@ import {
   setup,
   testClient,
   SESSION_DATA,
+    tearDown
 } from "../../../utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
@@ -12,18 +13,19 @@ const TEST_AUDITION = {
   id: 0,
   notes: "Here is a note",
   project: "Test Project",
-  type: "Television",
+  type: "television",
   userId: 0,
   company: "Test Company",
   createdAt: "2023-04-28T21:50:11.638Z",
-  status: 'Scheduled',
+  status: 'scheduled',
   archived: false
 
 };
 
 describe("Audition [id] integration tests", () => {
+  let test: IntegrationTestParams;
+
   beforeEach(async () => {
-    let test: IntegrationTestParams;
     test = await setup(["audition", "user"]);
     const { prisma } = test;
     await prisma.user.create({
@@ -39,15 +41,18 @@ describe("Audition [id] integration tests", () => {
         id: 0,
         notes: "Here is a note",
         project: "Test Project",
-        type: "Television",
+        type: "television",
         userId: 0,
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
-        status: 'Scheduled',
+        status: 'scheduled',
         archived: false
       },
     });
   });
+  afterEach(async()=>{
+    await tearDown(test)
+  })
   it("should get a particular audition", async () => {
     const request = await testClient(AuditionController, {
       id: TEST_AUDITION.id,
@@ -64,9 +69,9 @@ describe("Audition [id] integration tests", () => {
       id: 0,
       notes: "Here is a note",
       project: "Test Project",
-      type: "Television",
+      type: "television",
       userId: 0,
-      status: 'Scheduled',
+      status: 'scheduled',
       archived: false
     };
 
@@ -113,9 +118,9 @@ describe("Audition [id] integration tests", () => {
       id: 0,
       notes: "THIS IS A DIFFERENT NOTE",
       project: "UPDATED PROJECT",
-      type: "Television",
+      type: "television",
       userId: 0,
-      status: 'Scheduled',
+      status: 'scheduled',
       archived: false
     };
 
@@ -128,6 +133,18 @@ describe("Audition [id] integration tests", () => {
     expect(res.body).toEqual(updatedAudition);
   });
   it("should throw an error for unauthorized put request", async () => {
+    const updatedAudition = {
+      company: "Test Company",
+      createdAt: "2023-04-28T21:50:11.638Z",
+      date: 0,
+      id: 0,
+      notes: "THIS IS A DIFFERENT NOTE",
+      project: "UPDATED PROJECT",
+      type: "television",
+      userId: 0,
+      status: 'scheduled',
+      archived: false
+    };
     const request = await testClient(AuditionController, {
       id: TEST_AUDITION.id,
     });
@@ -144,7 +161,7 @@ describe("Audition [id] integration tests", () => {
 
     const res = await request
       .put(`/${TEST_AUDITION.id}`)
-      .set("Cookie", [`appSession=${session}`]);
+      .set("Cookie", [`appSession=${session}`]).send(updatedAudition);
 
     expect(res.statusCode).toEqual(401);
     expect(res.body).toEqual({

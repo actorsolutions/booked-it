@@ -12,8 +12,8 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "This is a note",
-      type: "Film",
-      status: "Scheduled",
+      type: "film",
+      status: "scheduled",
       archived: false,
     };
     const mockPrisma = {
@@ -40,8 +40,8 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: undefined,
-      type: "Television",
-      status: "Scheduled",
+      type: "television",
+      status: "scheduled",
       archived: false,
     };
     const expectedResponse = {
@@ -53,8 +53,8 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "No notes Added",
-      type: "Television",
-      status: "Scheduled",
+      type: "television",
+      status: "scheduled",
       archived: false,
     };
     const mockPrisma = {
@@ -81,8 +81,8 @@ describe("It Tests the Auditions Model", () => {
         callbackDate: undefined,
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
-        type: "Film",
-        status: "Scheduled",
+        type: "film",
+        status: "scheduled",
         archived: false,
       },
       {
@@ -94,8 +94,8 @@ describe("It Tests the Auditions Model", () => {
         callbackDate: undefined,
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
-        type: "Theater",
-        status: "Scheduled",
+        type: "theater",
+        status: "scheduled",
         archived: false,
       },
     ];
@@ -122,8 +122,8 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: undefined,
       casting: [{ name: "Test testerson", company: "Tester Casting" }],
       notes: "Notes!",
-      type: "Film",
-      status: "Scheduled",
+      type: "film",
+      status: "scheduled",
       archived: false,
     };
 
@@ -151,8 +151,8 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "No notes Added",
-      type: "Television",
-      status: "Scheduled",
+      type: "television",
+      status: "scheduled",
       archived: false,
     };
     const auditionData = {
@@ -164,8 +164,8 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: undefined,
-      type: "Television",
-      status: "Scheduled",
+      type: "television",
+      status: "scheduled",
       archived: false,
     };
     const mockPrisma = {
