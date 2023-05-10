@@ -3,7 +3,7 @@ import { RouteHandler } from "../../../middleware/handlers";
 import { getAuditions, addAudition } from "../../../controllers";
 
 /**
- * Controller for root route of /api/auditions
+ * Controller for root route of /apiCalls/auditions
  * @param req
  * @param res
  * @constructor

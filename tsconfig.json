@@ -21,7 +21,8 @@
     ],
     "baseUrl": "/",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/apiCalls": ["./src/apiCalls/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","./jest-setup.ts"],
