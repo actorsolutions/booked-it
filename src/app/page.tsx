@@ -1,14 +1,15 @@
 "use client";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
-
-import { LandingPage } from "@/components/Auth/LandingPage";
+import { Dashboard } from "../components/Dashboard";
 
 export default function Home() {
   return (
     <main className={"container"}>
       <UserProvider>
-        <LandingPage />
+        <Dashboard />
       </UserProvider>
     </main>
   );
 }
+
+

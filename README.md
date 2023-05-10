@@ -1,13 +1,10 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
-
-
 
 Check out the env.template to make sure you have all .env entries that you need, if you are using webstorm you also need to add these to your
 Jest tests when the time comes.
 
 Make sure those are gitignore
+
 ## Prisma
 Whatever DATABASE_URL is in your env.template needs to exist on your local postgres AND make sure it's in a .env NOT JUST .env.local
 
