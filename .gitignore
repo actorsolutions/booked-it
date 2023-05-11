@@ -39,4 +39,4 @@ next-env.d.ts
 /env.local
 /prisma/migrations/migration_lock.toml
 
-.vscode
+/.vscode*
