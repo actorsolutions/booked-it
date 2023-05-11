@@ -49,7 +49,7 @@ describe('Registration router integration tests', () => {
             email: "differenttest@test.com",
         };
         const request = await testClient(RegistrationController);
-        const session = await generateSessionCookie({user: {id: 3}}, {
+        const session = await generateSessionCookie({user: EXPECTED_USER}, {
             secret: process.env.AUTH0_SECRET as string,
         });
 
@@ -59,7 +59,7 @@ describe('Registration router integration tests', () => {
             .send(EXPECTED_USER)
 
         expect(res.statusCode).toEqual(200);
-        expect(res.body.id).toEqual(EXPECTED_USER.id)
+        expect(res.body.email).toEqual(EXPECTED_USER.email)
     });
     it('should throw an error if there is no active session', async () => {
         const EXPECTED_USER = {
