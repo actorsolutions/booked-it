@@ -30,5 +30,4 @@
     "esm": true,
     "experimentalSpecifierResolution": "node"
   },
-  "types": ["node", "jest"]
 }
