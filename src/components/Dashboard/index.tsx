@@ -8,6 +8,8 @@ import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
+import {CY_TAGS} from "@/types/cypress_tags";
+
 
 const modalStyle = {
   position: "absolute" as "absolute",
@@ -83,5 +85,5 @@ export const Dashboard = () => {
       </Container>
     );
   }
-  return <a href={"api/auth/login"}>Login</a>;
+  return <a href={"api/auth/login"} data-cy={ CY_TAGS.LOG_IN_BUTTON }>Login</a>;
 };
