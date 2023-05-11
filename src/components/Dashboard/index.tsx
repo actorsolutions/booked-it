@@ -36,6 +36,7 @@ export const Dashboard = () => {
       });
     });
   }, [user]);
+
   if (user) {
     return (
       <Container maxWidth="md">
@@ -45,13 +46,17 @@ export const Dashboard = () => {
           <code>{JSON.stringify(auditions[0], null, 4)}</code>
         </pre>
         <Stack rowGap={1}>
-          {auditions.map((audition: Audition) => {
-            return (
-              <SwipeableRow key={audition.id}>
-                <AuditionRow audition={audition} />
-              </SwipeableRow>
-            );
-          })}
+          {auditions.length === 0 ? (
+            <p>No Auditions Added</p>
+          ) : (
+            auditions.map((audition: Audition) => {
+              return (
+                <SwipeableRow key={audition.id}>
+                  <AuditionRow audition={audition} />
+                </SwipeableRow>
+              );
+            })
+          )}
         </Stack>
         <div
           style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
