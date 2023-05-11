@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { getAuditions } from "../../apihelpers/auditions";
-import { SignUpOrSignIn } from "../../apihelpers/auth";
+import { getAuditions } from "@/apihelpers/auditions";
+import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { AgGridReact } from "ag-grid-react";
 
 export const LandingPage = () => {

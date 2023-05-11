@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { Users } from "../../models/Users";
-import { getSession, updateSession } from "@auth0/nextjs-auth0";
-import { prisma } from "../../utils/prisma";
+import {NextApiRequest, NextApiResponse} from "next";
+import {getSession, updateSession} from "@auth0/nextjs-auth0";
+import {prisma} from "@/utils/prisma";
+import {Users} from "@/models/Users";
 
 /**
  * Gets User based on email and returns it
@@ -24,7 +24,7 @@ export const getUserByEmail = async (
 };
 
 /**
- * Gets User based on Id and returns it
+ * Gets User based on ID and returns it
  * @param req
  * @param res
  * @param db

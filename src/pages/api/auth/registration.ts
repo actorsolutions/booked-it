@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { RouteHandler } from "../../../middleware/handlers";
-import { registerOrSignInUser } from "../../../controllers/index";
+import { RouteHandler } from "@/middleware/handlers";
+import { registerOrSignInUser } from "@/controllers";
 
 /**
  * Registers a user/signs in an already registered user and adds localDB.user.id to the session data.

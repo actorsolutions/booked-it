@@ -19,10 +19,9 @@
         "name": "next"
       }
     ],
-    "baseUrl": "/",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/apiCalls": ["./src/apiCalls/*"]
+      "@/*": ["src/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","./jest-setup.ts"],
@@ -30,5 +29,5 @@
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"
-  }
+  },
 }

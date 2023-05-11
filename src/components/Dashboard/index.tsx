@@ -4,10 +4,10 @@ import { Stack, Box, IconButton, Modal, Typography } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SwipeableRow } from "../SwipeableRow";
 import { AuditionRow } from "../AuditionRow";
-import { SignUpOrSignIn } from "../../apihelpers/auth";
+import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { getAuditions } from "../../apihelpers/auditions";
-import { Audition } from "../../utils/types";
+import { getAuditions } from "@/apihelpers/auditions";
+import { Audition } from "@/utils/types";
 
 const modalStyle = {
   position: "absolute" as "absolute",

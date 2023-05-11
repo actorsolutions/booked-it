@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { RouteHandler } from "../../../middleware/handlers";
+import { RouteHandler } from "@/middleware/handlers";
 import {
   getAudition,
   updateAudition,
   deleteAudition,
-} from "../../../controllers/auditions/index";
+} from "@/controllers";
 
 /**
  * Controller for a dynamic route that using a specific audition [id]

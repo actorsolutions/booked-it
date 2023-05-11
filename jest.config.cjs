@@ -12,6 +12,9 @@ const customJestConfig = {
 
 module.exports = {
   ...createJestConfig(customJestConfig),
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1"
+  },
   preset: "ts-jest",
   setupFiles: ["dotenv/config"],
   transform: {

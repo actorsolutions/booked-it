@@ -4,9 +4,9 @@ import {
   getAudition,
   updateAudition,
   deleteAudition,
-} from "../../auditions/index";
+} from "@/controllers";
 import { NextApiRequest, NextApiResponse } from "next";
-import { SESSION_DATA } from "../../../utils/testSetup";
+import { SESSION_DATA } from "@/utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
 let finalStatusCode: any, finalBody: any;

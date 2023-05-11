@@ -1,4 +1,4 @@
-import { auditionResponse } from "../utils/types";
+import { auditionResponse } from "@/utils/types";
 
 interface createData {
   id: number;

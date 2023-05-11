@@ -1,11 +1,11 @@
-import AuditionsController from "../../api/auditions";
+import AuditionsController from "@/pages/api/auditions";
 import {
   IntegrationTestParams,
   setup,
   testClient,
   SESSION_DATA,
     tearDown
-} from "../../../utils/testSetup";
+} from "@/utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 import {audition_types,audition_statuses} from "@prisma/client"
 describe("Auditions Router integration tests", () => {
