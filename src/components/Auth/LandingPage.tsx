@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { getAuditions } from "../../apiCalls/auditions";
-import { SignUpOrSignIn } from "../../apiCalls/auth";
+import { getAuditions } from "../../apihelpers/auditions";
+import { SignUpOrSignIn } from "../../apihelpers/auth";
 import { AgGridReact } from "ag-grid-react";
 
 export const LandingPage = () => {
@@ -26,7 +26,7 @@ export const LandingPage = () => {
       <>
         <h1>Welcome {user.name}</h1>
         <p>Email - {user.email}</p>
-        <a href={"/apiCalls/auth/logout"}>Logout</a>
+        <a href={"/api/auth/logout"}>Logout</a>
         <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
           <AgGridReact
             rowData={auditions}

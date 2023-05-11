@@ -8,11 +8,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 /**
  *  Handles the Authentication from Auth0 with custom handleProfile logic to create a new session
- * - /apiCalls/auth/login: log the user in to your app by redirecting them to your identity provider.
- * - /apiCalls/auth/callback: The page that your identity provider will redirect the user back to on login.
- * - /apiCalls/auth/logout: log the user out of your app.
- * - /apiCalls/auth/me: View the user profile JSON (used by the UseUser hook).
- * - /apiCalls/auth/unauthorized: Returns a 401 for use by WithMiddlewareAuthRequired when protecting API routes.
+ * - /api/auth/login: log the user in to your app by redirecting them to your identity provider.
+ * - /api/auth/callback: The page that your identity provider will redirect the user back to on login.
+ * - /api/auth/logout: log the user out of your app.
+ * - /api/auth/me: View the user profile JSON (used by the UseUser hook).
+ * - /api/auth/unauthorized: Returns a 401 for use by WithMiddlewareAuthRequired when protecting API routes.
  *
  * For more information https://auth0.github.io/nextjs-auth0/types/handlers_auth.HandleAuth.html
  */
