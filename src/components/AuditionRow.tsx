@@ -1,6 +1,7 @@
 import { Card, Grid } from "@mui/material";
 import LensIcon from "@mui/icons-material/Lens";
-import { Audition, Casting } from "./Dashboard/audition_data";
+import { Audition } from "../utils/types";
+import { Casting } from "./Dashboard/audition_data";
 
 interface AuditionRowProps {
   audition: Audition;
@@ -8,9 +9,9 @@ interface AuditionRowProps {
 
 export const AuditionRow = ({ audition }: AuditionRowProps) => {
   const statusColor = (status: string): "success" | "info" => {
-    return status === "Audition" ? "success" : "info";
+    return status === "auditioned" ? "success" : "info";
   };
-  const casting = audition.casting ? audition.casting as Array<Casting> : [];
+  const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
 
   return (
     <Card
@@ -31,9 +32,7 @@ export const AuditionRow = ({ audition }: AuditionRowProps) => {
           <div> {audition.project} </div>
         </Grid>
         <Grid item md={3}>
-          <div>
-            {casting.length > 0 ? casting[0].name : undefined}
-          </div>
+          <div>{casting.length > 0 ? casting[0].name : undefined}</div>
         </Grid>
         <Grid item xs={2}>
           <div style={{ justifyContent: "flex-end" }}>

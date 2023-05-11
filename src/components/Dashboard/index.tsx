@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import { Container } from "@mui/system";
 import { Stack, Box, IconButton, Modal, Typography } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
-import { AUDITIONS } from "./audition_data";
 import { SwipeableRow } from "../SwipeableRow";
 import { AuditionRow } from "../AuditionRow";
 import { SignUpOrSignIn } from "../../apiCalls/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "../../apiCalls/auditions";
-import { NextApiResponse } from "next";
+import { Audition } from "../../utils/types";
 
 const modalStyle = {
   position: "absolute" as "absolute",
@@ -24,7 +23,7 @@ const modalStyle = {
 
 export const Dashboard = () => {
   const { user } = useUser();
-  const [auditions, setAuditions] = useState([]);
+  const [auditions, setAuditions] = useState<Audition[]>([]);
 
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
@@ -43,10 +42,10 @@ export const Dashboard = () => {
         <a href={"/api/auth/logout"}>Logout</a>
 
         <pre>
-          <code>{JSON.stringify(AUDITIONS[0], null, 4)}</code>
+          <code>{JSON.stringify(auditions[0], null, 4)}</code>
         </pre>
         <Stack rowGap={1}>
-          {auditions.map((audition) => {
+          {auditions.map((audition: Audition) => {
             return (
               <SwipeableRow key={audition.id}>
                 <AuditionRow audition={audition} />
