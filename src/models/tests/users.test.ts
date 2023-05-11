@@ -78,7 +78,6 @@ describe("It Tests the Users Model", () => {
       },
     };
     const user = await Users.signUpOrSignIn({
-      id: 1,
       email: "test2@email.com",
       sid: "FakeSid",
     },

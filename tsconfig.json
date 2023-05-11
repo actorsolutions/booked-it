@@ -19,11 +19,9 @@
         "name": "next"
       }
     ],
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@utils/*": ["utils/*"],
-      "@controllers/*": ["controllers/*"],
-      "@models/*": ["models/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","./jest-setup.ts"],
