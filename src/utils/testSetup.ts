@@ -3,7 +3,7 @@ import { NextApiHandler } from "next";
 import { apiResolver } from "next/dist/server/api-utils/node";
 import request from "supertest";
 import { PrismaClient } from "@prisma/client";
-import { generatePrisma } from "../utils/prisma";
+import { generatePrisma } from "@/utils/prisma";
 
 interface User {
   name: string;

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Audition } from "../../models/Auditions";
+import { Audition } from "@/models/Auditions";
 import { getSession } from "@auth0/nextjs-auth0";
-import { prisma } from "../../utils/prisma";
+import { prisma } from "@/utils/prisma";
 
 /**
  * Gets all Auditions based on UserID and sends them
