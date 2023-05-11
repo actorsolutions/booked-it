@@ -1,7 +1,6 @@
 import { Card, Grid } from "@mui/material";
 import LensIcon from "@mui/icons-material/Lens";
-import { Audition } from "@/utils/types";
-import { Casting } from "./Dashboard/audition_data";
+import { Audition, Casting } from "@/types";
 
 interface AuditionRowProps {
   audition: Audition;

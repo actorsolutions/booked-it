@@ -7,7 +7,7 @@ import { AuditionRow } from "../AuditionRow";
 import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
-import { Audition } from "@/utils/types";
+import { Audition } from "@/types";
 
 const modalStyle = {
   position: "absolute" as "absolute",

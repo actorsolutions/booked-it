@@ -1,22 +1,5 @@
 import { PrismaClient, User } from "@prisma/client";
-
-/**
- * Defines the Database representation of a User, starting with
- * a form of the object for User creation where id is optional
- */
-interface createData {
-  id?: number;
-  email: string;
-  sid: string;
-}
-
-/**
- * Extends the interface for User creation to the more general
- * form of the UserData object where id is required
- */
-interface UserData extends createData {
-  id: number;
-}
+import { User as UserData } from "@/types";
 
 /**
  * Business logic for manipulating & transacting UserData
