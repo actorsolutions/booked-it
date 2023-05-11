@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import {getSession} from "@auth0/nextjs-auth0";
-import {prisma} from "@/utils/prisma";
-import {Users} from "@/models/Users";
+import {prisma} from "@utils/prisma";
+import {Users} from "@models/Users";
 
 /**
  * Gets User based on email and returns it
