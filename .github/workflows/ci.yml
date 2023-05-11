@@ -30,7 +30,7 @@ jobs:
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID}}
       AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET}}
       AUTH0_HOOK_SECRET: ${{ secrets.AUTH0_HOOK_SECRET}}
-    timeout-minutes: 7
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
         with:
