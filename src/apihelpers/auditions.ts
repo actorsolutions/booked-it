@@ -1,3 +1,5 @@
+import { auditionResponse } from "../utils/types";
+
 interface createData {
   id: number;
   userId: number;
@@ -12,13 +14,12 @@ interface createData {
 }
 
 // Get Auditions from server, gets userId from session in server
-export const getAuditions = async () => {
+export const getAuditions = async (): Promise<auditionResponse> => {
   const response = await fetch(`/api/auditions`, {
     method: "GET",
   });
   return await response.json();
 };
-
 
 export const createAudition = async (data: createData) => {
   return await fetch("/api/auditions", {

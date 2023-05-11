@@ -1,13 +1,13 @@
-import {PrismaClient, User} from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 
 /**
  * Defines the Database representation of a User, starting with
  * a form of the object for User creation where id is optional
  */
 interface createData {
-  id?: number,
-  email: string,
-  sid: string
+  id?: number;
+  email: string;
+  sid: string;
 }
 
 /**
@@ -28,11 +28,7 @@ export class Users {
 
   // eslint-disable-next-line no-unused-vars
   constructor(data: UserData) {
-    const {
-      id,
-      email,
-      sid
-    } = data;
+    const { id, email, sid } = data;
     this.id = id;
     this.email = email;
     this.sid = sid;
@@ -61,7 +57,10 @@ export class Users {
    * @param data - user data for query
    * @param db - instance of database being used
    */
-  static async signUpOrSignIn(data: UserData, db: PrismaClient["user"]): Promise<User> {
+  static async signUpOrSignIn(
+    data: { email: string; sid: string },
+    db: PrismaClient["user"]
+  ): Promise<User> {
     const alreadyAdded = await Users.findByEmail(data.email, db);
     if (!alreadyAdded) {
       return db.create({ data });
