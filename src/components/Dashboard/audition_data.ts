@@ -1,21 +1,4 @@
-export interface Casting {
-  name?: string;
-  company?: string;
-}
-
-export interface Audition {
-  id: number;
-  userId: number;
-  date: number;
-  casting?: Casting[];
-  project: string;
-  company: string;
-  notes: string;
-  type: string;
-  callBackDate?: number;
-  status: string;
-  archived: boolean;
-}
+import { Audition, audition_statuses, audition_types } from "@/types";
 
 export const AUDITIONS: Audition[] = [
   {
@@ -26,9 +9,10 @@ export const AUDITIONS: Audition[] = [
     casting: [],
     company: "Disney",
     notes: "really apprehensive about this one",
-    type: "Cinema",
-    status: "Audition",
+    type: "film" as audition_types,
+    status: "scheduled" as audition_statuses,
     archived: false,
+    createdAt: 0,
   },
   {
     id: 2,
@@ -38,9 +22,10 @@ export const AUDITIONS: Audition[] = [
     project: "Bounce",
     company: "Denardi Studios",
     notes: "Hilarious startup sitcom",
-    type: "Television",
-    status: "Callback",
+    type: "television" as audition_types,
+    status: "callback" as audition_statuses,
     archived: false,
+    createdAt: 0,
   },
   {
     id: 3,
@@ -50,9 +35,10 @@ export const AUDITIONS: Audition[] = [
     company: "Bar",
     casting: [],
     notes: "no idea",
-    type: "Unknown",
-    status: "Audition",
+    type: "student" as audition_types,
+    status: "auditioned" as audition_statuses,
     archived: false,
+    createdAt: 0,
   },
   {
     id: 4,
@@ -62,8 +48,9 @@ export const AUDITIONS: Audition[] = [
     project: "Mission Impossible 101",
     company: "Tommy Cruise",
     notes: "holy shit, another one?",
-    type: "Cinema",
-    status: "Callback",
+    type: "commercial" as audition_types,
+    status: "booked" as audition_statuses,
     archived: false,
+    createdAt: 0,
   },
 ].sort((a, b) => b.date - a.date);
