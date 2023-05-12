@@ -13,7 +13,6 @@
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev",
     "seed:test": "dotenv -e .env.test ts-node src/utils/seedDb.ts",
     "test": "DOTENV_CONFIG_PATH=./.env.test jest --setupFiles dotenv/config"
-
   },
   "type": "module",
   "dependencies": {
@@ -42,6 +41,7 @@
     "prettier": "^2.8.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
     "ts-jest": "^29.0.5",
     "typescript": "4.9.5"
   },
