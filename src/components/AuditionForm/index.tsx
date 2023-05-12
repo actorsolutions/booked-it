@@ -1,13 +1,13 @@
 import { FieldValues, Control } from "react-hook-form";
 import { Casting } from "@/types";
-
+export { AuditionForm } from "./AuditionForm";
 export interface AuditionFormData extends FieldValues {
   id?: number;
   date: number;
   project: string;
   company: string;
   callbackDate?: number;
-  casting: Casting;
+  casting?: Casting;
   notes: string;
   type: string;
   status: string;

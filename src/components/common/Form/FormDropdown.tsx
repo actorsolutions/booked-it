@@ -5,7 +5,13 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { AuditionFormData } from "../../AuditionForm/index";
-import TextField from "@mui/material/TextField";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+
+interface MenuItem {
+  value: string | number;
+  label: string;
+}
 interface Props<T extends FieldValues> {
   inputCypressTag: string;
   inputId: string;
@@ -13,10 +19,20 @@ interface Props<T extends FieldValues> {
   control: Control<T>;
   field: string;
   rules?: RegisterOptions;
+  labelId: string;
+  menuItems: MenuItem[];
 }
 
-export const FormInput = (props: Props<AuditionFormData>) => {
-  const { inputCypressTag, inputId, control, field, inputType } = props;
+export const FormDropdown = (props: Props<AuditionFormData>) => {
+  const {
+    inputCypressTag,
+    inputId,
+    control,
+    field,
+    inputType,
+    labelId,
+    menuItems,
+  } = props;
   return (
     <div>
       <Controller
@@ -25,12 +41,19 @@ export const FormInput = (props: Props<AuditionFormData>) => {
         rules={{ ...props.rules }}
         render={({ field: { onChange } }) => {
           return (
-            <TextField
+            <Select
               id={inputId}
               data-cy={inputCypressTag}
               onChange={onChange}
               type={inputType}
-            />
+              labelId={labelId}
+            >
+              {menuItems.map((item) => (
+                <MenuItem key={item.label} value={item.value}>
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Select>
           );
         }}
       />

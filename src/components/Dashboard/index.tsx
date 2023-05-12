@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { Stack, Box, IconButton, Modal, Typography } from "@mui/material";
+import { Stack, IconButton, Modal } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SwipeableRow } from "../SwipeableRow";
 import { AuditionRow } from "../AuditionRow";
@@ -9,7 +9,7 @@ import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
-
+import { AuditionForm } from "@/components/AuditionForm";
 const modalStyle = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -72,14 +72,7 @@ export const Dashboard = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={modalStyle}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a Modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Description in a Modal
-            </Typography>
-          </Box>
+          <AuditionForm />
         </Modal>
       </Container>
     );
