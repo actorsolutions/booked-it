@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { Stack, IconButton, Modal } from "@mui/material";
+import { Stack, Box, IconButton, Modal, Typography } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SwipeableRow } from "../SwipeableRow";
 import { AuditionRow } from "../AuditionRow";
@@ -72,7 +72,9 @@ export const Dashboard = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <AuditionForm />
+          <Box sx={modalStyle}>
+            <AuditionForm />
+          </Box>
         </Modal>
       </Container>
     );
