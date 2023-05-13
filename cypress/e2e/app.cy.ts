@@ -9,12 +9,8 @@ describe('Fire up', () => {
         cy.get(cyTag(CY_TAGS.LOG_IN_BUTTON)).should('be.visible');
         cy.get(cyTag(CY_TAGS.LOG_IN_BUTTON)).click()
     });
-    it('should login',() => {
-        cy.generateSession();
-        cy.visit('/');
-
-
-
+    it.only('should login',() => {
+        cy.generateSession()
     })
 
 })

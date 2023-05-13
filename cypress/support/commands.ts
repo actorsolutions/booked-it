@@ -42,11 +42,11 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
-            generateSession(): Chainable<void>;
+            generateSession(): Chainable<any>;
         }
     }
 }
-Cypress.Commands.add('generateSession',() => {
+Cypress.Commands.add('generateSession', () => {
     let sessionData = {
         user: {
             name: "Test User",
@@ -59,7 +59,17 @@ Cypress.Commands.add('generateSession',() => {
         idToken: "tokeeeens",
         token_type: "Bearer",
     };
-        cy.then(() => generateSessionCookie(sessionData, { secret: 'testsecret' })).then((data) => {
-            cy.setCookie("appSession", data);
-        });
+    generateSessionCookie(sessionData, { secret: 'testsecret' }).then((data) => {
+        // cy.setCookie("appSession", data);
+        cy.log(data);
+    })
+
+    return cy.visit('/')
+
+
+        // cy.then(() => generateSessionCookie(sessionData, { secret: 'testsecret' })).then((data) => {
+        //     // cy.setCookie("appSession", data);
+        //     cy.log(data);
+        // });
+
 })
