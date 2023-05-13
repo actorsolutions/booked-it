@@ -35,3 +35,31 @@
 //     }
 //   }
 // }
+
+import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
+
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace Cypress {
+        interface Chainable {
+            generateSession(): Chainable<void>;
+        }
+    }
+}
+Cypress.Commands.add('generateSession',() => {
+    let sessionData = {
+        user: {
+            name: "Test User",
+            sid: "0000000",
+            email: "test@test.com",
+            id: "0",
+        },
+        accessToken: "somanytokens",
+        accessTokenScope: "openid profile email",
+        idToken: "tokeeeens",
+        token_type: "Bearer",
+    };
+        cy.then(() => generateSessionCookie(sessionData, { secret: 'testsecret' })).then((data) => {
+            cy.setCookie("appSession", data);
+        });
+})
