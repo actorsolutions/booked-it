@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Login } from "../Login";
 import { Container } from "@mui/system";
 import { Stack, Box, IconButton, Modal, Typography } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
@@ -85,5 +86,5 @@ export const Dashboard = () => {
       </Container>
     );
   }
-  return <a href={"api/auth/login"} data-cy={ CY_TAGS.LOG_IN_BUTTON }>Login</a>;
+  return <Login data-cy={ CY_TAGS.LOG_IN_BUTTON } />;
 };
