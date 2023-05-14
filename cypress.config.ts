@@ -2,9 +2,12 @@ import * as dotenv from "dotenv";
 import { defineConfig } from "cypress";
 import webpackPreprocessor from "@cypress/webpack-preprocessor";
 import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
-dotenv.config();
 
+dotenv.config({ path: ".env.test" });
 export default defineConfig({
+  env: {
+    ...process.env,
+  },
   e2e: {
     setupNodeEvents(on, config) {
       on(

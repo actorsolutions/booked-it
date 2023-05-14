@@ -55,11 +55,9 @@ export const registerOrSignInUser = async (
   db = prisma.user
 ) => {
   const session = await getSession(req, res);
-  console.log(session);
   if (!session) {
     res.status(500).send({ message: "Please sign in" });
   } else {
-    console.log(session);
     const { email, sid } = session.user;
     const registeredUser = await Users.signUpOrSignIn({ email, sid }, db);
     await updateSession(req, res, {
