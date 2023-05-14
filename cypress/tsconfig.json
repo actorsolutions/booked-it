@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "types": ["cypress", "node"],
+    "allowJs": true,
+    "outDir": "../../dist/out-tsc",
+    "sourceMap": false,
+    "target": "es2019",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "baseUrl": "../.",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "exclude": [
+    "../src/**/*.test.ts"
+  ],
+  "include": ["../src/**/*.ts", "../src/**/*.js", "../cypress.config.ts"],
+
+}

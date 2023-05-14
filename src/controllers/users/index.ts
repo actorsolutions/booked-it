@@ -1,7 +1,7 @@
-import {NextApiRequest, NextApiResponse} from "next";
-import {getSession, updateSession} from "@auth0/nextjs-auth0";
-import {prisma} from "@/utils/prisma";
-import {Users} from "@/models/Users";
+import { NextApiRequest, NextApiResponse } from "next";
+import { getSession, updateSession } from "@auth0/nextjs-auth0";
+import { prisma } from "@/utils/prisma";
+import { Users } from "@/models/Users";
 
 /**
  * Gets User based on email and returns it
@@ -55,9 +55,11 @@ export const registerOrSignInUser = async (
   db = prisma.user
 ) => {
   const session = await getSession(req, res);
+  console.log(session);
   if (!session) {
     res.status(500).send({ message: "Please sign in" });
   } else {
+    console.log(session);
     const { email, sid } = session.user;
     const registeredUser = await Users.signUpOrSignIn({ email, sid }, db);
     await updateSession(req, res, {
