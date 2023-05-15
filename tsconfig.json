@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["cypress", "node"],
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -30,5 +31,4 @@
     "esm": true,
     "experimentalSpecifierResolution": "node"
   },
-  "types": ["cypress", "node"]
 }

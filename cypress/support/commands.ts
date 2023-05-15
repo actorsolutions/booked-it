@@ -39,37 +39,26 @@
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
 declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace Cypress {
-        interface Chainable {
-            generateSession(): Chainable<any>;
-        }
+  // eslint-disable-next-line no-unused-vars
+  namespace Cypress {
+    interface Chainable {
+      generateSession(): Promise<string>;
     }
+  }
 }
-Cypress.Commands.add('generateSession', () => {
-    let sessionData = {
-        user: {
-            name: "Test User",
-            sid: "0000000",
-            email: "test@test.com",
-            id: "0",
-        },
-        accessToken: "somanytokens",
-        accessTokenScope: "openid profile email",
-        idToken: "tokeeeens",
-        token_type: "Bearer",
-    };
-    generateSessionCookie(sessionData, { secret: 'testsecret' }).then((data) => {
-        // cy.setCookie("appSession", data);
-        cy.log(data);
-    })
 
-    return cy.visit('/')
-
-
-        // cy.then(() => generateSessionCookie(sessionData, { secret: 'testsecret' })).then((data) => {
-        //     // cy.setCookie("appSession", data);
-        //     cy.log(data);
-        // });
-
-})
+Cypress.Commands.add("generateSession", () => {
+  let sessionData = {
+    user: {
+      name: "Test User",
+      sid: "0000000",
+      email: "test.user@email.com",
+      id: "0",
+    },
+  };
+  return generateSessionCookie(sessionData, {
+    secret: `${Cypress.env("AUTH0_SECRET")}`,
+  }).then((data) => {
+    return data;
+  });
+});
