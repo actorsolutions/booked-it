@@ -43,14 +43,17 @@ export const FormDropdown = (props: Props<AuditionFormData>) => {
         rules={{ ...props.rules }}
         render={({ field: { onChange } }) => {
           return (
-            <FormControl sx={{ m: 1, minWidth: 200 }}>
+            <FormControl>
               <Select
                 id={inputId}
                 data-cy={inputCypressTag}
                 onChange={onChange}
                 type={inputType}
                 labelId={labelId}
-                autoWidth={true}
+                sx={{
+                  width: 200,
+                  height: 50,
+                }}
               >
                 {menuItems.map((item) => (
                   <MenuItem key={item.label} value={item.value}>

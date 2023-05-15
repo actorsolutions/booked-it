@@ -16,9 +16,9 @@ import {
   IconButton,
   Modal,
   Typography,
-  Grid,
   Paper,
 } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
 const modalStyle = {
   position: "absolute" as "absolute",
@@ -55,15 +55,21 @@ export const AuditionForm = () => {
   });
 
   return (
-    <Paper>
-      <Form>
+    <Form>
+      <Grid item xs={12} md={6}>
         <DateInput control={control} />
-        <NotesInput control={control} />
+      </Grid>
+      <Grid item xs={12} md={6}>
         <ProjectInput control={control} />
+        <CompanyInput control={control} />
+      </Grid>
+      <Grid item xs={12} md={6}>
         <StatusDropdown control={control} />
         <TypeDropdown control={control} />
-        <CompanyInput control={control} />
-      </Form>
-    </Paper>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <NotesInput control={control} />
+      </Grid>
+    </Form>
   );
 };

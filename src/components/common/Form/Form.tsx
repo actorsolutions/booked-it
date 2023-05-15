@@ -8,7 +8,7 @@ interface Props {
 export const Form = (props: Props) => {
   const { children } = props;
   return (
-    <Grid container spacing={2} direction="column" alignItems="center">
+    <Grid container direction="row" justifyContent="center" alignItems="center">
       {children}
     </Grid>
   );
