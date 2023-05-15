@@ -6,6 +6,7 @@ import {
 } from "react-hook-form";
 import { AuditionFormData } from "../../AuditionForm/index";
 import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
 interface Props<T extends FieldValues> {
   inputCypressTag: string;
   inputId: string;
@@ -25,12 +26,14 @@ export const FormInput = (props: Props<AuditionFormData>) => {
         rules={{ ...props.rules }}
         render={({ field: { onChange } }) => {
           return (
-            <TextField
-              id={inputId}
-              data-cy={inputCypressTag}
-              onChange={onChange}
-              type={inputType}
-            />
+            <FormControl>
+              <TextField
+                id={inputId}
+                data-cy={inputCypressTag}
+                onChange={onChange}
+                type={inputType}
+              />
+            </FormControl>
           );
         }}
       />

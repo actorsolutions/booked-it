@@ -9,7 +9,28 @@ import {
 import { useForm } from "react-hook-form";
 import { AuditionFormData } from "../AuditionForm";
 import { Form } from "@/components/common/Form";
+import { Container } from "@mui/system";
+import {
+  Stack,
+  Box,
+  IconButton,
+  Modal,
+  Typography,
+  Grid,
+  Paper,
+} from "@mui/material";
 
+const modalStyle = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "90%",
+  bgcolor: "background.paper",
+  border: "2px solid black",
+  boxShadow: 24,
+  p: 4,
+};
 export const AuditionForm = () => {
   const {
     register,
@@ -34,13 +55,15 @@ export const AuditionForm = () => {
   });
 
   return (
-    <Form>
-      <DateInput control={control} />
-      <NotesInput control={control} />
-      <ProjectInput control={control} />
-      <StatusDropdown control={control} />
-      <TypeDropdown control={control} />
-      <CompanyInput control={control} />
-    </Form>
+    <Paper>
+      <Form>
+        <DateInput control={control} />
+        <NotesInput control={control} />
+        <ProjectInput control={control} />
+        <StatusDropdown control={control} />
+        <TypeDropdown control={control} />
+        <CompanyInput control={control} />
+      </Form>
+    </Paper>
   );
 };

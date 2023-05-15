@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import Box from "@mui/material/Box";
+import { Grid } from "@mui/material";
 interface Props {
   children: ReactNode;
 }
@@ -7,13 +8,8 @@ interface Props {
 export const Form = (props: Props) => {
   const { children } = props;
   return (
-    <Box
-      component="form"
-      sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
-      }}
-    >
+    <Grid container spacing={2} direction="column" alignItems="center">
       {children}
-    </Box>
+    </Grid>
   );
 };

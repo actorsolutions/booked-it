@@ -7,6 +7,8 @@ import {
 import { AuditionFormData } from "../../AuditionForm/index";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
 
 interface MenuItem {
   value: string | number;
@@ -41,19 +43,22 @@ export const FormDropdown = (props: Props<AuditionFormData>) => {
         rules={{ ...props.rules }}
         render={({ field: { onChange } }) => {
           return (
-            <Select
-              id={inputId}
-              data-cy={inputCypressTag}
-              onChange={onChange}
-              type={inputType}
-              labelId={labelId}
-            >
-              {menuItems.map((item) => (
-                <MenuItem key={item.label} value={item.value}>
-                  {item.label}
-                </MenuItem>
-              ))}
-            </Select>
+            <FormControl sx={{ m: 1, minWidth: 200 }}>
+              <Select
+                id={inputId}
+                data-cy={inputCypressTag}
+                onChange={onChange}
+                type={inputType}
+                labelId={labelId}
+                autoWidth={true}
+              >
+                {menuItems.map((item) => (
+                  <MenuItem key={item.label} value={item.value}>
+                    {item.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           );
         }}
       />
