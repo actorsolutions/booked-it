@@ -1,8 +1,13 @@
-import { FormGroupRow, FormLabel, FormInput } from "../../common/Form";
+import {
+  FormGroupRow,
+  FormLabel,
+  FormInput,
+  FormTextArea,
+} from "../../common/Form";
 import { FormProps, AuditionFormData } from "../index";
 import { Container } from "@mui/material";
 
-export const NotesInput = (props: FormProps<AuditionFormData>) => {
+export const NotesTextArea = (props: FormProps<AuditionFormData>) => {
   const { control } = props;
 
   return (
@@ -15,7 +20,7 @@ export const NotesInput = (props: FormProps<AuditionFormData>) => {
         />
       </Container>
       <Container>
-        <FormInput
+        <FormTextArea
           inputCypressTag="audition-company-notes"
           inputId="auditionsNotesInput"
           control={control}

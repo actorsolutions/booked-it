@@ -1,6 +1,6 @@
 import {
   DateInput,
-  NotesInput,
+  NotesTextArea,
   ProjectInput,
   StatusDropdown,
   TypeDropdown,
@@ -68,7 +68,7 @@ export const AuditionForm = () => {
         <TypeDropdown control={control} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <NotesInput control={control} />
+        <NotesTextArea control={control} />
       </Grid>
     </Form>
   );
