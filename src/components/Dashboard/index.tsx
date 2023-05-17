@@ -10,6 +10,8 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
+import {CY_TAGS} from "@/types/cypress_tags";
+
 const modalStyle = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -80,5 +82,5 @@ export const Dashboard = () => {
       </Container>
     );
   }
-  return <Login />;
+  return <Login data-cy={ CY_TAGS.LOG_IN_BUTTON } />;
 };
