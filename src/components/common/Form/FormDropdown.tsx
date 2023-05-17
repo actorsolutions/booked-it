@@ -51,7 +51,7 @@ export const FormDropdown = (props: Props<AuditionFormData>) => {
                 type={inputType}
                 labelId={labelId}
                 sx={{
-                  width: 200,
+                  width: 195,
                   height: 50,
                 }}
               >

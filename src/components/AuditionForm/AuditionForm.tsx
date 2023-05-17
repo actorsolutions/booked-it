@@ -9,16 +9,10 @@ import {
 import { useForm } from "react-hook-form";
 import { AuditionFormData } from "../AuditionForm";
 import { Form } from "@/components/common/Form";
-import { Container } from "@mui/system";
-import {
-  Stack,
-  Box,
-  IconButton,
-  Modal,
-  Typography,
-  Paper,
-} from "@mui/material";
 import Grid from "@mui/material/Grid";
+import { Button, Container, Divider } from "@mui/material";
+import React from "react";
+import Typography from "@mui/material/Typography";
 
 const modalStyle = {
   position: "absolute" as "absolute",
@@ -36,9 +30,7 @@ export const AuditionForm = () => {
     register,
     unregister,
     getValues,
-    trigger,
     formState: { errors },
-    clearErrors,
     control,
   } = useForm<AuditionFormData>({
     defaultValues: {
@@ -54,22 +46,36 @@ export const AuditionForm = () => {
     },
   });
 
+  const handleCreate = async () => {
+    console.log(getValues());
+  };
   return (
-    <Form>
-      <Grid item xs={12} md={6}>
-        <DateInput control={control} />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <ProjectInput control={control} />
-        <CompanyInput control={control} />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <StatusDropdown control={control} />
-        <TypeDropdown control={control} />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <NotesTextArea control={control} />
-      </Grid>
-    </Form>
+    <Container maxWidth="sm">
+      <Typography variant="h5" component="h5">
+        Add Audition
+      </Typography>
+      <Divider />
+      <Form>
+        <Grid item xs={12} md={6}>
+          <DateInput control={control} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <ProjectInput control={control} />
+          <CompanyInput control={control} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <StatusDropdown control={control} />
+          <TypeDropdown control={control} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <NotesTextArea control={control} />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Button type="submit" fullWidth variant="contained">
+            Submit
+          </Button>
+        </Grid>
+      </Form>
+    </Container>
   );
 };

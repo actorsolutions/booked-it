@@ -19,6 +19,7 @@ const modalStyle = {
   bgcolor: "background.paper",
   border: "2px solid black",
   boxShadow: 24,
+  overflow: "scroll",
   p: 4,
 };
 
