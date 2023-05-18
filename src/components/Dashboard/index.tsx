@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { Stack, Box, IconButton, Modal, Typography } from "@mui/material";
+import { Stack, Box, IconButton, Modal } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SwipeableRow } from "../SwipeableRow";
 import { AuditionRow } from "../AuditionRow";
@@ -10,8 +10,9 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
-import {CY_TAGS} from "@/types/cypress_tags";
+import CY_TAGS from "@/types/cypress_tags";
 
+const { LANDING_PAGE } = CY_TAGS;
 const modalStyle = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -82,5 +83,5 @@ export const Dashboard = () => {
       </Container>
     );
   }
-  return <Login data-cy={ CY_TAGS.LOG_IN_BUTTON } />;
+  return <Login data-cy={LANDING_PAGE.BUTTONS.LOG_IN} />;
 };

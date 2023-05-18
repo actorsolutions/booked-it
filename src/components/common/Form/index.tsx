@@ -4,3 +4,4 @@ export { FormLabel } from "./FormLabel";
 export { FormInput } from "./FormInput";
 export { FormDropdown } from "./FormDropdown";
 export { FormTextArea } from "./FormTextArea";
+export { FormDatePicker } from "./FormDatePicker";

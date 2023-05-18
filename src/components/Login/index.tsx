@@ -2,7 +2,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Button, Grid, Card } from "@mui/material";
-import { CY_TAGS } from "@/types/cypress_tags";
+import CY_TAGS from "@/types/cypress_tags";
 
 export const Login = () => {
   return (
@@ -32,7 +32,7 @@ export const Login = () => {
               fullWidth
               variant="contained"
               href={"api/auth/login"}
-              data-cy={CY_TAGS.LOG_IN_BUTTON}
+              data-cy={CY_TAGS.LANDING_PAGE.BUTTONS.LOG_IN}
             >
               Login or Sign Up
             </Button>

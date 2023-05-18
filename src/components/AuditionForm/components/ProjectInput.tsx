@@ -16,7 +16,7 @@ export const ProjectInput = (props: FormProps<AuditionFormData>) => {
       </Container>
       <Container>
         <FormInput
-          inputCypressTag="audition-project-input"
+          cyTag="audition-project-input"
           inputId="auditionProjectInput"
           control={control}
           field="project"

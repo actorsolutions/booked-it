@@ -5,19 +5,19 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { AuditionFormData } from "../../AuditionForm/index";
-import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
+import React from "react";
+import { DatePicker } from "@mui/x-date-pickers";
 interface Props<T extends FieldValues> {
   cyTag: string;
   inputId: string;
-  inputType?: string;
   control: Control<T>;
   field: string;
   rules?: RegisterOptions;
 }
 
-export const FormInput = (props: Props<AuditionFormData>) => {
-  const { cyTag, inputId, control, field, inputType } = props;
+export const FormDatePicker = (props: Props<AuditionFormData>) => {
+  const { cyTag, control, field } = props;
   return (
     <div>
       <Controller
@@ -25,13 +25,16 @@ export const FormInput = (props: Props<AuditionFormData>) => {
         control={control}
         rules={{ ...props.rules }}
         render={({ field: { onChange } }) => {
+          // @ts-ignore
           return (
             <FormControl>
-              <TextField
-                id={inputId}
+              <DatePicker
+                label={"Audition Date"}
                 data-cy={cyTag}
-                onChange={onChange}
-                type={inputType}
+                onChange={(event: any) => {
+                  const epochDate = new Date(event.$d).getTime() / 1000;
+                  onChange(epochDate);
+                }}
               />
             </FormControl>
           );

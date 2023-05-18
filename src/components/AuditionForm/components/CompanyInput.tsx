@@ -16,7 +16,7 @@ export const CompanyInput = (props: FormProps<AuditionFormData>) => {
       </Container>
       <Container>
         <FormInput
-          inputCypressTag="audition-company-input"
+          cyTag="audition-company-input"
           inputId="auditionCompanyInput"
           control={control}
           field="company"

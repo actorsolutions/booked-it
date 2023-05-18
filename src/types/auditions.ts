@@ -21,8 +21,7 @@ export interface Audition {
 }
 
 export interface CreateAuditionData {
-  id: number;
-  userId: number;
+  id?: number;
   date: number;
   project: string;
   company: string;

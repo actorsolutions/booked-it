@@ -6,13 +6,11 @@ export const StatusDropdown = (props: FormProps<AuditionFormData>) => {
   const { control } = props;
 
   const statusItems = [
-    { value: "television", label: "Television" },
-    { value: "film", label: "Film" },
-    { value: "student", label: "Student" },
-    { value: "theater", label: "Theater" },
-    { value: "industrial", label: "Industrial" },
-    { value: "commercial", label: "Commercial" },
-    { value: "newMedia", label: "New Media" },
+    { value: "submitted", label: "Submitted" },
+    { value: "scheduled", label: "Scheduled" },
+    { value: "auditioned", label: "Auditioned" },
+    { value: "callback", label: "Callback" },
+    { value: "booked", label: "Booked" },
   ];
   return (
     <FormGroupRow>

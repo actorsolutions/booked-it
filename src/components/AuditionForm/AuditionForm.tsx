@@ -1,5 +1,5 @@
 import {
-  DateInput,
+  DatePicker,
   NotesTextArea,
   ProjectInput,
   StatusDropdown,
@@ -13,28 +13,12 @@ import Grid from "@mui/material/Grid";
 import { Button, Container, Divider } from "@mui/material";
 import React from "react";
 import Typography from "@mui/material/Typography";
+import { createAudition } from "@/apihelpers/auditions";
 
-const modalStyle = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "90%",
-  bgcolor: "background.paper",
-  border: "2px solid black",
-  boxShadow: 24,
-  p: 4,
-};
 export const AuditionForm = () => {
-  const {
-    register,
-    unregister,
-    getValues,
-    formState: { errors },
-    control,
-  } = useForm<AuditionFormData>({
+  const { getValues, control } = useForm<AuditionFormData>({
     defaultValues: {
-      date: Date.now(),
+      date: undefined,
       project: "",
       company: "",
       callbackDate: undefined,
@@ -48,6 +32,8 @@ export const AuditionForm = () => {
 
   const handleCreate = async () => {
     console.log(getValues());
+    const createdAudition = await createAudition(getValues());
+    console.log(createdAudition);
   };
   return (
     <Container maxWidth="sm">
@@ -57,7 +43,7 @@ export const AuditionForm = () => {
       <Divider />
       <Form>
         <Grid item xs={12} md={6}>
-          <DateInput control={control} />
+          <DatePicker control={control} />
         </Grid>
         <Grid item xs={12} md={6}>
           <ProjectInput control={control} />
@@ -71,7 +57,12 @@ export const AuditionForm = () => {
           <NotesTextArea control={control} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Button type="submit" fullWidth variant="contained">
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            onClick={handleCreate}
+          >
             Submit
           </Button>
         </Grid>

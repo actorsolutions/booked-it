@@ -6,11 +6,13 @@ export const TypeDropdown = (props: FormProps<AuditionFormData>) => {
   const { control } = props;
 
   const typeItems = [
-    { value: "submitted", label: "Submitted" },
-    { value: "scheduled", label: "Scheduled" },
-    { value: "auditioned", label: "Auditioned" },
-    { value: "callback", label: "Callback" },
-    { value: "booked", label: "Booked" },
+    { value: "television", label: "Television" },
+    { value: "film", label: "Film" },
+    { value: "student", label: "Student" },
+    { value: "theater", label: "Theater" },
+    { value: "industrial", label: "Industrial" },
+    { value: "commercial", label: "Commercial" },
+    { value: "newMedia", label: "New Media" },
   ];
   return (
     <FormGroupRow>
@@ -26,7 +28,7 @@ export const TypeDropdown = (props: FormProps<AuditionFormData>) => {
           inputCypressTag="audition-type-dropdown"
           inputId="audition-type-dropdown"
           control={control}
-          field="types"
+          field="type"
           labelId="typesDropdown"
           menuItems={typeItems}
         />
