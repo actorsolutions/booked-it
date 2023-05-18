@@ -49,3 +49,56 @@ jobs:
 
       - run: yarn jest
 
+  Cypress:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/booked-it
+      AUTH0_SECRET: ${{ secrets.AUTH0_SECRET }}
+      AUTH0_BASE_URL: ${{ secrets.AUTH0_BASE_URL}}
+      AUTH0_ISSUER_BASE_URL: ${{ secrets.AUTH0_ISSUER_BASE_URL}}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID}}
+      AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET}}
+      AUTH0_HOOK_SECRET: ${{ secrets.AUTH0_HOOK_SECRET}}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Cache Dependencies
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+          node-version: 18
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn migrate
+      - run: yarn generate
+
+      - name: Install and run cypress
+        uses: cypress-io/github-action@v5
+        with:
+          start: yarn start
+          timeout-minutes: 7
+        env:
+         CYPRESS_AUTH0_SECRET: ${{ secrets.AUTH0_SECRET }}
+         CYPRESS_AUTH0_BASE_URL: ${{ secrets.AUTH0_BASE_URL}}
+         CYPRESS_AUTH0_ISSUER_BASE_URL: ${{ secrets.AUTH0_ISSUER_BASE_URL}}
+         CYPRESS_AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID}}
+         CYPRESS_AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET}}
+         CYPRESS_AUTH0_HOOK_SECRET: ${{ secrets.AUTH0_HOOK_SECRET}}
+

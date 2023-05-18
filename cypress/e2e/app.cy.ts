@@ -25,7 +25,7 @@ describe("Fire up", () => {
         id: 3,
       },
     });
-    cy.generateSession().then((data) => {
+    cy.generateSession().then((data: string) => {
       cy.setCookie("appSession", data);
     });
 
