@@ -22,7 +22,7 @@ const TEST_AUDITION = {
 
 };
 
-describe("Audition [id] integration tests", () => {
+describe("Audition [id] integration __tests__", () => {
   let test: IntegrationTestParams;
 
   beforeEach(async () => {

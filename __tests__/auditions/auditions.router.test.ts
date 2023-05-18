@@ -8,7 +8,7 @@ import {
 } from "@/utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 import {audition_types,audition_statuses} from "@prisma/client"
-describe("Auditions Router integration tests", () => {
+describe("Auditions Router integration __tests__", () => {
   let test: IntegrationTestParams;
 
   beforeEach(async () => {

@@ -8,7 +8,7 @@ import {
 } from "@/utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
-describe('Registration router integration tests', () => {
+describe('Registration router integration __tests__', () => {
     let test: IntegrationTestParams;
     beforeEach(async () => {
         test = await setup(['user']);

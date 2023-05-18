@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { RouteHandler } from "../index";
 
-describe("RouteHandler tests", () => {
+describe("RouteHandler __tests__", () => {
   it("Should send an error when trying to send a undefined method", async () => {
     const fakeReq = {
       method: "POST",
