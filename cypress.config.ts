@@ -40,6 +40,15 @@ export default defineConfig({
           },
         })
       );
+      on('task',{
+        async 'db:seed'(){
+          await cypressSanitize(["audition", "user"]);
+          const userSeed = await prisma.user.create({ data: USER_DATA });
+          // @ts-ignore
+          const auditionSeed = await prisma.audition.create({ data: AUDITION_DATA });
+          return { userSeed, auditionSeed }
+        }
+      })
       config.env = {
         ...process.env,
         ...config.env,
