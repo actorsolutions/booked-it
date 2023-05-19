@@ -33,6 +33,8 @@ yarn dev
 pnpm dev
 ```
 
+### Testing
+FYI, integration tests are located within the `__tests__` directory to circumvent Next.js automated routing. Other unit tests are located in the directory that corresponds to what they are testing.
 
 
 NextJS default readme pass this line

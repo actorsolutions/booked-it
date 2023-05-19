@@ -2,6 +2,9 @@ import * as dotenv from "dotenv";
 import { defineConfig } from "cypress";
 import webpackPreprocessor from "@cypress/webpack-preprocessor";
 import NodePolyfillPlugin from "node-polyfill-webpack-plugin";
+import {prisma} from "./src/utils/prisma";
+import {cypressSanitize} from "./cypress/support";
+import {AUDITION_DATA, USER_DATA} from "./cypress/support/seedData";
 
 dotenv.config({ path: ".env.test" });
 export default defineConfig({
@@ -11,8 +14,8 @@ export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       on(
-        "file:preprocessor",
-        webpackPreprocessor({
+          "file:preprocessor",
+          webpackPreprocessor({
           webpackOptions: {
             resolve: {
               extensions: [".tsx", ".jsx", ".ts", ".js"],

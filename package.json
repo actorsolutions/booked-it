@@ -64,5 +64,9 @@
     "supertest": "^6.3.3",
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1"
+  },
+  "browser": {
+    "tls": false,
+    "net": false
   }
 }

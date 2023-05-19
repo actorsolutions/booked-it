@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  Jest:
     runs-on: ubuntu-latest
     services:
       postgres:

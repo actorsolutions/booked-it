@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 import { CY_TAGS } from "../../src/types/cypress_tags";
-
 export const cyTag = (str: string) => `[data-cy='${str}']`;
 
 describe("Fire up", () => {
@@ -10,6 +9,7 @@ describe("Fire up", () => {
     cy.get(cyTag(CY_TAGS.LOG_IN_BUTTON)).click();
   });
   it("should login", () => {
+    cy.task("db:seed");
     cy.intercept("GET", "/api/auth/me", {
       statusCode: 200,
       body: {

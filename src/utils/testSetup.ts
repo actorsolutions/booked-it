@@ -53,7 +53,7 @@ export const testClient = async (handler: NextApiHandler, query = {}) => {
 /**
  * Removes data from specified DB tables
  */
-const sanitizeDB = async (
+export const sanitizeDB = async (
   modelNames: string[],
   prisma_cli?: PrismaClient | undefined
 ) => {
