@@ -5,7 +5,7 @@ import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
 
 
 let finalStatusCode: any, finalBody: any;
-describe('Users controller __tests__', () => {
+describe('Users controller tests', () => {
     it('should return a user by email', async () => {
         const user = {
             id: 0,
