@@ -16,14 +16,14 @@ export const StatusDropdown = (props: FormProps<AuditionFormData>) => {
     <FormGroupRow>
       <Container>
         <FormLabel
-          labelCypressTag="audition-status-label"
+          cyTag="audition-status-label"
           labelText="Audition Status"
           htmlFor="statusDropdown"
         />
       </Container>
       <Container>
         <FormDropdown
-          inputCypressTag="audition-status-dropdown"
+          cyTag="audition-status-dropdown"
           inputId="audition-status-down"
           control={control}
           field="status"

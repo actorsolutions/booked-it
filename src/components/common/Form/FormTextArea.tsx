@@ -3,21 +3,21 @@ import {
   Controller,
   RegisterOptions,
   FieldValues,
+  Path,
 } from "react-hook-form";
-import { AuditionFormData } from "../../AuditionForm/index";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import FormControl from "@mui/material/FormControl";
 interface Props<T extends FieldValues> {
-  inputCypressTag: string;
+  cyTag: string;
   inputId: string;
   inputType?: string;
   control: Control<T>;
-  field: string;
+  field: Path<T>;
   rules?: RegisterOptions;
 }
 
-export const FormTextArea = (props: Props<AuditionFormData>) => {
-  const { inputCypressTag, inputId, control, field, inputType } = props;
+export const FormTextArea = <T extends FieldValues>(props: Props<T>) => {
+  const { cyTag, inputId, control, field } = props;
   return (
     <div>
       <Controller
@@ -29,7 +29,7 @@ export const FormTextArea = (props: Props<AuditionFormData>) => {
             <FormControl>
               <TextareaAutosize
                 id={inputId}
-                data-cy={inputCypressTag}
+                data-cy={cyTag}
                 onChange={onChange}
                 minRows={3}
               />

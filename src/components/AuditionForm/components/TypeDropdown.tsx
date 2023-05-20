@@ -18,14 +18,14 @@ export const TypeDropdown = (props: FormProps<AuditionFormData>) => {
     <FormGroupRow>
       <Container>
         <FormLabel
-          labelCypressTag="audition-project-label"
+          cyTag="audition-project-label"
           labelText="Audition Project"
           htmlFor="projectInput"
         />
       </Container>
       <Container>
         <FormDropdown
-          inputCypressTag="audition-type-dropdown"
+          cyTag="audition-type-dropdown"
           inputId="audition-type-dropdown"
           control={control}
           field="type"

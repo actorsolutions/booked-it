@@ -9,7 +9,7 @@ export const CompanyInput = (props: FormProps<AuditionFormData>) => {
     <FormGroupRow>
       <Container>
         <FormLabel
-          labelCypressTag="audition-company-label"
+          cyTag="audition-company-label"
           labelText="Audition Company"
           htmlFor="companyInput"
         />

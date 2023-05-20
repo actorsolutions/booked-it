@@ -5,36 +5,28 @@ import {
   FieldValues,
 } from "react-hook-form";
 import { AuditionFormData } from "../../AuditionForm/index";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 
-interface MenuItem {
+interface Item {
   value: string | number;
   label: string;
 }
 interface Props<T extends FieldValues> {
-  inputCypressTag: string;
+  cyTag: string;
   inputId: string;
   inputType?: string;
   control: Control<T>;
   field: string;
   rules?: RegisterOptions;
   labelId: string;
-  menuItems: MenuItem[];
+  menuItems: Item[];
 }
 
 export const FormDropdown = (props: Props<AuditionFormData>) => {
-  const {
-    inputCypressTag,
-    inputId,
-    control,
-    field,
-    inputType,
-    labelId,
-    menuItems,
-  } = props;
+  const { cyTag, inputId, control, field, inputType, labelId, menuItems } =
+    props;
   return (
     <div>
       <Controller
@@ -46,10 +38,12 @@ export const FormDropdown = (props: Props<AuditionFormData>) => {
             <FormControl>
               <Select
                 id={inputId}
-                data-cy={inputCypressTag}
-                onChange={onChange}
+                data-cy={cyTag}
                 type={inputType}
                 labelId={labelId}
+                onChange={(event: any) => {
+                  onChange(event.target.value);
+                }}
                 sx={{
                   width: 195,
                   height: 50,

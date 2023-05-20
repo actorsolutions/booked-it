@@ -3,8 +3,8 @@ import {
   Controller,
   RegisterOptions,
   FieldValues,
+  Path,
 } from "react-hook-form";
-import { AuditionFormData } from "../../AuditionForm/index";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 interface Props<T extends FieldValues> {
@@ -12,11 +12,11 @@ interface Props<T extends FieldValues> {
   inputId: string;
   inputType?: string;
   control: Control<T>;
-  field: string;
+  field: Path<T>;
   rules?: RegisterOptions;
 }
 
-export const FormInput = (props: Props<AuditionFormData>) => {
+export const FormInput = <T extends FieldValues>(props: Props<T>) => {
   const { cyTag, inputId, control, field, inputType } = props;
   return (
     <div>

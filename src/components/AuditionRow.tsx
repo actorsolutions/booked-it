@@ -28,14 +28,14 @@ export const AuditionRow = ({ audition }: AuditionRowProps) => {
           <LensIcon color={statusColor(audition.status)} fontSize="large" />
         </Grid>
         <Grid item xs={7}>
-          <div> {audition.project} </div>
+          <div> Project: {audition.project} </div>
         </Grid>
         <Grid item md={3}>
           <div>{casting.length > 0 ? casting[0].name : undefined}</div>
         </Grid>
         <Grid item xs={2}>
           <div style={{ justifyContent: "flex-end" }}>
-            {new Date(audition.date).toLocaleDateString("en", {
+            {new Date(audition.date * 1000).toLocaleDateString("en", {
               dateStyle: "short",
             })}
           </div>

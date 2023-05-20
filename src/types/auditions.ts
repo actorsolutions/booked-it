@@ -34,5 +34,6 @@ export interface CreateAuditionData {
 
 export interface Casting {
   name?: string;
+  role?: string;
   company?: string;
 }

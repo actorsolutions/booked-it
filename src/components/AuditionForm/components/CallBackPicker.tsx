@@ -2,24 +2,24 @@ import { FormGroupRow, FormLabel, FormDatePicker } from "../../common/Form";
 import { FormProps, AuditionFormData } from "../index";
 import { Container } from "@mui/material";
 
-export const DatePicker = (props: FormProps<AuditionFormData>) => {
+export const CallbackPicker = (props: FormProps<AuditionFormData>) => {
   const { control } = props;
 
   return (
     <FormGroupRow>
       <Container>
         <FormLabel
-          cyTag="audition-date-label"
-          labelText="Audition Date"
-          htmlFor="dateInput"
+          cyTag="audition-callback-label"
+          labelText="Callback Date"
+          htmlFor="auditionCallbackDate"
         />
       </Container>
       <Container>
         <FormDatePicker
-          cyTag="audition-date-input"
-          inputId="auditionDateInput"
+          cyTag="audition-callback-picker"
+          inputId="auditionCallbackDate"
           control={control}
-          field="date"
+          field="callback"
         />
       </Container>
     </FormGroupRow>

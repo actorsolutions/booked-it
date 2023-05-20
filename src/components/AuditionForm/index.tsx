@@ -7,7 +7,7 @@ export interface AuditionFormData extends FieldValues {
   project: string;
   company: string;
   callbackDate?: number;
-  casting?: Casting;
+  casting?: Casting[];
   notes: string;
   type: string;
   status: string;

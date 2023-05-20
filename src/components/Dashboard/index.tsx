@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { Stack, Box, IconButton, Modal } from "@mui/material";
+import { Stack, IconButton } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SwipeableRow } from "../SwipeableRow";
 import { AuditionRow } from "../AuditionRow";
@@ -13,18 +16,6 @@ import { AuditionForm } from "@/components/AuditionForm";
 import CY_TAGS from "@/types/cypress_tags";
 
 const { LANDING_PAGE } = CY_TAGS;
-const modalStyle = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "50%",
-  bgcolor: "background.paper",
-  border: "2px solid black",
-  boxShadow: 24,
-  overflow: "scroll",
-  p: 4,
-};
 
 export const Dashboard = () => {
   const { user } = useUser();
@@ -70,16 +61,17 @@ export const Dashboard = () => {
             <AddCircle fontSize="large" color="primary" />
           </IconButton>
         </div>
-        <Modal
+        <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={modalStyle}>
+          <DialogContent>
+            <DialogTitle> Add Audition</DialogTitle>
             <AuditionForm />
-          </Box>
-        </Modal>
+          </DialogContent>
+        </Dialog>
       </Container>
     );
   }

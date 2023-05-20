@@ -3,8 +3,8 @@ import {
   Controller,
   RegisterOptions,
   FieldValues,
+  Path,
 } from "react-hook-form";
-import { AuditionFormData } from "../../AuditionForm/index";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -12,11 +12,11 @@ interface Props<T extends FieldValues> {
   cyTag: string;
   inputId: string;
   control: Control<T>;
-  field: string;
+  field: Path<T>;
   rules?: RegisterOptions;
 }
 
-export const FormDatePicker = (props: Props<AuditionFormData>) => {
+export const FormDatePicker = <T extends FieldValues>(props: Props<T>) => {
   const { cyTag, control, field } = props;
   return (
     <div>
