@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   DatePicker,
   NotesTextArea,
@@ -9,7 +9,7 @@ import {
   CallbackPicker,
   CastingRow,
 } from "@/components/AuditionForm/components";
-import { Casting } from "@/types/auditions";
+import { Audition, Casting } from "@/types/auditions";
 import { CastingForm } from "./components/CastingForm/CastingForm";
 import { useForm } from "react-hook-form";
 import { AuditionFormData } from "../AuditionForm";
@@ -19,7 +19,15 @@ import { Button, Container, Divider } from "@mui/material";
 import { createAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-export const AuditionForm = () => {
+
+interface Props {
+  auditions: Audition[];
+  setAuditions: Dispatch<SetStateAction<Audition[]>>;
+  handleClose: () => void;
+}
+export const AuditionForm = (props: Props) => {
+  const { setAuditions, auditions, handleClose } = props;
+
   const { getValues, control, watch, setValue } = useForm<AuditionFormData>({
     defaultValues: {
       date: undefined,
@@ -40,8 +48,9 @@ export const AuditionForm = () => {
 
   const handleModal = () => setOpen(!open);
   const handleCreate = async () => {
-    const createdAudition = await createAudition(getValues());
-    // TODO - Add to list / refresh list when added
+    const addedAudition = await createAudition(getValues());
+    auditions.push(addedAudition);
+    setAuditions(auditions);
   };
 
   const setCasting = (castingArray: Casting[]) => {
@@ -94,7 +103,9 @@ export const AuditionForm = () => {
         </Grid>
         <Button
           onClick={() => {
-            handleCreate();
+            handleCreate().then(() => {
+              handleClose();
+            });
           }}
         >
           Add Audition

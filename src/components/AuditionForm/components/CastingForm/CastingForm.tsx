@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button, Grid } from "@mui/material";
 
 import { FirstNameInput } from "./FirstNameInput";
@@ -10,18 +10,14 @@ import React from "react";
 import { AuditionFormData } from "@/components/AuditionForm";
 export const CastingForm = (props: FormProps<AuditionFormData>) => {
   const { initialCastingList, setCasting, handleClose } = props;
-  const { handleSubmit, control, getValues } = useForm<FormValues>({
+  const { control, getValues } = useForm<FormValues>({
     defaultValues: {
       casting: initialCastingList,
     },
   });
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "casting",
-  });
+
   const handleClick = () => {
     const { company, fName, lName, role, casting } = getValues();
-    console.log(getValues());
     const name = fName + " " + lName;
     if (casting.length < 1) {
       setCasting([

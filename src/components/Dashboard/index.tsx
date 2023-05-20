@@ -69,7 +69,11 @@ export const Dashboard = () => {
         >
           <DialogContent>
             <DialogTitle> Add Audition</DialogTitle>
-            <AuditionForm />
+            <AuditionForm
+              auditions={auditions}
+              setAuditions={setAuditions}
+              handleClose={handleClose}
+            />
           </DialogContent>
         </Dialog>
       </Container>
