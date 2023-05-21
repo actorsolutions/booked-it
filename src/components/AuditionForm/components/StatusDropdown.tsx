@@ -1,6 +1,7 @@
 import { FormGroupRow, FormLabel, FormDropdown } from "../../common/Form";
 import { FormProps, AuditionFormData } from "../index";
 import { Container } from "@mui/material";
+import CY_TAGS from "@/support/cypress_tags";
 
 export const StatusDropdown = (props: FormProps<AuditionFormData>) => {
   const { control } = props;
@@ -16,19 +17,20 @@ export const StatusDropdown = (props: FormProps<AuditionFormData>) => {
     <FormGroupRow>
       <Container>
         <FormLabel
-          cyTag="audition-status-label"
+          cyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.LABELS.STATUS}
           labelText="Audition Status"
           htmlFor="statusDropdown"
         />
       </Container>
       <Container>
         <FormDropdown
-          cyTag="audition-status-dropdown"
+          cyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.STATUS}
           inputId="audition-status-down"
           control={control}
           field="status"
           labelId="statusDropdown"
           menuItems={statusItems}
+          dropDownCyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS}
         />
       </Container>
     </FormGroupRow>

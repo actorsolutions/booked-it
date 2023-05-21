@@ -1,5 +1,5 @@
 export { CompanyInput } from "./CompanyInput";
-export { DatePicker } from "./DatePicker";
+export { AuditionDatePicker } from "./AuditionDatePicker";
 export { NotesTextArea } from "./NotesTextArea";
 export { ProjectInput } from "./ProjectInput";
 export { StatusDropdown } from "./StatusDropdown";

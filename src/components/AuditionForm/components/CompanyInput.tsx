@@ -1,7 +1,7 @@
 import { FormGroupRow, FormLabel, FormInput } from "../../common/Form";
 import { FormProps, AuditionFormData } from "../index";
 import { Container } from "@mui/material";
-
+import CY_TAGS from "@/support/cypress_tags";
 export const CompanyInput = (props: FormProps<AuditionFormData>) => {
   const { control } = props;
 
@@ -9,14 +9,14 @@ export const CompanyInput = (props: FormProps<AuditionFormData>) => {
     <FormGroupRow>
       <Container>
         <FormLabel
-          cyTag="audition-company-label"
+          cyTag={CY_TAGS.AUDITION_FORM.INPUTS.LABELS.COMPANY}
           labelText="Audition Company"
           htmlFor="companyInput"
         />
       </Container>
       <Container>
         <FormInput
-          cyTag="audition-company-input"
+          cyTag={CY_TAGS.AUDITION_FORM.INPUTS.COMPANY}
           inputId="auditionCompanyInput"
           control={control}
           field="company"

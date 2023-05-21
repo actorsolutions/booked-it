@@ -15,3 +15,51 @@
 
 // Import commands.js using ES2015 syntax:
 import "./commands";
+
+/**
+ * Generates a session cookie and spoofs login with Auth0
+ */
+export const login = () => {
+  cy.intercept("GET", "/api/auth/me", {
+    statusCode: 200,
+    body: {
+      nickname: "test.user",
+      name: "test.user@email.com",
+      picture:
+        "https://s.gravatar.com/avatar/5a86c4f810671cfc74c8a2b562f99a74?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fte.png",
+      updated_at: "2023-05-14T05:45:49.525Z",
+      email: "test.user@email.com",
+      email_verified: false,
+      sub: "auth0|63f5c556c8c54d340a113d29",
+      sid: "1MRVj_nf2Gy4RSjaNjTIaUZWX3Djf0w-",
+      id: 3,
+    },
+  }).as("Auth0");
+
+  cy.generateSession().then((data: string) => {
+    cy.setCookie("appSession", data);
+  });
+};
+
+/*
+  Helper method to make getting cyTags easier
+ */
+export const cyTag = (str: string) => `[data-cy='${str}']`;
+
+export const findAndClick = (tag: string) => {
+  cy.get(cyTag(tag)).should("be.visible").click();
+};
+
+export const addToInput = (tag: string, textToAdd: string) => {
+  findAndClick(tag);
+  cy.get(cyTag(tag)).type(textToAdd);
+};
+
+export const addSelectItem = (
+  dropdownTag: string,
+  tagOfItem: string,
+  textOfSelect: string
+) => {
+  findAndClick(dropdownTag);
+  cy.get(cyTag(tagOfItem)).contains(textOfSelect).click();
+};

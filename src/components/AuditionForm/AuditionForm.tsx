@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import {
-  DatePicker,
+  AuditionDatePicker,
   NotesTextArea,
   ProjectInput,
   StatusDropdown,
@@ -19,13 +19,14 @@ import { Button, Container, Divider } from "@mui/material";
 import { createAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-
+import CY_TAGS from "@/support/cypress_tags";
 interface Props {
   auditions: Audition[];
   setAuditions: Dispatch<SetStateAction<Audition[]>>;
   handleClose: () => void;
 }
 export const AuditionForm = (props: Props) => {
+  const { AUDITION_FORM } = CY_TAGS;
   const { setAuditions, auditions, handleClose } = props;
 
   const { getValues, control, watch, setValue } = useForm<AuditionFormData>({
@@ -57,11 +58,15 @@ export const AuditionForm = (props: Props) => {
     setValue("casting", castingArray);
   };
   return (
-    <Container maxWidth="md" id="auditionModal">
+    <Container
+      data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
+      maxWidth="md"
+      id="auditionModal"
+    >
       <Divider />
       <Form>
         <Grid item sm={8} md={6}>
-          <DatePicker control={control} />
+          <AuditionDatePicker control={control} />
         </Grid>
         <Grid item sm={8} md={6}>
           <ProjectInput control={control} />
@@ -78,7 +83,7 @@ export const AuditionForm = (props: Props) => {
         <Grid item sm={8}>
           {watchCasting
             ? watchCasting.map((person, index) => {
-                return <CastingRow key={index} name={person.name} />;
+                return <CastingRow key={index} name={person?.name || ""} />;
               })
             : null}
         </Grid>
@@ -102,6 +107,7 @@ export const AuditionForm = (props: Props) => {
           </Dialog>
         </Grid>
         <Button
+          data-cy={AUDITION_FORM.BUTTONS.ADD_AUDITION}
           onClick={() => {
             handleCreate().then(() => {
               handleClose();

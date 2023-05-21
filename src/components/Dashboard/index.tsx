@@ -13,9 +13,9 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
-import CY_TAGS from "@/types/cypress_tags";
+import CY_TAGS from "@/support/cypress_tags";
 
-const { LANDING_PAGE } = CY_TAGS;
+const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
 export const Dashboard = () => {
   const { user } = useUser();
@@ -41,14 +41,17 @@ export const Dashboard = () => {
         <pre>
           <code>{JSON.stringify(auditions[0], null, 4)}</code>
         </pre>
-        <Stack rowGap={1}>
+        <Stack
+          rowGap={1}
+          data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+        >
           {auditions.length === 0 ? (
             <p>No Auditions Added</p>
           ) : (
-            auditions.map((audition: Audition) => {
+            auditions.map((audition: Audition, index: number) => {
               return (
                 <SwipeableRow key={audition.id}>
-                  <AuditionRow audition={audition} />
+                  <AuditionRow audition={audition} index={index} />
                 </SwipeableRow>
               );
             })
@@ -57,7 +60,10 @@ export const Dashboard = () => {
         <div
           style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
         >
-          <IconButton onClick={handleOpen}>
+          <IconButton
+            data-cy={AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION}
+            onClick={handleOpen}
+          >
             <AddCircle fontSize="large" color="primary" />
           </IconButton>
         </div>

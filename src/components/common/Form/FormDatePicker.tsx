@@ -28,14 +28,15 @@ export const FormDatePicker = <T extends FieldValues>(props: Props<T>) => {
           // @ts-ignore
           return (
             <FormControl>
-              <DatePicker
-                label={"Audition Date"}
-                data-cy={cyTag}
-                onChange={(event: any) => {
-                  const epochDate = new Date(event.$d).getTime() / 1000;
-                  onChange(epochDate);
-                }}
-              />
+              <div data-cy={cyTag}>
+                <DatePicker
+                  label={"Audition Date"}
+                  onChange={(event: any) => {
+                    const epochDate = new Date(event.$d).getTime() / 1000;
+                    onChange(epochDate);
+                  }}
+                />
+              </div>
             </FormControl>
           );
         }}

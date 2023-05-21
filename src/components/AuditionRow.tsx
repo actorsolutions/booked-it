@@ -1,12 +1,15 @@
 import { Card, Grid } from "@mui/material";
 import LensIcon from "@mui/icons-material/Lens";
 import { Audition, Casting } from "@/types";
+import CY_TAGS from "@/support/cypress_tags";
 
 interface AuditionRowProps {
   audition: Audition;
+  index: number;
 }
 
-export const AuditionRow = ({ audition }: AuditionRowProps) => {
+export const AuditionRow = ({ audition, index }: AuditionRowProps) => {
+  const { AUDITIONS_SECTION } = CY_TAGS;
   const statusColor = (status: string): "success" | "info" => {
     return status === "auditioned" ? "success" : "info";
   };
@@ -22,6 +25,7 @@ export const AuditionRow = ({ audition }: AuditionRowProps) => {
         minHeight: "4.5rem",
       }}
       key={audition.id}
+      data-cy={`${AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}${index}`}
     >
       <Grid container spacing={2}>
         <Grid item xs={2}>

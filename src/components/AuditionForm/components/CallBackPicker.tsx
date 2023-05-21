@@ -1,7 +1,7 @@
 import { FormGroupRow, FormLabel, FormDatePicker } from "../../common/Form";
 import { FormProps, AuditionFormData } from "../index";
 import { Container } from "@mui/material";
-
+import CY_TAGS from "@/support/cypress_tags";
 export const CallbackPicker = (props: FormProps<AuditionFormData>) => {
   const { control } = props;
 
@@ -9,7 +9,7 @@ export const CallbackPicker = (props: FormProps<AuditionFormData>) => {
     <FormGroupRow>
       <Container>
         <FormLabel
-          cyTag="audition-callback-label"
+          cyTag={CY_TAGS.AUDITION_FORM.PICKERS.CALLBACK}
           labelText="Callback Date"
           htmlFor="auditionCallbackDate"
         />
