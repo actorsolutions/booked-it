@@ -79,7 +79,7 @@ export const setup = async (
 ): Promise<IntegrationTestParams> => {
   const prisma = generatePrisma();
   await sanitizeDB(clearTables, prisma);
-  return { prisma };
+  return {prisma} ;
 };
 export type IntegrationTestParams = {
   prisma: PrismaClient;

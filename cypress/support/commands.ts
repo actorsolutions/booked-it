@@ -62,3 +62,5 @@ Cypress.Commands.add("generateSession", () => {
     return data;
   });
 });
+
+
