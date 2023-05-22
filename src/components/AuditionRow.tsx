@@ -9,6 +9,7 @@ interface AuditionRowProps {
 }
 
 export const AuditionRow = ({ audition }: AuditionRowProps) => {
+    const { AUDITIONS_SECTION } = CY_TAGS;
     const statusColor = (status: string): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
         switch (status) {
             case "submitted":
