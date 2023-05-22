@@ -21,7 +21,6 @@ interface Props<T extends FieldValues> {
   field: Path<T>;
   rules?: RegisterOptions;
   labelId: string;
-  menuItems: Item[];
 }
 
 export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
