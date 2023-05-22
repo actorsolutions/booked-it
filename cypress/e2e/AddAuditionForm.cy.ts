@@ -113,10 +113,11 @@ describe("Add Auditions Form E2E Tests", () => {
     shouldNotExist(AUDITION_FORM.ERRORS.PROJECT);
 
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
-    findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
-    shouldNotExist(AUDITION_FORM.ERRORS.COMPANY);
 
     addToInput(AUDITION_FORM.TEXT_AREA.NOTES, "Wally is a good boy");
+
+    findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
+    shouldNotExist(AUDITION_FORM.ERRORS.COMPANY);
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("not.exist");
 
