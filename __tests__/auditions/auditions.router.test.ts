@@ -4,15 +4,15 @@ import {
   setup,
   testClient,
   SESSION_DATA,
-    tearDown
+  tearDown,
 } from "@/utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
-import {audition_types,audition_statuses} from "@prisma/client"
+import { audition_types, audition_statuses } from "@prisma/client";
 describe("Auditions Router integration tests", () => {
   let test: IntegrationTestParams;
 
   beforeEach(async () => {
-    test = await setup(['audition', 'user' ]);
+    test = await setup(["audition", "user"]);
     const { prisma } = test;
     await prisma.user.create({
       data: {
@@ -32,13 +32,13 @@ describe("Auditions Router integration tests", () => {
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
         status: "booked" as audition_statuses,
-        archived: false
+        archived: false,
       },
     });
   });
-  afterEach(async()=>{
-    await tearDown(test)
-  })
+  afterEach(async () => {
+    await tearDown(test);
+  });
   it("Find Auditions", async () => {
     const request = await testClient(AuditionsController);
     const session = await generateSessionCookie(SESSION_DATA, {
@@ -57,8 +57,8 @@ describe("Auditions Router integration tests", () => {
           type: "television",
           userId: 0,
           createdAt: "2023-04-28T21:50:11.638Z",
-          status: 'booked',
-          archived: false
+          status: "booked",
+          archived: false,
         },
       ],
     };
@@ -76,7 +76,7 @@ describe("Auditions Router integration tests", () => {
       secret: process.env.AUTH0_SECRET as string,
     });
     const request = await testClient(AuditionsController);
-    const data = {
+    const body = {
       callBackDate: null,
       casting: null,
       company: "Test Company",
@@ -85,8 +85,8 @@ describe("Auditions Router integration tests", () => {
       notes: "Here is a note",
       project: "Created Project",
       type: "television",
-      status: 'booked',
-      archived: false
+      status: "booked",
+      archived: false,
     };
     const expected = {
       callBackDate: null,
@@ -98,18 +98,19 @@ describe("Auditions Router integration tests", () => {
       project: "Created Project",
       type: "television",
       userId: 0,
-      status: 'booked',
-      archived: false
+      status: "booked",
+      archived: false,
     };
-
     const res = await request
       .post("/")
+      .set("Content-type", "text/plain")
+      .set("Accept", "application/json")
       .set("Cookie", [`appSession=${session}`])
-      .send(data);
+      .send(JSON.stringify(body));
+
     const createdAudition = res.body;
 
     delete createdAudition.createdAt;
     expect(createdAudition).toEqual(expected);
   });
 });
-

@@ -22,11 +22,20 @@ interface Props<T extends FieldValues> {
   field: Path<T>;
   rules?: RegisterOptions;
   labelId: string;
+  dropDownCyTag: string;
 }
 
 export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
-  const { cyTag, inputId, control, field, inputType, labelId, menuItems } =
-    props;
+  const {
+    cyTag,
+    inputId,
+    control,
+    field,
+    inputType,
+    labelId,
+    menuItems,
+    dropDownCyTag,
+  } = props;
   return (
     <div>
       <Controller
@@ -49,8 +58,12 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
                   height: 50,
                 }}
               >
-                {menuItems.map((item: Item) => (
-                  <MenuItem key={item.label} value={item.value}>
+                {menuItems.map((item) => (
+                  <MenuItem
+                    data-cy={dropDownCyTag}
+                    key={item.label}
+                    value={item.value}
+                  >
                     {item.label}
                   </MenuItem>
                 ))}

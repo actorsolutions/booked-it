@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { Stack, Box, IconButton, Modal, Typography } from "@mui/material";
+import { Stack, IconButton } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SwipeableRow } from "../SwipeableRow";
 import { AuditionRow } from "../AuditionRow";
@@ -9,19 +12,10 @@ import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
-import {CY_TAGS} from "@/types/cypress_tags";
+import { AuditionForm } from "@/components/AuditionForm";
+import CY_TAGS from "@/support/cypress_tags";
 
-const modalStyle = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "90%",
-  bgcolor: "background.paper",
-  border: "2px solid black",
-  boxShadow: 24,
-  p: 4,
-};
+const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
 export const Dashboard = () => {
   const { user } = useUser();
@@ -47,14 +41,17 @@ export const Dashboard = () => {
         <pre>
           <code>{JSON.stringify(auditions[0], null, 4)}</code>
         </pre>
-        <Stack rowGap={1}>
+        <Stack
+          rowGap={1}
+          data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+        >
           {auditions.length === 0 ? (
             <p>No Auditions Added</p>
           ) : (
-            auditions.map((audition: Audition) => {
+            auditions.map((audition: Audition, index: number) => {
               return (
                 <SwipeableRow key={audition.id}>
-                  <AuditionRow audition={audition} />
+                  <AuditionRow audition={audition} index={index} />
                 </SwipeableRow>
               );
             })
@@ -63,27 +60,30 @@ export const Dashboard = () => {
         <div
           style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
         >
-          <IconButton onClick={handleOpen}>
+          <IconButton
+            data-cy={AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION}
+            onClick={handleOpen}
+          >
             <AddCircle fontSize="large" color="primary" />
           </IconButton>
         </div>
-        <Modal
+        <Dialog
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={modalStyle}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a Modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Description in a Modal
-            </Typography>
-          </Box>
-        </Modal>
+          <DialogContent>
+            <DialogTitle> Add Audition</DialogTitle>
+            <AuditionForm
+              auditions={auditions}
+              setAuditions={setAuditions}
+              handleClose={handleClose}
+            />
+          </DialogContent>
+        </Dialog>
       </Container>
     );
   }
-  return <Login data-cy={ CY_TAGS.LOG_IN_BUTTON } />;
+  return <Login data-cy={LANDING_PAGE.BUTTONS.LOG_IN} />;
 };

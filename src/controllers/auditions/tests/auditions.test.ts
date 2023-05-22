@@ -23,16 +23,13 @@ describe("Auditions Controller Tests", () => {
         casting: undefined,
         notes: "Here is a note",
         type: "Television",
-        status: 'Scheduled',
-        archived: false
+        status: "Scheduled",
+        archived: false,
       },
     ];
-    const session = await generateSessionCookie(
-      SESSION_DATA,
-      {
-        secret: process.env.AUTH0_SECRET as string,
-      }
-    );
+    const session = await generateSessionCookie(SESSION_DATA, {
+      secret: process.env.AUTH0_SECRET as string,
+    });
     const fakeReq = {
       method: "GET",
       headers: { cookie: `appSession=${session}` },
@@ -77,20 +74,17 @@ describe("Auditions Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "television",
-      status: 'scheduled',
-      archived: false
+      status: "scheduled",
+      archived: false,
     };
 
-    const session = await generateSessionCookie(
-      SESSION_DATA,
-      {
-        secret: process.env.AUTH0_SECRET as string,
-      }
-    );
+    const session = await generateSessionCookie(SESSION_DATA, {
+      secret: process.env.AUTH0_SECRET as string,
+    });
     const fakeReq = {
       method: "POST",
       headers: { cookie: `appSession=${session}` },
-      body: audition,
+      body: JSON.stringify(audition),
     };
     const fakeResp = {
       json: (json: any) => json,
@@ -136,16 +130,13 @@ describe("Audition Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "Television",
-      status: 'Scheduled',
-      archived: false
+      status: "Scheduled",
+      archived: false,
     };
 
-    const session = await generateSessionCookie(
-      SESSION_DATA,
-      {
-        secret: process.env.AUTH0_SECRET as string,
-      }
-    );
+    const session = await generateSessionCookie(SESSION_DATA, {
+      secret: process.env.AUTH0_SECRET as string,
+    });
     const fakeReq = {
       method: "GET",
       headers: { cookie: `appSession=${session}` },
@@ -191,16 +182,13 @@ describe("Audition Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "television",
-      status: 'scheduled',
-      archived: false
+      status: "scheduled",
+      archived: false,
     };
 
-    const session = await generateSessionCookie(
-      SESSION_DATA,
-      {
-        secret: process.env.AUTH0_SECRET as string,
-      }
-    );
+    const session = await generateSessionCookie(SESSION_DATA, {
+      secret: process.env.AUTH0_SECRET as string,
+    });
     const fakeReq = {
       method: "PUT",
       headers: { cookie: `appSession=${session}` },
@@ -247,16 +235,13 @@ describe("Audition Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "Television",
-      status: 'Scheduled',
-      archived: false
+      status: "Scheduled",
+      archived: false,
     };
 
-    const session = await generateSessionCookie(
-        SESSION_DATA,
-      {
-        secret: process.env.AUTH0_SECRET as string,
-      }
-    );
+    const session = await generateSessionCookie(SESSION_DATA, {
+      secret: process.env.AUTH0_SECRET as string,
+    });
     const fakeReq = {
       method: "DELETE",
       headers: { cookie: `appSession=${session}` },
@@ -281,7 +266,7 @@ describe("Audition Controller Tests", () => {
     const mockDb = {
       deleteMany: async () => {
         return new Promise((resolve) => {
-          resolve({message: "", count: 1});
+          resolve({ message: "", count: 1 });
         });
       },
     };
