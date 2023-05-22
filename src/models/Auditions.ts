@@ -9,7 +9,7 @@ import {
  * Defines the Database representation of an Audition, starting with
  * a form of the object for Audition creation where id is optional
  */
-interface createAuditionData {
+interface CreateAuditionData {
   id?: number;
   userId: number;
   date: number;
@@ -60,7 +60,7 @@ const validateEnum = (enumList: {}, value: string) => {
  * Extends the interface for Audition creation to the more general
  * form of the AuditionData object where id is required
  */
-interface AuditionData extends createAuditionData {
+interface AuditionData extends CreateAuditionData {
   id: number;
 }
 
@@ -136,7 +136,7 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async create(
-    createData: createAuditionData,
+    createData: CreateAuditionData,
     db: PrismaClient["audition"]
   ) {
     console.log({ createData });
