@@ -9,7 +9,7 @@ interface AuditionRowProps {
 }
 
 export const AuditionRow = ({ audition }: AuditionRowProps) => {
-    const color = function statusColor(status: string): string {
+    const statusColor = (status: string): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
         switch (status) {
             case "submitted":
                 return "info";
@@ -22,7 +22,7 @@ export const AuditionRow = ({ audition }: AuditionRowProps) => {
             case "booked":
                 return "success";
             default:
-                return "grey"
+                return "disabled"
         }
     }
   const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
