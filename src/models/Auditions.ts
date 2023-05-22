@@ -48,8 +48,6 @@ const auditionTypes = {
  * @param value
  */
 const validateEnum = (enumList: {}, value: string) => {
-  console.log({ value });
-  console.log({ enumList });
   if (Object.values(enumList).includes(value)) {
     return value;
   } else {
@@ -139,10 +137,6 @@ export class Audition {
     createData: CreateAuditionData,
     db: PrismaClient["audition"]
   ) {
-    console.log({ createData });
-    const testStatus = validateEnum(auditionStatuses, createData.status);
-    // const testType = validateEnum(auditionTypes, createData.type);
-    console.log(testStatus);
     return db.create({
       data: {
         ...createData,
