@@ -3,6 +3,7 @@ import {
   Controller,
   RegisterOptions,
   FieldValues,
+  Path,
 } from "react-hook-form";
 import { AuditionFormData } from "../../AuditionForm/index";
 import Select from "@mui/material/Select";
@@ -14,28 +15,20 @@ interface Item {
   label: string;
 }
 interface Props<T extends FieldValues> {
+  menuItems: Item[];
   cyTag: string;
   inputId: string;
   inputType?: string;
   control: Control<T>;
-  field: string;
+  field: Path<T>;
   rules?: RegisterOptions;
   labelId: string;
-  menuItems: Item[];
   dropDownCyTag: string;
 }
 
-export const FormDropdown = (props: Props<AuditionFormData>) => {
-  const {
-    cyTag,
-    inputId,
-    control,
-    field,
-    inputType,
-    labelId,
-    menuItems,
-    dropDownCyTag,
-  } = props;
+export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
+  const { cyTag, inputId, control, field, inputType, labelId, menuItems,dropDownCyTag, } =
+    props;
   return (
     <div>
       <Controller
