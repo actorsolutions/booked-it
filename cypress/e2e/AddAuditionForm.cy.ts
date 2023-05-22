@@ -10,13 +10,9 @@ import {
 
 const { AUDITIONS_SECTION, AUDITION_FORM } = CY_TAGS;
 describe("Add Auditions Form E2E Tests", () => {
-  beforeEach(() => {
-    // setUp();
-  });
   it("Should not show add audition button while not logged in", () => {
     cy.task("db:seed");
     cy.visit("/");
-    // cy.get(cyTag(LANDING_PAGE.BUTTONS.LOG_IN)).should("be.visible");
   });
 
   it("Should add one audition and show on list", () => {
@@ -29,7 +25,8 @@ describe("Add Auditions Form E2E Tests", () => {
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
 
-    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    //TODO: (BI-59) Better Datepicker Logic
+    //eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click().type("01012023");
 
     addSelectItem(

@@ -50,11 +50,22 @@ export const findAndClick = (tag: string) => {
   cy.get(cyTag(tag)).should("be.visible").click();
 };
 
+/**
+ * Adds Text to input fields
+ * @param tag
+ * @param textToAdd
+ */
 export const addToInput = (tag: string, textToAdd: string) => {
   findAndClick(tag);
   cy.get(cyTag(tag)).type(textToAdd);
 };
 
+/**
+ * Selects dropdown items from dropdown
+ * @param dropdownTag
+ * @param tagOfItem
+ * @param textOfSelect
+ */
 export const addSelectItem = (
   dropdownTag: string,
   tagOfItem: string,
