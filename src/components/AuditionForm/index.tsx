@@ -1,4 +1,4 @@
-import { FieldValues, Control } from "react-hook-form";
+import { FieldValues, Control, UseFormRegister } from "react-hook-form";
 import { Casting } from "@/types";
 export { AuditionForm } from "./AuditionForm";
 export interface AuditionFormData extends FieldValues {
@@ -16,4 +16,5 @@ export interface AuditionFormData extends FieldValues {
 
 export interface FormProps<T extends FieldValues> {
   control: Control<T>;
+  register: UseFormRegister<T>;
 }
