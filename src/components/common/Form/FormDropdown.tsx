@@ -9,10 +9,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 
-interface Item {
-  value: string | number;
-  label: string;
-}
 interface Props<T extends FieldValues> {
   cyTag: string;
   inputId: string;
