@@ -21,10 +21,10 @@ export default {
     },
     ERRORS: {
       COMPANY: "audition-company-error",
-      DATE: "audition-company-error",
-      PROJECT: "audition-company-error",
-      STATUS: "audition-company-error",
-      TYPE: "audition-company-error",
+      DATE: "audition-date-error",
+      PROJECT: "audition-project-error",
+      STATUS: "audition-status-error",
+      TYPE: "audition-type-error",
     },
     INPUTS: {
       LABELS: {

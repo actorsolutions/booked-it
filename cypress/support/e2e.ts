@@ -74,3 +74,17 @@ export const addSelectItem = (
   findAndClick(dropdownTag);
   cy.get(cyTag(tagOfItem)).contains(textOfSelect).click();
 };
+
+/*
+  Checks to see if element is visible based on data-cy
+ */
+export const shouldBeVisible = (tag: string) => {
+  cy.get(cyTag(tag)).should("be.visible");
+};
+
+/*
+    Checks to see if element does not exist in dom
+ */
+export const shouldNotExist = (tag: string) => {
+  cy.get(cyTag(tag)).should("not.exist");
+};
