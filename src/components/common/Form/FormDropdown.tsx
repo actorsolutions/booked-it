@@ -5,7 +5,6 @@ import {
   FieldValues,
   Path,
 } from "react-hook-form";
-import { AuditionFormData } from "../../AuditionForm/index";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -27,8 +26,16 @@ interface Props<T extends FieldValues> {
 }
 
 export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
-  const { cyTag, inputId, control, field, inputType, labelId, menuItems,dropDownCyTag, } =
-    props;
+  const {
+    cyTag,
+    inputId,
+    control,
+    field,
+    inputType,
+    labelId,
+    menuItems,
+    dropDownCyTag,
+  } = props;
   return (
     <div>
       <Controller
