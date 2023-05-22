@@ -76,7 +76,7 @@ describe("Auditions Router integration tests", () => {
       secret: process.env.AUTH0_SECRET as string,
     });
     const request = await testClient(AuditionsController);
-    const data = {
+    const body = {
       callBackDate: null,
       casting: null,
       company: "Test Company",
@@ -101,11 +101,13 @@ describe("Auditions Router integration tests", () => {
       status: "booked",
       archived: false,
     };
-
     const res = await request
       .post("/")
+      .set("Content-type", "text/plain")
+      .set("Accept", "application/json")
       .set("Cookie", [`appSession=${session}`])
-      .send(JSON.stringify(data));
+      .send(JSON.stringify(body));
+
     const createdAudition = res.body;
 
     delete createdAudition.createdAt;
