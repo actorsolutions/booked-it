@@ -9,7 +9,12 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 
+interface Item {
+  value: string | number;
+  label: string;
+}
 interface Props<T extends FieldValues> {
+  menuItems: Item[];
   cyTag: string;
   inputId: string;
   inputType?: string;
@@ -44,7 +49,7 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
                   height: 50,
                 }}
               >
-                {menuItems.map((item) => (
+                {menuItems.map((item: Item) => (
                   <MenuItem key={item.label} value={item.value}>
                     {item.label}
                   </MenuItem>
