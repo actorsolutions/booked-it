@@ -12,5 +12,7 @@ export const createAudition = async (data: CreateAuditionData) => {
   return await fetch("/api/auditions", {
     method: "POST",
     body: JSON.stringify(data),
+  }).then((data) => {
+    return data.json();
   });
 };

@@ -49,7 +49,7 @@ export const addAudition = async (
     callBackDate,
     status,
     archived,
-  } = req.body;
+  } = JSON.parse(req.body);
   const auditionData = {
     id,
     userId,
