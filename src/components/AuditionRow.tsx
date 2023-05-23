@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { Card, Grid } from "@mui/material";
+import {Dispatch, MouseEvent, SetStateAction, useState} from "react";
+import { Card, Grid, Accordion, AccordionDetails, AccordionSummary, Button } from "@mui/material";
 import LensIcon from "@mui/icons-material/Lens";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import { Audition, Casting } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
+import { deleteAudition } from "@/apihelpers/auditions";
 
 interface AuditionRowProps {
     audition: Audition;
     index: number;
+    auditions: Audition[];
+    setAuditions: Dispatch<SetStateAction<Audition[]>>;
 }
 
-export const AuditionRow = ({ audition, index }: AuditionRowProps) => {
+export const AuditionRow = ({ audition, index, auditions, setAuditions }: AuditionRowProps) => {
     const { AUDITIONS_SECTION } = CY_TAGS;
     const statusColor = (status: string): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
         switch (status) {
@@ -34,9 +34,21 @@ export const AuditionRow = ({ audition, index }: AuditionRowProps) => {
     const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
 
     const [expanded, setExpanded] = useState(false);
+    const [archived, setArchived] = useState(false)
+
+    const handleDelete = async () => {
+        const deletedAudition = await deleteAudition(audition);
+        auditions.filter(deletedAudition);
+        setAuditions(auditions);
+    };
 
     const handleAccordionChange = () => {
         setExpanded(!expanded);
+    };
+
+    const handleArchiveClick = (event: MouseEvent) => {
+        event.stopPropagation();
+        setArchived(!archived);
     };
 
     return (
@@ -44,49 +56,61 @@ export const AuditionRow = ({ audition, index }: AuditionRowProps) => {
             sx={{
                 alignItems: "center",
                 pl: "4px",
-                backgroundColor: "white",
+                backgroundColor: archived ? "#f5f5f5" : "white",
                 display: "flex",
-                minHeight: "4.5rem",
+                mb: "3px",
+                pt: "10px",
+                justifyContent: "center",
+                opacity: archived ? 0.5 : 1
             }}
             key={audition.id}
             data-cy={`${AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}${index}`}
         >
-            <Accordion expanded={expanded} onChange={handleAccordionChange}>
-            <Grid container spacing={2}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    id="accordion-header"
-                    sx={{ width: "100%" }}
-                >
-                <Grid item xs={2}>
-                    <LensIcon color={statusColor(audition.status)} fontSize="large" />
-                </Grid>
-                <Grid item xs={7}>
-                    <div> Project: {audition.project} </div>
-                </Grid>
-                </AccordionSummary>
-                <AccordionDetails sx={{ width: "100%" }} >
-                <Grid item xs={2}>
-                    <div> Type: {audition.type} </div>
-                </Grid>
-                <Grid item md={3}>
-                    <div>{casting.length > 0 ? casting[0].name : undefined}</div>
-                </Grid>
-                <Grid item md={3}>
-                    <div>Notes: {audition.notes}</div>
-                </Grid>
-                <Grid item xs={2}>
-                    <div style={{ justifyContent: "flex-end" }}>
-                        {new Date(audition.date * 1000).toLocaleDateString("en", {
-                            dateStyle: "short",
-                        })}
-                    </div>
-                </Grid>
-                </AccordionDetails>
+            <Grid container spacing={2} id={'grid-container'}>
+                <Accordion expanded={expanded} onChange={handleAccordionChange} sx={{ width: "100%" }} id={'accordion-container'}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        id="accordion-header"
+                        sx={{ display: "flex", alignItems: 'center' }}
+                    >
+                        <Grid item xs={2}>
+                            <LensIcon color={statusColor(audition.status)} fontSize="large" />
+                        </Grid>
+                        <Grid item xs={7}>
+                            <div> Project: {audition.project} </div>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Button variant="outlined" onClick={handleArchiveClick}>
+                                {archived ? "Unarchive" : "Archive"}
+                            </Button>
+                        </Grid>
+                        <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
+                            {new Date(audition.date * 1000).toLocaleDateString("en", {
+                                dateStyle: "short",
+                            })}
+                        </Grid>
+                    </AccordionSummary>
+                    {expanded && (
+                        <AccordionDetails>
+                            <Grid container spacing={2}>
+                                <Grid item xs={4}>
+                                    <div> Type: {audition.type} </div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div>{casting.length > 0 ? casting[0].name : undefined}</div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <div>Notes: {audition.notes}</div>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Button variant="contained">Delete</Button>
+                                </Grid>
+                            </Grid>
+                        </AccordionDetails>
+                    )}
+                </Accordion>
             </Grid>
-            </Accordion>
         </Card>
-
     );
 };
 
