@@ -20,7 +20,6 @@ export const createAudition = async (data: CreateAuditionData) => {
 export const deleteAudition = async (data: Audition) => {
   return await fetch(`/api/auditions/${data.id}`, {
     method: "DELETE",
-    body: JSON.stringify(data),
   }).then((data) => {
     return data.json();
   })
