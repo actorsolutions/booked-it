@@ -19,6 +19,13 @@ export default {
     CONTAINERS: {
       FORM_CONTAINER: "audition-form-container",
     },
+    ERRORS: {
+      COMPANY: "audition-company-error",
+      DATE: "audition-date-error",
+      PROJECT: "audition-project-error",
+      STATUS: "audition-status-error",
+      TYPE: "audition-type-error",
+    },
     INPUTS: {
       LABELS: {
         COMPANY: "company-input-label",
