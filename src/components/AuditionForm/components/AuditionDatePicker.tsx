@@ -3,7 +3,7 @@ import { FormProps, AuditionFormData } from "../index";
 import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 export const AuditionDatePicker = (props: FormProps<AuditionFormData>) => {
-  const { control } = props;
+  const { control, register } = props;
 
   return (
     <FormGroupRow>
@@ -13,6 +13,7 @@ export const AuditionDatePicker = (props: FormProps<AuditionFormData>) => {
           inputId="auditionDateInput"
           control={control}
           field="date"
+          {...register("date", { required: true })}
         />
       </Container>
     </FormGroupRow>

@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 
 export const TypeDropdown = (props: FormProps<AuditionFormData>) => {
-  const { control } = props;
+  const { control, register } = props;
 
   const typeItems = [
     { value: "television", label: "Television" },
@@ -33,6 +33,7 @@ export const TypeDropdown = (props: FormProps<AuditionFormData>) => {
           labelId="typesDropdown"
           menuItems={typeItems}
           dropDownCyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE}
+          {...register("type", { required: true })}
         />
       </Container>
     </FormGroupRow>

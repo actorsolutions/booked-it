@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 
 export const StatusDropdown = (props: FormProps<AuditionFormData>) => {
-  const { control } = props;
+  const { control, register } = props;
 
   const statusItems = [
     { value: "submitted", label: "Submitted" },
@@ -31,6 +31,7 @@ export const StatusDropdown = (props: FormProps<AuditionFormData>) => {
           labelId="statusDropdown"
           menuItems={statusItems}
           dropDownCyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS}
+          {...register("status", { required: true })}
         />
       </Container>
     </FormGroupRow>

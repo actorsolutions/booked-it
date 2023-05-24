@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { AuditionFormData } from "../AuditionForm";
 import { Form } from "@/components/common/Form";
 import Grid from "@mui/material/Grid";
-import { Button, Container, Divider } from "@mui/material";
+import { Button, Container, Divider, Typography } from "@mui/material";
 import { createAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -29,7 +29,16 @@ export const AuditionForm = (props: Props) => {
   const { AUDITION_FORM } = CY_TAGS;
   const { setAuditions, auditions, handleClose } = props;
 
-  const { getValues, control, watch, setValue } = useForm<AuditionFormData>({
+  const {
+    getValues,
+    control,
+    watch,
+    setValue,
+    register,
+    formState: { errors },
+    trigger,
+    clearErrors,
+  } = useForm<AuditionFormData>({
     defaultValues: {
       date: undefined,
       project: "",
@@ -42,16 +51,47 @@ export const AuditionForm = (props: Props) => {
       archived: false,
     },
   });
+
+  type fields =
+    | "date"
+    | "project"
+    | "company"
+    | "callbackDate"
+    | "notes"
+    | "type"
+    | "status";
+
+  const createFields = [
+    "date",
+    "project",
+    "company",
+    "callbackDate",
+    "notes",
+    "type",
+    "status",
+  ];
+  const customValidation = async (arrayOfFields: fields[]) => {
+    return trigger(arrayOfFields as fields[], { shouldFocus: true });
+  };
+
   const [open, setOpen] = useState(false);
 
   const watchStatus = watch("status");
   const watchCasting = watch("casting");
 
   const handleModal = () => setOpen(!open);
+
+  /**
+   * Triggers Validation on form, will not send to API if form is not valid
+   */
   const handleCreate = async () => {
-    const addedAudition = await createAudition(getValues());
-    auditions.push(addedAudition);
-    setAuditions(auditions);
+    if (await customValidation(createFields as fields[])) {
+      const addedAudition = await createAudition(getValues());
+      auditions.push(addedAudition);
+      setAuditions(auditions);
+      return true;
+    }
+    return false;
   };
 
   const setCasting = (castingArray: Casting[]) => {
@@ -66,19 +106,55 @@ export const AuditionForm = (props: Props) => {
       <Divider />
       <Form>
         <Grid item sm={8} md={6}>
-          <AuditionDatePicker control={control} />
+          <AuditionDatePicker control={control} register={register} />
+          {errors.date && (
+            <Typography data-cy={AUDITION_FORM.ERRORS.DATE} variant="overline">
+              Required!
+            </Typography>
+          )}
         </Grid>
         <Grid item sm={8} md={6}>
-          <ProjectInput control={control} />
-          <CompanyInput control={control} />
+          <ProjectInput control={control} register={register} />
+          {errors.project && (
+            <Typography
+              data-cy={AUDITION_FORM.ERRORS.PROJECT}
+              variant="overline"
+            >
+              Required!
+            </Typography>
+          )}
+          <CompanyInput control={control} register={register} />
+          {errors.company && (
+            <Typography
+              data-cy={AUDITION_FORM.ERRORS.COMPANY}
+              variant="overline"
+            >
+              Required!
+            </Typography>
+          )}
         </Grid>
         <Grid item sm={8} md={6}>
-          <StatusDropdown control={control} />
-          <TypeDropdown control={control} />
+          <StatusDropdown control={control} register={register} />
+          {errors.status && (
+            <Typography
+              data-cy={AUDITION_FORM.ERRORS.STATUS}
+              variant="overline"
+            >
+              Required!
+            </Typography>
+          )}
+          <TypeDropdown control={control} register={register} />
+          {errors.type && (
+            <Typography data-cy={AUDITION_FORM.ERRORS.TYPE} variant="overline">
+              Required!
+            </Typography>
+          )}
         </Grid>
-        {watchStatus === "callback" && <CallbackPicker control={control} />}
+        {watchStatus === "callback" && (
+          <CallbackPicker control={control} register={register} />
+        )}
         <Grid item sm={8} md={6}>
-          <NotesTextArea control={control} />
+          <NotesTextArea control={control} register={register} />
         </Grid>
         <Grid item sm={8}>
           {watchCasting
@@ -109,8 +185,9 @@ export const AuditionForm = (props: Props) => {
         <Button
           data-cy={AUDITION_FORM.BUTTONS.ADD_AUDITION}
           onClick={() => {
-            handleCreate().then(() => {
-              handleClose();
+            clearErrors();
+            handleCreate().then((wasSent) => {
+              wasSent && handleClose();
             });
           }}
         >
