@@ -4,7 +4,7 @@ import LensIcon from "@mui/icons-material/Lens";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Audition, Casting } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
-import { deleteAudition } from "@/apihelpers/auditions";
+import { deleteAudition, updateAudition } from "@/apihelpers/auditions";
 
 interface AuditionRowProps {
     audition: Audition;
@@ -34,20 +34,27 @@ export const AuditionRow = ({ audition, index, auditions, setAuditions }: Auditi
     const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
 
     const [expanded, setExpanded] = useState(false);
-    const [archived, setArchived] = useState(false)
-
-    const handleDelete = async () => {
-        const deletedAudition = await deleteAudition(audition);
-        auditions.filter(deletedAudition);
-        setAuditions(auditions);
-    };
+    const [archived, setArchived] = useState(audition.archived)
 
     const handleAccordionChange = () => {
         setExpanded(!expanded);
     };
 
-    const handleArchiveClick = (event: MouseEvent) => {
+    const handleDelete = async () => {
+        try {
+            await deleteAudition(audition);
+            const updatedAuditions = auditions.filter((auditionEntry) => auditionEntry !== audition);
+            setAuditions(updatedAuditions);
+        } catch (error) {
+           new Error("Failed to delete.");
+        }
+    };
+
+    // TODO: BI-47 - implement try/catch for archiving error and leverage filter pattern from handleDelete
+    const handleArchiveClick = async (event: MouseEvent) => {
         event.stopPropagation();
+        audition.archived = !archived;
+        await updateAudition(audition)
         setArchived(!archived);
     };
 
@@ -103,7 +110,9 @@ export const AuditionRow = ({ audition, index, auditions, setAuditions }: Auditi
                                     <div>Notes: {audition.notes}</div>
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <Button variant="contained">Delete</Button>
+                                    <Button variant="contained" onClick={() => {
+                                        handleDelete()
+                                    }}>Delete</Button>
                                 </Grid>
                             </Grid>
                         </AccordionDetails>
@@ -113,17 +122,3 @@ export const AuditionRow = ({ audition, index, auditions, setAuditions }: Auditi
         </Card>
     );
 };
-
-// <Grid>
-//     <Accordion>
-//         <AccordionSummary
-//             expandIcon={<ExpandMoreIcon />}
-//             id="accordion-header"
-//         >
-//             Test Accordion
-//         </AccordionSummary>
-//         <AccordionDetails>
-//             Test test test
-//         </AccordionDetails>
-//     </Accordion>
-// </Grid>

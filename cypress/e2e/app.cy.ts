@@ -24,4 +24,9 @@ describe("Landing Page E2E Tests", () => {
       "be.visible"
     );
   });
+  // it("audition row item should expand and collapse")
+  // it("should archive an audition and update audition list");
+  // it should archive, check to make sure its archived, reload the page, make sure it's still archived
+  // unarchive it, make sure tha it's unarchived, reload, make sure its still unarchived
+  // it("should delete an audition and update audition list");
 });

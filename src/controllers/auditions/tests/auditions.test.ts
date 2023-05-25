@@ -140,7 +140,7 @@ describe("Audition Controller Tests", () => {
     const fakeReq = {
       method: "GET",
       headers: { cookie: `appSession=${session}` },
-      body: audition,
+      body: JSON.stringify(audition),
       query: { id: 0 },
     };
     const fakeResp = {

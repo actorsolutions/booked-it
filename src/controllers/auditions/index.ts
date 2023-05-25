@@ -89,8 +89,9 @@ export const updateAudition = async (
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
-  const audition = new Audition(req.body);
-  if (req.body.userId != userId) {
+  const auditionData = JSON.parse(req.body);
+  const audition = new Audition(auditionData);
+  if (audition.userId != userId) {
     return res.status(401).send({ message: "Unauthorized" });
   } else {
     await audition.save(db);
