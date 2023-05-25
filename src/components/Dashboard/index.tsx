@@ -14,6 +14,7 @@ import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
 import CY_TAGS from "@/support/cypress_tags";
+import Paper from "@mui/material/Paper";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
@@ -41,32 +42,39 @@ export const Dashboard = () => {
         <pre>
           <code>{JSON.stringify(auditions[0], null, 4)}</code>
         </pre>
-        <Stack
-          rowGap={1}
-          data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
-        >
-          {auditions.length === 0 ? (
-            <p>No Auditions Added</p>
-          ) : (
-            auditions.map((audition: Audition, index: number) => {
-              return (
-                <SwipeableRow key={audition.id}>
-                  <AuditionRow audition={audition} index={index} />
-                </SwipeableRow>
-              );
-            })
-          )}
-        </Stack>
-        <div
-          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
-        >
-          <IconButton
-            data-cy={AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION}
-            onClick={handleOpen}
+        <Paper elevation={5} sx={{ p: "1rem", bgcolor: "snow" }}>
+          <Stack
+            rowGap={3}
+            data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
           >
-            <AddCircle fontSize="large" color="primary" />
-          </IconButton>
-        </div>
+            {auditions.length === 0 ? (
+              <p>No Auditions Added</p>
+            ) : (
+              auditions.map((audition: Audition, index: number) => {
+                return (
+                  <SwipeableRow key={audition.id}>
+                    <AuditionRow audition={audition} index={index} />
+                  </SwipeableRow>
+                );
+              })
+            )}
+          </Stack>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              width: "100%",
+            }}
+          >
+            <IconButton
+              data-cy={AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION}
+              onClick={handleOpen}
+            >
+              <AddCircle fontSize="large" color="primary" />
+            </IconButton>
+          </div>
+        </Paper>
+
         <Dialog
           open={open}
           onClose={handleClose}

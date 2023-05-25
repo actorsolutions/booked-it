@@ -7,7 +7,14 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 export default function Home() {
   return (
     <main>
-      <Container>
+      <Container
+        id={"MainContainer"}
+        maxWidth={false}
+        sx={{
+          height: "100vh",
+          bgcolor: "#caccce",
+        }}
+      >
         <UserProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Dashboard />
