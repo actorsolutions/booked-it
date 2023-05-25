@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  Title,
+  BarElement,
+} from "chart.js";
 
 import { Login } from "../Login";
 import { Container } from "@mui/system";
@@ -15,78 +24,28 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
-import { Pie } from "react-chartjs-2";
-
+import { Metrics } from "./Metrics";
 import CY_TAGS from "@/support/cypress_tags";
-import Grid from "@mui/material/Grid";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
 export const Dashboard = () => {
   const { user } = useUser();
-  ChartJS.register(ArcElement, Tooltip, Legend);
+  ChartJS.register(
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    Title,
+    BarElement
+  );
 
   const [auditions, setAuditions] = useState<Audition[]>([]);
 
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const chartAuditions = (auditions: Audition[]) => {
-    const pieChartLabel = "Type Breakdown";
-    const typeCount: number[] = [];
-    const pieLabels: string[] = [];
-    const capitalize = (text: string): string =>
-      (text && text[0].toUpperCase() + text.slice(1)) || "";
-
-    auditions.forEach((audition) => {
-      const label = capitalize(audition.type);
-      // Check to see if label exists, add if not.
-      if (!pieLabels.includes(label)) {
-        pieLabels.push(capitalize(label));
-        // Add count of each label to data obj
-        const filterByType = auditions.filter(
-          (filteredAudition) => filteredAudition.type === audition.type
-        );
-        typeCount.push(filterByType.length);
-      }
-    });
-
-    const pieChartData = {
-      labels: pieLabels,
-      datasets: [
-        {
-          label: pieChartLabel,
-          data: typeCount,
-          backgroundColor: [
-            "rgba(50, 150, 132, 1)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-            "rgba(255, 25, 100, 0.2)",
-          ],
-          borderColor: [
-            "rgba(15, 10, 222, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-            "rgba(255, 5, 64, 1)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-      options: {
-        legends: {
-          display: true,
-        },
-      },
-    };
-    return { pieChartData };
-  };
 
   useEffect(() => {
     SignUpOrSignIn().then(() => {
@@ -97,7 +56,6 @@ export const Dashboard = () => {
   }, [user]);
 
   if (user) {
-    const { pieChartData } = chartAuditions(auditions);
     return (
       <Container maxWidth="md">
         <a href={"/api/auth/logout"}>Logout</a>
@@ -107,22 +65,10 @@ export const Dashboard = () => {
         {/*</pre>*/}
 
         <Stack
-          rowGap={1}
+          rowGap={5}
           data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
         >
-          <Grid
-            container
-            spacing={2}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Grid item xs={12} m={12}>
-              <Pie data-cy={LANDING_PAGE.GRAPH.PIE_CHART} data={pieChartData} />
-            </Grid>
-          </Grid>
+          <Metrics auditions={auditions} />
 
           {auditions.length === 0 ? (
             <p>No Auditions Added</p>

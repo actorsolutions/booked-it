@@ -7,6 +7,7 @@ export default {
     },
     GRAPH: {
       PIE_CHART: "audition-pie-chart",
+      BAR_CHART: "audition-bar-chart",
     },
   },
   AUDITIONS_SECTION: {
