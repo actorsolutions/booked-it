@@ -4,23 +4,26 @@ import { Dashboard } from "@/components/Dashboard";
 import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import React from "react";
+
 export default function Home() {
   return (
-    <main>
-      <Container
-        id={"MainContainer"}
-        maxWidth={false}
-        sx={{
-          height: "100vh",
-          bgcolor: "#caccce",
-        }}
-      >
-        <UserProvider>
+    <UserProvider>
+      <main>
+        <Container
+          id={"MainContainer"}
+          maxWidth={false}
+          sx={{
+            height: "100vh",
+            bgcolor: "#caccce",
+          }}
+        >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Dashboard />
           </LocalizationProvider>
-        </UserProvider>
-      </Container>
-    </main>
+        </Container>
+      </main>
+    </UserProvider>
   );
 }

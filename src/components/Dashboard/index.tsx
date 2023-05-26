@@ -14,7 +14,7 @@ import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
 import CY_TAGS from "@/support/cypress_tags";
-import Paper from "@mui/material/Paper";
+import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
@@ -37,12 +37,12 @@ export const Dashboard = () => {
   if (user) {
     return (
       <Container maxWidth="md">
-        <a href={"/api/auth/logout"}>Logout</a>
+        {/*<a href={"/api/auth/logout"}>Logout</a>*/}
 
         <pre>
           <code>{JSON.stringify(auditions[0], null, 4)}</code>
         </pre>
-        <Paper elevation={5} sx={{ p: "1rem", bgcolor: "snow" }}>
+        <DashboardWrapper>
           <Stack
             rowGap={3}
             data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
@@ -73,7 +73,7 @@ export const Dashboard = () => {
               <AddCircle fontSize="large" color="primary" />
             </IconButton>
           </div>
-        </Paper>
+        </DashboardWrapper>
 
         <Dialog
           open={open}

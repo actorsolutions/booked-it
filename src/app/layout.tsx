@@ -1,8 +1,11 @@
+"use client";
 import "bootstrap/dist/css/bootstrap.css";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import React from "react";
 
+import React from "react";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { NavBar } from "@/components/NavBar";
 
 export default function RootLayout({
   children,
@@ -17,7 +20,12 @@ export default function RootLayout({
       */}
       <title>Booked It</title>
       <head />
-      <body>{children}</body>
+      <body>
+        <UserProvider>
+          <NavBar />
+        </UserProvider>
+        {children}
+      </body>
     </html>
   );
 }
