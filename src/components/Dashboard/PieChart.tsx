@@ -1,11 +1,14 @@
 import Grid from "@mui/material/Grid";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import { Audition } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
 interface MetricProps {
   auditions: Audition[];
 }
-export const Metrics = (props: MetricProps) => {
+export const PieChart = (props: MetricProps) => {
+  ChartJS.register(ArcElement, Tooltip, Legend, Title);
+
   const { auditions } = props;
   const chartAuditions = (auditions: Audition[]) => {
     const pieChartLabel: string = "Type Breakdown";
@@ -74,7 +77,7 @@ export const Metrics = (props: MetricProps) => {
       },
       title: {
         display: true,
-        text: "Breakdown of Statuses",
+        text: "Breakdown by Type",
       },
     },
   };
@@ -99,6 +102,7 @@ export const Metrics = (props: MetricProps) => {
           data={pieChartData}
           options={options}
         />
+        <p>Number of Auditions - {auditions.length}</p>
       </Grid>
     </Grid>
   );
