@@ -69,4 +69,12 @@ export default {
     },
     CASTING: {},
   },
+  NAV_BAR: {
+    CONTAINER: {
+      NAV_BAR: "nav-bar-container",
+    },
+    BUTTONS: {
+      LOGOUT: "log-out-button",
+    },
+  },
 };

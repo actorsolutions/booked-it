@@ -1,18 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  Title,
-  BarElement,
-} from "chart.js";
-
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { Stack, IconButton } from "@mui/material";
+import { Stack, IconButton, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -24,23 +13,14 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
-import { Metrics } from "./Metrics";
+import { PieChart } from "./PieChart";
 import CY_TAGS from "@/support/cypress_tags";
+import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
 export const Dashboard = () => {
   const { user } = useUser();
-  ChartJS.register(
-    ArcElement,
-    Tooltip,
-    Legend,
-    CategoryScale,
-    LinearScale,
-    Title,
-    BarElement
-  );
-
   const [auditions, setAuditions] = useState<Audition[]>([]);
 
   const [open, setOpen] = useState<boolean>(false);
@@ -58,55 +38,66 @@ export const Dashboard = () => {
   if (user) {
     return (
       <Container maxWidth="md">
-        <a href={"/api/auth/logout"}>Logout</a>
-
+        {/*Saving this here for Todd*/}
         {/*<pre>*/}
         {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}
         {/*</pre>*/}
-
-        <Stack
-          rowGap={5}
-          data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
-        >
-          <Metrics auditions={auditions} />
-
-          {auditions.length === 0 ? (
-            <p>No Auditions Added</p>
-          ) : (
-            auditions.map((audition: Audition, index: number) => {
-              return (
-                <SwipeableRow key={audition.id}>
-                  <AuditionRow audition={audition} index={index} />
-                </SwipeableRow>
-              );
-            })
-          )}
-        </Stack>
-        <div
-          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
-        >
-          <IconButton
-            data-cy={AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION}
-            onClick={handleOpen}
-          >
-            <AddCircle fontSize="large" color="primary" />
-          </IconButton>
-        </div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <DialogContent>
-            <DialogTitle> Add Audition</DialogTitle>
-            <AuditionForm
-              auditions={auditions}
-              setAuditions={setAuditions}
-              handleClose={handleClose}
-            />
-          </DialogContent>
-        </Dialog>
+        <Grid container spacing={2}>
+          <Grid item xs>
+            <DashboardWrapper>
+              <PieChart auditions={auditions} />
+            </DashboardWrapper>
+          </Grid>
+          <Grid item xs>
+            <DashboardWrapper>
+              <Stack
+                rowGap={3}
+                data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+              >
+                {auditions.length === 0 ? (
+                  <p>No Auditions Added</p>
+                ) : (
+                  auditions.map((audition: Audition, index: number) => {
+                    return (
+                      <SwipeableRow key={audition.id}>
+                        <AuditionRow audition={audition} index={index} />
+                      </SwipeableRow>
+                    );
+                  })
+                )}
+              </Stack>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  width: "100%",
+                }}
+              >
+                <IconButton
+                  data-cy={AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION}
+                  onClick={handleOpen}
+                >
+                  <AddCircle fontSize="large" color="primary" />
+                </IconButton>
+              </div>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <DialogContent>
+                  <DialogTitle> Add Audition</DialogTitle>
+                  <AuditionForm
+                    auditions={auditions}
+                    setAuditions={setAuditions}
+                    handleClose={handleClose}
+                  />
+                </DialogContent>
+              </Dialog>
+            </DashboardWrapper>
+          </Grid>
+        </Grid>
       </Container>
     );
   }
