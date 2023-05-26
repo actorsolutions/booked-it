@@ -1,4 +1,15 @@
 import { useState, useEffect } from "react";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  Title,
+  BarElement,
+} from "chart.js";
+
 import { Login } from "../Login";
 import { Container } from "@mui/system";
 import { Stack, IconButton } from "@mui/material";
@@ -13,12 +24,23 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
+import { Metrics } from "./Metrics";
 import CY_TAGS from "@/support/cypress_tags";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
 export const Dashboard = () => {
   const { user } = useUser();
+  ChartJS.register(
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    Title,
+    BarElement
+  );
+
   const [auditions, setAuditions] = useState<Audition[]>([]);
 
   const [open, setOpen] = useState<boolean>(false);
@@ -38,13 +60,16 @@ export const Dashboard = () => {
       <Container maxWidth="md">
         <a href={"/api/auth/logout"}>Logout</a>
 
-        <pre>
-          <code>{JSON.stringify(auditions[0], null, 4)}</code>
-        </pre>
+        {/*<pre>*/}
+        {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}
+        {/*</pre>*/}
+
         <Stack
-          rowGap={1}
+          rowGap={5}
           data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
         >
+          <Metrics auditions={auditions} />
+
           {auditions.length === 0 ? (
             <p>No Auditions Added</p>
           ) : (
