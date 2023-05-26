@@ -76,7 +76,7 @@ export const AuditionRow = ({ audition, index, auditions, setAuditions }: Auditi
             <Grid container spacing={2} id={'grid-container'}>
                 <Accordion expanded={expanded} onChange={handleAccordionChange} sx={{ width: "100%" }} id={'accordion-container'}>
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
+                        expandIcon={<ExpandMoreIcon data-cy={`${AUDITIONS_SECTION.BUTTONS.EXPAND_MORE}`} />}
                         id="accordion-header"
                         sx={{ display: "flex", alignItems: 'center' }}
                     >
@@ -87,7 +87,7 @@ export const AuditionRow = ({ audition, index, auditions, setAuditions }: Auditi
                             <div> Project: {audition.project} </div>
                         </Grid>
                         <Grid item xs={4}>
-                            <Button variant="outlined" onClick={handleArchiveClick}>
+                            <Button variant="outlined" data-cy={`${AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION}`} onClick={handleArchiveClick}>
                                 {archived ? "Unarchive" : "Archive"}
                             </Button>
                         </Grid>
@@ -98,7 +98,7 @@ export const AuditionRow = ({ audition, index, auditions, setAuditions }: Auditi
                         </Grid>
                     </AccordionSummary>
                     {expanded && (
-                        <AccordionDetails>
+                        <AccordionDetails data-cy={`${AUDITIONS_SECTION.CONTAINERS.ACCORDION_DETAILS}`}>
                             <Grid container spacing={2}>
                                 <Grid item xs={4}>
                                     <div> Type: {audition.type} </div>
@@ -110,7 +110,7 @@ export const AuditionRow = ({ audition, index, auditions, setAuditions }: Auditi
                                     <div>Notes: {audition.notes}</div>
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <Button variant="contained" onClick={() => {
+                                    <Button variant="contained" data-cy={`${AUDITIONS_SECTION.BUTTONS.DELETE_AUDITION}`} onClick={() => {
                                         handleDelete()
                                     }}>Delete</Button>
                                 </Grid>
