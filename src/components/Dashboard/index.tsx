@@ -43,12 +43,12 @@ export const Dashboard = () => {
         {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}
         {/*</pre>*/}
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid item xs>
             <DashboardWrapper>
               <PieChart auditions={auditions} />
             </DashboardWrapper>
           </Grid>
-          <Grid item>
+          <Grid item xs>
             <DashboardWrapper>
               <Stack
                 rowGap={3}
