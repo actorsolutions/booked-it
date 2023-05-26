@@ -22,6 +22,8 @@ describe("Landing Page E2E Tests", () => {
     login();
     cy.visit("/");
     cy.wait("@Auth0");
+    shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER);
+    shouldBeVisible(LANDING_PAGE.GRAPH.PIE_CHART);
     shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0");
   });
 });

@@ -1,4 +1,15 @@
 import { useState, useEffect } from "react";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  Title,
+  BarElement,
+} from "chart.js";
+
 import { Login } from "../Login";
 import { Container } from "@mui/system";
 import { Stack, IconButton } from "@mui/material";
@@ -13,6 +24,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
+import { Metrics } from "./Metrics";
 import CY_TAGS from "@/support/cypress_tags";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 
@@ -39,9 +51,12 @@ export const Dashboard = () => {
       <Container maxWidth="md">
         {/*<a href={"/api/auth/logout"}>Logout</a>*/}
 
-        <pre>
-          <code>{JSON.stringify(auditions[0], null, 4)}</code>
-        </pre>
+        {/*<pre>*/}
+        {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}
+        {/*</pre>*/}
+          <DashboardWrapper>
+              <Metrics auditions={auditions} />
+          </DashboardWrapper>
         <DashboardWrapper>
           <Stack
             rowGap={3}
@@ -75,6 +90,35 @@ export const Dashboard = () => {
           </div>
         </DashboardWrapper>
 
+
+        <Stack
+          rowGap={5}
+          data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+        >
+          <Metrics auditions={auditions} />
+
+          {auditions.length === 0 ? (
+            <p>No Auditions Added</p>
+          ) : (
+            auditions.map((audition: Audition, index: number) => {
+              return (
+                <SwipeableRow key={audition.id}>
+                  <AuditionRow audition={audition} index={index} />
+                </SwipeableRow>
+              );
+            })
+          )}
+        </Stack>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+        >
+          <IconButton
+            data-cy={AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION}
+            onClick={handleOpen}
+          >
+            <AddCircle fontSize="large" color="primary" />
+          </IconButton>
+        </div>
         <Dialog
           open={open}
           onClose={handleClose}

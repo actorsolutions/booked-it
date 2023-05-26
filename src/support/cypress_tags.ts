@@ -5,6 +5,10 @@ export default {
       LOG_IN: "log-in-button",
       LOG_OUT: "log-out-button",
     },
+    GRAPH: {
+      PIE_CHART: "audition-pie-chart",
+      BAR_CHART: "audition-bar-chart",
+    },
   },
   AUDITIONS_SECTION: {
     CONTAINERS: {
