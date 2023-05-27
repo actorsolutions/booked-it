@@ -4,7 +4,6 @@ import { Dashboard } from "@/components/Dashboard";
 import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-
 import React from "react";
 
 export default function Home() {
@@ -15,7 +14,7 @@ export default function Home() {
           id={"MainContainer"}
           maxWidth={false}
           sx={{
-            height: "100vh",
+            height: "fit-content",
             bgcolor: "#caccce",
           }}
         >

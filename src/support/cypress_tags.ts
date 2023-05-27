@@ -19,6 +19,12 @@ export default {
       CREATE_AUDITION: "create-audition-button",
     },
   },
+  NEEDS_ATTENTION_SECTION: {
+    CONTAINER: {
+      NEEDS_ATTENTION_CONTAINER: "needs-attention-container",
+      NEEDS_ATTENTION_ROW: "needs-attention-row-",
+    },
+  },
   AUDITION_FORM: {
     CONTAINERS: {
       FORM_CONTAINER: "audition-form-container",

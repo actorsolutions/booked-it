@@ -16,6 +16,7 @@ import { AuditionForm } from "@/components/AuditionForm";
 import { PieChart } from "./PieChart";
 import CY_TAGS from "@/support/cypress_tags";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
+import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
@@ -46,6 +47,11 @@ export const Dashboard = () => {
           <Grid item xs>
             <DashboardWrapper>
               <PieChart auditions={auditions} />
+            </DashboardWrapper>
+          </Grid>
+          <Grid item>
+            <DashboardWrapper>
+              <NeedsAttention auditions={auditions} />
             </DashboardWrapper>
           </Grid>
           <Grid item xs>
