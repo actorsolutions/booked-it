@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { Stack, IconButton, Grid } from "@mui/material";
+import { Stack, IconButton, Grid, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -43,23 +43,25 @@ export const Dashboard = () => {
         {/*<pre>*/}
         {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}
         {/*</pre>*/}
-        <Grid container spacing={2}>
-          <Grid item xs>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
             <DashboardWrapper>
               <PieChart auditions={auditions} />
             </DashboardWrapper>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} sm={6}>
             <DashboardWrapper>
               <NeedsAttention auditions={auditions} />
             </DashboardWrapper>
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12}>
             <DashboardWrapper>
               <Stack
                 rowGap={3}
                 data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
               >
+                <Typography variant="overline">Auditions</Typography>
+
                 {auditions.length === 0 ? (
                   <p>No Auditions Added</p>
                 ) : (
