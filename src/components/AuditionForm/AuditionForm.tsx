@@ -20,7 +20,7 @@ import { createAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
-import CircularProgress from "@mui/material/CircularProgress";
+import { LoadingCircle } from "@/components/common/LoadingCircle";
 
 interface Props {
   auditions: Audition[];
@@ -213,19 +213,7 @@ export const AuditionForm = (props: Props) => {
         >
           Add Audition
         </Button>
-        {submissionState.loading && (
-          <CircularProgress
-            size={24}
-            sx={{
-              color: "blue",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              marginTop: "-12px",
-              marginLeft: "-12px",
-            }}
-          />
-        )}
+        {submissionState.loading && <LoadingCircle />}
       </Form>
     </Container>
   );
