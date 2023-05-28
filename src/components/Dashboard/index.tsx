@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
 import { Stack, IconButton, Grid } from "@mui/material";
@@ -16,28 +16,35 @@ import { AuditionForm } from "@/components/AuditionForm";
 import { PieChart } from "./PieChart";
 import CY_TAGS from "@/support/cypress_tags";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
+import { LoadingCircle } from "@/components/common/LoadingCircle";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
 export const Dashboard = () => {
   const { user } = useUser();
   const [auditions, setAuditions] = useState<Audition[]>([]);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    SignUpOrSignIn().then(() => {
-      getAuditions().then((response) => {
-        setAuditions(response.auditions);
+    if (user) {
+      SignUpOrSignIn().then(() => {
+        setLoading(true);
+
+        getAuditions().then((response) => {
+          setLoading(false);
+          setAuditions(response.auditions);
+        });
       });
-    });
+    }
   }, [user]);
 
   if (user) {
     return (
       <Container maxWidth="md">
+        {loading && <LoadingCircle />}
         {/*Saving this here for Todd*/}
         {/*<pre>*/}
         {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}

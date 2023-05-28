@@ -14,7 +14,8 @@
     "generate": "npx prisma generate --schema ./prisma/schema.prisma",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev",
     "seed:test": "dotenv -e .env.test ts-node src/utils/seedDb.ts",
-    "test": "DOTENV_CONFIG_PATH=./.env.test jest --setupFiles dotenv/config"
+    "test": "DOTENV_CONFIG_PATH=./.env.test jest --setupFiles dotenv/config",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "type": "module",
   "dependencies": {
