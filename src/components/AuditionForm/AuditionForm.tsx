@@ -20,6 +20,8 @@ import { createAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
+import { LoadingCircle } from "@/components/common/LoadingCircle";
+
 interface Props {
   auditions: Audition[];
   setAuditions: Dispatch<SetStateAction<Audition[]>>;
@@ -28,7 +30,15 @@ interface Props {
 export const AuditionForm = (props: Props) => {
   const { AUDITION_FORM } = CY_TAGS;
   const { setAuditions, auditions, handleClose } = props;
+  const customValidation = async (arrayOfFields: fields[]) => {
+    return trigger(arrayOfFields as fields[], { shouldFocus: true });
+  };
 
+  const [open, setOpen] = useState(false);
+  const [submissionState, setSubmissionState] = useState<SubmissionState>({
+    loading: false,
+    submitted: false,
+  });
   const {
     getValues,
     control,
@@ -51,7 +61,10 @@ export const AuditionForm = (props: Props) => {
       archived: false,
     },
   });
-
+  interface SubmissionState {
+    loading: boolean;
+    submitted: boolean;
+  }
   type fields =
     | "date"
     | "project"
@@ -70,11 +83,6 @@ export const AuditionForm = (props: Props) => {
     "type",
     "status",
   ];
-  const customValidation = async (arrayOfFields: fields[]) => {
-    return trigger(arrayOfFields as fields[], { shouldFocus: true });
-  };
-
-  const [open, setOpen] = useState(false);
 
   const watchStatus = watch("status");
   const watchCasting = watch("casting");
@@ -85,12 +93,24 @@ export const AuditionForm = (props: Props) => {
    * Triggers Validation on form, will not send to API if form is not valid
    */
   const handleCreate = async () => {
+    setSubmissionState({
+      loading: true,
+      submitted: false,
+    });
     if (await customValidation(createFields as fields[])) {
       const addedAudition = await createAudition(getValues());
       auditions.push(addedAudition);
       setAuditions(auditions);
+      setSubmissionState({
+        loading: false,
+        submitted: true,
+      });
       return true;
     }
+    setSubmissionState({
+      loading: false,
+      submitted: false,
+    });
     return false;
   };
 
@@ -193,6 +213,7 @@ export const AuditionForm = (props: Props) => {
         >
           Add Audition
         </Button>
+        {submissionState.loading && <LoadingCircle />}
       </Form>
     </Container>
   );
