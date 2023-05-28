@@ -59,7 +59,6 @@ export const registerOrSignInUser = async (
     res.status(500).send({ message: "Please sign in" });
   } else {
     const { email, sid } = session.user;
-    console.log(session.user);
     const registeredUser = await Users.signUpOrSignIn({ email, sid }, db);
     await updateSession(req, res, {
       ...session,
