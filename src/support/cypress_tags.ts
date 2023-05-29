@@ -5,6 +5,10 @@ export default {
       LOG_IN: "log-in-button",
       LOG_OUT: "log-out-button",
     },
+    GRAPH: {
+      PIE_CHART: "audition-pie-chart",
+      BAR_CHART: "audition-bar-chart",
+    },
   },
   AUDITIONS_SECTION: {
     CONTAINERS: {
@@ -22,6 +26,13 @@ export default {
   AUDITION_FORM: {
     CONTAINERS: {
       FORM_CONTAINER: "audition-form-container",
+    },
+    ERRORS: {
+      COMPANY: "audition-company-error",
+      DATE: "audition-date-error",
+      PROJECT: "audition-project-error",
+      STATUS: "audition-status-error",
+      TYPE: "audition-type-error",
     },
     INPUTS: {
       LABELS: {
@@ -61,5 +72,13 @@ export default {
       ADD_AUDITION: "add-audition-button",
     },
     CASTING: {},
+  },
+  NAV_BAR: {
+    CONTAINER: {
+      NAV_BAR: "nav-bar-container",
+    },
+    BUTTONS: {
+      LOGOUT: "log-out-button",
+    },
   },
 };

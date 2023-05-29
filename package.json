@@ -14,7 +14,8 @@
     "generate": "npx prisma generate --schema ./prisma/schema.prisma",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev",
     "seed:test": "dotenv -e .env.test ts-node src/utils/seedDb.ts",
-    "test": "DOTENV_CONFIG_PATH=./.env.test jest --setupFiles dotenv/config"
+    "test": "DOTENV_CONFIG_PATH=./.env.test jest --setupFiles dotenv/config",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "type": "module",
   "dependencies": {
@@ -35,6 +36,7 @@
     "babel-jest": "^29.5.0",
     "babel-loader": "^9.1.2",
     "bootstrap": "^5.2.3",
+    "chart.js": "^4.3.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "eslint": "^8.35.0",
@@ -47,6 +49,7 @@
     "node-polyfill-webpack-plugin": "^2.0.1",
     "prettier": "^2.8.4",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "ts-jest": "^29.0.5",

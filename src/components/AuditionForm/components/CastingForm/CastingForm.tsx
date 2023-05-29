@@ -31,7 +31,6 @@ export const CastingForm = (props: FormProps<AuditionFormData>) => {
     handleClose();
   };
 
-  console.log({ initialCastingList });
   return (
     <Grid container direction="column">
       <Grid item>
