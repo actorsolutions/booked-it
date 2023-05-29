@@ -14,7 +14,7 @@ export default function Home() {
           id={"MainContainer"}
           maxWidth={false}
           sx={{
-            height: "fit-content",
+            height: "100vh",
             bgcolor: "#caccce",
           }}
         >
