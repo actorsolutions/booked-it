@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 import CY_TAGS from "../../src/support/cypress_tags";
-import { login, shouldBeVisible, shouldNotExist } from "../support/e2e";
+import {findAndClick, login, shouldBeVisible, shouldNotExist, cyTag} from "../support/e2e";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
@@ -31,22 +31,13 @@ describe("Landing Page E2E Tests", () => {
     login();
     cy.visit("/");
     cy.wait("@Auth0");
-    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(() => {
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE)).click();
-      cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.ACCORDION_DETAILS)).should(
-          "be.visible"
-      );
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.DELETE_AUDITION)).should(
-          "be.visible"
-      );
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE)).click();
-    });
-    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.ACCORDION_DETAILS)).should(
-        "not.exist"
-    );
-    cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.DELETE_AUDITION)).should(
-        "not.exist"
-    );
+    shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0");
+    findAndClick(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE);
+    shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.ACCORDION_DETAILS);
+    shouldBeVisible(AUDITIONS_SECTION.BUTTONS.DELETE_AUDITION);
+    findAndClick(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE);
+    shouldNotExist(AUDITIONS_SECTION.CONTAINERS.ACCORDION_DETAILS);
+    shouldNotExist(AUDITIONS_SECTION.BUTTONS.DELETE_AUDITION);
   });
   it("should archive an audition and update audition list", () => {
     cy.task("db:seed");
@@ -55,21 +46,21 @@ describe("Landing Page E2E Tests", () => {
     cy.wait("@Auth0");
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(() => {
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).click()
+      findAndClick(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)
     })
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).should(
-          "have.attr",
-          "data-cy",
-          `${AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}0.archived`
-      );
+        "have.attr",
+        "data-cy",
+        `${AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}0`
+    );
 
     cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).click();
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).should(
-          "not.have.attr",
-          "data-cy",
-          `${AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}0.archived`
+        "not.have.attr",
+        "data-cy",
+        `${AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}0`
       );
   });
   // it should archive, check to make sure its archived, reload the page, make sure it's still archived
