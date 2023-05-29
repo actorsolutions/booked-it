@@ -5,6 +5,7 @@ export default function Head() {
       <meta content="width=device-width, initial-scale=1" name="viewport" />
       <meta name="description" content="Track your Auditions" />
       <link rel="icon" href="/assets/checkmark.png" />
+      <link rel="manifest" href="/manifest.json" />
     </>
   );
 }
