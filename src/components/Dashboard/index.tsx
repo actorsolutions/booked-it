@@ -67,7 +67,7 @@ export const Dashboard = () => {
                   auditions.map((audition: Audition, index: number) => {
                     return (
                       <SwipeableRow key={audition.id}>
-                        <AuditionRow audition={audition} index={index} />
+                        <AuditionRow audition={audition} index={index} auditions={auditions} setAuditions={setAuditions}/>
                       </SwipeableRow>
                     );
                   })
