@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { Stack, IconButton, Grid } from "@mui/material";
+import { IconButton, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddCircle from "@mui/icons-material/AddCircle";
-import { SwipeableRow } from "../SwipeableRow";
-import { AuditionRow } from "../AuditionRow";
 import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
 import { AuditionForm } from "@/components/AuditionForm";
 import { PieChart } from "./PieChart";
+import { AuditionList } from "@/components/Dashboard/AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
@@ -57,22 +56,7 @@ export const Dashboard = () => {
           </Grid>
           <Grid item xs>
             <DashboardWrapper>
-              <Stack
-                rowGap={3}
-                data-cy={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
-              >
-                {auditions.length === 0 ? (
-                  <p>No Auditions Added</p>
-                ) : (
-                  auditions.map((audition: Audition, index: number) => {
-                    return (
-                      <SwipeableRow key={audition.id}>
-                        <AuditionRow audition={audition} index={index} />
-                      </SwipeableRow>
-                    );
-                  })
-                )}
-              </Stack>
+              <AuditionList auditions={auditions} setAuditions={setAuditions} />
               <div
                 style={{
                   display: "flex",
