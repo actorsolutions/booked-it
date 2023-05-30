@@ -163,7 +163,10 @@ describe("Audition [id] integration tests", () => {
 
         const res = await request
             .put(`/${TEST_AUDITION.id}`)
-            .set("Cookie", [`appSession=${session}`]).send(updatedAudition);
+            .set("Content-type", "text/plain")
+            .set("Accept", "application/json")
+            .set("Cookie", [`appSession=${session}`])
+            .send(JSON.stringify(updatedAudition))
 
         expect(res.statusCode).toEqual(401);
         expect(res.body).toEqual({

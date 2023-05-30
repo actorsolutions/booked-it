@@ -83,19 +83,19 @@ export const getAudition = async (
 };
 
 export const updateAudition = async (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  db = prisma.audition
+    req: NextApiRequest,
+    res: NextApiResponse,
+    db = prisma.audition
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
   const auditionData = JSON.parse(req.body);
   const audition = new Audition(auditionData);
-  if (audition.userId != userId) {
-    return res.status(401).send({ message: "Unauthorized" });
+  if (audition.userId !== userId) {
+    res.status(401).send({ message: "Unauthorized" });
   } else {
     await audition.save(db);
-    return res.status(200).send(audition);
+    res.status(200).send(audition);
   }
 };
 
