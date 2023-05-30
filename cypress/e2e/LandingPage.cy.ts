@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 import CY_TAGS from "../../src/support/cypress_tags";
-import {findAndClick, login, shouldBeVisible, shouldNotExist, cyTag} from "../support/e2e";
+import {findAndClick, login, shouldBeVisible, shouldNotExist, shouldContainText, cyTag} from "../support/e2e";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
@@ -46,9 +46,9 @@ describe("Landing Page E2E Tests", () => {
     cy.wait("@Auth0");
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(() => {
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Archive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Archive")
       findAndClick(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION);
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Unarchive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Unarchive")
     })
   });
   it('should archive an audition, confirm it is archived, reload the page, confirm archive has persisted', () => {
@@ -58,15 +58,15 @@ describe("Landing Page E2E Tests", () => {
     cy.wait("@Auth0");
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(() => {
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Archive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Archive");
       findAndClick(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION);
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Unarchive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Unarchive")
     });
 
     cy.reload();
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(() => {
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Unarchive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Unarchive");
     });
   });
   it('should unarchive unarchive an audition, confirm it is unarchived, reload, confirm unarchive persisted', () => {
@@ -76,17 +76,17 @@ describe("Landing Page E2E Tests", () => {
     cy.wait("@Auth0");
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(() => {
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Archive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Archive");
       findAndClick(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION);
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Unarchive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Unarchive");
       findAndClick(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION);
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Archive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Archive");
     });
 
     cy.reload();
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(() => {
-      cy.get(cyTag(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION)).should("contain.text", "Archive");
+      shouldContainText(AUDITIONS_SECTION.BUTTONS.ARCHIVE_AUDITION, "Archive");
     });
   });
   it("should delete an audition and update audition list", () => {

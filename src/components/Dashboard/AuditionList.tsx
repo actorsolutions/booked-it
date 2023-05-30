@@ -30,6 +30,5 @@ export const AuditionList = ({ auditions, setAuditions }: AuditionListProps) => 
             })
         )}
       </Stack>
-
   )
 }
