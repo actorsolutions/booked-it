@@ -14,9 +14,13 @@ export default {
     CONTAINERS: {
       AUDITIONS_CONTAINER: "auditions-container",
       AUDITION_ROW: "audition-row-",
+      ACCORDION_DETAILS: "accordion-details"
     },
     BUTTONS: {
       CREATE_AUDITION: "create-audition-button",
+      EXPAND_MORE: "expand-more-button",
+      DELETE_AUDITION: "delete-audition-button",
+      ARCHIVE_AUDITION: "archive-audition-button"
     },
   },
   AUDITION_FORM: {
