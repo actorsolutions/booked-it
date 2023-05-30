@@ -88,3 +88,7 @@ export const shouldBeVisible = (tag: string) => {
 export const shouldNotExist = (tag: string) => {
   cy.get(cyTag(tag)).should("not.exist");
 };
+
+export const shouldContainText = (tag: string, text: string) => {
+  cy.get(cyTag(tag)).should("contain.text", text);
+}
