@@ -1,13 +1,14 @@
 import { FormGroupRow, FormLabel, FormInput } from "../../../common/Form";
 import { FormValues } from "./index";
 import { Container } from "@mui/material";
-import { Control, FieldValues } from "react-hook-form";
+import {Control, FieldValues, UseFormRegister} from "react-hook-form";
 
 export interface Props<T extends FieldValues> {
   control: Control<T>;
+  register: UseFormRegister<T>;
 }
 export const FirstNameInput = (props: Props<FormValues>) => {
-  const { control } = props;
+  const { control, register } = props;
 
   return (
     <FormGroupRow>
@@ -24,6 +25,7 @@ export const FirstNameInput = (props: Props<FormValues>) => {
           inputId="casting-first-name"
           control={control}
           field="fName"
+          {...register("fName", { required: true })}
         />
       </Container>
     </FormGroupRow>
