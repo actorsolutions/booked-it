@@ -185,5 +185,6 @@ describe("Landing Page E2E Tests", () => {
         );
       }
     );
+    shouldNotExist(NEEDS_ATTENTION_SECTION.CONTAINER.NEEDS_ATTENTION_ROW + "0");
   });
 });
