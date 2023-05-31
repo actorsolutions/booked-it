@@ -119,9 +119,7 @@ export const AuditionRow = ({
         >
           <AccordionSummary
             expandIcon={
-              <ExpandMoreIcon
-                data-cy={`${AUDITIONS_SECTION.BUTTONS.EXPAND_MORE}`}
-              />
+              <ExpandMoreIcon data-cy={`${buttonPrefix}expand-more-button`} />
             }
             id="accordion-header"
             sx={{ display: { sm: "flex" }, alignItems: "center" }}

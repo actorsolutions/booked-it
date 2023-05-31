@@ -3,6 +3,7 @@ import { Audition } from "@/types";
 import { AuditionList } from "./AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
 import React, { Dispatch, SetStateAction } from "react";
+import { Typography } from "@mui/material";
 interface Props {
   auditions: Audition[];
   setAuditions: Dispatch<SetStateAction<Audition[]>>;
@@ -26,16 +27,26 @@ export const NeedsAttention = ({ auditions, setAuditions }: Props) => {
     setAuditions(merged);
   }, [needsAttention]);
 
-  if (filteredArray.length < 1) {
-    return <p>Yay! You are all caught up!</p>;
-  }
   return (
-    <AuditionList
-      buttonPrefix={NEEDS_ATTENTION_SECTION.BUTTONS.PREFIX}
-      auditions={filteredArray}
-      setAuditions={setNeedsAttention}
-      rowCyTag={NEEDS_ATTENTION_SECTION.CONTAINER.NEEDS_ATTENTION_ROW}
-      listCyTag={NEEDS_ATTENTION_SECTION.CONTAINER.NEEDS_ATTENTION_CONTAINER}
-    />
+    <>
+      <Typography variant="overline" display="block" gutterBottom>
+        Needs Attention
+      </Typography>
+      {filteredArray.length < 1 ? (
+        <Typography variant="body1" display="block" gutterBottom>
+          All Caught Up!
+        </Typography>
+      ) : (
+        <AuditionList
+          buttonPrefix={NEEDS_ATTENTION_SECTION.BUTTONS.PREFIX}
+          auditions={filteredArray}
+          setAuditions={setNeedsAttention}
+          rowCyTag={NEEDS_ATTENTION_SECTION.CONTAINER.NEEDS_ATTENTION_ROW}
+          listCyTag={
+            NEEDS_ATTENTION_SECTION.CONTAINER.NEEDS_ATTENTION_CONTAINER
+          }
+        />
+      )}
+    </>
   );
 };

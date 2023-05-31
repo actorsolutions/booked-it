@@ -19,7 +19,7 @@ export default {
     BUTTONS: {
       PREFIX: "audition-",
       CREATE_AUDITION: "create-audition-button",
-      EXPAND_MORE: "expand-more-button",
+      EXPAND_MORE: "audition-expand-more-button",
       DELETE_AUDITION: "audition-delete-button",
       ARCHIVE_AUDITION: "audition-archive-button",
     },
@@ -31,6 +31,7 @@ export default {
     },
     BUTTONS: {
       PREFIX: "needs-attention-",
+      EXPAND_MORE: "needs-attention-expand-more-button",
       DELETE_AUDITION: "needs-attention-delete-button",
       ARCHIVE_AUDITION: "needs-attention-archive-button",
     },
