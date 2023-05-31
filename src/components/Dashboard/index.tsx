@@ -15,6 +15,7 @@ import { PieChart } from "./PieChart";
 import { AuditionList } from "@/components/Dashboard/AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
+import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
@@ -31,7 +32,6 @@ export const Dashboard = () => {
     if (user) {
       SignUpOrSignIn().then(() => {
         setLoading(true);
-
         getAuditions().then((response) => {
           setLoading(false);
           setAuditions(response.auditions);
@@ -48,15 +48,29 @@ export const Dashboard = () => {
         {/*<pre>*/}
         {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}
         {/*</pre>*/}
-        <Grid container spacing={2}>
-          <Grid item xs>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
             <DashboardWrapper>
               <PieChart auditions={auditions} />
             </DashboardWrapper>
           </Grid>
-          <Grid item xs>
+          <Grid item xs={12} sm={6}>
             <DashboardWrapper>
-              <AuditionList auditions={auditions} setAuditions={setAuditions} />
+              <NeedsAttention
+                auditions={auditions}
+                setAuditions={setAuditions}
+              />
+            </DashboardWrapper>
+          </Grid>
+          <Grid item xs={12}>
+            <DashboardWrapper>
+              <AuditionList
+                auditions={auditions}
+                setAuditions={setAuditions}
+                buttonPrefix={AUDITIONS_SECTION.BUTTONS.PREFIX}
+                listCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+                rowCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}
+              />
               <div
                 style={{
                   display: "flex",
@@ -74,8 +88,8 @@ export const Dashboard = () => {
               <Dialog
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                aria-labelledby="audition-form"
+                aria-describedby="audition-form-modal"
               >
                 <DialogContent>
                   <DialogTitle> Add Audition</DialogTitle>

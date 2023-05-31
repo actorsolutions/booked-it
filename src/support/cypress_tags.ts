@@ -14,13 +14,26 @@ export default {
     CONTAINERS: {
       AUDITIONS_CONTAINER: "auditions-container",
       AUDITION_ROW: "audition-row-",
-      ACCORDION_DETAILS: "accordion-details"
+      ACCORDION_DETAILS: "accordion-details",
     },
     BUTTONS: {
+      PREFIX: "audition-",
       CREATE_AUDITION: "create-audition-button",
-      EXPAND_MORE: "expand-more-button",
-      DELETE_AUDITION: "delete-audition-button",
-      ARCHIVE_AUDITION: "archive-audition-button"
+      EXPAND_MORE: "audition-expand-more-button",
+      DELETE_AUDITION: "audition-delete-button",
+      ARCHIVE_AUDITION: "audition-archive-button",
+    },
+  },
+  NEEDS_ATTENTION_SECTION: {
+    CONTAINER: {
+      NEEDS_ATTENTION_CONTAINER: "needs-attention-container",
+      NEEDS_ATTENTION_ROW: "needs-attention-row-",
+    },
+    BUTTONS: {
+      PREFIX: "needs-attention-",
+      EXPAND_MORE: "needs-attention-expand-more-button",
+      DELETE_AUDITION: "needs-attention-delete-button",
+      ARCHIVE_AUDITION: "needs-attention-archive-button",
     },
   },
   AUDITION_FORM: {

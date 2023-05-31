@@ -1,4 +1,4 @@
-import {Audition, AuditionsResponse, CreateAuditionData} from "@/types";
+import { Audition, AuditionsResponse, CreateAuditionData } from "@/types";
 
 // Get Auditions from server, gets userId from session in server
 export const getAuditions = async (): Promise<AuditionsResponse> => {
@@ -18,12 +18,12 @@ export const createAudition = async (data: CreateAuditionData) => {
 };
 
 export const updateAudition = async (data: Audition) => {
-  await fetch(`/api/auditions/${data.id}`, {
+  data.casting = [];
+  const response = await fetch(`/api/auditions/${data.id}`, {
     method: "PUT",
     body: JSON.stringify(data),
-  }).then((data) => {
-    return data.json();
-  })
+  });
+  return await response.json();
 };
 
 export const deleteAudition = async (data: Audition) => {
@@ -31,12 +31,5 @@ export const deleteAudition = async (data: Audition) => {
     method: "DELETE",
   }).then((data) => {
     return data.json();
-  })
-}
-
-
-
-
-
-
-
+  });
+};
