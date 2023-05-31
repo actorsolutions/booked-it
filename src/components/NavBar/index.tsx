@@ -17,7 +17,7 @@ export const NavBar = () => {
   }
 
   return (
-    <Toolbar>
+    <Toolbar sx={{ display: "flex" }}>
       <Grid container data-cy={NAV_BAR.CONTAINER.NAV_BAR}>
         <Grid item xs={10}>
           <Image

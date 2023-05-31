@@ -16,6 +16,7 @@ export default function Home() {
           sx={{
             height: "100vh",
             bgcolor: "#caccce",
+            mt: "1rem",
           }}
         >
           <LocalizationProvider dateAdapter={AdapterDayjs}>

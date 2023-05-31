@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import {  IconButton, Grid } from "@mui/material";
+import { IconButton, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -32,7 +32,6 @@ export const Dashboard = () => {
     if (user) {
       SignUpOrSignIn().then(() => {
         setLoading(true);
-
         getAuditions().then((response) => {
           setLoading(false);
           setAuditions(response.auditions);
@@ -57,12 +56,21 @@ export const Dashboard = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <DashboardWrapper>
-              <NeedsAttention auditions={auditions} />
+              <NeedsAttention
+                auditions={auditions}
+                setAuditions={setAuditions}
+              />
             </DashboardWrapper>
           </Grid>
           <Grid item xs={12}>
             <DashboardWrapper>
-              <AuditionList auditions={auditions} setAuditions={setAuditions} />
+              <AuditionList
+                auditions={auditions}
+                setAuditions={setAuditions}
+                buttonPrefix={AUDITIONS_SECTION.BUTTONS.PREFIX}
+                listCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+                rowCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}
+              />
               <div
                 style={{
                   display: "flex",
@@ -80,8 +88,8 @@ export const Dashboard = () => {
               <Dialog
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                aria-labelledby="audition-form"
+                aria-describedby="audition-form-modal"
               >
                 <DialogContent>
                   <DialogTitle> Add Audition</DialogTitle>
