@@ -33,10 +33,14 @@ export const CastingForm = (props: FormProps<AuditionFormData>) => {
     const requiredFields = ["fName", "lName"];
 
     const handleClick = async () => {
-        const { company, fName, lName, role, casting} = getValues();
+        const { company, fName, lName, role, casting } = getValues();
         const name = fName + " " + lName;
-        if (await customValidation(requiredFields as fields[]) && casting.length < 3 ) {
+        if (
+            await customValidation(requiredFields as fields[]) &&
+            casting.length < 3
+        ) {
             setCasting([
+                ...casting,
                 {
                     name: name,
                     role: role,

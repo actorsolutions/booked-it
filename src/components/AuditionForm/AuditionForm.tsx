@@ -39,6 +39,7 @@ export const AuditionForm = (props: Props) => {
     loading: false,
     submitted: false,
   });
+
   const {
     getValues,
     control,
@@ -61,6 +62,11 @@ export const AuditionForm = (props: Props) => {
       archived: false,
     },
   });
+
+  const MAX_CASTING_ROWS = 3;
+  const [castingRowCount, setCastingRowCount] = useState(
+      getValues().casting?.length || 0
+  );
   interface SubmissionState {
     loading: boolean;
     submitted: boolean;
@@ -87,7 +93,13 @@ export const AuditionForm = (props: Props) => {
   const watchStatus = watch("status");
   const watchCasting = watch("casting");
 
-  const handleModal = () => setOpen(!open);
+  const handleModal = () => {
+    if (castingRowCount < MAX_CASTING_ROWS) {
+      setOpen(true);
+    }
+    setOpen(!open);
+  }
+
 
   /**
    * Triggers Validation on form, will not send to API if form is not valid
@@ -105,6 +117,7 @@ export const AuditionForm = (props: Props) => {
         loading: false,
         submitted: true,
       });
+      setCastingRowCount(watchCasting ? watchCasting.length : 0);
       return true;
     }
     setSubmissionState({
@@ -112,6 +125,12 @@ export const AuditionForm = (props: Props) => {
       submitted: false,
     });
     return false;
+  };
+
+  const handleDeleteCastingRow = (index: number) => {
+    const updatedCasting = [...(watchCasting || [])];
+    updatedCasting.splice(index, 1);
+    setValue("casting", updatedCasting);
   };
 
   const setCasting = (castingArray: Casting[]) => {
@@ -177,31 +196,31 @@ export const AuditionForm = (props: Props) => {
           <NotesTextArea control={control} register={register} />
         </Grid>
         <Grid item sm={8}>
-          {watchCasting
-            ? watchCasting.map((person, index) => {
-                return <CastingRow key={index} name={person?.name || ""} />;
-              })
-            : null}
-        </Grid>
-        <Grid item sm={8} md={6}>
-          <Button
-            onClick={() => {
-              handleModal();
-            }}
-          >
-            Add Casting
-          </Button>
-          <Dialog open={open} onClose={handleModal}>
-            <DialogContent>
-              <CastingForm
-                auditionControl={control}
-                initialCastingList={getValues().casting}
-                setCasting={setCasting}
-                handleClose={handleModal}
+          {watchCasting ? (
+              <CastingRow
+                  casting={watchCasting}
+                  onDelete={handleDeleteCastingRow}
+                  name={""}
               />
-            </DialogContent>
-          </Dialog>
+          ) : null}
         </Grid>
+        {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
+            <Grid item sm={8} md={6}>
+              <Button onClick={handleModal}>
+                Add Casting
+              </Button>
+              <Dialog open={open} onClose={handleModal}>
+                <DialogContent>
+                  <CastingForm
+                      auditionControl={control}
+                      initialCastingList={getValues().casting}
+                      setCasting={setCasting}
+                      handleClose={handleModal}
+                  />
+                </DialogContent>
+              </Dialog>
+            </Grid>
+        )}
         <Button
           data-cy={AUDITION_FORM.BUTTONS.ADD_AUDITION}
           onClick={() => {
