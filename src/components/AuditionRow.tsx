@@ -161,7 +161,7 @@ export const AuditionRow = ({
                   <div> Type: {audition.type} </div>
                 </Grid>
                 <Grid item xs={4}>
-                  <div>{casting.length > 0 ? casting[0].name : undefined}</div>
+                  <div data-cy={AUDITIONS_SECTION.CONTAINERS.CASTING_INFO}>{casting.length > 0 ? casting[0].name : undefined}</div>
                 </Grid>
                 <Grid item xs={4}>
                   <div>Notes: {audition.notes}</div>

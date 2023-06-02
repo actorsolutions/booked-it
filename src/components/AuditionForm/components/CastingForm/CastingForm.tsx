@@ -7,10 +7,12 @@ import { CompanyInput } from "./CompanyInput";
 import { RoleInput } from "./RoleInput";
 import { FormValues, FormProps } from "./index";
 import React from "react";
+import CY_TAGS from "@/support/cypress_tags";
 import { AuditionFormData } from "@/components/AuditionForm";
 
 export const CastingForm = (props: FormProps<AuditionFormData>) => {
     const { initialCastingList, setCasting, handleClose } = props;
+    const { CASTING_FORM } = CY_TAGS
     const {
         control,
         formState: { errors },
@@ -52,15 +54,15 @@ export const CastingForm = (props: FormProps<AuditionFormData>) => {
     };
 
     return (
-        <Grid container direction="column">
+        <Grid container direction="column" data-cy={CASTING_FORM.CONTAINERS.CASTING_CONTAINER}>
             <Grid item>
-                <FirstNameInput control={control} register={register} />
+                <FirstNameInput control={control} register={register} data-cy={CASTING_FORM.INPUTS.FIRST_NAME} />
                 {errors.fName && (
                     <Typography variant="overline">First Name is required!</Typography>
                 )}
             </Grid>
             <Grid item>
-                <LastNameInput control={control} register={register} />
+                <LastNameInput control={control} register={register} data-cy={CASTING_FORM.INPUTS.LAST_NAME} />
                 {errors.lName && (
                     <Typography variant="overline">Last Name is required!</Typography>
                 )}

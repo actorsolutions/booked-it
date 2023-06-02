@@ -7,7 +7,7 @@ import {
   TypeDropdown,
   CompanyInput,
   CallbackPicker,
-  CastingRow,
+  CastingList,
 } from "@/components/AuditionForm/components";
 import { Audition, Casting } from "@/types/auditions";
 import { CastingForm } from "./components/CastingForm/CastingForm";
@@ -197,16 +197,19 @@ export const AuditionForm = (props: Props) => {
         </Grid>
         <Grid item sm={8}>
           {watchCasting ? (
-              <CastingRow
+              <CastingList
                   casting={watchCasting}
                   onDelete={handleDeleteCastingRow}
                   name={""}
+                  listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
               />
           ) : null}
         </Grid>
         {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
             <Grid item sm={8} md={6}>
-              <Button onClick={handleModal}>
+              <Button
+                  data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
+                  onClick={handleModal}>
                 Add Casting
               </Button>
               <Dialog open={open} onClose={handleModal}>
