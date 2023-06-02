@@ -63,7 +63,7 @@ export const AuditionForm = (props: Props) => {
     },
   });
 
-  const MAX_CASTING_ROWS = 3;
+  const MAX_CASTING_ROWS = 2;
   const [castingRowCount, setCastingRowCount] = useState(
       getValues().casting?.length || 0
   );
