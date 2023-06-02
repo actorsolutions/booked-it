@@ -28,6 +28,7 @@ export const CastingList = (props: Props) => {
                   edge="end"
                   aria-label="delete"
                   onClick={() => handleDelete(index)}
+                  data-cy={AUDITION_FORM.BUTTONS.DELETE_CASTING}
               >
                 <CloseIcon />
               </IconButton>

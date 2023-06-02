@@ -56,7 +56,7 @@ export const CastingForm = (props: FormProps<AuditionFormData>) => {
     return (
         <Grid container direction="column" data-cy={CASTING_FORM.CONTAINERS.CASTING_CONTAINER}>
             <Grid item>
-                <FirstNameInput control={control} register={register} data-cy={CASTING_FORM.INPUTS.FIRST_NAME} />
+                <FirstNameInput control={control} register={register} />
                 {errors.fName && (
                     <Typography variant="overline">First Name is required!</Typography>
                 )}
@@ -79,6 +79,7 @@ export const CastingForm = (props: FormProps<AuditionFormData>) => {
                         clearErrors();
                         handleClick();
                     }}
+                    data-cy={CASTING_FORM.BUTTONS.ADD_PERSON}
                 >
                     Add Person
                 </Button>

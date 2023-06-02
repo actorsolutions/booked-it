@@ -84,7 +84,8 @@ export default {
     },
     BUTTONS: {
       ADD_AUDITION: "add-audition-button",
-      ADD_CASTING: "add-casting-button"
+      ADD_CASTING: "add-casting-button",
+      DELETE_CASTING: "delete-casting-button"
     },
     CASTING: {
       CASTING_LIST: "casting-list",
@@ -96,6 +97,10 @@ export default {
       CASTING_CONTAINER: "casting-form-container"
     },
     INPUTS: {
+      LABELS: {
+        FIRST_NAME: "first-name-input-label",
+        LAST_NAME: "last-name-input-label"
+      },
       FIRST_NAME: "first-name-input",
       LAST_NAME: "last-name-input"
     },

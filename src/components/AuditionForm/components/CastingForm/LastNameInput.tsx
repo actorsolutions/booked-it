@@ -2,6 +2,7 @@ import { FormGroupRow, FormLabel, FormInput } from "../../../common/Form";
 import { FormValues } from "./index";
 import { Container } from "@mui/material";
 import {Control, FieldValues, UseFormRegister} from "react-hook-form";
+import CY_TAGS from "@/support/cypress_tags";
 
 export interface Props<T extends FieldValues> {
     control: Control<T>;
@@ -14,14 +15,14 @@ export const LastNameInput = (props: Props<FormValues>) => {
     <FormGroupRow>
       <Container>
         <FormLabel
-          cyTag="audition-casting-lName-label"
+          cyTag={CY_TAGS.CASTING_FORM.INPUTS.LABELS.LAST_NAME}
           labelText="Casting Last Name"
           htmlFor="castingLastName"
         />
       </Container>
       <Container>
         <FormInput
-          cyTag="casting-last-name"
+          cyTag={CY_TAGS.CASTING_FORM.INPUTS.LAST_NAME}
           inputId="casting-last-name"
           control={control}
           field="lName"
