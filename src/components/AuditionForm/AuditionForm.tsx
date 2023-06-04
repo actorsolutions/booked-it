@@ -127,6 +127,7 @@ export const AuditionForm = (props: Props) => {
     return false;
   };
 
+  // TODO - BI-72 Refactor handleDeleteCastingRow to live in CastingList
   const handleDeleteCastingRow = (index: number) => {
     const updatedCasting = [...(watchCasting || [])];
     updatedCasting.splice(index, 1);
