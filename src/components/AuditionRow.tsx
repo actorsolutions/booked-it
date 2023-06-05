@@ -25,33 +25,33 @@ interface AuditionRowProps {
 }
 
 export const AuditionRow = ({
-                                audition,
-                                index,
-                                auditions,
-                                setAuditions,
-                                rowCyTag,
-                                buttonPrefix,
-                            }: AuditionRowProps) => {
-    const {AUDITIONS_SECTION} = CY_TAGS;
-    const statusColor = (
-        status: string
-    ): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
-        switch (status) {
-            case "submitted":
-                return "info";
-            case "scheduled":
-                return "secondary";
-            case "auditioned":
-                return "warning";
-            case "callback":
-                return "error";
-            case "booked":
-                return "success";
-            default:
-                return "disabled";
-        }
-    };
-    const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
+  audition,
+  index,
+  auditions,
+  setAuditions,
+  rowCyTag,
+  buttonPrefix,
+}: AuditionRowProps) => {
+  const { AUDITIONS_SECTION } = CY_TAGS;
+  const statusColor = (
+    status: string
+  ): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
+    switch (status) {
+      case "submitted":
+        return "info";
+      case "scheduled":
+        return "secondary";
+      case "auditioned":
+        return "warning";
+      case "callback":
+        return "error";
+      case "booked":
+        return "success";
+      default:
+        return "disabled";
+    }
+  };
+  const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
 
     const [expanded, setExpanded] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -72,29 +72,29 @@ export const AuditionRow = ({
         }
     };
 
-    // TODO: BI-47 - implement try/catch for archiving error and leverage filter pattern from handleDelete
-    const handleArchiveClick = async (event: MouseEvent) => {
-        setLoading(true);
-        event.stopPropagation();
-        audition.archived = !audition.archived;
-        const updatedAudition = await updateAudition(audition);
-        const auditionIndex = auditions.findIndex(
-            (audition) => audition.id == updatedAudition.id
-        );
-        auditions[auditionIndex] = updatedAudition;
-        setAuditions(auditions);
-        setLoading(false);
-    };
-
-    const formattedDate = new Date(audition.date * 1000).toLocaleDateString(
-        "en",
-        {
-            dateStyle: "short",
-        }
+  // TODO: BI-47 - implement try/catch for archiving error and leverage filter pattern from handleDelete
+  const handleArchiveClick = async (event: MouseEvent) => {
+    setLoading(true);
+    event.stopPropagation();
+    audition.archived = !audition.archived;
+    const updatedAudition = await updateAudition(audition);
+    const auditionIndex = auditions.findIndex(
+      (audition) => audition.id == updatedAudition.id
     );
-    if (loading) {
-        return <LoadingCircle/>;
+    auditions[auditionIndex] = updatedAudition;
+    setAuditions(auditions);
+    setLoading(false);
+  };
+
+  const formattedDate = new Date(audition.date * 1000).toLocaleDateString(
+    "en",
+    {
+      dateStyle: "short",
     }
+  );
+  if (loading) {
+    return <LoadingCircle />;
+  }
 
     return (
         <Card
