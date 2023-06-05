@@ -20,7 +20,7 @@ import { createAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
-import { LoadingCircle } from "@/components/common/LoadingCircle";
+import { LoadingCircle, SnackbarMessage } from "@/components/common";
 
 interface Props {
   auditions: Audition[];
@@ -39,6 +39,9 @@ export const AuditionForm = (props: Props) => {
     loading: false,
     submitted: false,
   });
+
+  const [snackbarMessage, setSnackbarMessage] = useState<any>(null);
+
   const {
     getValues,
     control,
@@ -106,12 +109,14 @@ export const AuditionForm = (props: Props) => {
         submitted: true,
       });
       return true;
+    } else {
+      setSubmissionState({
+        loading: false,
+        submitted: false,
+      });
+      setSnackbarMessage("Failed to create audition record" as string);
+      return false;
     }
-    setSubmissionState({
-      loading: false,
-      submitted: false,
-    });
-    return false;
   };
 
   const setCasting = (castingArray: Casting[]) => {
@@ -215,6 +220,7 @@ export const AuditionForm = (props: Props) => {
         </Button>
         {submissionState.loading && <LoadingCircle />}
       </Form>
+      <SnackbarMessage message={snackbarMessage} setOpen={setSnackbarMessage} />
     </Container>
   );
 };
