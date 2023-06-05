@@ -6,14 +6,14 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Audition } from "@/types";
 
 interface Props {
-  id?: number;
+  audition?: Audition;
   auditions: Audition[];
   setAuditions: Dispatch<SetStateAction<Audition[]>>;
   handleClose: () => void;
   open: boolean;
 }
 export const AddEditAuditionDialog = (props: Props) => {
-  const { id, auditions, setAuditions, handleClose, open } = props;
+  const { audition, auditions, setAuditions, handleClose, open } = props;
   return (
     <Dialog
       open={open}
@@ -22,12 +22,12 @@ export const AddEditAuditionDialog = (props: Props) => {
       aria-describedby="audition-form-modal"
     >
       <DialogContent>
-        <DialogTitle> Add Audition</DialogTitle>
+        <DialogTitle>{audition ? "Edit Audition" : "Add Audition"}</DialogTitle>
         <AuditionForm
           auditions={auditions}
           setAuditions={setAuditions}
           handleClose={handleClose}
-          id={id}
+          audition={audition}
         />
       </DialogContent>
     </Dialog>

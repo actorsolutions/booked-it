@@ -78,7 +78,6 @@ export const AuditionRow = ({
   };
 
   const handleEdit = () => {
-    console.log("Ya clicked the edit button");
     handleDialog();
   };
   // TODO: BI-47 - implement try/catch for archiving error and leverage filter pattern from handleDelete
@@ -213,6 +212,7 @@ export const AuditionRow = ({
         </Accordion>
       </Grid>
       <AddEditAuditionDialog
+        audition={audition}
         auditions={auditions}
         setAuditions={setAuditions}
         handleClose={handleDialog}

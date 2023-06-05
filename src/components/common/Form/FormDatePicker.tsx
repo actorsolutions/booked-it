@@ -8,6 +8,8 @@ import {
 import FormControl from "@mui/material/FormControl";
 import React from "react";
 import { DatePicker } from "@mui/x-date-pickers";
+import { TextField } from "@mui/material";
+import dayjs from "dayjs";
 interface Props<T extends FieldValues> {
   cyTag: string;
   inputId: string;
@@ -24,13 +26,14 @@ export const FormDatePicker = <T extends FieldValues>(props: Props<T>) => {
         name={field}
         control={control}
         rules={{ ...props.rules }}
-        render={({ field: { onChange } }) => {
-          // @ts-ignore
+        render={({ field: { onChange, ref, ...field } }) => {
           return (
             <FormControl>
               <div data-cy={cyTag}>
                 <DatePicker
+                  inputRef={ref}
                   label={"Audition Date"}
+                  value={dayjs(field.value)}
                   onChange={(event: any) => {
                     const epochDate = new Date(event.$d).getTime() / 1000;
                     onChange(epochDate);

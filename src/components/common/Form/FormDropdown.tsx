@@ -42,10 +42,12 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
         name={field}
         control={control}
         rules={{ ...props.rules }}
-        render={({ field: { onChange } }) => {
+        render={({ field: { onChange, ref, ...field } }) => {
           return (
             <FormControl>
               <Select
+                {...field}
+                inputRef={ref}
                 id={inputId}
                 data-cy={cyTag}
                 type={inputType}
