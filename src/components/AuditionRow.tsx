@@ -14,6 +14,7 @@ import { Audition, Casting } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
 import { deleteAudition, updateAudition } from "@/apihelpers/auditions";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
+import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
 
 interface AuditionRowProps {
   audition: Audition;
@@ -55,6 +56,11 @@ export const AuditionRow = ({
 
   const [expanded, setExpanded] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleDialog = () => {
+    setOpen(!open);
+  };
   const handleAccordionChange = () => {
     setExpanded(!expanded);
   };
@@ -73,6 +79,7 @@ export const AuditionRow = ({
 
   const handleEdit = () => {
     console.log("Ya clicked the edit button");
+    handleDialog();
   };
   // TODO: BI-47 - implement try/catch for archiving error and leverage filter pattern from handleDelete
   const handleArchiveClick = async (event: MouseEvent) => {
@@ -205,6 +212,12 @@ export const AuditionRow = ({
           )}
         </Accordion>
       </Grid>
+      <AddEditAuditionDialog
+        auditions={auditions}
+        setAuditions={setAuditions}
+        handleClose={handleDialog}
+        open={open}
+      />
     </Card>
   );
 };

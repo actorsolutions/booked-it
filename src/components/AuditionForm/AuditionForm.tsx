@@ -23,13 +23,15 @@ import CY_TAGS from "@/support/cypress_tags";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 
 interface Props {
+  id?: number;
   auditions: Audition[];
   setAuditions: Dispatch<SetStateAction<Audition[]>>;
   handleClose: () => void;
 }
 export const AuditionForm = (props: Props) => {
+  const { setAuditions, auditions, handleClose, id } = props;
+
   const { AUDITION_FORM } = CY_TAGS;
-  const { setAuditions, auditions, handleClose } = props;
   const customValidation = async (arrayOfFields: fields[]) => {
     return trigger(arrayOfFields as fields[], { shouldFocus: true });
   };
@@ -65,7 +67,7 @@ export const AuditionForm = (props: Props) => {
 
   const MAX_CASTING_ROWS = 2;
   const [castingRowCount, setCastingRowCount] = useState(
-      getValues().casting?.length || 0
+    getValues().casting?.length || 0
   );
   interface SubmissionState {
     loading: boolean;
@@ -98,8 +100,7 @@ export const AuditionForm = (props: Props) => {
       setOpen(true);
     }
     setOpen(!open);
-  }
-
+  };
 
   /**
    * Triggers Validation on form, will not send to API if form is not valid
@@ -198,32 +199,33 @@ export const AuditionForm = (props: Props) => {
         </Grid>
         <Grid item sm={8}>
           {watchCasting ? (
-              <CastingList
-                  casting={watchCasting}
-                  onDelete={handleDeleteCastingRow}
-                  name={""}
-                  listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
-              />
+            <CastingList
+              casting={watchCasting}
+              onDelete={handleDeleteCastingRow}
+              name={""}
+              listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
+            />
           ) : null}
         </Grid>
         {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
-            <Grid item sm={8} md={6}>
-              <Button
-                  data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
-                  onClick={handleModal}>
-                Add Casting
-              </Button>
-              <Dialog open={open} onClose={handleModal}>
-                <DialogContent>
-                  <CastingForm
-                      auditionControl={control}
-                      initialCastingList={getValues().casting}
-                      setCasting={setCasting}
-                      handleClose={handleModal}
-                  />
-                </DialogContent>
-              </Dialog>
-            </Grid>
+          <Grid item sm={8} md={6}>
+            <Button
+              data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
+              onClick={handleModal}
+            >
+              Add Casting
+            </Button>
+            <Dialog open={open} onClose={handleModal}>
+              <DialogContent>
+                <CastingForm
+                  auditionControl={control}
+                  initialCastingList={getValues().casting}
+                  setCasting={setCasting}
+                  handleClose={handleModal}
+                />
+              </DialogContent>
+            </Dialog>
+          </Grid>
         )}
         <Button
           data-cy={AUDITION_FORM.BUTTONS.ADD_AUDITION}
