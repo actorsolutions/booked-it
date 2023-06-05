@@ -13,7 +13,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {Audition, Casting} from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
 import {deleteAudition, updateAudition} from "@/apihelpers/auditions";
-import {LoadingCircle, SnackbarMessage} from "@/components/common";
+import {LoadingCircle} from "@/components/common";
+import { useSnackBar } from "@/support/SnackbarContext";
 
 interface AuditionRowProps {
     audition: Audition;
@@ -32,7 +33,8 @@ export const AuditionRow = ({
   rowCyTag,
   buttonPrefix,
 }: AuditionRowProps) => {
-  const { AUDITIONS_SECTION } = CY_TAGS;
+    const {showSnackBar} = useSnackBar()
+    const { AUDITIONS_SECTION } = CY_TAGS;
   const statusColor = (
     status: string
   ): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
@@ -58,8 +60,6 @@ export const AuditionRow = ({
     const handleAccordionChange = () => {
         setExpanded(!expanded);
     };
-    const [snackbarMessage, setSnackbarMessage] = useState<any>(null);
-
     const handleDelete = async () => {
         try {
             await deleteAudition(audition);
@@ -67,8 +67,9 @@ export const AuditionRow = ({
                 (auditionEntry) => auditionEntry !== audition
             );
             setAuditions(updatedAuditions);
+            showSnackBar("You deleted that shit.")
         } catch (error) {
-            setSnackbarMessage("Failed to delete." as string);
+            showSnackBar("Failed to delete.");
         }
     };
 
@@ -183,9 +184,6 @@ export const AuditionRow = ({
                     )}
                 </Accordion>
             </Grid>
-            {snackbarMessage && (
-                <SnackbarMessage message={snackbarMessage} setOpen={setSnackbarMessage}/>
-            )}
         </Card>
     );
 };

@@ -35,7 +35,10 @@ export const Dashboard = () => {
         getAuditions().then((response) => {
           setLoading(false);
           setAuditions(response.auditions);
-        });
+        }).catch((error) => {
+              console.log(error);
+              showSnackBar("I dont give a shit")
+            })
       });
     }
   }, [user]);
