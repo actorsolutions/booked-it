@@ -17,10 +17,12 @@ import CY_TAGS from "@/support/cypress_tags";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
+import {useSnackBar} from "@/support/SnackbarContext";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
 export const Dashboard = () => {
+  const {showSnackBar} = useSnackBar()
   const { user } = useUser();
   const [auditions, setAuditions] = useState<Audition[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,7 +43,7 @@ export const Dashboard = () => {
             })
       });
     }
-  }, [user]);
+  }, [user,showSnackBar]);
 
   if (user) {
     return (
