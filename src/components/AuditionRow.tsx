@@ -71,6 +71,9 @@ export const AuditionRow = ({
     }
   };
 
+  const handleEdit = () => {
+    console.log("Ya clicked the edit button");
+  };
   // TODO: BI-47 - implement try/catch for archiving error and leverage filter pattern from handleDelete
   const handleArchiveClick = async (event: MouseEvent) => {
     setLoading(true);
@@ -161,21 +164,41 @@ export const AuditionRow = ({
                   <div> Type: {audition.type} </div>
                 </Grid>
                 <Grid item xs={4}>
-                  <div data-cy={AUDITIONS_SECTION.CONTAINERS.CASTING_INFO}>{casting.length > 0 ? casting[0].name : undefined}</div>
+                  <div data-cy={AUDITIONS_SECTION.CONTAINERS.CASTING_INFO}>
+                    {casting.length > 0 ? casting[0].name : undefined}
+                  </div>
                 </Grid>
                 <Grid item xs={4}>
                   <div>Notes: {audition.notes}</div>
                 </Grid>
-                <Grid item xs={4}>
-                  <Button
-                    variant="contained"
-                    data-cy={`${buttonPrefix}delete-button`}
-                    onClick={() => {
-                      handleDelete();
-                    }}
+                <Grid item xs={12}>
+                  <Grid
+                    container
+                    direction={"row"}
+                    justifyContent={"space-between"}
                   >
-                    Delete
-                  </Button>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        data-cy={`${buttonPrefix}delete-button`}
+                        onClick={() => {
+                          handleDelete();
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        onClick={() => {
+                          handleEdit();
+                        }}
+                        variant="contained"
+                      >
+                        Edit
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </AccordionDetails>
