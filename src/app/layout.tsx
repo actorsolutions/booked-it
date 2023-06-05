@@ -6,6 +6,8 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import React from "react";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { NavBar } from "@/components/NavBar";
+import { Container } from "@mui/system";
+import { Typography } from "@mui/material";
 
 export default function RootLayout({
   children,
@@ -25,6 +27,9 @@ export default function RootLayout({
           <NavBar />
         </UserProvider>
         {children}
+        <Container>
+          <Typography variant="subtitle1">Booked-It MVP</Typography>
+        </Container>
       </body>
     </html>
   );
