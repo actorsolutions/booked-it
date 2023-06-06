@@ -82,7 +82,7 @@ export const addToInput = (tag: string, textToAdd: string) => {
  * @param tagOfItem
  * @param textOfSelect
  */
-export const addSelectItem = (
+export const selectItem = (
   dropdownTag: string,
   tagOfItem: string,
   textOfSelect: string
@@ -114,10 +114,18 @@ export const shouldContainText = (tag: string, text: string) => {
 
 /*
   Selects date from MaterialUI Date Picker
+
  */
 export const clickCalendarDate = (dataTimeStamp: string) => {
-  cy.get(`[data-testid='CalendarIcon']`)
-    .click()
-    .get(`[data-timestamp="${dataTimeStamp}"`)
-    .click();
+  cy.get(`[data-testid='CalendarIcon']`).click();
+  cy.get(`[data-timestamp="${dataTimeStamp}"`).click();
+};
+
+/*
+  Simplifies getting text from picker
+ */
+export const checkNestedInput = (pickerTag: string, text: string) => {
+  cy.get(cyTag(pickerTag)).within(() => {
+    cy.get("input").should("contain.value", text);
+  });
 };

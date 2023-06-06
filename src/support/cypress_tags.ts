@@ -23,6 +23,7 @@ export default {
       EXPAND_MORE: "audition-expand-more-button",
       DELETE_AUDITION: "audition-delete-button",
       ARCHIVE_AUDITION: "audition-archive-button",
+      EDIT_AUDITION: "audition-edit-button",
     },
   },
   NEEDS_ATTENTION_SECTION: {
@@ -35,6 +36,7 @@ export default {
       EXPAND_MORE: "needs-attention-expand-more-button",
       DELETE_AUDITION: "needs-attention-delete-button",
       ARCHIVE_AUDITION: "needs-attention-archive-button",
+      EDIT_AUDITION: "needs-attention-edit-button",
     },
   },
   AUDITION_FORM: {

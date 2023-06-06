@@ -189,6 +189,7 @@ export const AuditionRow = ({
                           handleEdit();
                         }}
                         variant="contained"
+                        data-cy={`${buttonPrefix}edit-button`}
                       >
                         Edit
                       </Button>

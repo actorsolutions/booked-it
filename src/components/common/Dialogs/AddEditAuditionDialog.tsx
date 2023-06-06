@@ -4,7 +4,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { AuditionForm } from "@/components/AuditionForm";
 import React, { Dispatch, SetStateAction } from "react";
 import { Audition } from "@/types";
-
+import CY_TAGS from "@/support/cypress_tags";
 interface Props {
   audition?: Audition;
   auditions: Audition[];
@@ -22,7 +22,9 @@ export const AddEditAuditionDialog = (props: Props) => {
       aria-describedby="audition-form-modal"
     >
       <DialogContent>
-        <DialogTitle>{audition ? "Edit Audition" : "Add Audition"}</DialogTitle>
+        <DialogTitle data-cy={CY_TAGS.AUDITION_FORM.TITLE}>
+          {audition ? "Edit Audition" : "Add Audition"}
+        </DialogTitle>
         <AuditionForm
           auditions={auditions}
           setAuditions={setAuditions}
