@@ -34,9 +34,8 @@ describe("Add Auditions Form E2E Tests", () => {
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
 
-    //TODO: (BI-59) Better Datepicker Logic
-    //eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click().type("01012023");
+    cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click();
+    cy.type("01012023");
 
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,
