@@ -20,7 +20,6 @@ export const createAudition = async (data: CreateAuditionData) => {
 };
 
 export const updateAudition = async (data: Audition) => {
-  data.casting = [];
   const response = await fetch(`/api/auditions/${data.id}`, {
     method: "PUT",
     body: JSON.stringify(data),

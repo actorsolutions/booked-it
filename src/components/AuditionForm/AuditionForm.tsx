@@ -117,6 +117,7 @@ export const AuditionForm = (props: Props) => {
         const updateData = {
           ...values,
           date: values.date / 1000,
+          casting: watchCasting,
           id: audition.id,
           userId: audition.userId,
           createdAt: audition.createdAt,
@@ -165,7 +166,7 @@ export const AuditionForm = (props: Props) => {
         callbackDate: audition.callBackDate
           ? audition.callBackDate * 1000
           : undefined,
-        casting: [],
+        casting: audition.casting || [],
         company: audition.company,
         date: audition.date * 1000,
         notes: audition.notes,
