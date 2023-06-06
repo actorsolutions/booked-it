@@ -14,12 +14,14 @@ import { AuditionForm } from "@/components/AuditionForm";
 import { PieChart } from "./PieChart";
 import { AuditionList } from "@/components/Dashboard/AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
+import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 import {useSnackBar} from "@/support/SnackbarContext";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
+const { AUTH, AUDITIONS } = SNACKBAR_MESSAGES
 
 export const Dashboard = () => {
   const {showSnackBar} = useSnackBar()
@@ -42,12 +44,12 @@ export const Dashboard = () => {
                 })
                 .catch((error) => {
                   console.log(error);
-                  showSnackBar("Error retrieving your auditions. Please try again.", "error");
+                  showSnackBar(AUDITIONS.GET_AUDITIONS_FAILURE, "error");
                 });
           })
           .catch((error) => {
             console.log(error);
-            showSnackBar("Error signing in. Please contact Zach and Tyler.", "error");
+            showSnackBar(AUTH.SIGNIN_SIGNUP_FAILURE, "error");
           });
     }
   }, [user, showSnackBar]);

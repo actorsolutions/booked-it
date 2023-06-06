@@ -12,6 +12,7 @@ import LensIcon from "@mui/icons-material/Lens";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {Audition, Casting} from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
+import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
 import {deleteAudition, updateAudition} from "@/apihelpers/auditions";
 import {LoadingCircle} from "@/components/common";
 import { useSnackBar } from "@/support/SnackbarContext";
@@ -35,6 +36,7 @@ export const AuditionRow = ({
 }: AuditionRowProps) => {
     const {showSnackBar} = useSnackBar()
     const { AUDITIONS_SECTION } = CY_TAGS;
+    const { AUDITIONS } = SNACKBAR_MESSAGES
   const statusColor = (
     status: string
   ): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
@@ -67,9 +69,10 @@ export const AuditionRow = ({
                 (auditionEntry) => auditionEntry !== audition
             );
             setAuditions(updatedAuditions);
-            showSnackBar("Audition successfully deleted", "success")
+            showSnackBar(AUDITIONS.AUDITION_DELETE_SUCCESS, "success")
         } catch (error) {
-            showSnackBar("Failed to delete audition. Please contact Zach and Tyler", "error");
+            console.log(error)
+            showSnackBar(AUDITIONS.AUDITION_DELETE_FAILURE, "error");
         }
     };
 

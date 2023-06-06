@@ -20,6 +20,7 @@ import { createAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
+import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
 import { LoadingCircle } from "@/components/common";
 import {useSnackBar} from "@/support/SnackbarContext";
 
@@ -30,6 +31,7 @@ interface Props {
 }
 export const AuditionForm = (props: Props) => {
   const { AUDITION_FORM } = CY_TAGS;
+  const { AUDITIONS } = SNACKBAR_MESSAGES
   const { setAuditions, auditions, handleClose } = props;
   const {showSnackBar} = useSnackBar();
 
@@ -120,19 +122,19 @@ export const AuditionForm = (props: Props) => {
           loading: false,
           submitted: true,
         });
-        showSnackBar("Audition added successfully. Woo!", "success");
+        showSnackBar(AUDITIONS.AUDITION_CREATE_SUCCESS, "success");
         setCastingRowCount(watchCasting ? watchCasting.length : 0);
         return true;
       } catch (error) {
         console.log(error);
-        showSnackBar("Encountered a problem trying to add that audition. Please contact Zach and Tyler.", "error");
+        showSnackBar(AUDITIONS.AUDITION_CREATE_FAILURE, "error");
       }
     } else {
       setSubmissionState({
         loading: false,
         submitted: false,
       });
-      showSnackBar("Failed to add audition. Make sure all fields are properly completed.", "error")
+      showSnackBar(AUDITIONS.AUDITION_CREATE_VALIDATION_ERROR, "error")
       return false;
     }
   };
