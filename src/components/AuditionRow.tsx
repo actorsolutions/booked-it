@@ -67,9 +67,9 @@ export const AuditionRow = ({
                 (auditionEntry) => auditionEntry !== audition
             );
             setAuditions(updatedAuditions);
-            showSnackBar("You deleted that shit.")
+            showSnackBar("Audition successfully deleted", "success")
         } catch (error) {
-            showSnackBar("Failed to delete.");
+            showSnackBar("Failed to delete audition. Please contact Zach and Tyler", "error");
         }
     };
 

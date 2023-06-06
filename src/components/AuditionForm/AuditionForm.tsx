@@ -21,6 +21,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
 import { LoadingCircle } from "@/components/common";
+import {useSnackBar} from "@/support/SnackbarContext";
 
 interface Props {
   auditions: Audition[];
@@ -30,6 +31,8 @@ interface Props {
 export const AuditionForm = (props: Props) => {
   const { AUDITION_FORM } = CY_TAGS;
   const { setAuditions, auditions, handleClose } = props;
+  const {showSnackBar} = useSnackBar();
+
   const customValidation = async (arrayOfFields: fields[]) => {
     return trigger(arrayOfFields as fields[], { shouldFocus: true });
   };
@@ -109,20 +112,27 @@ export const AuditionForm = (props: Props) => {
       submitted: false,
     });
     if (await customValidation(createFields as fields[])) {
-      const addedAudition = await createAudition(getValues());
-      auditions.push(addedAudition);
-      setAuditions(auditions);
-      setSubmissionState({
-        loading: false,
-        submitted: true,
-      });
-      setCastingRowCount(watchCasting ? watchCasting.length : 0);
-      return true;
+      try {
+        const addedAudition = await createAudition(getValues());
+        auditions.push(addedAudition);
+        setAuditions(auditions);
+        setSubmissionState({
+          loading: false,
+          submitted: true,
+        });
+        showSnackBar("Audition added successfully. Woo!", "success");
+        setCastingRowCount(watchCasting ? watchCasting.length : 0);
+        return true;
+      } catch (error) {
+        console.log(error);
+        showSnackBar("Encountered a problem trying to add that audition. Please contact Zach and Tyler.", "error");
+      }
     } else {
       setSubmissionState({
         loading: false,
         submitted: false,
       });
+      showSnackBar("Failed to add audition. Make sure all fields are properly completed.", "error")
       return false;
     }
   };

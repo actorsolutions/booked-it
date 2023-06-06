@@ -32,18 +32,25 @@ export const Dashboard = () => {
 
   useEffect(() => {
     if (user) {
-      SignUpOrSignIn().then(() => {
-        setLoading(true);
-        getAuditions().then((response) => {
-          setLoading(false);
-          setAuditions(response.auditions);
-        }).catch((error) => {
-              console.log(error);
-              showSnackBar("I dont give a shit")
-            })
-      });
+      SignUpOrSignIn()
+          .then(() => {
+            setLoading(true);
+            getAuditions()
+                .then((response) => {
+                  setLoading(false);
+                  setAuditions(response.auditions);
+                })
+                .catch((error) => {
+                  console.log(error);
+                  showSnackBar("Error retrieving your auditions. Please try again.", "error");
+                });
+          })
+          .catch((error) => {
+            console.log(error);
+            showSnackBar("Error signing in. Please contact Zach and Tyler.", "error");
+          });
     }
-  }, [user,showSnackBar]);
+  }, [user, showSnackBar]);
 
   if (user) {
     return (
