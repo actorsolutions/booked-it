@@ -63,7 +63,6 @@ export const AuditionForm = (props: Props) => {
       status: "",
       archived: false,
     },
-    shouldUnregister: false,
   });
 
   const MAX_CASTING_ROWS = 2;
@@ -105,6 +104,7 @@ export const AuditionForm = (props: Props) => {
 
   /**
    * Triggers Validation on form, will not send to API if form is not valid
+   * Determines if a PUT or POST create depending on if audition is send along in props.
    */
   const handleCreateOrEdit = async () => {
     setSubmissionState({
@@ -177,7 +177,6 @@ export const AuditionForm = (props: Props) => {
     }
   }, [audition, reset]);
 
-  console.log(audition);
   return (
     <Container
       data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
@@ -268,7 +267,11 @@ export const AuditionForm = (props: Props) => {
           </Grid>
         )}
         <Button
-          data-cy={AUDITION_FORM.BUTTONS.ADD_AUDITION}
+          data-cy={
+            audition
+              ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
+              : AUDITION_FORM.BUTTONS.ADD_AUDITION
+          }
           onClick={() => {
             clearErrors();
             handleCreateOrEdit().then((wasSent) => {

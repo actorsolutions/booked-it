@@ -185,23 +185,24 @@ export const AuditionRow = ({
                   >
                     <Grid item>
                       <Button
-                        variant="contained"
-                        data-cy={`${buttonPrefix}delete-button`}
-                        onClick={() => {
-                          handleDelete();
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button
                         onClick={() => {
                           handleEdit();
                         }}
                         variant="contained"
                       >
                         Edit
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color={"error"}
+                        data-cy={`${buttonPrefix}delete-button`}
+                        onClick={() => {
+                          handleDelete();
+                        }}
+                      >
+                        Delete
                       </Button>
                     </Grid>
                   </Grid>

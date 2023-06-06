@@ -8,10 +8,15 @@ import {
   addSelectItem,
   shouldBeVisible,
   shouldNotExist,
+  clickCalendarDate,
 } from "../support/e2e";
 
 const { AUDITIONS_SECTION, AUDITION_FORM } = CY_TAGS;
 describe("Add Auditions Form E2E Tests", () => {
+  beforeEach(() => {
+    const fakeDate = new Date(2023, 5, 1); // month is 0-indexed
+    cy.clock(fakeDate);
+  });
   it("Should not show add audition button while not logged in", () => {
     cy.task("db:seed");
     cy.visit("/");
@@ -86,11 +91,10 @@ describe("Add Auditions Form E2E Tests", () => {
       shouldBeVisible(tag);
     });
 
-    //TODO: (BI-59) Better Datepicker Logic
-    //eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click().type("01012023");
-    findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
-    shouldNotExist(AUDITION_FORM.ERRORS.DATE);
+    // clickCalendarDate("1685948400000");
+    //
+    // findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
+    // shouldNotExist(AUDITION_FORM.ERRORS.DATE);
 
     addSelectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,

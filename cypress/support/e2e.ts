@@ -105,6 +105,19 @@ export const shouldNotExist = (tag: string) => {
   cy.get(cyTag(tag)).should("not.exist");
 };
 
+/*
+  Checks that component contains text
+ */
 export const shouldContainText = (tag: string, text: string) => {
   cy.get(cyTag(tag)).should("contain.text", text);
+};
+
+/*
+  Selects date from MaterialUI Date Picker
+ */
+export const clickCalendarDate = (dataTimeStamp: string) => {
+  cy.get(`[data-testid='CalendarIcon']`)
+    .click()
+    .get(`[data-timestamp="${dataTimeStamp}"`)
+    .click();
 };

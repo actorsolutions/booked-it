@@ -7,7 +7,8 @@ import {
 } from "react-hook-form";
 import FormControl from "@mui/material/FormControl";
 import React, { useState } from "react";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import dayjs from "dayjs";
 interface Props<T extends FieldValues> {
   cyTag: string;
