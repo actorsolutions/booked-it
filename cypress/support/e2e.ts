@@ -51,6 +51,7 @@ export const login = () => {
     },
   }).as("Auth0");
   cy.intercept("GET", "/api/auditions").as("getAuditions");
+  cy.intercept("GET", "/api/auditions/**").as("updateAudition");
 
   cy.generateSession().then((data: string) => {
     cy.setCookie("appSession", data);
@@ -127,5 +128,11 @@ export const clickCalendarDate = (dataTimeStamp: string) => {
 export const checkNestedInput = (pickerTag: string, text: string) => {
   cy.get(cyTag(pickerTag)).within(() => {
     cy.get("input").should("contain.value", text);
+  });
+};
+
+export const clearNestedInput = (pickerTag: string) => {
+  cy.get(cyTag(pickerTag)).within(() => {
+    cy.get("input").clear();
   });
 };

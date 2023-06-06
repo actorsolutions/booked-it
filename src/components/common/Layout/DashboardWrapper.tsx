@@ -6,7 +6,7 @@ interface Props {
 }
 export const DashboardWrapper = ({ children }: Props) => {
   return (
-    <Paper elevation={5} sx={{ p: "1rem", bgcolor: "snow" }}>
+    <Paper elevation={5} sx={{ p: "1rem", bgcolor: "snow", mb: "2rem" }}>
       {children}
     </Paper>
   );

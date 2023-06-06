@@ -11,6 +11,7 @@ import {
   clickCalendarDate,
   shouldContainText,
   checkNestedInput,
+  clearNestedInput,
 } from "../support/e2e";
 
 const { AUDITIONS_SECTION, AUDITION_FORM } = CY_TAGS;
@@ -149,8 +150,12 @@ describe("Add Auditions Form E2E Tests", () => {
       AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
       "Booked"
     );
+    clearNestedInput(AUDITION_FORM.INPUTS.PROJECT);
+    findAndClick(AUDITION_FORM.INPUTS.PROJECT);
+    addToInput(AUDITION_FORM.INPUTS.PROJECT, "Updated");
     findAndClick(AUDITION_FORM.BUTTONS.EDIT_AUDITION);
     findAndClick(AUDITIONS_SECTION.BUTTONS.EDIT_AUDITION);
     shouldContainText(AUDITION_FORM.DROPDOWNS.STATUS, "Booked");
+    checkNestedInput(AUDITION_FORM.INPUTS.PROJECT, "Updated");
   });
 });
