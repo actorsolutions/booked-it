@@ -30,17 +30,16 @@ interface Props {
 }
 export const AuditionForm = (props: Props) => {
   const { setAuditions, auditions, handleClose, audition } = props;
-
   const { AUDITION_FORM } = CY_TAGS;
-  const customValidation = async (arrayOfFields: fields[]) => {
-    return trigger(arrayOfFields as fields[], { shouldFocus: true });
-  };
-
   const [open, setOpen] = useState(false);
   const [submissionState, setSubmissionState] = useState<SubmissionState>({
     loading: false,
     submitted: false,
   });
+
+  const customValidation = async (arrayOfFields: fields[]) => {
+    return trigger(arrayOfFields as fields[], { shouldFocus: true });
+  };
 
   const {
     getValues,
@@ -124,7 +123,12 @@ export const AuditionForm = (props: Props) => {
           callbackDate: audition.callBackDate,
         };
         const response = await updateAudition(updateData as Audition);
-        console.log(response);
+        const auditionToReplace = auditions.find(
+          (audition) => audition.id === response.id
+        ) as Audition;
+        Object.assign(auditionToReplace, response);
+        setCastingRowCount(watchCasting ? watchCasting.length : 0);
+        return true;
       } else {
         const addedAudition = await createAudition(getValues());
         auditions.push(addedAudition);
@@ -171,7 +175,9 @@ export const AuditionForm = (props: Props) => {
       };
       reset({ ...data });
     }
-  }, []);
+  }, [audition, reset]);
+
+  console.log(audition);
   return (
     <Container
       data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
