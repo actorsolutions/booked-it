@@ -99,11 +99,11 @@ export const AuditionRow = ({
     <Card
       sx={{
         alignItems: "center",
-        pl: "4px",
+        pl: "0.2rem",
         backgroundColor: audition.archived ? "#f5f5f5" : "white",
         display: "flex",
-        mb: "3px",
-        pt: "10px",
+        mb: "0.5rem",
+        pt: "0.5rem",
         justifyContent: "center",
         opacity: audition.archived ? 0.5 : 1,
       }}

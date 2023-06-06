@@ -14,7 +14,7 @@ export default function Home() {
           id={"MainContainer"}
           maxWidth={false}
           sx={{
-            height: "100vh",
+            minHeight: "100vh",
             bgcolor: "#caccce",
             mt: "1rem",
           }}
@@ -24,6 +24,7 @@ export default function Home() {
           </LocalizationProvider>
         </Container>
       </main>
+      {/*<Container sx={{ pt: "1rem", mt: "1rem" }}>Booked It - Beta</Container>*/}
     </UserProvider>
   );
 }
