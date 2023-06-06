@@ -72,7 +72,7 @@ export class Audition {
   project: string;
   company?: string | undefined;
   callbackDate?: number;
-  casting?: Object;
+  casting?: Prisma.JsonArray;
   notes?: string;
   type: audition_types;
   createdAt?: string;
@@ -101,7 +101,7 @@ export class Audition {
     this.project = project;
     this.company = company || undefined;
     this.callbackDate = callbackDate || undefined;
-    this.casting = casting || [];
+    this.casting = casting;
     this.notes = notes || undefined;
     this.createdAt = createdAt;
     this.archived = archived;
@@ -146,6 +146,18 @@ export class Audition {
         ) as audition_statuses,
         type: validateEnum(auditionTypes, createData.type) as audition_types,
       },
+    });
+  }
+
+  /**
+   * Method used to either update or create (upsert) an audition in one step
+   * @param db - instance of database being used
+   */
+  async save(db: PrismaClient["audition"]) {
+    return db.upsert({
+      where: { id: this.id },
+      update: this,
+      create: this,
     });
   }
 
