@@ -10,7 +10,7 @@ import { Audition } from "@/types";
 import { PieChart } from "./PieChart";
 import { AuditionList } from "@/components/Dashboard/AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
-import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
+import RESPONSE_MESSAGES from "@/support/response_messages";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
@@ -18,7 +18,7 @@ import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditi
 import {useSnackBar} from "@/context/SnackbarContext";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
-const { AUTH, AUDITIONS } = SNACKBAR_MESSAGES
+const { AUTH_MESSAGES, AUDITION_MESSAGES } = RESPONSE_MESSAGES
 
 export const Dashboard = () => {
   const {showSnackBar} = useSnackBar()
@@ -40,12 +40,12 @@ export const Dashboard = () => {
                 })
                 .catch((error) => {
                   console.log(error);
-                  showSnackBar(AUDITIONS.GET_AUDITIONS_FAILURE, "error");
+                  showSnackBar(AUDITION_MESSAGES.GET_AUDITIONS_FAILURE, "error");
                 });
           })
           .catch((error) => {
             console.log(error);
-            showSnackBar(AUTH.SIGNIN_SIGNUP_FAILURE, "error");
+            showSnackBar(AUTH_MESSAGES.SIGNIN_SIGNUP_FAILURE, "error");
           });
     }
     setLoading(false);

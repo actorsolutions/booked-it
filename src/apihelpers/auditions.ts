@@ -1,4 +1,5 @@
 import { Audition, AuditionsResponse, CreateAuditionData } from "@/types";
+import RESPONSE_MESSAGES from "@/support/response_messages";
 
 // Get Auditions from server, gets userId from session in server
 export const getAuditions = async (): Promise<AuditionsResponse> => {
@@ -6,7 +7,7 @@ export const getAuditions = async (): Promise<AuditionsResponse> => {
     method: "GET",
   });
   if (response.status !== 200) {
-    throw Error("Failed to get auditions.")
+    throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.GET_AUDITIONS_FAILURE)
   }
   return await response.json();
 };

@@ -20,7 +20,7 @@ import { createAudition, updateAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
-import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
+import RESPONSE_MESSAGES from "@/support/response_messages";
 import { LoadingCircle } from "@/components/common";
 import {useSnackBar} from "@/context/SnackbarContext";
 
@@ -33,7 +33,7 @@ interface Props {
 export const AuditionForm = (props: Props) => {
   const {setAuditions, auditions, handleClose, audition} = props;
   const {AUDITION_FORM} = CY_TAGS;
-  const {AUDITIONS} = SNACKBAR_MESSAGES
+  const {AUDITION_MESSAGES} = RESPONSE_MESSAGES
   const {showSnackBar} = useSnackBar();
 
   const [open, setOpen] = useState(false);
@@ -137,7 +137,7 @@ export const AuditionForm = (props: Props) => {
         Object.assign(auditionToReplace, response);
         setCastingRowCount(watchCasting ? watchCasting.length : 0);
         return true;
-      } else {
+      } else if (!audition) {
         try {
           const addedAudition = await createAudition(getValues());
           auditions.push(addedAudition);
@@ -146,22 +146,23 @@ export const AuditionForm = (props: Props) => {
             loading: false,
             submitted: true,
           });
-          showSnackBar(AUDITIONS.AUDITION_CREATE_SUCCESS, "success");
+          showSnackBar(AUDITION_MESSAGES.AUDITION_CREATE_SUCCESS, "success");
           setCastingRowCount(watchCasting ? watchCasting.length : 0);
           return true;
         } catch (error) {
           console.log(error);
-          showSnackBar(AUDITIONS.AUDITION_CREATE_FAILURE, "error");
+          showSnackBar(AUDITION_MESSAGES.AUDITION_CREATE_FAILURE, "error");
         }
+      } else {
+        setSubmissionState({
+          loading: false,
+          submitted: false,
+        });
+        showSnackBar(AUDITION_MESSAGES.AUDITION_CREATE_VALIDATION_ERROR, "error")
+        return false;
       }
-      setSubmissionState({
-        loading: false,
-        submitted: false,
-      });
-      showSnackBar(AUDITIONS.AUDITION_CREATE_VALIDATION_ERROR, "error")
-      return false;
     }
-
+  }
 
     // TODO - BI-72 Refactor handleDeleteCastingRow to live in CastingList
     const handleDeleteCastingRow = (index: number) => {
@@ -301,4 +302,5 @@ export const AuditionForm = (props: Props) => {
         </Container>
     );
   };
-}
+
+

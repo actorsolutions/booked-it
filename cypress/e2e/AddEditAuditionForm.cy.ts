@@ -169,16 +169,15 @@ describe("Add Auditions Form E2E Tests", () => {
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
 
-    //TODO: (BI-59) Better Datepicker Logic
     //eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click().type("01012023");
 
-    addSelectItem(
+    selectItem(
         AUDITION_FORM.DROPDOWNS.TYPE,
         AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
         "Television"
     );
-    addSelectItem(
+    selectItem(
         AUDITION_FORM.DROPDOWNS.STATUS,
         AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
         "Booked"
@@ -202,16 +201,15 @@ describe("Add Auditions Form E2E Tests", () => {
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
 
-    //TODO: (BI-59) Better Datepicker Logic
     //eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click().type("01012023");
 
-    addSelectItem(
+    selectItem(
         AUDITION_FORM.DROPDOWNS.TYPE,
         AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
         "Television"
     );
-    addSelectItem(
+    selectItem(
         AUDITION_FORM.DROPDOWNS.STATUS,
         AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
         "Booked"

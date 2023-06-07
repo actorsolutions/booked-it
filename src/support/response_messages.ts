@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    AUTH: {
+    AUTH_MESSAGES: {
         SIGNIN_SIGNUP_FAILURE: "Error signing in. Please contact Zach and Tyler."
     },
-    AUDITIONS: {
+    AUDITION_MESSAGES: {
         GET_AUDITIONS_FAILURE: "Error retrieving your auditions. Please try again.",
         AUDITION_DELETE_SUCCESS: "Audition successfully deleted.",
         AUDITION_DELETE_FAILURE: "Failed to delete audition. Please contact Zach and Tyler",
