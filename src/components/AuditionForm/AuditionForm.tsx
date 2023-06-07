@@ -31,6 +31,7 @@ interface Props {
   handleClose: () => void;
 }
 export const AuditionForm = (props: Props) => {
+
   const {setAuditions, auditions, handleClose, audition} = props;
   const {AUDITION_FORM} = CY_TAGS;
   const {AUDITION_MESSAGES} = RESPONSE_MESSAGES
@@ -289,6 +290,7 @@ export const AuditionForm = (props: Props) => {
                       : AUDITION_FORM.BUTTONS.ADD_AUDITION
                 }
                 onClick={() => {
+
                   clearErrors();
                   handleCreateOrEdit().then((wasSent) => {
                     wasSent && handleClose();
