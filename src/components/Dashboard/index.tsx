@@ -16,13 +16,13 @@ import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
 import TextField from "@mui/material/TextField";
-import {useSnackBar} from "@/context/SnackbarContext";
+import { useSnackBar } from "@/context/SnackbarContext";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
-const { AUTH_MESSAGES, AUDITION_MESSAGES } = RESPONSE_MESSAGES
+const { AUTH_MESSAGES, AUDITION_MESSAGES } = RESPONSE_MESSAGES;
 
 export const Dashboard = () => {
-  const {showSnackBar} = useSnackBar()
+  const { showSnackBar } = useSnackBar();
   const { user } = useUser();
   const [auditions, setAuditions] = useState<Audition[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,22 +35,23 @@ export const Dashboard = () => {
   useEffect(() => {
     if (user) {
       SignUpOrSignIn()
-          .then(() => {
-            setLoading(true);
-            getAuditions()
-                .then((response) => {
-                  setAuditions(response.auditions);
-                  setFilteredArray(response.auditions);
-                })
-                .catch((error) => {
-                  console.log(error);
-                  showSnackBar(AUDITION_MESSAGES.GET_AUDITIONS_FAILURE, "error");
-                });
-          })
-          .catch((error) => {
-            console.log(error);
-            showSnackBar(AUTH_MESSAGES.SIGNIN_SIGNUP_FAILURE, "error");
-          });
+        .then(() => {
+          setLoading(true);
+          getAuditions()
+            .then((response) => {
+              setAuditions(response.auditions);
+              setFilteredArray(response.auditions);
+              setLoading(false);
+            })
+            .catch((error) => {
+              console.log(error);
+              showSnackBar(AUDITION_MESSAGES.GET_AUDITIONS_FAILURE, "error");
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          showSnackBar(AUTH_MESSAGES.SIGNIN_SIGNUP_FAILURE, "error");
+        });
     }
     setLoading(false);
   }, [user]);
