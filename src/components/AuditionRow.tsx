@@ -12,8 +12,10 @@ import LensIcon from "@mui/icons-material/Lens";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Audition, Casting } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
+import RESPONSE_MESSAGES from "@/support/response_messages";
 import { deleteAudition, updateAudition } from "@/apihelpers/auditions";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
+import { useSnackBar } from "@/context/SnackbarContext";
 import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
 
 interface AuditionRowProps {
@@ -33,7 +35,9 @@ export const AuditionRow = ({
   rowCyTag,
   buttonPrefix,
 }: AuditionRowProps) => {
-  const { AUDITIONS_SECTION } = CY_TAGS;
+    const {showSnackBar} = useSnackBar()
+    const { AUDITIONS_SECTION } = CY_TAGS;
+    const { AUDITION_MESSAGES } = RESPONSE_MESSAGES
   const statusColor = (
     status: string
   ): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
@@ -72,8 +76,11 @@ export const AuditionRow = ({
         (auditionEntry) => auditionEntry !== audition
       );
       setAuditions(updatedAuditions);
+      showSnackBar(AUDITION_MESSAGES.AUDITION_DELETE_SUCCESS, "success")
+
     } catch (error) {
-      new Error("Failed to delete.");
+      console.log(error)
+      showSnackBar(AUDITION_MESSAGES.AUDITION_DELETE_FAILURE, "error");
     }
   };
 
