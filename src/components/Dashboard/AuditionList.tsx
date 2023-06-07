@@ -21,7 +21,7 @@ export const AuditionList = ({
   buttonPrefix,
 }: AuditionListProps) => {
   return (
-    <Container sx={{ m: 0, p: 0, height: "20rem", overflow: "auto" }}>
+    <Container sx={{ m: 0, p: 0, maxHeight: "20rem", overflow: "auto" }}>
       <Stack rowGap={3} data-cy={listCyTag}>
         {auditions.length === 0 ? (
           <p>No Auditions Added</p>

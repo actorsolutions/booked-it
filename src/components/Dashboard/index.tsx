@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { IconButton, Grid } from "@mui/material";
+import { IconButton, Grid, Typography } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -65,7 +65,7 @@ export const Dashboard = () => {
     } else {
       setFilteredArray(auditions);
     }
-  }, [filterText]);
+  }, [filterText, auditions]);
   if (user) {
     return (
       <Container maxWidth="md">
@@ -90,6 +90,9 @@ export const Dashboard = () => {
           </Grid>
           <Grid item xs={12}>
             <DashboardWrapper>
+              <Typography variant="overline" display="block" gutterBottom>
+                Auditions
+              </Typography>
               <Grid
                 container
                 direction="column"
