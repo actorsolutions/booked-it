@@ -41,24 +41,56 @@ export const Dashboard = () => {
     }
   }, [user]);
 
+  /**
+   * This takes an auditionArray and filters by text for Type,Project and Company and pushes into another
+   * 'filtered' Array.
+   * @param auditionArray
+   * @param filterArray
+   * @param filter
+   */
+
+  const filterByTypeProjectCompany = (
+    auditionArray: Audition[],
+    filterArray: Audition[],
+    filter: string
+  ) => {
+    auditionArray.filter((audition) => {
+      if (
+        audition.type.includes(filter) ||
+        audition.project.includes(filter) ||
+        audition.company.includes(filter)
+      ) {
+        !filterArray.includes(audition) && filterArray.push(audition);
+      }
+    });
+  };
+
+  /**
+   * This takes an audition array and filters by Casting name and pushes that audition into  a'filtered' array
+   * @param auditionArray
+   * @param filterArray
+   * @param filter
+   */
+  const filterByCastingName = (
+    auditionArray: Audition[],
+    filterArray: Audition[],
+    filter: string
+  ) => {
+    auditionArray.filter((audition) => {
+      audition.casting?.filter((person) => {
+        if (person.name?.includes(filter)) {
+          !filterArray.includes(audition) && filterArray.push(audition);
+        }
+      });
+    });
+  };
+
   useEffect(() => {
     if (filterText.length > 2) {
       const filterAuditions = () => {
         const returnArray: Audition[] = [];
-        auditions.filter((audition) => {
-          if (
-            audition.type.includes(filterText) ||
-            audition.project.includes(filterText) ||
-            audition.company.includes(filterText)
-          ) {
-            !returnArray.includes(audition) && returnArray.push(audition);
-          }
-          audition.casting?.filter((person) => {
-            if (person.name?.includes(filterText)) {
-              !returnArray.includes(audition) && returnArray.push(audition);
-            }
-          });
-        });
+        filterByTypeProjectCompany(auditions, returnArray, filterText);
+        filterByCastingName(auditions, returnArray, filterText);
         return returnArray;
       };
       setFilteredArray(filterAuditions);
@@ -70,10 +102,6 @@ export const Dashboard = () => {
     return (
       <Container maxWidth="md">
         {loading && <LoadingCircle />}
-        {/*Saving this here for Todd*/}
-        {/*<pre>*/}
-        {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}
-        {/*</pre>*/}
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <DashboardWrapper>
