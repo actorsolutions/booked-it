@@ -51,6 +51,7 @@ export const login = () => {
     },
   }).as("Auth0");
   cy.intercept("GET", "/api/auditions").as("getAuditions");
+  cy.intercept("GET", "/api/auditions/**").as("updateAudition");
 
   cy.generateSession().then((data: string) => {
     cy.setCookie("appSession", data);
@@ -82,7 +83,7 @@ export const addToInput = (tag: string, textToAdd: string) => {
  * @param tagOfItem
  * @param textOfSelect
  */
-export const addSelectItem = (
+export const selectItem = (
   dropdownTag: string,
   tagOfItem: string,
   textOfSelect: string
@@ -105,6 +106,33 @@ export const shouldNotExist = (tag: string) => {
   cy.get(cyTag(tag)).should("not.exist");
 };
 
+/*
+  Checks that component contains text
+ */
 export const shouldContainText = (tag: string, text: string) => {
   cy.get(cyTag(tag)).should("contain.text", text);
+};
+
+/*
+  Selects date from MaterialUI Date Picker
+
+ */
+export const clickCalendarDate = (dataTimeStamp: string) => {
+  cy.get(`[data-testid='CalendarIcon']`).click();
+  cy.get(`[data-timestamp="${dataTimeStamp}"]`).click();
+};
+
+/*
+  Simplifies getting text from picker
+ */
+export const checkNestedInput = (pickerTag: string, text: string) => {
+  cy.get(cyTag(pickerTag)).within(() => {
+    cy.get("input").should("contain.value", text);
+  });
+};
+
+export const clearNestedInput = (pickerTag: string) => {
+  cy.get(cyTag(pickerTag)).within(() => {
+    cy.get("input").clear();
+  });
 };

@@ -9,6 +9,8 @@ export const getAuditions = async (): Promise<AuditionsResponse> => {
 };
 
 export const createAudition = async (data: CreateAuditionData) => {
+  // This division makes it work nice with the backend.
+  data.date = data.date / 1000;
   return await fetch("/api/auditions", {
     method: "POST",
     body: JSON.stringify(data),
@@ -18,7 +20,6 @@ export const createAudition = async (data: CreateAuditionData) => {
 };
 
 export const updateAudition = async (data: Audition) => {
-  data.casting = [];
   const response = await fetch(`/api/auditions/${data.id}`, {
     method: "PUT",
     body: JSON.stringify(data),

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
 import {
   AuditionDatePicker,
   NotesTextArea,
@@ -16,29 +16,30 @@ import { AuditionFormData } from "../AuditionForm";
 import { Form } from "@/components/common/Form";
 import Grid from "@mui/material/Grid";
 import { Button, Container, Divider, Typography } from "@mui/material";
-import { createAudition } from "@/apihelpers/auditions";
+import { createAudition, updateAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 
 interface Props {
+  audition?: Audition;
   auditions: Audition[];
   setAuditions: Dispatch<SetStateAction<Audition[]>>;
   handleClose: () => void;
 }
 export const AuditionForm = (props: Props) => {
+  const { setAuditions, auditions, handleClose, audition } = props;
   const { AUDITION_FORM } = CY_TAGS;
-  const { setAuditions, auditions, handleClose } = props;
-  const customValidation = async (arrayOfFields: fields[]) => {
-    return trigger(arrayOfFields as fields[], { shouldFocus: true });
-  };
-
   const [open, setOpen] = useState(false);
   const [submissionState, setSubmissionState] = useState<SubmissionState>({
     loading: false,
     submitted: false,
   });
+
+  const customValidation = async (arrayOfFields: fields[]) => {
+    return trigger(arrayOfFields as fields[], { shouldFocus: true });
+  };
 
   const {
     getValues,
@@ -49,6 +50,7 @@ export const AuditionForm = (props: Props) => {
     formState: { errors },
     trigger,
     clearErrors,
+    reset,
   } = useForm<AuditionFormData>({
     defaultValues: {
       date: undefined,
@@ -65,7 +67,7 @@ export const AuditionForm = (props: Props) => {
 
   const MAX_CASTING_ROWS = 2;
   const [castingRowCount, setCastingRowCount] = useState(
-      getValues().casting?.length || 0
+    getValues().casting?.length || 0
   );
   interface SubmissionState {
     loading: boolean;
@@ -98,27 +100,47 @@ export const AuditionForm = (props: Props) => {
       setOpen(true);
     }
     setOpen(!open);
-  }
-
+  };
 
   /**
    * Triggers Validation on form, will not send to API if form is not valid
+   * Determines if a PUT or POST create depending on if audition is send along in props.
    */
-  const handleCreate = async () => {
+  const handleCreateOrEdit = async () => {
     setSubmissionState({
       loading: true,
       submitted: false,
     });
     if (await customValidation(createFields as fields[])) {
-      const addedAudition = await createAudition(getValues());
-      auditions.push(addedAudition);
-      setAuditions(auditions);
-      setSubmissionState({
-        loading: false,
-        submitted: true,
-      });
-      setCastingRowCount(watchCasting ? watchCasting.length : 0);
-      return true;
+      if (audition) {
+        const values = getValues();
+        const updateData = {
+          ...values,
+          date: values.date / 1000,
+          casting: watchCasting,
+          id: audition.id,
+          userId: audition.userId,
+          createdAt: audition.createdAt,
+          callbackDate: audition.callBackDate,
+        };
+        const response = await updateAudition(updateData as Audition);
+        const auditionToReplace = auditions.find(
+          (audition) => audition.id === response.id
+        ) as Audition;
+        Object.assign(auditionToReplace, response);
+        setCastingRowCount(watchCasting ? watchCasting.length : 0);
+        return true;
+      } else {
+        const addedAudition = await createAudition(getValues());
+        auditions.push(addedAudition);
+        setAuditions(auditions);
+        setSubmissionState({
+          loading: false,
+          submitted: true,
+        });
+        setCastingRowCount(watchCasting ? watchCasting.length : 0);
+        return true;
+      }
     }
     setSubmissionState({
       loading: false,
@@ -137,6 +159,25 @@ export const AuditionForm = (props: Props) => {
   const setCasting = (castingArray: Casting[]) => {
     setValue("casting", castingArray);
   };
+  useEffect(() => {
+    if (audition) {
+      const data = {
+        archived: audition.archived,
+        callbackDate: audition.callBackDate
+          ? audition.callBackDate * 1000
+          : undefined,
+        casting: audition.casting || [],
+        company: audition.company,
+        date: audition.date * 1000,
+        notes: audition.notes,
+        project: audition.project,
+        status: audition.status,
+        type: audition.type,
+      };
+      reset({ ...data });
+    }
+  }, [audition, reset]);
+
   return (
     <Container
       data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
@@ -198,43 +239,48 @@ export const AuditionForm = (props: Props) => {
         </Grid>
         <Grid item sm={8}>
           {watchCasting ? (
-              <CastingList
-                  casting={watchCasting}
-                  onDelete={handleDeleteCastingRow}
-                  name={""}
-                  listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
-              />
+            <CastingList
+              casting={watchCasting}
+              onDelete={handleDeleteCastingRow}
+              name={""}
+              listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
+            />
           ) : null}
         </Grid>
         {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
-            <Grid item sm={8} md={6}>
-              <Button
-                  data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
-                  onClick={handleModal}>
-                Add Casting
-              </Button>
-              <Dialog open={open} onClose={handleModal}>
-                <DialogContent>
-                  <CastingForm
-                      auditionControl={control}
-                      initialCastingList={getValues().casting}
-                      setCasting={setCasting}
-                      handleClose={handleModal}
-                  />
-                </DialogContent>
-              </Dialog>
-            </Grid>
+          <Grid item sm={8} md={6}>
+            <Button
+              data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
+              onClick={handleModal}
+            >
+              Add Casting
+            </Button>
+            <Dialog open={open} onClose={handleModal}>
+              <DialogContent>
+                <CastingForm
+                  auditionControl={control}
+                  initialCastingList={getValues().casting}
+                  setCasting={setCasting}
+                  handleClose={handleModal}
+                />
+              </DialogContent>
+            </Dialog>
+          </Grid>
         )}
         <Button
-          data-cy={AUDITION_FORM.BUTTONS.ADD_AUDITION}
+          data-cy={
+            audition
+              ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
+              : AUDITION_FORM.BUTTONS.ADD_AUDITION
+          }
           onClick={() => {
             clearErrors();
-            handleCreate().then((wasSent) => {
+            handleCreateOrEdit().then((wasSent) => {
               wasSent && handleClose();
             });
           }}
         >
-          Add Audition
+          {audition ? "Edit Audition" : "Add Audition"}
         </Button>
         {submissionState.loading && <LoadingCircle />}
       </Form>
