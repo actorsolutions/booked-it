@@ -187,4 +187,50 @@ describe("Landing Page E2E Tests", () => {
     );
     shouldNotExist(NEEDS_ATTENTION_SECTION.CONTAINER.NEEDS_ATTENTION_ROW + "0");
   });
+  it("should delete an audition row and display the successful delete Snackbar message", () => {
+    cy.task("db:seed");
+    login();
+    cy.visit("/");
+    cy.wait("@Auth0");
+
+    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(
+        () => {
+          cy.get("div").contains("Project:").invoke("text").as("projectName");
+          findAndClick(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE);
+          findAndClick(AUDITIONS_SECTION.BUTTONS.DELETE_AUDITION);
+        }
+    );
+
+    cy.contains("Audition successfully deleted.").should("be.visible");
+  });
+    it("should fail to delete an audition row and display the delete error Snackbar message", () => {
+        cy.task("db:seed");
+        login();
+        cy.visit("/");
+        cy.wait("@Auth0");
+
+        cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0")).within(
+            () => {
+                cy.get("div").contains("Project:").invoke("text").as("projectName");
+                findAndClick(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE);
+                cy.intercept("DELETE", "/api/auditions/0", {
+                    statusCode: 500
+                }).as("deleteAudition");
+                findAndClick(AUDITIONS_SECTION.BUTTONS.DELETE_AUDITION);
+            }
+        );
+
+        cy.contains("Failed to delete audition. Please contact Zach and Tyler").should("be.visible");
+    });
+    it("should display Snackbar error message when getAuditions fails", () => {
+        cy.task("db:seed");
+        login();
+        cy.visit("/");
+        cy.wait("@Auth0");
+        cy.intercept("GET", "/api/auditions", {
+            statusCode: 500,
+        }).as("getAuditionsFailure");
+
+        cy.contains("Error retrieving your auditions. Please try again.").should("be.visible");
+    });
 });

@@ -1,7 +1,7 @@
 "use client";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Dashboard } from "@/components/Dashboard";
-import { SnackBarProvider } from "@/support/SnackbarContext";
+import { SnackBarProvider } from "@/context/SnackbarContext";
 import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";

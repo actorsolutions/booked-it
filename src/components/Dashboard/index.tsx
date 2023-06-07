@@ -18,7 +18,7 @@ import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
-import {useSnackBar} from "@/support/SnackbarContext";
+import {useSnackBar} from "@/context/SnackbarContext";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 const { AUTH, AUDITIONS } = SNACKBAR_MESSAGES
@@ -39,7 +39,6 @@ export const Dashboard = () => {
             setLoading(true);
             getAuditions()
                 .then((response) => {
-                  setLoading(false);
                   setAuditions(response.auditions);
                 })
                 .catch((error) => {
@@ -51,8 +50,9 @@ export const Dashboard = () => {
             console.log(error);
             showSnackBar(AUTH.SIGNIN_SIGNUP_FAILURE, "error");
           });
+      setLoading(false);
     }
-  }, [user, showSnackBar]);
+  }, [user]);
 
   if (user) {
     return (

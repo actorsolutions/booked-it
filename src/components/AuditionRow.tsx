@@ -15,7 +15,7 @@ import CY_TAGS from "@/support/cypress_tags";
 import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
 import { deleteAudition, updateAudition } from "@/apihelpers/auditions";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
-import { useSnackBar } from "@/support/SnackbarContext";
+import { useSnackBar } from "@/context/SnackbarContext";
 
 interface AuditionRowProps {
   audition: Audition;

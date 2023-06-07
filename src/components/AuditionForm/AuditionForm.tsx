@@ -22,7 +22,7 @@ import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
 import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
 import { LoadingCircle } from "@/components/common";
-import {useSnackBar} from "@/support/SnackbarContext";
+import {useSnackBar} from "@/context/SnackbarContext";
 
 interface Props {
   auditions: Audition[];

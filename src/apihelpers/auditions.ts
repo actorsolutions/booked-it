@@ -5,6 +5,9 @@ export const getAuditions = async (): Promise<AuditionsResponse> => {
   const response = await fetch(`/api/auditions`, {
     method: "GET",
   });
+  if (response.status !== 200) {
+    throw Error("Failed to get auditions.")
+  }
   return await response.json();
 };
 
