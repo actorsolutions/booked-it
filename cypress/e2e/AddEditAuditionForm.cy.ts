@@ -19,6 +19,7 @@ const today = new Date();
 today.setHours(0, 0, 0, 0);
 
 describe("Add Auditions Form E2E Tests", () => {
+  // Note : Keeping this in because I'd like to utilize it in the future.
   // beforeEach(() => {
   //   cy.clock(Date.UTC(2023, 5, 1), ["Date"]);
   // });
