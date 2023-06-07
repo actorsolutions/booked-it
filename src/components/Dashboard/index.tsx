@@ -50,8 +50,8 @@ export const Dashboard = () => {
             console.log(error);
             showSnackBar(AUTH.SIGNIN_SIGNUP_FAILURE, "error");
           });
-      setLoading(false);
     }
+    setLoading(false);
   }, [user]);
 
   if (user) {
