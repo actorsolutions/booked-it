@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
-import { IconButton, Grid } from "@mui/material";
+import { IconButton, Grid, Typography } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -15,6 +15,7 @@ import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
+import TextField from "@mui/material/TextField";
 import {useSnackBar} from "@/context/SnackbarContext";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
@@ -26,6 +27,8 @@ export const Dashboard = () => {
   const [auditions, setAuditions] = useState<Audition[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [filterText, setFilterText] = useState("");
+  const [filteredArray, setFilteredArray] = useState<Audition[]>([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -37,6 +40,7 @@ export const Dashboard = () => {
             getAuditions()
                 .then((response) => {
                   setAuditions(response.auditions);
+                  setFilteredArray(response.auditions);
                 })
                 .catch((error) => {
                   console.log(error);
@@ -51,14 +55,67 @@ export const Dashboard = () => {
     setLoading(false);
   }, [user]);
 
+  /**
+   * This takes an auditionArray and filters by text for Type,Project and Company and pushes into another
+   * 'filtered' Array.
+   * @param auditionArray
+   * @param filterArray
+   * @param filter
+   */
+
+  const filterByTypeProjectCompany = (
+    auditionArray: Audition[],
+    filterArray: Audition[],
+    filter: string
+  ) => {
+    auditionArray.filter((audition) => {
+      if (
+        audition.type.includes(filter) ||
+        audition.project.includes(filter) ||
+        audition.company.includes(filter)
+      ) {
+        !filterArray.includes(audition) && filterArray.push(audition);
+      }
+    });
+  };
+
+  /**
+   * This takes an audition array and filters by Casting name and pushes that audition into  a'filtered' array
+   * @param auditionArray
+   * @param filterArray
+   * @param filter
+   */
+  const filterByCastingName = (
+    auditionArray: Audition[],
+    filterArray: Audition[],
+    filter: string
+  ) => {
+    auditionArray.filter((audition) => {
+      audition.casting?.filter((person) => {
+        if (person.name?.includes(filter)) {
+          !filterArray.includes(audition) && filterArray.push(audition);
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    if (filterText.length > 2) {
+      const filterAuditions = () => {
+        const returnArray: Audition[] = [];
+        filterByTypeProjectCompany(auditions, returnArray, filterText);
+        filterByCastingName(auditions, returnArray, filterText);
+        return returnArray;
+      };
+      setFilteredArray(filterAuditions);
+    } else {
+      setFilteredArray(auditions);
+    }
+  }, [filterText, auditions]);
   if (user) {
     return (
       <Container maxWidth="md">
         {loading && <LoadingCircle />}
-        {/*Saving this here for Todd*/}
-        {/*<pre>*/}
-        {/*  <code>{JSON.stringify(auditions[0], null, 4)}</code>*/}
-        {/*</pre>*/}
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <DashboardWrapper>
@@ -75,13 +132,38 @@ export const Dashboard = () => {
           </Grid>
           <Grid item xs={12}>
             <DashboardWrapper>
-              <AuditionList
-                auditions={auditions}
-                setAuditions={setAuditions}
-                buttonPrefix={AUDITIONS_SECTION.BUTTONS.PREFIX}
-                listCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
-                rowCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}
-              />
+              <Typography variant="overline" display="block" gutterBottom>
+                Auditions
+              </Typography>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Grid item sx={{ mb: "2rem" }}>
+                  <TextField
+                    data-cy={AUDITIONS_SECTION.SEARCH_INPUT}
+                    id="filled-search"
+                    label="Search..."
+                    type="search"
+                    variant="outlined"
+                    onChange={(e) => {
+                      setFilterText(e.target.value);
+                    }}
+                  />
+                </Grid>
+                <Grid item sx={{ width: "100%" }}>
+                  <AuditionList
+                    auditions={filteredArray}
+                    setAuditions={setAuditions}
+                    buttonPrefix={AUDITIONS_SECTION.BUTTONS.PREFIX}
+                    listCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+                    rowCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}
+                  />
+                </Grid>
+              </Grid>
+
               <div
                 style={{
                   display: "flex",

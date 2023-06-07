@@ -7,6 +7,8 @@ import {
   shouldNotExist,
   shouldContainText,
   cyTag,
+  addToInput,
+  clearNestedInput,
 } from "../support/e2e";
 
 const { LANDING_PAGE, AUDITIONS_SECTION, NEEDS_ATTENTION_SECTION } = CY_TAGS;
@@ -233,4 +235,18 @@ describe("Landing Page E2E Tests", () => {
 
         cy.contains("Error retrieving your auditions. Please try again.").should("be.visible");
     });
+  it("should use the filter to filter out audition,then come back when filter is empty", () => {
+    cy.task("db:seed");
+    login();
+
+    cy.visit("/");
+    cy.wait("@Auth0");
+    cy.wait("@getAuditions");
+
+    shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0");
+    addToInput(AUDITIONS_SECTION.SEARCH_INPUT, "qqq");
+    shouldNotExist(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0");
+    clearNestedInput(AUDITIONS_SECTION.SEARCH_INPUT);
+    shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0");
+  });
 });
