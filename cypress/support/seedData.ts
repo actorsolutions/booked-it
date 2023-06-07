@@ -15,4 +15,5 @@ export const AUDITION_DATA = {
   createdAt: "2023-04-28T21:50:11.638Z",
   status: "scheduled",
   archived: false,
+  casting: [],
 };

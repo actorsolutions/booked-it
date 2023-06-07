@@ -34,8 +34,7 @@ describe("Add Auditions Form E2E Tests", () => {
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
 
-    cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click();
-    cy.type("01012023");
+    clickCalendarDate("1682924400000");
 
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,

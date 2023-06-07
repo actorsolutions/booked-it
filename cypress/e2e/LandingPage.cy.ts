@@ -97,7 +97,7 @@ describe("Landing Page E2E Tests", () => {
       }
     );
   });
-  it("should unarchive unarchive an audition, confirm it is unarchived, reload, confirm unarchive persisted", () => {
+  it("should  unarchive an audition, confirm it is unarchived, reload, confirm unarchive persisted", () => {
     cy.task("db:seed");
     login();
     cy.visit("/");
