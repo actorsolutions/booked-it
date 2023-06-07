@@ -17,6 +17,7 @@ import CY_TAGS from "@/support/cypress_tags";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
+import TextField from "@mui/material/TextField";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
 
@@ -64,6 +65,12 @@ export const Dashboard = () => {
           </Grid>
           <Grid item xs={12}>
             <DashboardWrapper>
+              <TextField
+                id="filled-search"
+                label="Search field"
+                type="search"
+                variant="filled"
+              />
               <AuditionList
                 auditions={auditions}
                 setAuditions={setAuditions}
