@@ -83,9 +83,9 @@ export const getAudition = async (
 };
 
 export const updateAudition = async (
-    req: NextApiRequest,
-    res: NextApiResponse,
-    db = prisma.audition
+  req: NextApiRequest,
+  res: NextApiResponse,
+  db = prisma.audition
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
