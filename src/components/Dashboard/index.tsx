@@ -101,6 +101,7 @@ export const Dashboard = () => {
               >
                 <Grid item sx={{ mb: "2rem" }}>
                   <TextField
+                    data-cy={AUDITIONS_SECTION.SEARCH_INPUT}
                     id="filled-search"
                     label="Search..."
                     type="search"
