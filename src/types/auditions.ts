@@ -30,6 +30,7 @@ export interface CreateAuditionData {
   callBackDate?: number;
   status: string;
   archived: boolean;
+  casting?: Casting[];
 }
 
 export interface Casting {

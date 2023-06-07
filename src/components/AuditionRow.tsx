@@ -16,6 +16,7 @@ import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
 import { deleteAudition, updateAudition } from "@/apihelpers/auditions";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 import { useSnackBar } from "@/context/SnackbarContext";
+import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
 
 interface AuditionRowProps {
   audition: Audition;
@@ -57,25 +58,35 @@ export const AuditionRow = ({
   };
   const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
 
-    const [expanded, setExpanded] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const handleAccordionChange = () => {
-        setExpanded(!expanded);
-    };
-    const handleDelete = async () => {
-        try {
-            await deleteAudition(audition);
-            const updatedAuditions = auditions.filter(
-                (auditionEntry) => auditionEntry !== audition
-            );
-            setAuditions(updatedAuditions);
-            showSnackBar(AUDITIONS.AUDITION_DELETE_SUCCESS, "success")
-        } catch (error) {
-            console.log(error)
-            showSnackBar(AUDITIONS.AUDITION_DELETE_FAILURE, "error");
-        }
-    };
+  const [expanded, setExpanded] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
+  const handleDialog = () => {
+    setOpen(!open);
+  };
+  const handleAccordionChange = () => {
+    setExpanded(!expanded);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteAudition(audition);
+      const updatedAuditions = auditions.filter(
+        (auditionEntry) => auditionEntry !== audition
+      );
+      setAuditions(updatedAuditions);
+      showSnackBar(AUDITIONS.AUDITION_DELETE_SUCCESS, "success")
+
+    } catch (error) {
+      console.log(error)
+      showSnackBar(AUDITIONS.AUDITION_DELETE_FAILURE, "error");
+    }
+  };
+
+  const handleEdit = () => {
+    handleDialog();
+  };
   // TODO: BI-47 - implement try/catch for archiving error and leverage filter pattern from handleDelete
   const handleArchiveClick = async (event: MouseEvent) => {
     setLoading(true);
@@ -166,27 +177,58 @@ export const AuditionRow = ({
                   <div> Type: {audition.type} </div>
                 </Grid>
                 <Grid item xs={4}>
-                  <div data-cy={AUDITIONS_SECTION.CONTAINERS.CASTING_INFO}>{casting.length > 0 ? casting[0].name : undefined}</div>
+                  <div data-cy={AUDITIONS_SECTION.CONTAINERS.CASTING_INFO}>
+                    {casting.length > 0 ? casting[0].name : undefined}
+                  </div>
                 </Grid>
                 <Grid item xs={4}>
                   <div>Notes: {audition.notes}</div>
                 </Grid>
-                <Grid item xs={4}>
-                  <Button
-                    variant="contained"
-                    data-cy={`${buttonPrefix}delete-button`}
-                    onClick={() => {
-                      handleDelete();
-                    }}
+                <Grid item xs={12}>
+                  <Grid
+                    container
+                    direction={"row"}
+                    justifyContent={"space-between"}
                   >
-                    Delete
-                  </Button>
+                    <Grid item>
+                      <Button
+                        onClick={() => {
+                          handleEdit();
+                        }}
+                        variant="contained"
+                        data-cy={`${buttonPrefix}edit-button`}
+                      >
+                        Edit
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color={"error"}
+                        data-cy={`${buttonPrefix}delete-button`}
+                        onClick={() => {
+                          handleDelete();
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </AccordionDetails>
           )}
         </Accordion>
       </Grid>
+      <AddEditAuditionDialog
+        audition={audition}
+        auditions={auditions}
+        setAuditions={setAuditions}
+        handleClose={handleDialog}
+        open={open}
+      />
     </Card>
   );
 };
+
+//

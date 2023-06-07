@@ -24,10 +24,12 @@ export const FormInput = <T extends FieldValues>(props: Props<T>) => {
         name={field}
         control={control}
         rules={{ ...props.rules }}
-        render={({ field: { onChange } }) => {
+        render={({ field: { onChange, ref, ...field } }) => {
           return (
             <FormControl>
               <TextField
+                {...field}
+                inputRef={ref}
                 id={inputId}
                 data-cy={cyTag}
                 onChange={onChange}

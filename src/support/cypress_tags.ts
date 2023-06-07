@@ -15,7 +15,7 @@ export default {
       AUDITIONS_CONTAINER: "auditions-container",
       AUDITION_ROW: "audition-row-",
       ACCORDION_DETAILS: "accordion-details",
-      CASTING_INFO: "casting-info-container"
+      CASTING_INFO: "casting-info-container",
     },
     BUTTONS: {
       PREFIX: "audition-",
@@ -23,6 +23,7 @@ export default {
       EXPAND_MORE: "audition-expand-more-button",
       DELETE_AUDITION: "audition-delete-button",
       ARCHIVE_AUDITION: "audition-archive-button",
+      EDIT_AUDITION: "audition-edit-button",
     },
   },
   NEEDS_ATTENTION_SECTION: {
@@ -35,9 +36,11 @@ export default {
       EXPAND_MORE: "needs-attention-expand-more-button",
       DELETE_AUDITION: "needs-attention-delete-button",
       ARCHIVE_AUDITION: "needs-attention-archive-button",
+      EDIT_AUDITION: "needs-attention-edit-button",
     },
   },
   AUDITION_FORM: {
+    TITLE: "audition-form-title",
     CONTAINERS: {
       FORM_CONTAINER: "audition-form-container",
     },
@@ -85,7 +88,8 @@ export default {
     BUTTONS: {
       ADD_AUDITION: "add-audition-button",
       ADD_CASTING: "add-casting-button",
-      DELETE_CASTING: "delete-casting-button"
+      DELETE_CASTING: "delete-casting-button",
+      EDIT_AUDITION: "edit-audition-button",
     },
     CASTING: {
       CASTING_LIST: "casting-list",
@@ -94,23 +98,23 @@ export default {
   },
   CASTING_FORM: {
     CONTAINERS: {
-      CASTING_CONTAINER: "casting-form-container"
+      CASTING_CONTAINER: "casting-form-container",
     },
     INPUTS: {
       LABELS: {
         FIRST_NAME: "first-name-input-label",
-        LAST_NAME: "last-name-input-label"
+        LAST_NAME: "last-name-input-label",
       },
       FIRST_NAME: "first-name-input",
-      LAST_NAME: "last-name-input"
+      LAST_NAME: "last-name-input",
     },
     ERRORS: {
       FIRST_NAME: "first-name-error",
-      LAST_NAME: "last-name-error"
+      LAST_NAME: "last-name-error",
     },
     BUTTONS: {
-      ADD_PERSON: "add-person-button"
-    }
+      ADD_PERSON: "add-person-button",
+    },
   },
   NAV_BAR: {
     CONTAINER: {

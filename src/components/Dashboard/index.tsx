@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Login } from "../Login";
 import { Container } from "@mui/system";
 import { IconButton, Grid } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
 import { Audition } from "@/types";
-import { AuditionForm } from "@/components/AuditionForm";
 import { PieChart } from "./PieChart";
 import { AuditionList } from "@/components/Dashboard/AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
@@ -18,6 +14,7 @@ import SNACKBAR_MESSAGES from "@/support/snackbar_messages";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
+import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
 import {useSnackBar} from "@/context/SnackbarContext";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
@@ -99,21 +96,12 @@ export const Dashboard = () => {
                   <AddCircle fontSize="large" color="primary" />
                 </IconButton>
               </div>
-              <Dialog
+              <AddEditAuditionDialog
+                auditions={auditions}
+                setAuditions={setAuditions}
+                handleClose={handleClose}
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="audition-form"
-                aria-describedby="audition-form-modal"
-              >
-                <DialogContent>
-                  <DialogTitle> Add Audition</DialogTitle>
-                  <AuditionForm
-                    auditions={auditions}
-                    setAuditions={setAuditions}
-                    handleClose={handleClose}
-                  />
-                </DialogContent>
-              </Dialog>
+              />
             </DashboardWrapper>
           </Grid>
         </Grid>
