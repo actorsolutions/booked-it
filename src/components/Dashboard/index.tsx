@@ -26,6 +26,8 @@ export const Dashboard = () => {
   const [auditions, setAuditions] = useState<Audition[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [filterText, setFilterText] = useState("");
+  const [filteredArray, setFilteredArray] = useState<Audition[]>([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -36,11 +38,37 @@ export const Dashboard = () => {
         getAuditions().then((response) => {
           setLoading(false);
           setAuditions(response.auditions);
+          setFilteredArray(response.auditions);
         });
       });
     }
   }, [user]);
 
+  useEffect(() => {
+    if (filterText.length > 2) {
+      const filterAuditions = () => {
+        const returnArray: Audition[] = [];
+        auditions.filter((audition) => {
+          if (
+            audition.type.includes(filterText) ||
+            audition.project.includes(filterText) ||
+            audition.company.includes(filterText)
+          ) {
+            !returnArray.includes(audition) && returnArray.push(audition);
+          }
+          audition.casting?.filter((person) => {
+            if (person.name?.includes(filterText)) {
+              !returnArray.includes(audition) && returnArray.push(audition);
+            }
+          });
+        });
+        return returnArray;
+      };
+      setFilteredArray(filterAuditions);
+    } else {
+      setFilteredArray(auditions);
+    }
+  }, [filterText]);
   if (user) {
     return (
       <Container maxWidth="md">
@@ -65,19 +93,34 @@ export const Dashboard = () => {
           </Grid>
           <Grid item xs={12}>
             <DashboardWrapper>
-              <TextField
-                id="filled-search"
-                label="Search field"
-                type="search"
-                variant="filled"
-              />
-              <AuditionList
-                auditions={auditions}
-                setAuditions={setAuditions}
-                buttonPrefix={AUDITIONS_SECTION.BUTTONS.PREFIX}
-                listCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
-                rowCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}
-              />
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Grid item sx={{ mb: "2rem" }}>
+                  <TextField
+                    id="filled-search"
+                    label="Search..."
+                    type="search"
+                    variant="outlined"
+                    onChange={(e) => {
+                      setFilterText(e.target.value);
+                    }}
+                  />
+                </Grid>
+                <Grid item sx={{ width: "100%" }}>
+                  <AuditionList
+                    auditions={filteredArray}
+                    setAuditions={setAuditions}
+                    buttonPrefix={AUDITIONS_SECTION.BUTTONS.PREFIX}
+                    listCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+                    rowCyTag={AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW}
+                  />
+                </Grid>
+              </Grid>
+
               <div
                 style={{
                   display: "flex",
