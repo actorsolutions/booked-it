@@ -10,14 +10,18 @@ import { Audition } from "@/types";
 import { PieChart } from "./PieChart";
 import { AuditionList } from "@/components/Dashboard/AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
+import RESPONSE_MESSAGES from "@/support/response_messages";
 import { DashboardWrapper } from "../common/Layout/DashboardWrapper";
 import { NeedsAttention } from "@/components/Dashboard/NeedsAttention";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
+import {useSnackBar} from "@/context/SnackbarContext";
 
 const { LANDING_PAGE, AUDITIONS_SECTION } = CY_TAGS;
+const { AUTH_MESSAGES, AUDITION_MESSAGES } = RESPONSE_MESSAGES
 
 export const Dashboard = () => {
+  const {showSnackBar} = useSnackBar()
   const { user } = useUser();
   const [auditions, setAuditions] = useState<Audition[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -27,14 +31,24 @@ export const Dashboard = () => {
 
   useEffect(() => {
     if (user) {
-      SignUpOrSignIn().then(() => {
-        setLoading(true);
-        getAuditions().then((response) => {
-          setLoading(false);
-          setAuditions(response.auditions);
-        });
-      });
+      SignUpOrSignIn()
+          .then(() => {
+            setLoading(true);
+            getAuditions()
+                .then((response) => {
+                  setAuditions(response.auditions);
+                })
+                .catch((error) => {
+                  console.log(error);
+                  showSnackBar(AUDITION_MESSAGES.GET_AUDITIONS_FAILURE, "error");
+                });
+          })
+          .catch((error) => {
+            console.log(error);
+            showSnackBar(AUTH_MESSAGES.SIGNIN_SIGNUP_FAILURE, "error");
+          });
     }
+    setLoading(false);
   }, [user]);
 
   if (user) {
