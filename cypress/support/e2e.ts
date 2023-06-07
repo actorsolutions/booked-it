@@ -119,7 +119,7 @@ export const shouldContainText = (tag: string, text: string) => {
  */
 export const clickCalendarDate = (dataTimeStamp: string) => {
   cy.get(`[data-testid='CalendarIcon']`).click();
-  cy.get(`[data-timestamp="${dataTimeStamp}"`).click();
+  cy.get(`[data-timestamp="${dataTimeStamp}"]`).click();
 };
 
 /*

@@ -92,7 +92,6 @@ describe("Add Auditions Form E2E Tests", () => {
     });
 
     clickCalendarDate("1682924400000");
-    // cy.pause();
 
     findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.ERRORS.DATE);
