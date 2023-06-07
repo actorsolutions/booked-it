@@ -15,10 +15,13 @@ import {
 } from "../support/e2e";
 
 const { AUDITIONS_SECTION, AUDITION_FORM } = CY_TAGS;
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
 describe("Add Auditions Form E2E Tests", () => {
-  beforeEach(() => {
-    cy.clock(Date.UTC(2023, 5, 1), ["Date"]);
-  });
+  // beforeEach(() => {
+  //   cy.clock(Date.UTC(2023, 5, 1), ["Date"]);
+  // });
   it("Should not show add audition button while not logged in", () => {
     cy.task("db:seed");
     cy.visit("/");
@@ -34,7 +37,7 @@ describe("Add Auditions Form E2E Tests", () => {
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
 
-    clickCalendarDate("1682924400000");
+    clickCalendarDate(today.valueOf().toString());
 
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,
@@ -91,7 +94,7 @@ describe("Add Auditions Form E2E Tests", () => {
       shouldBeVisible(tag);
     });
 
-    clickCalendarDate("1682924400000");
+    clickCalendarDate(today.valueOf().toString());
 
     findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.ERRORS.DATE);
