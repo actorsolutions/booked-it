@@ -9,6 +9,7 @@ export default {
         AUDITION_DELETE_FAILURE: "Failed to delete audition. Please contact Zach and Tyler",
         AUDITION_CREATE_SUCCESS: "Audition created successfully. Woo!",
         AUDITION_CREATE_FAILURE: "Encountered a problem trying to create that audition. Please contact Zach and Tyler.",
-        AUDITION_CREATE_VALIDATION_ERROR: "Failed to add audition. Make sure all fields are properly completed."
+        AUDITION_CREATE_VALIDATION_ERROR: "Failed to add audition. Make sure all fields are properly completed.",
+        AUDITION_UPDATE_FAILURE: "Failed to update audition",
     }
 }
