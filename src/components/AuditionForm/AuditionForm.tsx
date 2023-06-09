@@ -32,6 +32,8 @@ interface Props {
 }
 export const AuditionForm = (props: Props) => {
   const { setAuditions, auditions, handleClose, audition } = props;
+  // variable rename to help with if Adding an audition or Editing an Audition
+  const editMode = audition;
   const { AUDITION_FORM } = CY_TAGS;
   const { AUDITION_MESSAGES } = RESPONSE_MESSAGES;
   const { showSnackBar } = useSnackBar();
@@ -110,60 +112,66 @@ export const AuditionForm = (props: Props) => {
   };
 
   /**
+   * Handles Editing an audition
+   */
+  const handleEdit = async (audition: Audition) => {
+    const values = getValues();
+    const updateData = {
+      ...values,
+      date: values.date / 1000,
+      casting: watchCasting,
+      id: audition.id,
+      userId: audition.userId,
+      createdAt: audition.createdAt,
+      callbackDate: audition.callBackDate,
+    };
+    const response = await updateAudition(updateData as Audition);
+    const auditionToReplace = auditions.find(
+      (audition) => audition.id === response.id
+    ) as Audition;
+    Object.assign(auditionToReplace, response);
+    setCastingRowCount(watchCasting ? watchCasting.length : 0);
+  };
+
+  /**
+   * Handles creating an audition
+   */
+  const handleCreate = async () => {
+    try {
+      const addedAudition = await createAudition(getValues());
+      auditions.push(addedAudition);
+      setAuditions(auditions);
+      setSubmissionState({
+        loading: false,
+        submitted: true,
+      });
+      showSnackBar(AUDITION_MESSAGES.AUDITION_CREATE_SUCCESS, "success");
+      setCastingRowCount(watchCasting ? watchCasting.length : 0);
+      return true;
+    } catch (error) {
+      console.log(error);
+      showSnackBar(AUDITION_MESSAGES.AUDITION_CREATE_FAILURE, "error");
+    }
+  };
+  /**
    * Triggers Validation on form, will not send to API if form is not valid
    * Determines if a PUT or POST create depending on if audition is send along in props.
    */
-  const handleCreateOrEdit = async () => {
+  const handleClick = async () => {
     setSubmissionState({
       loading: true,
       submitted: false,
     });
     if (await customValidation(createFields as fields[])) {
-      if (audition) {
-        const values = getValues();
-        const updateData = {
-          ...values,
-          date: values.date / 1000,
-          casting: watchCasting,
-          id: audition.id,
-          userId: audition.userId,
-          createdAt: audition.createdAt,
-          callbackDate: audition.callBackDate,
-        };
-        const response = await updateAudition(updateData as Audition);
-        const auditionToReplace = auditions.find(
-          (audition) => audition.id === response.id
-        ) as Audition;
-        Object.assign(auditionToReplace, response);
-        setCastingRowCount(watchCasting ? watchCasting.length : 0);
-        return true;
-      } else if (!audition) {
-        try {
-          const addedAudition = await createAudition(getValues());
-          auditions.push(addedAudition);
-          setAuditions(auditions);
-          setSubmissionState({
-            loading: false,
-            submitted: true,
-          });
-          showSnackBar(AUDITION_MESSAGES.AUDITION_CREATE_SUCCESS, "success");
-          setCastingRowCount(watchCasting ? watchCasting.length : 0);
-          return true;
-        } catch (error) {
-          console.log(error);
-          showSnackBar(AUDITION_MESSAGES.AUDITION_CREATE_FAILURE, "error");
-        }
-      } else {
-        setSubmissionState({
-          loading: false,
-          submitted: false,
-        });
-        showSnackBar(
-          AUDITION_MESSAGES.AUDITION_CREATE_VALIDATION_ERROR,
-          "error"
-        );
-        return false;
-      }
+      editMode ? await handleEdit(audition) : await handleCreate();
+      return true;
+    } else {
+      setSubmissionState({
+        loading: false,
+        submitted: false,
+      });
+      showSnackBar(AUDITION_MESSAGES.AUDITION_CREATE_VALIDATION_ERROR, "error");
+      return false;
     }
   };
 
@@ -178,7 +186,7 @@ export const AuditionForm = (props: Props) => {
     setValue("casting", castingArray);
   };
   useEffect(() => {
-    if (audition) {
+    if (editMode) {
       const data = {
         archived: audition.archived,
         callbackDate: audition.callBackDate
@@ -194,7 +202,7 @@ export const AuditionForm = (props: Props) => {
       };
       reset({ ...data });
     }
-  }, [audition, reset]);
+  }, [editMode, reset]);
 
   return (
     <Container
@@ -287,18 +295,18 @@ export const AuditionForm = (props: Props) => {
         )}
         <Button
           data-cy={
-            audition
+            editMode
               ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
               : AUDITION_FORM.BUTTONS.ADD_AUDITION
           }
           onClick={() => {
             clearErrors();
-            handleCreateOrEdit().then((wasSent) => {
+            handleClick().then((wasSent) => {
               wasSent && handleClose();
             });
           }}
         >
-          {audition ? "Edit Audition" : "Add Audition"}
+          {editMode ? "Edit Audition" : "Add Audition"}
         </Button>
         {submissionState.loading && <LoadingCircle />}
       </Form>
