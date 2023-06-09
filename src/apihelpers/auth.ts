@@ -1,4 +1,5 @@
 import RESPONSE_MESSAGES from "@/support/response_messages";
+
 export const SignUpOrSignIn = async () => {
   const response = await fetch("/api/auth/registration", {
     method: "POST",
