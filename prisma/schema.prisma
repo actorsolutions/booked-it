@@ -42,6 +42,7 @@ enum audition_types{
     industrial
     commercial
     newMedia
+    voiceOver
 }
 
 enum audition_statuses{

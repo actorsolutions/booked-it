@@ -40,6 +40,7 @@ const auditionTypes = {
   industrial: "industrial",
   commercial: "commercial",
   newMedia: "newMedia",
+  voiceOver: "voiceOver",
 };
 
 /**
