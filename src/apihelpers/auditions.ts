@@ -13,14 +13,22 @@ export const getAuditions = async (): Promise<AuditionsResponse> => {
 };
 
 export const createAudition = async (data: CreateAuditionData) => {
-  // This division makes it work nice with the backend.
+  // This division makes it work nicely with the backend.
   data.date = data.date / 1000;
   return await fetch("/api/auditions", {
     method: "POST",
     body: JSON.stringify(data),
-  }).then((data) => {
-    return data.json();
-  });
+  })
+      .then((response) => {
+        if (response.status !== 200) {
+          throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE);
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error)
+        throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE);
+      });
 };
 
 export const updateAudition = async (data: Audition) => {
@@ -28,13 +36,24 @@ export const updateAudition = async (data: Audition) => {
     method: "PUT",
     body: JSON.stringify(data),
   });
+  if (response.status !== 200) {
+    throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_UPDATE_FAILURE)
+  }
   return await response.json();
 };
 
 export const deleteAudition = async (data: Audition) => {
   return await fetch(`/api/auditions/${data.id}`, {
     method: "DELETE",
-  }).then((data) => {
-    return data.json();
-  });
+  })
+      .then((response) => {
+    if (response.status !== 200) {
+      throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_DELETE_FAILURE);
+    }
+    return response.json();
+  })
+      .catch((error) => {
+        console.log(error)
+        throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_DELETE_FAILURE);
+      });
 };
