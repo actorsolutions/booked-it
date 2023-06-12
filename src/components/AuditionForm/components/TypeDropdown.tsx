@@ -14,6 +14,7 @@ export const TypeDropdown = (props: FormProps<AuditionFormData>) => {
     { value: "industrial", label: "Industrial" },
     { value: "commercial", label: "Commercial" },
     { value: "newMedia", label: "New Media" },
+    { value: "voiceOver", label: "Voiceover" },
   ];
   return (
     <FormGroupRow>
