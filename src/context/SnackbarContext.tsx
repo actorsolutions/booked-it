@@ -1,5 +1,9 @@
 import React, { createContext, useState, useContext } from "react";
 import { Alert, Snackbar } from "@mui/material";
+import CY_TAGS from "@/support/cypress_tags";
+
+const { LANDING_PAGE } = CY_TAGS;
+
 
 type SnackBarContextActions = {
     // eslint-disable-next-line no-unused-vars
@@ -32,6 +36,7 @@ const SnackBarProvider: React.FC<SnackBarProviderProps> = ({ children }) => {
     return (
         <SnackBarContext.Provider value={{ showSnackBar }}>
             <Snackbar
+                data-cy={LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER}
                 open={open}
                 autoHideDuration={3000}
                 anchorOrigin={{ vertical: "bottom", horizontal: "left" }}

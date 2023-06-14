@@ -14,7 +14,7 @@ import {
   clearNestedInput,
 } from "../support/e2e";
 
-const { AUDITIONS_SECTION, AUDITION_FORM } = CY_TAGS;
+const { AUDITIONS_SECTION, LANDING_PAGE, AUDITION_FORM } = CY_TAGS;
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
@@ -189,7 +189,10 @@ describe("Add Auditions Form E2E Tests", () => {
     findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    cy.contains("Audition created successfully. Woo!").should("be.visible");
+    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(
+        () => {
+          cy.contains("Audition created successfully. Woo!").should("be.visible");
+        });
   });
   it("Should show error Snackbar message when audition fails to create", () => {
     cy.task("db:seed");
@@ -226,6 +229,9 @@ describe("Add Auditions Form E2E Tests", () => {
 
     findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
 
-    cy.contains("Encountered a problem trying to create that audition. Please contact Zach and Tyler.").should("be.visible");
+    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(
+        () => {
+          cy.contains("Encountered a problem trying to create that audition. Please contact Zach and Tyler.").should("be.visible");
+        });
   });
 });
