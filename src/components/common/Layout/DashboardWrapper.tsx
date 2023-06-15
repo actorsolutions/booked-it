@@ -5,9 +5,5 @@ interface Props {
   children: ReactNode;
 }
 export const DashboardWrapper = ({ children }: Props) => {
-  return (
-    <Paper elevation={5} sx={{ p: "1rem", bgcolor: "snow" }}>
-      {children}
-    </Paper>
-  );
+  return <Paper variant={"dashboardWrapper"}>{children}</Paper>;
 };
