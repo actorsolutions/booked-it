@@ -17,6 +17,7 @@ import { deleteAudition, updateAudition } from "@/apihelpers/auditions";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 import { useSnackBar } from "@/context/SnackbarContext";
 import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
+import {audition_types} from "@prisma/client";
 
 interface AuditionRowProps {
   audition: Audition;
@@ -56,6 +57,32 @@ export const AuditionRow = ({
         return "disabled";
     }
   };
+
+  const typeLabel = (
+      type: audition_types
+  ): string => {
+    switch (type) {
+      case "television":
+        return "Television";
+      case "film":
+        return "Film";
+      case "student":
+        return "Student";
+      case "theater":
+        return "Theater";
+      case "industrial":
+        return "Industrial";
+      case "commercial":
+        return "Commercial";
+      case "newMedia":
+        return "New Media";
+      case "voiceOver":
+        return "Voice Over"
+      default:
+        return "Unknown";
+    }
+  }
+
   const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
 
   const [expanded, setExpanded] = useState(false);
@@ -147,10 +174,10 @@ export const AuditionRow = ({
             >
               <LensIcon color={statusColor(audition.status)} fontSize="large" />
             </Grid>
-            <Grid item xs={7}>
-              <div> Project: {audition.project} </div>
+            <Grid item xs={9} md={7}>
+              <div style={{ marginTop: "0.5rem" }}> Project: {audition.project} </div>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={3} sx={{marginTop: "0.3rem"}}>
               <Button
                 sx={{ p: 0.5 }}
                 variant="outlined"
@@ -163,7 +190,9 @@ export const AuditionRow = ({
             <Grid
               item
               xs={6}
-              sx={{ display: "flex", justifyContent: "flex-end" }}
+              sx={{ display: "flex",
+                alignItems: "center",
+                justifyContent: "center" }}
             >
               <Typography variant="body2">{formattedDate}</Typography>
             </Grid>
@@ -173,8 +202,8 @@ export const AuditionRow = ({
               data-cy={`${AUDITIONS_SECTION.CONTAINERS.ACCORDION_DETAILS}`}
             >
               <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <div> Type: {audition.type} </div>
+                <Grid item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
+                  <div> Type: {typeLabel(audition.type)} </div>
                 </Grid>
                 <Grid item xs={4}>
                   <div data-cy={AUDITIONS_SECTION.CONTAINERS.CASTING_INFO}>
@@ -190,7 +219,7 @@ export const AuditionRow = ({
                     direction={"row"}
                     justifyContent={"space-between"}
                   >
-                    <Grid item>
+                    <Grid item sx={{ marginLeft: "0.5rem"}}>
                       <Button
                         onClick={() => {
                           handleEdit();
@@ -230,5 +259,3 @@ export const AuditionRow = ({
     </Card>
   );
 };
-
-//
