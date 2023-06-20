@@ -17,6 +17,7 @@ import { deleteAudition, updateAudition } from "@/apihelpers/auditions";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 import { useSnackBar } from "@/context/SnackbarContext";
 import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
+import {audition_types} from "@prisma/client";
 
 interface AuditionRowProps {
   audition: Audition;
@@ -56,6 +57,32 @@ export const AuditionRow = ({
         return "disabled";
     }
   };
+
+  const typeLabel = (
+      type: audition_types
+  ): string => {
+    switch (type) {
+      case "television":
+        return "Television";
+      case "film":
+        return "Film";
+      case "student":
+        return "Student";
+      case "theater":
+        return "Theater";
+      case "industrial":
+        return "Industrial";
+      case "commercial":
+        return "Commercial";
+      case "newMedia":
+        return "New Media";
+      case "voiceOver":
+        return "Voice-Over"
+      default:
+        return "Unknown";
+    }
+  }
+
   const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
 
   const [expanded, setExpanded] = useState(false);
@@ -176,7 +203,7 @@ export const AuditionRow = ({
             >
               <Grid container spacing={2}>
                 <Grid item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
-                  <div> Type: {audition.type} </div>
+                  <div> Type: {typeLabel(audition.type)} </div>
                 </Grid>
                 <Grid item xs={4}>
                   <div data-cy={AUDITIONS_SECTION.CONTAINERS.CASTING_INFO}>
