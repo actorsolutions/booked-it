@@ -37,7 +37,7 @@ model Audition {
 
 model Status {
   id           Int            @id @default(autoincrement())
-  type         String
+  type         String         @unique
   StatusChange StatusChange[]
 }
 
@@ -68,3 +68,5 @@ enum audition_statuses {
   callback
   booked
 }
+
+
