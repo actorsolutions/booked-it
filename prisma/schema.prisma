@@ -9,47 +9,62 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-model User {
-  id        Int      @id @default(autoincrement())
-  sid       String   @unique
-  email     String   @unique @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  Audition Audition[]
-}
 
+model User {
+  id        Int        @id @default(autoincrement())
+  sid       String     @unique
+  email     String     @unique @db.VarChar(255)
+  createdAt DateTime   @default(now()) @db.Timestamp(6)
+  Audition  Audition[]
+}
 
 model Audition {
-  id      Int      @id @default(autoincrement())
-  userId Int
-  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  date      Int
-  project   String
-  company  String?
+  id           Int               @id @default(autoincrement())
+  userId       Int
+  User         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime          @default(now()) @db.Timestamp(6)
+  date         Int
+  project      String
+  company      String?
   callBackDate Int?
-  casting  Json?
-  notes    String?
-  type     audition_types
-  status   audition_statuses
-  archived Boolean    @default(false)
+  casting      Json?
+  notes        String?
+  type         audition_types
+  status       audition_statuses
+  archived     Boolean           @default(false)
+  StatusChange StatusChange[]
 }
 
-enum audition_types{
-    television
-    film
-    student
-    theater
-    industrial
-    commercial
-    newMedia
-    voiceOver
+model Status {
+  id           Int            @id @default(autoincrement())
+  type         String
+  StatusChange StatusChange[]
 }
 
-enum audition_statuses{
-    submitted
-    scheduled
-    auditioned
-    callback
-    booked
+model StatusChange {
+  id         Int      @id @default(autoincrement())
+  Audition   Audition @relation(fields: [auditionId], references: [id])
+  auditionId Int
+  Status     Status   @relation(fields: [statusId], references: [id])
+  statusId   Int
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
 }
 
+enum audition_types {
+  television
+  film
+  student
+  theater
+  industrial
+  commercial
+  newMedia
+  voiceOver
+}
+
+enum audition_statuses {
+  submitted
+  scheduled
+  auditioned
+  callback
+  booked
+}
