@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { generatePrisma } from "@/utils/prisma";
+import { generatePrisma } from "../../src/utils/prisma";
 
 /**
  * Replicates sanitizeDB functionality in the cypress portion of the product
