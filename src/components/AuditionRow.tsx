@@ -77,7 +77,7 @@ export const AuditionRow = ({
       case "newMedia":
         return "New Media";
       case "voiceOver":
-        return "Voice-Over"
+        return "Voice Over"
       default:
         return "Unknown";
     }
