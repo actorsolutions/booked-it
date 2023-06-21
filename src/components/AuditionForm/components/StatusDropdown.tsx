@@ -18,7 +18,7 @@ export const StatusDropdown = (props: FormProps<AuditionFormData>) => {
       <Container>
         <FormLabel
           cyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.LABELS.STATUS}
-          labelText="Audition Status"
+          labelText="Current Status"
           htmlFor="statusDropdown"
         />
       </Container>

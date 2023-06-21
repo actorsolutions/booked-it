@@ -10,7 +10,7 @@ export const NotesTextArea = (props: FormProps<AuditionFormData>) => {
       <Container>
         <FormLabel
           cyTag={CY_TAGS.AUDITION_FORM.TEXT_AREA.LABELS.NOTES}
-          labelText="Audition Notes"
+          labelText="Notes"
           htmlFor="notesInput"
         />
       </Container>

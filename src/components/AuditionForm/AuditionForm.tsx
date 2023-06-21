@@ -205,111 +205,122 @@ export const AuditionForm = (props: Props) => {
   }, [editMode, reset]);
 
   return (
-    <Container
-      data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
-      maxWidth="md"
-      id="auditionModal"
-    >
-      <Divider />
-      <Form>
-        <Grid item sm={8} md={6}>
-          <AuditionDatePicker control={control} register={register} />
-          {errors.date && (
-            <Typography data-cy={AUDITION_FORM.ERRORS.DATE} variant="overline">
-              Required!
-            </Typography>
-          )}
-        </Grid>
-        <Grid item sm={8} md={6}>
-          <ProjectInput control={control} register={register} />
-          {errors.project && (
-            <Typography
-              data-cy={AUDITION_FORM.ERRORS.PROJECT}
-              variant="overline"
-            >
-              Required!
-            </Typography>
-          )}
-          <CompanyInput control={control} register={register} />
-          {errors.company && (
-            <Typography
-              data-cy={AUDITION_FORM.ERRORS.COMPANY}
-              variant="overline"
-            >
-              Required!
-            </Typography>
-          )}
-        </Grid>
-        <Grid item sm={8} md={6}>
-          <StatusDropdown control={control} register={register} />
-          {errors.status && (
-            <Typography
-              data-cy={AUDITION_FORM.ERRORS.STATUS}
-              variant="overline"
-            >
-              Required!
-            </Typography>
-          )}
-          <TypeDropdown control={control} register={register} />
-          {errors.type && (
-            <Typography data-cy={AUDITION_FORM.ERRORS.TYPE} variant="overline">
-              Required!
-            </Typography>
-          )}
-        </Grid>
-        {watchStatus === "callback" && (
-          <CallbackPicker control={control} register={register} />
-        )}
-        <Grid item sm={8} md={6}>
-          <NotesTextArea control={control} register={register} />
-        </Grid>
-        <Grid item sm={8}>
-          {watchCasting ? (
-            <CastingList
-              casting={watchCasting}
-              onDelete={handleDeleteCastingRow}
-              name={""}
-              listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
-            />
-          ) : null}
-        </Grid>
-        {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
-          <Grid item sm={8} md={6}>
-            <Button
-              data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
-              onClick={handleModal}
-            >
-              Add Casting
-            </Button>
-            <Dialog open={open} onClose={handleModal}>
-              <DialogContent>
-                <CastingForm
-                  auditionControl={control}
-                  initialCastingList={getValues().casting}
-                  setCasting={setCasting}
-                  handleClose={handleModal}
-                />
-              </DialogContent>
-            </Dialog>
+      <Container
+          data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
+          maxWidth="md"
+          id="auditionModal"
+          justify-content={"center"}
+      >
+        <Divider />
+        <Form>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <AuditionDatePicker control={control} register={register} />
+              {errors.date && (
+                  <Typography data-cy={AUDITION_FORM.ERRORS.DATE} variant="overline">
+                    Required!
+                  </Typography>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <ProjectInput control={control} register={register} />
+              {errors.project && (
+                  <Typography
+                      data-cy={AUDITION_FORM.ERRORS.PROJECT}
+                      variant="overline"
+                  >
+                    Required!
+                  </Typography>
+              )}
+            </Grid>
+              <Grid item xs={12}>
+                <StatusDropdown control={control} register={register} />
+                {errors.status && (
+                    <Typography
+                        data-cy={AUDITION_FORM.ERRORS.STATUS}
+                        variant="overline"
+                    >
+                      Required!
+                    </Typography>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TypeDropdown control={control} register={register} />
+                {errors.type && (
+                    <Typography data-cy={AUDITION_FORM.ERRORS.TYPE} variant="overline">
+                      Required!
+                    </Typography>
+                )}
+              </Grid>
+            {watchStatus === "callback" && (
+                <Grid item xs={12}>
+                  <CallbackPicker control={control} register={register} />
+                </Grid>
+            )}
+            <Grid item xs={12}>
+              <CompanyInput control={control} register={register} />
+              {errors.company && (
+                  <Typography
+                      data-cy={AUDITION_FORM.ERRORS.COMPANY}
+                      variant="overline"
+                  >
+                    Required!
+                  </Typography>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              {watchCasting ? (
+                  <CastingList
+                      casting={watchCasting}
+                      onDelete={handleDeleteCastingRow}
+                      name={""}
+                      listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
+                  />
+              ) : null}
+            </Grid>
+            {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
+                <Grid item xs={12}>
+                  <Button
+                      data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
+                      onClick={handleModal}
+                  >
+                    Add Casting
+                  </Button>
+                  <Dialog open={open} onClose={handleModal}>
+                    <DialogContent>
+                      <CastingForm
+                          auditionControl={control}
+                          initialCastingList={getValues().casting}
+                          setCasting={setCasting}
+                          handleClose={handleModal}
+                      />
+                    </DialogContent>
+                  </Dialog>
+                </Grid>
+            )}
+            <Grid item xs={12}>
+              <NotesTextArea control={control} register={register} />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                  data-cy={
+                    editMode
+                        ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
+                        : AUDITION_FORM.BUTTONS.ADD_AUDITION
+                  }
+                  onClick={() => {
+                    clearErrors();
+                    handleClick().then((wasSent) => {
+                      wasSent && handleClose();
+                    });
+                  }}
+              >
+                {editMode ? "Edit Audition" : "Add Audition"}
+              </Button>
+              {submissionState.loading && <LoadingCircle />}
+            </Grid>
           </Grid>
-        )}
-        <Button
-          data-cy={
-            editMode
-              ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
-              : AUDITION_FORM.BUTTONS.ADD_AUDITION
-          }
-          onClick={() => {
-            clearErrors();
-            handleClick().then((wasSent) => {
-              wasSent && handleClose();
-            });
-          }}
-        >
-          {editMode ? "Edit Audition" : "Add Audition"}
-        </Button>
-        {submissionState.loading && <LoadingCircle />}
-      </Form>
-    </Container>
+        </Form>
+      </Container>
   );
 };

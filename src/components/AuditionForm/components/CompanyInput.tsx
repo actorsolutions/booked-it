@@ -10,7 +10,7 @@ export const CompanyInput = (props: FormProps<AuditionFormData>) => {
       <Container>
         <FormLabel
           cyTag={CY_TAGS.AUDITION_FORM.INPUTS.LABELS.COMPANY}
-          labelText="Audition Company"
+          labelText="Producing Company"
           htmlFor="companyInput"
         />
       </Container>
