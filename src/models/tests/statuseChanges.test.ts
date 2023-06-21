@@ -9,18 +9,21 @@ describe("It tests the StatusChange Model", () => {
         auditionId: 0,
         statusId: 0,
         createdAt: new Date(),
+        date: new Date(),
       },
       {
         id: 1,
         auditionId: 0,
         statusId: 1,
         createdAt: new Date(),
+        date: new Date(),
       },
       {
         id: 2,
         auditionId: 0,
         statusId: 3,
         createdAt: new Date(),
+        date: new Date(),
       },
     ];
     const mockPrisma = {
@@ -63,11 +66,13 @@ describe("It tests the StatusChange Model", () => {
     const createData = {
       auditionId: 0,
       statusId: 0,
+      date: new Date(),
     };
     const expectedResponse = {
       ...createData,
       id: 0,
       createdAt: new Date(),
+      date: new Date(),
     };
     const mockPrisma = {
       create: async () => {
@@ -89,18 +94,21 @@ describe("It tests the StatusChange Model", () => {
         auditionId: 0,
         statusId: 0,
         createdAt: new Date(),
+        date: new Date(),
       },
       {
         id: 1,
         auditionId: 0,
         statusId: 1,
         createdAt: new Date(),
+        date: new Date(),
       },
       {
         id: 2,
         auditionId: 0,
         statusId: 3,
         createdAt: new Date(),
+        date: new Date(),
       },
     ];
     const expectedResponse = {
@@ -153,6 +161,7 @@ describe("It tests the StatusChange Model", () => {
         auditionId: 0,
         statusId: 0,
         createdAt: new Date(),
+        date: new Date(),
       },
     ];
     const expectedResponse = {
