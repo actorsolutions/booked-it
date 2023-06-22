@@ -209,12 +209,11 @@ export const AuditionForm = (props: Props) => {
           data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
           maxWidth="md"
           id="auditionModal"
-          justify-content={"center"}
       >
         <Divider />
         <Form>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
               <AuditionDatePicker control={control} register={register} />
               {errors.date && (
                   <Typography data-cy={AUDITION_FORM.ERRORS.DATE} variant="overline">

@@ -30,7 +30,7 @@ export const FormDatePicker = <T extends FieldValues>(props: Props<T>) => {
         render={({ field: { onChange, ref, ...field } }) => {
           setValue(field.value);
           return (
-            <FormControl>
+            <FormControl fullWidth={true}>
               <div data-cy={cyTag}>
                 <DatePicker
                   inputRef={ref}
