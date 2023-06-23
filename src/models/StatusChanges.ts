@@ -6,7 +6,7 @@ export class StatusChange {
   id: number;
   auditionId: number;
   statusId: number;
-  createdAt: Date;
+  createdAt: Date | null;
 
   constructor(data: PrismaStatusChange) {
     const { id, auditionId, statusId, createdAt } = data;
