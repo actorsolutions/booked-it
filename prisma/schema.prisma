@@ -22,7 +22,7 @@ model Audition {
   id           Int               @id @default(autoincrement())
   userId       Int
   User         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime          @default(now()) @db.Timestamp(6)
+  createdAt    DateTime?         @default(now()) @db.Timestamp(6)
   date         Int
   project      String
   company      String?
@@ -48,6 +48,7 @@ model StatusChange {
   Status     Status   @relation(fields: [statusId], references: [id])
   statusId   Int
   createdAt  DateTime @default(now()) @db.Timestamp(6)
+  date       Int
 }
 
 enum audition_types {
@@ -68,5 +69,3 @@ enum audition_statuses {
   callback
   booked
 }
-
-

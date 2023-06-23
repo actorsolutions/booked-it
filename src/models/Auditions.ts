@@ -4,44 +4,7 @@ import {
   audition_types,
   audition_statuses,
 } from "@prisma/client";
-
-/**
- * Defines the Database representation of an Audition, starting with
- * a form of the object for Audition creation where id is optional
- */
-interface CreateAuditionData {
-  id?: number;
-  userId: number;
-  date: number;
-  project: string;
-  company?: string;
-  callbackDate?: number;
-  casting?: Prisma.JsonArray;
-  notes?: string;
-  type: string;
-  createdAt?: string;
-  status: string;
-  archived: boolean;
-}
-
-const auditionStatuses = {
-  submitted: "submitted",
-  scheduled: "scheduled",
-  auditioned: "auditioned",
-  callback: "callback",
-  booked: "booked",
-};
-
-const auditionTypes = {
-  television: "television",
-  film: "film",
-  student: "student",
-  theater: "theater",
-  industrial: "industrial",
-  commercial: "commercial",
-  newMedia: "newMedia",
-  voiceOver: "voiceOver",
-};
+import type { Audition as PrismaAudition } from "@prisma/client";
 
 /**
  * Makes sure value is a part of object representing Prisma Enum
@@ -55,17 +18,12 @@ const validateEnum = (enumList: {}, value: string) => {
     throw Error(`Invalid Type: ${value} in ${enumList}`);
   }
 };
-/**
- * Extends the interface for Audition creation to the more general
- * form of the AuditionData object where id is required
- */
-interface AuditionData extends CreateAuditionData {
-  id: number;
-}
 
 /**
- * Business logic for manipulating & transacting AuditionData
+ * Defines the Database representation of an Audition, starting with
+ * a form of the object for Audition creation where id is optional
  */
+
 export class Audition {
   id: number;
   userId: number;
@@ -73,22 +31,28 @@ export class Audition {
   project: string;
   company?: string | undefined;
   callbackDate?: number;
-  casting?: Prisma.JsonArray;
+  casting?:
+    | string
+    | number
+    | boolean
+    | Prisma.JsonObject
+    | Prisma.JsonArray
+    | null;
   notes?: string;
   type: audition_types;
-  createdAt?: string;
+  createdAt?: Date | null;
   status: audition_statuses;
   archived: boolean;
 
   // eslint-disable-next-line no-unused-vars
-  constructor(data: AuditionData) {
+  constructor(data: PrismaAudition) {
     const {
       id,
       userId,
       date,
       project,
       company,
-      callbackDate,
+      callBackDate,
       casting,
       notes,
       createdAt,
@@ -101,14 +65,14 @@ export class Audition {
     this.date = date;
     this.project = project;
     this.company = company || undefined;
-    this.callbackDate = callbackDate || undefined;
+    this.callbackDate = callBackDate || undefined;
     this.casting = casting;
     this.notes = notes || undefined;
     this.createdAt = createdAt;
     this.archived = archived;
 
-    this.status = validateEnum(auditionStatuses, status) as audition_statuses;
-    this.type = validateEnum(auditionTypes, type) as audition_types;
+    this.status = validateEnum(audition_statuses, status) as audition_statuses;
+    this.type = validateEnum(audition_types, type) as audition_types;
   }
 
   /**
@@ -117,7 +81,7 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async findById(id: number, db: PrismaClient["audition"]) {
-    return await db.findUnique({ where: { id } });
+    return db.findUnique({ where: { id } });
   }
 
   /**
@@ -126,7 +90,7 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async findByUserId(userId: number, db: PrismaClient["audition"]) {
-    return await db.findMany({ where: { userId: userId } });
+    return db.findMany({ where: { userId: userId } });
   }
 
   /**
@@ -135,17 +99,17 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async create(
-    createData: CreateAuditionData,
+    createData: Prisma.AuditionUncheckedCreateInput,
     db: PrismaClient["audition"]
   ) {
     return db.create({
       data: {
         ...createData,
         status: validateEnum(
-          auditionStatuses,
+          audition_statuses,
           createData.status
         ) as audition_statuses,
-        type: validateEnum(auditionTypes, createData.type) as audition_types,
+        type: validateEnum(audition_types, createData.type) as audition_types,
       },
     });
   }
@@ -157,8 +121,8 @@ export class Audition {
   async save(db: PrismaClient["audition"]) {
     return db.upsert({
       where: { id: this.id },
-      update: this,
-      create: this,
+      update: this as Prisma.AuditionUncheckedUpdateInput,
+      create: this as Prisma.AuditionUncheckedCreateInput,
     });
   }
 
@@ -174,7 +138,7 @@ export class Audition {
     userId: number,
     db: PrismaClient["audition"]
   ) {
-    return await db.deleteMany({
+    return db.deleteMany({
       where: {
         id,
         userId,
