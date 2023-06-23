@@ -6,32 +6,6 @@ import {
 } from "@prisma/client";
 import type { Audition as PrismaAudition } from "@prisma/client";
 
-import {
-  CreateAuditionPrismaData,
-  AuditionPrismaData,
-  AuditionData,
-} from "@/types/auditions";
-import { StatusChangeData, StatusChangePrismaData } from "@/types/statuschange";
-
-const auditionStatuses = {
-  submitted: "submitted",
-  scheduled: "scheduled",
-  auditioned: "auditioned",
-  callback: "callback",
-  booked: "booked",
-};
-
-const auditionTypes = {
-  television: "television",
-  film: "film",
-  student: "student",
-  theater: "theater",
-  industrial: "industrial",
-  commercial: "commercial",
-  newMedia: "newMedia",
-  voiceOver: "voiceOver",
-};
-
 /**
  * Makes sure value is a part of object representing Prisma Enum
  * @param enumList
@@ -46,9 +20,11 @@ const validateEnum = (enumList: {}, value: string) => {
 };
 
 /**
- * Formats the returned Audition into the format needed for the frontend
+ * Defines the Database representation of an Audition, starting with
+ * a form of the object for Audition creation where id is optional
  */
-const formatAuditions = (auditions: AuditionPrismaData[]) => {
+
+const formatAuditions = (auditions: PrismaAudition[]) => {
   const formattedStatuses: StatusChangeData[] = [];
   auditions.forEach((audition) => {
     const formatted: StatusChangeData[] = [];
@@ -64,33 +40,35 @@ const formatAuditions = (auditions: AuditionPrismaData[]) => {
   formattedAuditions.statuses = formattedStatuses;
   return formattedAuditions;
 };
-
-/**
- * Business logic for manipulating & transacting AuditionData
- */
 export class Audition {
   id: number;
   userId: number;
   date: number;
   project: string;
-  company: string;
+  company?: string | undefined;
   callbackDate?: number;
-  casting?: Prisma.JsonArray | undefined;
+  casting?:
+    | string
+    | number
+    | boolean
+    | Prisma.JsonObject
+    | Prisma.JsonArray
+    | null;
   notes?: string;
   type: audition_types;
-  createdAt?: string;
+  createdAt?: Date | null;
   status: audition_statuses;
   archived: boolean;
   statuses: StatusChangePrismaData[];
 
-  constructor(data: AuditionPrismaData) {
+  constructor(data: PrismaAudition) {
     const {
       id,
       userId,
       date,
       project,
       company,
-      callbackDate,
+      callBackDate,
       casting,
       notes,
       createdAt,
@@ -103,16 +81,16 @@ export class Audition {
     this.userId = userId;
     this.date = date;
     this.project = project;
-    this.company = company;
-    this.callbackDate = callbackDate || undefined;
+    this.company = company || undefined;
+    this.callbackDate = callBackDate || undefined;
     this.casting = casting;
     this.notes = notes || undefined;
     this.createdAt = createdAt;
     this.archived = archived;
     this.statuses = statuses;
 
-    this.status = validateEnum(auditionStatuses, status) as audition_statuses;
-    this.type = validateEnum(auditionTypes, type) as audition_types;
+    this.status = validateEnum(audition_statuses, status) as audition_statuses;
+    this.type = validateEnum(audition_types, type) as audition_types;
   }
 
   /**
@@ -121,7 +99,7 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async findById(id: number, db: PrismaClient["audition"]) {
-    return await db.findUnique({ where: { id } });
+    return db.findUnique({ where: { id } });
   }
 
   /**
@@ -130,6 +108,7 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async findByUserId(userId: number, db: PrismaClient["audition"]) {
+    return db.findMany({ where: { userId: userId } });
     const auditions = await db.findMany({
       where: { userId: userId },
       include: {
@@ -154,17 +133,17 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async create(
-    createData: CreateAuditionPrismaData,
+    createData: Prisma.AuditionUncheckedCreateInput,
     db: PrismaClient["audition"]
   ) {
     return db.create({
       data: {
         ...createData,
         status: validateEnum(
-          auditionStatuses,
+          audition_statuses,
           createData.status
         ) as audition_statuses,
-        type: validateEnum(auditionTypes, createData.type) as audition_types,
+        type: validateEnum(audition_types, createData.type) as audition_types,
         statuses: {
           createMany: {
             data: createData.statuses,
@@ -181,8 +160,8 @@ export class Audition {
   async save(db: PrismaClient["audition"]) {
     return db.upsert({
       where: { id: this.id },
-      update: this,
-      create: this,
+      update: this as Prisma.AuditionUncheckedUpdateInput,
+      create: this as Prisma.AuditionUncheckedCreateInput,
     });
   }
 
@@ -198,7 +177,7 @@ export class Audition {
     userId: number,
     db: PrismaClient["audition"]
   ) {
-    return await db.deleteMany({
+    return db.deleteMany({
       where: {
         id,
         userId,

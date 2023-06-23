@@ -20,14 +20,14 @@ const statusToStatusChange = async () => {
       const statusChangeData = {
         auditionId,
         statusId: status.id,
-        date: new Date(audition.date),
+        date: new Date(audition.date).getTime() / 1000,
       };
       prisma.statusChange.create({ data: statusChangeData }).then(() => {
         console.log(statusChangeData + " Added");
       });
     }
   });
-  prisma.$disconnect();
+  await prisma.$disconnect();
 };
 console.log("Starting Status -> Status Change Migration");
 statusToStatusChange().then(() => console.log("Completed"));
