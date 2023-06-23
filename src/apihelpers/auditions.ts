@@ -1,4 +1,4 @@
-import { Audition, AuditionsResponse, CreateAuditionData } from "@/types";
+import { AuditionData, AuditionsResponse, CreateAuditionData } from "@/types";
 import RESPONSE_MESSAGES from "@/support/response_messages";
 
 // Get Auditions from server, gets userId from session in server
@@ -7,7 +7,7 @@ export const getAuditions = async (): Promise<AuditionsResponse> => {
     method: "GET",
   });
   if (response.status !== 200) {
-    throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.GET_AUDITIONS_FAILURE)
+    throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.GET_AUDITIONS_FAILURE);
   }
   return await response.json();
 };
@@ -19,41 +19,45 @@ export const createAudition = async (data: CreateAuditionData) => {
     method: "POST",
     body: JSON.stringify(data),
   })
-      .then((response) => {
-        if (response.status !== 200) {
-          throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE);
-        }
-        return response.json();
-      })
-      .catch((error) => {
-        console.log(error)
-        throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE);
-      });
+    .then((response) => {
+      if (response.status !== 200) {
+        throw Error(
+          RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE
+        );
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
+      throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE);
+    });
 };
 
-export const updateAudition = async (data: Audition) => {
+export const updateAudition = async (data: AuditionData) => {
   const response = await fetch(`/api/auditions/${data.id}`, {
     method: "PUT",
     body: JSON.stringify(data),
   });
   if (response.status !== 200) {
-    throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_UPDATE_FAILURE)
+    throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_UPDATE_FAILURE);
   }
   return await response.json();
 };
 
-export const deleteAudition = async (data: Audition) => {
+export const deleteAudition = async (data: AuditionData) => {
   return await fetch(`/api/auditions/${data.id}`, {
     method: "DELETE",
   })
-      .then((response) => {
-    if (response.status !== 200) {
+    .then((response) => {
+      if (response.status !== 200) {
+        throw Error(
+          RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_DELETE_FAILURE
+        );
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
       throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_DELETE_FAILURE);
-    }
-    return response.json();
-  })
-      .catch((error) => {
-        console.log(error)
-        throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_DELETE_FAILURE);
-      });
+    });
 };

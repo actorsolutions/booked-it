@@ -1,6 +1,6 @@
-import { Audition, audition_statuses, audition_types } from "@/types";
+import { AuditionData, audition_statuses, audition_types } from "@/types";
 
-export const AUDITIONS: Audition[] = [
+export const AUDITIONS: AuditionData[] = [
   {
     id: 1,
     userId: 1,

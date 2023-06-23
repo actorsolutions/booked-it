@@ -1,7 +1,7 @@
 import { StatusChange } from "../StatusChanges";
 import { PrismaClient } from "@prisma/client";
 
-describe("It tests the StatusChange Model", () => {
+describe("It tests the Statuschange Model", () => {
   it("returns an array of statusChanges with auditionId", async () => {
     const expectedResponse = [
       {

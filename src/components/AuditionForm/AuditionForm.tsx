@@ -9,7 +9,7 @@ import {
   CallbackPicker,
   CastingList,
 } from "@/components/AuditionForm/components";
-import { Audition, Casting } from "@/types/auditions";
+import { AuditionData, Casting } from "@/types/auditions";
 import { CastingForm } from "./components/CastingForm/CastingForm";
 import { useForm } from "react-hook-form";
 import { AuditionFormData } from "../AuditionForm";
@@ -25,9 +25,9 @@ import { LoadingCircle } from "@/components/common";
 import { useSnackBar } from "@/context/SnackbarContext";
 
 interface Props {
-  audition?: Audition;
-  auditions: Audition[];
-  setAuditions: Dispatch<SetStateAction<Audition[]>>;
+  audition?: AuditionData;
+  auditions: AuditionData[];
+  setAuditions: Dispatch<SetStateAction<AuditionData[]>>;
   handleClose: () => void;
 }
 export const AuditionForm = (props: Props) => {
@@ -114,7 +114,7 @@ export const AuditionForm = (props: Props) => {
   /**
    * Handles Editing an audition
    */
-  const handleEdit = async (audition: Audition) => {
+  const handleEdit = async (audition: AuditionData) => {
     const values = getValues();
     const updateData = {
       ...values,
@@ -125,10 +125,10 @@ export const AuditionForm = (props: Props) => {
       createdAt: audition.createdAt,
       callbackDate: audition.callBackDate,
     };
-    const response = await updateAudition(updateData as Audition);
+    const response = await updateAudition(updateData as AuditionData);
     const auditionToReplace = auditions.find(
       (audition) => audition.id === response.id
-    ) as Audition;
+    ) as AuditionData;
     Object.assign(auditionToReplace, response);
     setCastingRowCount(watchCasting ? watchCasting.length : 0);
   };

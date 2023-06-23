@@ -25,14 +25,14 @@ model Audition {
   createdAt    DateTime          @default(now()) @db.Timestamp(6)
   date         Int
   project      String
-  company      String?
+  company      String
   callBackDate Int?
   casting      Json?
   notes        String?
   type         audition_types
   status       audition_statuses
   archived     Boolean           @default(false)
-  StatusChange StatusChange[]
+  statuses     StatusChange[]
 }
 
 model Status {
@@ -48,7 +48,7 @@ model StatusChange {
   Status     Status   @relation(fields: [statusId], references: [id])
   statusId   Int
   createdAt  DateTime @default(now()) @db.Timestamp(6)
-  date  DateTime @default(now()) @db.Timestamp(6)
+  date       DateTime @default(now()) @db.Timestamp(6)
 }
 
 enum audition_types {
@@ -69,5 +69,3 @@ enum audition_statuses {
   callback
   booked
 }
-
-

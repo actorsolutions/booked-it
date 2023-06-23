@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
-import { Audition } from "@/types";
+import { AuditionData } from "@/types";
 import { AuditionList } from "./AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
 import React, { Dispatch, SetStateAction } from "react";
 import { Typography } from "@mui/material";
 interface Props {
-  auditions: Audition[];
-  setAuditions: Dispatch<SetStateAction<Audition[]>>;
+  auditions: AuditionData[];
+  setAuditions: Dispatch<SetStateAction<AuditionData[]>>;
 }
 export const NeedsAttention = ({ auditions, setAuditions }: Props) => {
-  const [needsAttention, setNeedsAttention] = useState<Audition[]>(auditions);
+  const [needsAttention, setNeedsAttention] =
+    useState<AuditionData[]>(auditions);
   const { NEEDS_ATTENTION_SECTION } = CY_TAGS;
 
   const weekAgo = Date.now() - 1684537224;
-  const filteredArray = auditions.filter((audition: Audition) => {
+  const filteredArray = auditions.filter((audition: AuditionData) => {
     if (audition.date < weekAgo / 1000 && !audition.archived) {
       return audition;
     }

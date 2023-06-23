@@ -1,6 +1,6 @@
 export type {
   CreateAuditionData,
-  Audition,
+  AuditionData,
   AuditionsResponse,
   Casting,
   audition_types,

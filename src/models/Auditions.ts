@@ -4,25 +4,14 @@ import {
   audition_types,
   audition_statuses,
 } from "@prisma/client";
+import type { Audition as PrismaAudition } from "@prisma/client";
 
-/**
- * Defines the Database representation of an Audition, starting with
- * a form of the object for Audition creation where id is optional
- */
-interface CreateAuditionData {
-  id?: number;
-  userId: number;
-  date: number;
-  project: string;
-  company?: string;
-  callbackDate?: number;
-  casting?: Prisma.JsonArray;
-  notes?: string;
-  type: string;
-  createdAt?: string;
-  status: string;
-  archived: boolean;
-}
+import {
+  CreateAuditionPrismaData,
+  AuditionPrismaData,
+  AuditionData,
+} from "@/types/auditions";
+import { StatusChangeData, StatusChangePrismaData } from "@/types/statuschange";
 
 const auditionStatuses = {
   submitted: "submitted",
@@ -55,13 +44,26 @@ const validateEnum = (enumList: {}, value: string) => {
     throw Error(`Invalid Type: ${value} in ${enumList}`);
   }
 };
+
 /**
- * Extends the interface for Audition creation to the more general
- * form of the AuditionData object where id is required
+ * Formats the returned Audition into the format needed for the frontend
  */
-interface AuditionData extends CreateAuditionData {
-  id: number;
-}
+const formatAuditions = (auditions: AuditionPrismaData[]) => {
+  const formattedStatuses: StatusChangeData[] = [];
+  auditions.forEach((audition) => {
+    const formatted: StatusChangeData[] = [];
+    audition.statuses?.forEach((statusChange) => {
+      const formattedStatus = statusChange as StatusChangeData;
+      formattedStatus.type = statusChange.Status?.type;
+      // @ts-ignore
+      delete formattedStatus.Status;
+      formatted.push(formattedStatus);
+    });
+  });
+  const formattedAuditions = auditions as unknown as AuditionData;
+  formattedAuditions.statuses = formattedStatuses;
+  return formattedAuditions;
+};
 
 /**
  * Business logic for manipulating & transacting AuditionData
@@ -71,17 +73,17 @@ export class Audition {
   userId: number;
   date: number;
   project: string;
-  company?: string | undefined;
+  company: string;
   callbackDate?: number;
-  casting?: Prisma.JsonArray;
+  casting?: Prisma.JsonArray | undefined;
   notes?: string;
   type: audition_types;
   createdAt?: string;
   status: audition_statuses;
   archived: boolean;
+  statuses: StatusChangePrismaData[];
 
-  // eslint-disable-next-line no-unused-vars
-  constructor(data: AuditionData) {
+  constructor(data: AuditionPrismaData) {
     const {
       id,
       userId,
@@ -95,17 +97,19 @@ export class Audition {
       archived,
       status,
       type,
+      statuses,
     } = data;
     this.id = id;
     this.userId = userId;
     this.date = date;
     this.project = project;
-    this.company = company || undefined;
+    this.company = company;
     this.callbackDate = callbackDate || undefined;
     this.casting = casting;
     this.notes = notes || undefined;
     this.createdAt = createdAt;
     this.archived = archived;
+    this.statuses = statuses;
 
     this.status = validateEnum(auditionStatuses, status) as audition_statuses;
     this.type = validateEnum(auditionTypes, type) as audition_types;
@@ -126,9 +130,22 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async findByUserId(userId: number, db: PrismaClient["audition"]) {
-    return await db.findMany({
+    const auditions = await db.findMany({
       where: { userId: userId },
+      include: {
+        statuses: {
+          select: {
+            date: true,
+            id: true,
+            statusId: true,
+            Status: true,
+            auditionId: true,
+          },
+        },
+      },
     });
+
+    return formatAuditions(auditions);
   }
 
   /**
@@ -137,7 +154,7 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async create(
-    createData: CreateAuditionData,
+    createData: CreateAuditionPrismaData,
     db: PrismaClient["audition"]
   ) {
     return db.create({
@@ -148,6 +165,11 @@ export class Audition {
           createData.status
         ) as audition_statuses,
         type: validateEnum(auditionTypes, createData.type) as audition_types,
+        statuses: {
+          createMany: {
+            data: createData.statuses,
+          },
+        },
       },
     });
   }
