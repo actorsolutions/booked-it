@@ -1,5 +1,5 @@
 import { PrismaClient, User } from "@prisma/client";
-import { User as UserData } from "@/types";
+import type { User as PrismaUser } from "@prisma/client";
 
 /**
  * Business logic for manipulating & transacting UserData
@@ -10,7 +10,7 @@ export class Users {
   sid: string;
 
   // eslint-disable-next-line no-unused-vars
-  constructor(data: UserData) {
+  constructor(data: PrismaUser) {
     const { id, email, sid } = data;
     this.id = id;
     this.email = email;
@@ -23,7 +23,7 @@ export class Users {
    * @param db - instance of database being used
    */
   static async findById(id: number, db: PrismaClient["user"]) {
-    return await db.findUnique({ where: { id } });
+    return db.findUnique({ where: { id } });
   }
 
   /**
@@ -32,7 +32,7 @@ export class Users {
    * @param db - instance of database being used
    */
   static async findByEmail(email: string, db: PrismaClient["user"]) {
-    return await db.findUnique({ where: { email: email } });
+    return db.findUnique({ where: { email: email } });
   }
 
   /**
