@@ -47,7 +47,7 @@ model StatusChange {
   auditionId Int
   Status     Status   @relation(fields: [statusId], references: [id])
   statusId   Int
-  createdAt  DateTime @default(now()) @db.Timestamp(6)
+  createdAt  DateTime? @default(now()) @db.Timestamp(6)
   date       Int
 }
 
