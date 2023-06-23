@@ -126,7 +126,9 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async findByUserId(userId: number, db: PrismaClient["audition"]) {
-    return await db.findMany({ where: { userId: userId } });
+    return await db.findMany({
+      where: { userId: userId },
+    });
   }
 
   /**

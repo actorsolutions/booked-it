@@ -48,6 +48,7 @@ model StatusChange {
   Status     Status   @relation(fields: [statusId], references: [id])
   statusId   Int
   createdAt  DateTime @default(now()) @db.Timestamp(6)
+  date  DateTime @default(now()) @db.Timestamp(6)
 }
 
 enum audition_types {

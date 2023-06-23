@@ -6,6 +6,7 @@ interface CreateStatusChangeData {
   createdAt?: Date;
   auditionId: number;
   statusId: number;
+  date: Date;
 }
 
 interface StatusChangeData extends CreateStatusChangeData {
@@ -18,13 +19,15 @@ export class StatusChange {
   auditionId: number;
   statusId: number;
   createdAt: Date;
+  date: Date;
 
   constructor(data: StatusChangeData) {
-    const { id, auditionId, statusId, createdAt } = data;
+    const { id, auditionId, statusId, createdAt, date } = data;
     this.id = id;
     this.auditionId = auditionId;
     this.statusId = statusId;
     this.createdAt = createdAt;
+    this.date = date;
   }
 
   /**
