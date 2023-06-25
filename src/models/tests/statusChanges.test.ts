@@ -1,5 +1,5 @@
 import { StatusChange } from "../StatusChanges";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 
 describe("It tests the StatusChange Model", () => {
   it("returns an array of statusChanges with auditionId", async () => {
@@ -82,7 +82,7 @@ describe("It tests the StatusChange Model", () => {
       },
     };
     const createdStatusChange = await StatusChange.create(
-      createData,
+      createData as unknown as Prisma.StatusChangeCreateInput,
       mockPrisma as unknown as PrismaClient["statusChange"]
     );
     expect(createdStatusChange).toEqual(expectedResponse);

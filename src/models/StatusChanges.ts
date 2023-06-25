@@ -1,33 +1,19 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { generatePrisma } from "@/utils/prisma";
-
-interface CreateStatusChangeData {
-  id?: number;
-  createdAt?: Date;
-  auditionId: number;
-  statusId: number;
-  date: Date;
-}
-
-interface StatusChangeData extends CreateStatusChangeData {
-  id: number;
-  createdAt: Date;
-}
+import type { StatusChange as PrismaStatusChange } from "@prisma/client";
 
 export class StatusChange {
   id: number;
   auditionId: number;
   statusId: number;
-  createdAt: Date;
-  date: Date;
+  createdAt: Date | null;
 
-  constructor(data: StatusChangeData) {
-    const { id, auditionId, statusId, createdAt, date } = data;
+  constructor(data: PrismaStatusChange) {
+    const { id, auditionId, statusId, createdAt } = data;
     this.id = id;
     this.auditionId = auditionId;
     this.statusId = statusId;
     this.createdAt = createdAt;
-    this.date = date;
   }
 
   /**
@@ -37,14 +23,14 @@ export class StatusChange {
     auditionId: number,
     db: PrismaClient["statusChange"]
   ): Promise<StatusChange[]> {
-    return await db.findMany({ where: { auditionId } });
+    return db.findMany({ where: { auditionId } });
   }
 
   /**
-   * Method for finding one statusChange by Id
+   * Method for finding one statusChange by id
    */
   static async findById(id: number, db: PrismaClient["statusChange"]) {
-    return await db.findUnique({ where: { id } });
+    return db.findUnique({ where: { id } });
   }
 
   /**
@@ -53,7 +39,7 @@ export class StatusChange {
    * @param db
    */
   static async create(
-    createData: CreateStatusChangeData,
+    createData: Prisma.StatusChangeCreateInput,
     db: PrismaClient["statusChange"]
   ) {
     return db.create({
