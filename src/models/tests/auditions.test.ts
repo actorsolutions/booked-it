@@ -1,6 +1,6 @@
 import { Audition } from "../Auditions";
 import { PrismaClient, Prisma } from "@prisma/client";
-import type { Audition as PrismaAudition } from "@prisma/client";
+import { AuditionsWithStatusChange } from "@/models";
 describe("It Tests the Auditions Model", () => {
   it("returns an audition with id", async () => {
     const expectedResponse = {
@@ -31,18 +31,32 @@ describe("It Tests the Auditions Model", () => {
     expect(audition).toEqual(expectedResponse);
   });
   it("Creates and saves an audition", async () => {
-    const auditionData = {
+    const auditionData: AuditionsWithStatusChange = {
       id: 0,
+      createdAt: new Date(),
       userId: 0,
       date: 0,
       project: "FakeCompany",
       company: "FakeProject",
       callBackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
-      notes: undefined,
+      notes: "Notes",
       type: "television",
       status: "scheduled",
       archived: false,
+      statuses: [
+        {
+          date: 0,
+          id: 0,
+          statusId: 0,
+          auditionId: 0,
+          createdAt: new Date(),
+          Status: {
+            type: "scheduled",
+            id: 0,
+          },
+        },
+      ],
     };
     const expectedResponse = {
       id: 0,
@@ -56,6 +70,15 @@ describe("It Tests the Auditions Model", () => {
       type: "television",
       status: "scheduled",
       archived: false,
+      statuses: [
+        {
+          type: "scheduled",
+          date: 0,
+          createdAt: new Date(),
+          auditionId: 0,
+          statusId: 0,
+        },
+      ],
     };
     const mockPrisma = {
       upsert: async () => {
@@ -65,7 +88,7 @@ describe("It Tests the Auditions Model", () => {
       },
     };
 
-    const audition = new Audition(auditionData as unknown as PrismaAudition);
+    const audition = new Audition(auditionData);
     expect(
       await audition.save(mockPrisma as unknown as PrismaClient["audition"])
     ).toEqual(expectedResponse);

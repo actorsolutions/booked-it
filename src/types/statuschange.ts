@@ -1,16 +1,18 @@
-import { Status } from "./status";
-export interface CreateStatusChangePrismaData {
-  id?: number;
-  statusId: number;
-  date: Date;
-  createdAt?: Date;
+import { Status } from "@prisma/client";
+export interface FormattedStatus {
+  type: string;
   auditionId: number;
-}
-export interface StatusChangePrismaData extends CreateStatusChangePrismaData {
+  statusId: number;
+  date: number;
   id: number;
-  Status: Status;
+  createdAt: Date;
 }
 
-export interface StatusChangeData extends StatusChangePrismaData {
-  type: string;
+export interface StatusChangeData {
+  id: number;
+  auditionId: number;
+  statusId: number;
+  date: number;
+  createdAt: Date;
+  Status: Status;
 }
