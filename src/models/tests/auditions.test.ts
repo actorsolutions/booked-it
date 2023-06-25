@@ -1,6 +1,11 @@
 import { Audition } from "../Auditions";
-import { PrismaClient, Prisma } from "@prisma/client";
-import { AuditionsWithStatusChange } from "@/models";
+import {
+  PrismaClient,
+  Prisma,
+  audition_types,
+  audition_statuses,
+} from "@prisma/client";
+
 describe("It Tests the Auditions Model", () => {
   it("returns an audition with id", async () => {
     const expectedResponse = {
@@ -12,8 +17,8 @@ describe("It Tests the Auditions Model", () => {
       callbackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "This is a note",
-      type: "film",
-      status: "scheduled",
+      type: "film" as audition_types,
+      status: "scheduled" as audition_statuses,
       archived: false,
     };
     const mockPrisma = {
@@ -31,7 +36,7 @@ describe("It Tests the Auditions Model", () => {
     expect(audition).toEqual(expectedResponse);
   });
   it("Creates and saves an audition", async () => {
-    const auditionData: AuditionsWithStatusChange = {
+    const auditionData = {
       id: 0,
       createdAt: new Date(),
       userId: 0,
@@ -41,20 +46,16 @@ describe("It Tests the Auditions Model", () => {
       callBackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "Notes",
-      type: "television",
-      status: "scheduled",
+      type: "television" as audition_types,
+      status: "scheduled" as audition_statuses,
       archived: false,
       statuses: [
         {
-          date: 0,
           id: 0,
-          statusId: 0,
           auditionId: 0,
+          statusId: 0,
           createdAt: new Date(),
-          Status: {
-            type: "scheduled",
-            id: 0,
-          },
+          date: 0,
         },
       ],
     };

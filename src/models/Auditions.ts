@@ -6,29 +6,16 @@ import {
 } from "@prisma/client";
 import type { StatusChange as PrismaStatusChange } from "@prisma/client";
 import { formatAuditions } from "@/models/index";
-import { AuditionData } from "@/types";
 import { FormattedAudition } from "@/types/auditions";
 
 const auditionWithStatuses = Prisma.validator<Prisma.AuditionArgs>()({
   include: { statuses: true },
 });
 
-const statusChangeWithStatus = Prisma.validator<Prisma.StatusChangeArgs>()({
-  include: { Status: true },
-});
-
-// @ts-ignore
-type AuditionsWithStatusChange = Prisma.PromiseReturnType<
-  typeof Audition.findByUserId
->;
-
 type AuditionWithStatuses = Prisma.AuditionGetPayload<
   typeof auditionWithStatuses
 >;
 
-type StatusChangeWithStatus = Prisma.StatusChangeGetPayload<
-  typeof statusChangeWithStatus
->;
 /**
  * Makes sure value is a part of object representing Prisma Enum
  * @param enumList
@@ -142,7 +129,9 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async create(
-    createData: Prisma.AuditionCreateInput,
+    createData:
+      | Prisma.AuditionCreateInput
+      | Prisma.AuditionUncheckedCreateInput,
     db: PrismaClient["audition"]
   ) {
     return db.create({
