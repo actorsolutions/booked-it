@@ -8,6 +8,7 @@ export type AuditionWithStatusChange = Prisma.PromiseReturnType<
   typeof Audition.findById
 >;
 
+// TODO: [BI-102] Better solution other than ignoring line 27
 /**
  * Formats Prisma Auditions into Auditions useable by App.
  * @param auditions - Auditions from DB with statuses
