@@ -44,7 +44,7 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
         rules={{ ...props.rules }}
         render={({ field: { onChange, ref, ...field } }) => {
           return (
-            <FormControl>
+            <FormControl fullWidth={true}>
               <Select
                 {...field}
                 inputRef={ref}
@@ -56,7 +56,6 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
                   onChange(event.target.value);
                 }}
                 sx={{
-                  width: 195,
                   height: 50,
                 }}
                 defaultValue={""}

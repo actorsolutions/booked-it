@@ -26,7 +26,7 @@ export const FormInput = <T extends FieldValues>(props: Props<T>) => {
         rules={{ ...props.rules }}
         render={({ field: { onChange, ref, ...field } }) => {
           return (
-            <FormControl>
+            <FormControl fullWidth={true}>
               <TextField
                 {...field}
                 inputRef={ref}

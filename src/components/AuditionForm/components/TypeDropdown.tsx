@@ -21,7 +21,7 @@ export const TypeDropdown = (props: FormProps<AuditionFormData>) => {
       <Container>
         <FormLabel
           cyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.LABELS.TYPE}
-          labelText="Audition Type"
+          labelText="Project Type"
           htmlFor="typesDropdown"
         />
       </Container>

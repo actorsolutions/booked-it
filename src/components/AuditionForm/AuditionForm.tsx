@@ -15,13 +15,13 @@ import { useForm } from "react-hook-form";
 import { AuditionFormData } from "../AuditionForm";
 import { Form } from "@/components/common/Form";
 import Grid from "@mui/material/Grid";
-import { Button, Container, Divider, Typography } from "@mui/material";
+import { Button, Container, Divider } from "@mui/material";
 import { createAudition, updateAudition } from "@/apihelpers/auditions";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CY_TAGS from "@/support/cypress_tags";
 import RESPONSE_MESSAGES from "@/support/response_messages";
-import { LoadingCircle } from "@/components/common";
+import { LoadingCircle, ValidationRequiredMessage } from "@/components/common";
 import { useSnackBar } from "@/context/SnackbarContext";
 
 interface Props {
@@ -205,111 +205,104 @@ export const AuditionForm = (props: Props) => {
   }, [editMode, reset]);
 
   return (
-    <Container
-      data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
-      maxWidth="md"
-      id="auditionModal"
-    >
-      <Divider />
-      <Form>
-        <Grid item sm={8} md={6}>
-          <AuditionDatePicker control={control} register={register} />
-          {errors.date && (
-            <Typography data-cy={AUDITION_FORM.ERRORS.DATE} variant="overline">
-              Required!
-            </Typography>
-          )}
-        </Grid>
-        <Grid item sm={8} md={6}>
-          <ProjectInput control={control} register={register} />
-          {errors.project && (
-            <Typography
-              data-cy={AUDITION_FORM.ERRORS.PROJECT}
-              variant="overline"
-            >
-              Required!
-            </Typography>
-          )}
-          <CompanyInput control={control} register={register} />
-          {errors.company && (
-            <Typography
-              data-cy={AUDITION_FORM.ERRORS.COMPANY}
-              variant="overline"
-            >
-              Required!
-            </Typography>
-          )}
-        </Grid>
-        <Grid item sm={8} md={6}>
-          <StatusDropdown control={control} register={register} />
-          {errors.status && (
-            <Typography
-              data-cy={AUDITION_FORM.ERRORS.STATUS}
-              variant="overline"
-            >
-              Required!
-            </Typography>
-          )}
-          <TypeDropdown control={control} register={register} />
-          {errors.type && (
-            <Typography data-cy={AUDITION_FORM.ERRORS.TYPE} variant="overline">
-              Required!
-            </Typography>
-          )}
-        </Grid>
-        {watchStatus === "callback" && (
-          <CallbackPicker control={control} register={register} />
-        )}
-        <Grid item sm={8} md={6}>
-          <NotesTextArea control={control} register={register} />
-        </Grid>
-        <Grid item sm={8}>
-          {watchCasting ? (
-            <CastingList
-              casting={watchCasting}
-              onDelete={handleDeleteCastingRow}
-              name={""}
-              listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
-            />
-          ) : null}
-        </Grid>
-        {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
-          <Grid item sm={8} md={6}>
-            <Button
-              data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
-              onClick={handleModal}
-            >
-              Add Casting
-            </Button>
-            <Dialog open={open} onClose={handleModal}>
-              <DialogContent>
-                <CastingForm
-                  auditionControl={control}
-                  initialCastingList={getValues().casting}
-                  setCasting={setCasting}
-                  handleClose={handleModal}
-                />
-              </DialogContent>
-            </Dialog>
+      <Container
+          data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
+          maxWidth="md"
+          id="auditionModal"
+      >
+        <Divider />
+        <Form>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <AuditionDatePicker control={control} register={register} />
+              {errors.date && (
+                  <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.DATE} />
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <Divider style={{ backgroundColor: "#616161" }} />
+              <ProjectInput control={control} register={register} />
+              {errors.project && (
+                  <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.PROJECT} />
+                )}
+            </Grid>
+              <Grid item xs={12}>
+                <StatusDropdown control={control} register={register} />
+                {errors.status && (
+                    <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.STATUS} />
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TypeDropdown control={control} register={register} />
+                {errors.type && (
+                    <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.TYPE} />
+                )}
+              </Grid>
+            {watchStatus === "callback" && (
+                <Grid item xs={12}>
+                  <CallbackPicker control={control} register={register} />
+                </Grid>
+            )}
+            <Grid item xs={12}>
+              <CompanyInput control={control} register={register} />
+              {errors.company && (
+                  <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.COMPANY} />
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              {watchCasting ? (
+                  <CastingList
+                      casting={watchCasting}
+                      onDelete={handleDeleteCastingRow}
+                      name={""}
+                      listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
+                  />
+              ) : null}
+            </Grid>
+            {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
+                <Grid item container xs={12} justifyContent={"right"}>
+                  <Button
+                      data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
+                      onClick={handleModal}
+                  >
+                    Add Casting
+                  </Button>
+                  <Dialog open={open} onClose={handleModal}>
+                    <DialogContent>
+                      <CastingForm
+                          auditionControl={control}
+                          initialCastingList={getValues().casting}
+                          setCasting={setCasting}
+                          handleClose={handleModal}
+                      />
+                    </DialogContent>
+                  </Dialog>
+                </Grid>
+            )}
+            <Grid item xs={12}>
+              <Divider style={{ backgroundColor: "#616161" }} />
+              <NotesTextArea control={control} register={register} />
+            </Grid>
+            <Grid item container xs={12} justifyContent={"right"}>
+              <Button
+                  data-cy={
+                    editMode
+                        ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
+                        : AUDITION_FORM.BUTTONS.ADD_AUDITION
+                  }
+                  onClick={() => {
+                    clearErrors();
+                    handleClick().then((wasSent) => {
+                      wasSent && handleClose();
+                    });
+                  }}
+              >
+                {editMode ? "Edit Audition" : "Add Audition"}
+              </Button>
+              {submissionState.loading && <LoadingCircle />}
+            </Grid>
           </Grid>
-        )}
-        <Button
-          data-cy={
-            editMode
-              ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
-              : AUDITION_FORM.BUTTONS.ADD_AUDITION
-          }
-          onClick={() => {
-            clearErrors();
-            handleClick().then((wasSent) => {
-              wasSent && handleClose();
-            });
-          }}
-        >
-          {editMode ? "Edit Audition" : "Add Audition"}
-        </Button>
-        {submissionState.loading && <LoadingCircle />}
-      </Form>
-    </Container>
+        </Form>
+      </Container>
   );
 };
