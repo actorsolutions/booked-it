@@ -5,7 +5,6 @@ export interface FormattedStatus {
   statusId: number;
   date: number;
   id: number;
-  createdAt: Date;
 }
 
 export interface StatusChangeData {

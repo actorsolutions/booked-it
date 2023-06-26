@@ -108,6 +108,19 @@ describe("It Tests the Auditions Model", () => {
         type: "film",
         status: "scheduled",
         archived: false,
+        statuses: [
+          {
+            id: 0,
+            statusId: 0,
+            auditionId: 0,
+            date: 0,
+            callBackDate: new Date(),
+            Status: {
+              id: 0,
+              type: "scheduled",
+            },
+          },
+        ],
       },
       {
         id: 1,
@@ -121,8 +134,22 @@ describe("It Tests the Auditions Model", () => {
         type: "theater",
         status: "scheduled",
         archived: false,
+        statuses: [
+          {
+            id: 0,
+            statusId: 0,
+            auditionId: 0,
+            date: 0,
+            callBackDate: new Date(),
+            Status: {
+              id: 0,
+              type: "scheduled",
+            },
+          },
+        ],
       },
     ];
+
     const mockPrisma = {
       findMany: async () => {
         return new Promise((resolve) => {
@@ -135,6 +162,123 @@ describe("It Tests the Auditions Model", () => {
       mockPrisma as unknown as PrismaClient["audition"]
     );
     expect(userAuditions).toEqual(auditions);
+  });
+  it("Finds all Formatted Auditions by UserId", async () => {
+    const auditions = [
+      {
+        id: 0,
+        userId: 1,
+        date: 0,
+        project: "Test",
+        company: "Test Company",
+        callbackDate: undefined,
+        casting: [{ name: "Test testerson", company: "Tester Casting" }],
+        notes: "Notes!",
+        type: "film",
+        status: "scheduled",
+        archived: false,
+        statuses: [
+          {
+            id: 0,
+            statusId: 0,
+            auditionId: 0,
+            date: 0,
+            callBackDate: new Date(),
+            Status: {
+              id: 0,
+              type: "scheduled",
+            },
+          },
+        ],
+      },
+      {
+        id: 1,
+        userId: 1,
+        date: 0,
+        project: "Test",
+        company: "Test Company",
+        callbackDate: undefined,
+        casting: [{ name: "Test testerson", company: "Tester Casting" }],
+        notes: "Notes!",
+        type: "theater",
+        status: "scheduled",
+        archived: false,
+        statuses: [
+          {
+            id: 0,
+            statusId: 0,
+            auditionId: 0,
+            date: 0,
+            callBackDate: new Date(),
+            Status: {
+              id: 0,
+              type: "scheduled",
+            },
+          },
+        ],
+      },
+    ];
+    const expected = [
+      {
+        id: 0,
+        userId: 1,
+        date: 0,
+        project: "Test",
+        company: "Test Company",
+        callbackDate: undefined,
+        casting: [{ name: "Test testerson", company: "Tester Casting" }],
+        notes: "Notes!",
+        type: "film",
+        status: "scheduled",
+        archived: false,
+        statuses: [
+          {
+            id: 0,
+            statusId: 0,
+            auditionId: 0,
+            date: 0,
+            callBackDate: new Date(),
+            type: "scheduled",
+          },
+        ],
+      },
+      {
+        id: 1,
+        userId: 1,
+        date: 0,
+        project: "Test",
+        company: "Test Company",
+        callbackDate: undefined,
+        casting: [{ name: "Test testerson", company: "Tester Casting" }],
+        notes: "Notes!",
+        type: "theater",
+        status: "scheduled",
+        archived: false,
+        statuses: [
+          {
+            id: 0,
+            statusId: 0,
+            auditionId: 0,
+            date: 0,
+            callBackDate: new Date(),
+            type: "scheduled",
+          },
+        ],
+      },
+    ];
+
+    const mockPrisma = {
+      findMany: async () => {
+        return new Promise((resolve) => {
+          resolve(auditions);
+        });
+      },
+    };
+    const userAuditions = await Audition.getFormattedAuditionsByUserId(
+      auditions[0].userId,
+      mockPrisma as unknown as PrismaClient["audition"]
+    );
+    expect(userAuditions).toEqual(expected);
   });
   it("Deletes Audition by Id and returns Audition", async () => {
     const audition = {

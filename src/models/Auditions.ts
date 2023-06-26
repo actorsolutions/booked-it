@@ -6,7 +6,6 @@ import {
 } from "@prisma/client";
 import type { StatusChange as PrismaStatusChange } from "@prisma/client";
 import { formatAuditions } from "@/models/index";
-import { FormattedAudition } from "@/types/auditions";
 
 const auditionWithStatuses = Prisma.validator<Prisma.AuditionArgs>()({
   include: { statuses: true },
@@ -92,7 +91,20 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async findById(id: number, db: PrismaClient["audition"]) {
-    return db.findUnique({ where: { id } });
+    return db.findUnique({
+      where: { id },
+      include: {
+        statuses: {
+          select: {
+            date: true,
+            id: true,
+            statusId: true,
+            Status: true,
+            auditionId: true,
+          },
+        },
+      },
+    });
   }
 
   /**
@@ -100,11 +112,11 @@ export class Audition {
    * @param userId - id of user within sought after audition records
    * @param db - instance of database being used
    */
-  static async findByUserId(
+  static findByUserId = async (
     userId: number,
     db: PrismaClient["audition"]
-  ): Promise<FormattedAudition> {
-    const auditions = await db.findMany({
+  ) => {
+    return db.findMany({
       where: { userId: userId },
       include: {
         statuses: {
@@ -118,11 +130,15 @@ export class Audition {
         },
       },
     });
+  };
 
-    // @ts-ignore
+  static getFormattedAuditionsByUserId = async (
+    userId: number,
+    db: PrismaClient["audition"]
+  ) => {
+    const auditions = await Audition.findByUserId(userId, db);
     return formatAuditions(auditions);
-  }
-
+  };
   /**
    * Method used to create a new audition
    * @param createData - audition data for creation
