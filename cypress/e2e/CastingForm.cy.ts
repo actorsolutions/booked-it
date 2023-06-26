@@ -90,9 +90,7 @@ describe("Add Casting Form E2E tests", () => {
     shouldBeVisible(AUDITION_FORM.CASTING.CASTING_LIST);
     shouldBeVisible(AUDITION_FORM.CASTING.CASTING_ROW + "0");
 
-    cy.get(cyTag(AUDITION_FORM.BUTTONS.ADD_AUDITION)).scrollIntoView();
-
-    findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
+    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "1")).within(
       () => {
