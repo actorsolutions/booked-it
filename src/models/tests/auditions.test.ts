@@ -237,7 +237,6 @@ describe("It Tests the Auditions Model", () => {
             statusId: 0,
             auditionId: 0,
             date: 0,
-            callBackDate: new Date(),
             type: "scheduled",
           },
         ],
@@ -260,7 +259,6 @@ describe("It Tests the Auditions Model", () => {
             statusId: 0,
             auditionId: 0,
             date: 0,
-            callBackDate: new Date(),
             type: "scheduled",
           },
         ],
@@ -340,6 +338,68 @@ describe("It Tests the Auditions Model", () => {
       create: async () => {
         return new Promise((resolve) => {
           resolve(expectedResponse);
+        });
+      },
+    };
+
+    const newAudition = await Audition.create(
+      auditionData as Prisma.AuditionUncheckedCreateInput,
+      mockPrisma as unknown as PrismaClient["audition"]
+    );
+    expect(newAudition).toEqual(expectedResponse);
+  });
+  it("Creates an audition with statuses and returns it", async () => {
+    const expectedResponse = {
+      id: 0,
+      userId: 0,
+      date: 0,
+      project: "FakeCompany",
+      company: "FakeProject",
+      callbackDate: 0,
+      casting: [{ name: "FakeCasting", company: "Casting" }],
+      notes: "No notes Added",
+      type: "television",
+      status: "scheduled",
+      archived: false,
+      statuses: [
+        {
+          id: 0,
+          statusId: 0,
+          auditionId: 0,
+          date: 0,
+          type: "scheduled",
+        },
+      ],
+    };
+    const auditionData = {
+      id: 0,
+      userId: 0,
+      date: 0,
+      project: "FakeCompany",
+      company: "FakeProject",
+      callbackDate: 0,
+      casting: [{ name: "FakeCasting", company: "Casting" }],
+      notes: "No notes Added",
+      type: "television",
+      status: "scheduled",
+      archived: false,
+      statuses: [
+        {
+          id: 0,
+          statusId: 0,
+          auditionId: 0,
+          date: 0,
+          Status: {
+            id: 0,
+            type: "scheduled",
+          },
+        },
+      ],
+    };
+    const mockPrisma = {
+      create: async () => {
+        return new Promise((resolve) => {
+          resolve(auditionData);
         });
       },
     };

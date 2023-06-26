@@ -5,7 +5,7 @@ import {
   audition_statuses,
 } from "@prisma/client";
 import type { StatusChange as PrismaStatusChange } from "@prisma/client";
-import { formatAuditions } from "@/models/index";
+import { formatAuditions, formatAudition } from "@/models/index";
 
 const auditionWithStatuses = Prisma.validator<Prisma.AuditionArgs>()({
   include: { statuses: true },
@@ -150,7 +150,7 @@ export class Audition {
       | Prisma.AuditionUncheckedCreateInput,
     db: PrismaClient["audition"]
   ) {
-    return db.create({
+    const createdAudition = await db.create({
       data: {
         ...createData,
         status: validateEnum(
@@ -159,7 +159,12 @@ export class Audition {
         ) as audition_statuses,
         type: validateEnum(audition_types, createData.type) as audition_types,
       },
+      include: {
+        statuses: true,
+      },
     });
+    // @ts-ignore
+    return formatAudition(createdAudition);
   }
 
   /**

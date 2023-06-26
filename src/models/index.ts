@@ -15,21 +15,29 @@ export type AuditionWithStatusChange = Prisma.PromiseReturnType<
  */
 export const formatAuditions = (auditions: AuditionsWithStatusChange) => {
   return auditions.map((audition) => {
-    const formattedAudition = {
-      ...audition,
-    };
-    formattedAudition.statuses = formattedAudition.statuses.map(
-      (statusChange) => {
-        const formattedStatus = {
-          ...statusChange,
-          type: statusChange.Status.type,
-        };
-        // @ts-ignore
-        delete formattedStatus.Status;
-        return formattedStatus;
-      }
-    );
-
-    return formattedAudition;
+    formatAudition(audition);
   });
+};
+
+/**
+ * Formats a single audition to be front-end friendly
+ * @param audition
+ */
+export const formatAudition = (audition: AuditionWithStatusChange) => {
+  const formattedAudition = {
+    ...audition,
+  };
+  formattedAudition.statuses = formattedAudition.statuses?.map(
+    (statusChange) => {
+      const formattedStatus = {
+        ...statusChange,
+        type: statusChange.Status.type,
+      };
+      // @ts-ignore
+      delete formattedStatus.Status;
+      return formattedStatus;
+    }
+  );
+
+  return formattedAudition;
 };
