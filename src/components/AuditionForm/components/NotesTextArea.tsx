@@ -7,7 +7,7 @@ export const NotesTextArea = (props: FormProps<AuditionFormData>) => {
 
   return (
     <FormGroupRow>
-      <Container>
+      <Container style={{paddingTop: "8px"}}>
         <FormLabel
           cyTag={CY_TAGS.AUDITION_FORM.TEXT_AREA.LABELS.NOTES}
           labelText="Notes"

@@ -12,28 +12,42 @@ interface Props {
   onDelete: (index: number) => void;
   listCyTag: string
 }
+
 export const CastingList = (props: Props) => {
   const { casting, onDelete, listCyTag } = props;
   const handleDelete = (index: number) => {
     onDelete(index);
   };
-  const { AUDITION_FORM } = CY_TAGS
+  const { AUDITION_FORM } = CY_TAGS;
+
   return (
       <div data-cy={listCyTag}>
-        {casting.map((person, index) => (
-            <Paper key={index} data-cy={AUDITION_FORM.CASTING.CASTING_ROW + index}>
-              <PersonIcon />
-              {person.name}
-              <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => handleDelete(index)}
-                  data-cy={AUDITION_FORM.BUTTONS.DELETE_CASTING}
-              >
-                <CloseIcon />
-              </IconButton>
+        {casting.length === 0 ? (
+            <Paper
+                style={{
+                  border: "none",
+                  fontStyle: "italic",
+                  color: "rgba(0, 0, 0, 0.4)",
+                }}
+            >
+              <p>No Casting Added</p>
             </Paper>
-        ))}
+        ) : (
+            casting.map((person, index) => (
+                <Paper key={index} data-cy={AUDITION_FORM.CASTING.CASTING_ROW + index}>
+                  <PersonIcon />
+                  {person.name}
+                  <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => handleDelete(index)}
+                      data-cy={AUDITION_FORM.BUTTONS.DELETE_CASTING}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </Paper>
+            ))
+        )}
       </div>
   );
 };

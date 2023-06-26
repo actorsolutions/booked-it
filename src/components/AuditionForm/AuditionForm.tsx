@@ -222,6 +222,7 @@ export const AuditionForm = (props: Props) => {
               )}
             </Grid>
             <Grid item xs={12}>
+              <Divider style={{ backgroundColor: "#616161" }} />
               <ProjectInput control={control} register={register} />
               {errors.project && (
                   <Typography
@@ -278,7 +279,7 @@ export const AuditionForm = (props: Props) => {
               ) : null}
             </Grid>
             {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
-                <Grid item xs={12}>
+                <Grid item container xs={12} justifyContent={"right"}>
                   <Button
                       data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
                       onClick={handleModal}
@@ -298,9 +299,10 @@ export const AuditionForm = (props: Props) => {
                 </Grid>
             )}
             <Grid item xs={12}>
+              <Divider style={{ backgroundColor: "#616161" }} />
               <NotesTextArea control={control} register={register} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item container xs={12} justifyContent={"right"}>
               <Button
                   data-cy={
                     editMode

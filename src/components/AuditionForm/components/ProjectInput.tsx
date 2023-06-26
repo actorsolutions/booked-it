@@ -7,7 +7,7 @@ export const ProjectInput = (props: FormProps<AuditionFormData>) => {
 
   return (
     <FormGroupRow>
-      <Container>
+      <Container style={{paddingTop: "8px"}}>
         <FormLabel
           cyTag={CY_TAGS.AUDITION_FORM.INPUTS.LABELS.PROJECT}
           labelText="Project Name"
