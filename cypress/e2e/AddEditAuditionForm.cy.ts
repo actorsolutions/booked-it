@@ -77,8 +77,8 @@ describe("Add Auditions Form E2E Tests", () => {
 
   it("Should show errors on each form that is invalid", () => {
     const errorsArray = [
-      AUDITION_FORM.ERRORS.TYPE,
       AUDITION_FORM.ERRORS.STATUS,
+      AUDITION_FORM.ERRORS.TYPE,
       AUDITION_FORM.ERRORS.DATE,
       AUDITION_FORM.ERRORS.COMPANY,
       AUDITION_FORM.ERRORS.PROJECT,
