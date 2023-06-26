@@ -26,7 +26,7 @@ export const FormTextArea = <T extends FieldValues>(props: Props<T>) => {
         rules={{ ...props.rules }}
         render={({ field: { onChange } }) => {
           return (
-            <FormControl>
+            <FormControl fullWidth={true}>
               <TextareaAutosize
                 id={inputId}
                 data-cy={cyTag}

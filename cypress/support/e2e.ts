@@ -67,6 +67,16 @@ export const findAndClick = (tag: string) => {
   cy.get(cyTag(tag)).should("be.visible").click();
 };
 
+export const scrollAndFind = (tag: string) => {
+  cy.get(cyTag(tag)).scrollIntoView();
+  cy.get(cyTag(tag)).should("be.visible");
+};
+
+export const scrollFindClick = (tag: string) => {
+  cy.get(cyTag(tag)).scrollIntoView();
+  cy.get(cyTag(tag)).should("be.visible").click();
+};
+
 /**
  * Adds Text to input fields
  * @param tag

@@ -9,9 +9,13 @@ import {
   shouldBeVisible,
   shouldContainText,
   shouldNotExist,
+  clickCalendarDate,
+  scrollFindClick
 } from "../support/e2e";
 
 const { AUDITIONS_SECTION, AUDITION_FORM, CASTING_FORM } = CY_TAGS;
+const today = new Date();
+today.setHours(0, 0, 0, 0);
 
 describe("Add Casting Form E2E tests", () => {
   it("Should add one Casting Row entry and show on Add Audition form", () => {
@@ -24,6 +28,7 @@ describe("Add Casting Form E2E tests", () => {
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
     //eslint-disable-next-line cypress/unsafe-to-chain-command
     cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click().type("01012023");
+    addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,
       AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
@@ -34,7 +39,7 @@ describe("Add Casting Form E2E tests", () => {
       AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
       "Booked"
     );
-    addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
+
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
     addToInput(AUDITION_FORM.TEXT_AREA.NOTES, "Wally is a good boy");
 
@@ -56,8 +61,9 @@ describe("Add Casting Form E2E tests", () => {
 
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
-    //eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get(cyTag(AUDITION_FORM.PICKERS.DATE)).click().type("01012023");
+
+    clickCalendarDate(today.valueOf().toString());
+    addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,
       AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
@@ -68,7 +74,6 @@ describe("Add Casting Form E2E tests", () => {
       AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
       "Booked"
     );
-    addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
     addToInput(AUDITION_FORM.TEXT_AREA.NOTES, "Wally is a good boy");
 
@@ -85,7 +90,7 @@ describe("Add Casting Form E2E tests", () => {
     shouldBeVisible(AUDITION_FORM.CASTING.CASTING_LIST);
     shouldBeVisible(AUDITION_FORM.CASTING.CASTING_ROW + "0");
 
-    findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
+    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
 
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "1")).within(
       () => {
@@ -108,7 +113,7 @@ describe("Add Casting Form E2E tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    findAndClick(AUDITION_FORM.BUTTONS.ADD_CASTING);
+    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_CASTING)
     cy.get(cyTag(CASTING_FORM.CONTAINERS.CASTING_CONTAINER)).within(() => {
       shouldBeVisible(CASTING_FORM.INPUTS.LABELS.FIRST_NAME);
       addToInput(CASTING_FORM.INPUTS.FIRST_NAME, "Ned");
@@ -145,7 +150,7 @@ describe("Add Casting Form E2E tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    findAndClick(AUDITION_FORM.BUTTONS.ADD_CASTING);
+    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_CASTING)
     cy.get(cyTag(CASTING_FORM.CONTAINERS.CASTING_CONTAINER)).within(() => {
       shouldBeVisible(CASTING_FORM.INPUTS.LABELS.FIRST_NAME);
       addToInput(CASTING_FORM.INPUTS.FIRST_NAME, "Ned");
