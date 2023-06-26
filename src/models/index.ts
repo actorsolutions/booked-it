@@ -17,16 +17,18 @@ export const formatAuditions = (auditions: AuditionsWithStatusChange) => {
     const formattedAudition = {
       ...audition,
     };
-    const formattedStatuses = formattedAudition.statuses.map((statusChange) => {
-      const formattedStatus = {
-        ...statusChange,
-        type: statusChange.Status.type,
-      };
-      // @ts-ignore
-      delete formattedStatus.Status;
-      return formattedStatus;
-    });
-    formattedAudition.statuses = formattedStatuses;
+    formattedAudition.statuses = formattedAudition.statuses.map(
+      (statusChange) => {
+        const formattedStatus = {
+          ...statusChange,
+          type: statusChange.Status.type,
+        };
+        // @ts-ignore
+        delete formattedStatus.Status;
+        return formattedStatus;
+      }
+    );
+
     return formattedAudition;
   });
 };
