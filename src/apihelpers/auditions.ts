@@ -34,6 +34,7 @@ export const createAudition = async (data: CreateAuditionData) => {
 };
 
 export const updateAudition = async (data: AuditionData) => {
+  //TODO: BI-93- This will be changed when API changes go in effect.
   delete data.statuses;
   const response = await fetch(`/api/auditions/${data.id}`, {
     method: "PUT",
