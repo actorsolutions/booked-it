@@ -5,7 +5,10 @@ import {
   audition_statuses,
 } from "@prisma/client";
 import type { StatusChange as PrismaStatusChange } from "@prisma/client";
-import { formatAuditions, formatAudition } from "@/models/index";
+import {
+  formatAuditions,
+  formatAudition,
+} from "@/models/utils/formatAuditions";
 
 const auditionWithStatuses = Prisma.validator<Prisma.AuditionArgs>()({
   include: { statuses: true },
