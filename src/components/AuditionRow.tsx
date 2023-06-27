@@ -173,7 +173,6 @@ export const AuditionRow = ({
             </Grid>
             <Grid item xs={9} md={7}>
               <div style={{ marginTop: "0.5rem" }}>
-                {" "}
                 Project: {audition.project}{" "}
               </div>
             </Grid>
