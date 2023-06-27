@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { Button, Grid, Typography } from "@mui/material";
-
 import { FirstNameInput } from "./FirstNameInput";
 import { LastNameInput } from "./LastNameInput";
 import { CompanyInput } from "./CompanyInput";
@@ -81,7 +80,7 @@ export const CastingForm = (props: FormProps<AuditionFormData>) => {
       <Grid item>
         <RoleInput control={control} />
       </Grid>
-      <Grid item>
+      <Grid item container justifyContent={"right"}>
         <Button
           onClick={() => {
             clearErrors();
