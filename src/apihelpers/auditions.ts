@@ -34,6 +34,7 @@ export const createAudition = async (data: CreateAuditionData) => {
 };
 
 export const updateAudition = async (data: AuditionData) => {
+  delete data.statuses;
   const response = await fetch(`/api/auditions/${data.id}`, {
     method: "PUT",
     body: JSON.stringify(data),
