@@ -203,10 +203,9 @@ describe("Landing Page E2E Tests", () => {
       }
     );
 
-    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(
-        () => {
-          cy.contains("Audition successfully deleted.").should("be.visible");
-        });
+    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(() => {
+      cy.contains("Audition successfully deleted.").should("be.visible");
+    });
   });
   it("should fail to delete an audition row and display the delete error Snackbar message", () => {
     cy.task("db:seed");
@@ -225,10 +224,11 @@ describe("Landing Page E2E Tests", () => {
       }
     );
 
-    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(
-        () => {
-          cy.contains("Failed to delete audition. Please contact Zach and Tyler").should("be.visible");
-        });
+    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(() => {
+      cy.contains(
+        "Failed to delete audition. Please contact Zach and Tyler"
+      ).should("be.visible");
+    });
   });
   it("should display Snackbar error message when getAuditions fails", () => {
     cy.task("db:seed");
@@ -239,10 +239,11 @@ describe("Landing Page E2E Tests", () => {
       statusCode: 500,
     }).as("getAuditionsFailure");
 
-    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(
-        () => {
-          cy.contains("Error retrieving your auditions. Please try again.").should("be.visible")
-        });
+    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(() => {
+      cy.contains("Error retrieving your auditions. Please try again.").should(
+        "be.visible"
+      );
+    });
   });
   it("should use the filter to filter out audition,then come back when filter is empty", () => {
     cy.task("db:seed");

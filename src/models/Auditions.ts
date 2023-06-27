@@ -4,7 +4,19 @@ import {
   audition_types,
   audition_statuses,
 } from "@prisma/client";
-import type { Audition as PrismaAudition } from "@prisma/client";
+import type { StatusChange as PrismaStatusChange } from "@prisma/client";
+import {
+  formatAuditions,
+  formatAudition,
+} from "@/models/utils/formatAuditions";
+
+const auditionWithStatuses = Prisma.validator<Prisma.AuditionArgs>()({
+  include: { statuses: true },
+});
+
+type AuditionWithStatuses = Prisma.AuditionGetPayload<
+  typeof auditionWithStatuses
+>;
 
 /**
  * Makes sure value is a part of object representing Prisma Enum
@@ -23,7 +35,6 @@ const validateEnum = (enumList: {}, value: string) => {
  * Defines the Database representation of an Audition, starting with
  * a form of the object for Audition creation where id is optional
  */
-
 export class Audition {
   id: number;
   userId: number;
@@ -43,9 +54,9 @@ export class Audition {
   createdAt?: Date | null;
   status: audition_statuses;
   archived: boolean;
+  statuses: PrismaStatusChange[];
 
-  // eslint-disable-next-line no-unused-vars
-  constructor(data: PrismaAudition) {
+  constructor(data: AuditionWithStatuses) {
     const {
       id,
       userId,
@@ -59,6 +70,7 @@ export class Audition {
       archived,
       status,
       type,
+      statuses,
     } = data;
     this.id = id;
     this.userId = userId;
@@ -70,6 +82,7 @@ export class Audition {
     this.notes = notes || undefined;
     this.createdAt = createdAt;
     this.archived = archived;
+    this.statuses = statuses;
 
     this.status = validateEnum(audition_statuses, status) as audition_statuses;
     this.type = validateEnum(audition_types, type) as audition_types;
@@ -81,7 +94,20 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async findById(id: number, db: PrismaClient["audition"]) {
-    return db.findUnique({ where: { id } });
+    return db.findUnique({
+      where: { id },
+      include: {
+        statuses: {
+          select: {
+            date: true,
+            id: true,
+            statusId: true,
+            Status: true,
+            auditionId: true,
+          },
+        },
+      },
+    });
   }
 
   /**
@@ -89,20 +115,45 @@ export class Audition {
    * @param userId - id of user within sought after audition records
    * @param db - instance of database being used
    */
-  static async findByUserId(userId: number, db: PrismaClient["audition"]) {
-    return db.findMany({ where: { userId: userId } });
-  }
+  static findByUserId = async (
+    userId: number,
+    db: PrismaClient["audition"]
+  ) => {
+    return db.findMany({
+      where: { userId: userId },
+      include: {
+        statuses: {
+          select: {
+            date: true,
+            id: true,
+            statusId: true,
+            Status: true,
+            auditionId: true,
+          },
+        },
+      },
+    });
+  };
 
+  static getFormattedAuditionsByUserId = async (
+    userId: number,
+    db: PrismaClient["audition"]
+  ) => {
+    const auditions = await Audition.findByUserId(userId, db);
+    return formatAuditions(auditions);
+  };
   /**
    * Method used to create a new audition
    * @param createData - audition data for creation
    * @param db - instance of database being used
    */
   static async create(
-    createData: Prisma.AuditionUncheckedCreateInput,
+    createData:
+      | Prisma.AuditionCreateInput
+      | Prisma.AuditionUncheckedCreateInput,
     db: PrismaClient["audition"]
   ) {
-    return db.create({
+    const createdAudition = await db.create({
       data: {
         ...createData,
         status: validateEnum(
@@ -111,7 +162,12 @@ export class Audition {
         ) as audition_statuses,
         type: validateEnum(audition_types, createData.type) as audition_types,
       },
+      include: {
+        statuses: true,
+      },
     });
+    // @ts-ignore
+    return formatAudition(createdAudition);
   }
 
   /**

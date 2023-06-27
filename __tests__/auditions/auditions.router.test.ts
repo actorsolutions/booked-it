@@ -59,6 +59,7 @@ describe("Auditions Router integration tests", () => {
           createdAt: "2023-04-28T21:50:11.638Z",
           status: "booked",
           archived: false,
+          statuses: [],
         },
       ],
     };
@@ -100,6 +101,7 @@ describe("Auditions Router integration tests", () => {
       userId: 0,
       status: "booked",
       archived: false,
+      statuses: [],
     };
     const res = await request
       .post("/")

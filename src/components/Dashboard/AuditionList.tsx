@@ -1,4 +1,4 @@
-import { Audition } from "@/types";
+import { AuditionData } from "@/types";
 import { SwipeableRow } from "@/components/SwipeableRow";
 import { AuditionRow } from "@/components/AuditionRow";
 import { Stack } from "@mui/material";
@@ -6,8 +6,8 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Container } from "@mui/system";
 
 interface AuditionListProps {
-  auditions: Audition[];
-  setAuditions: Dispatch<SetStateAction<Audition[]>>;
+  auditions: AuditionData[];
+  setAuditions: Dispatch<SetStateAction<AuditionData[]>>;
   listCyTag: string;
   rowCyTag: string;
   buttonPrefix: string;
@@ -26,7 +26,7 @@ export const AuditionList = ({
         {auditions.length === 0 ? (
           <p>No Auditions Added</p>
         ) : (
-          auditions.map((audition: Audition, index: number) => {
+          auditions.map((audition: AuditionData, index: number) => {
             return (
               <SwipeableRow key={audition.id}>
                 <AuditionRow

@@ -1,14 +1,14 @@
 import { NextApiResponse } from "next";
 import { audition_statuses, audition_types } from "@prisma/client";
-export { audition_types, audition_statuses } from "@prisma/client";
+import { FormattedStatus, StatusChangeData } from "@/types/statuschange";
 export interface AuditionsResponse extends NextApiResponse {
-  auditions: Audition[];
+  auditions: AuditionData[];
 }
 
-export interface Audition {
+export interface AuditionData {
   id: number;
   userId: number;
-  createdAt: number;
+  createdAt: Date;
   date: number;
   project: string;
   company: string;
@@ -18,6 +18,7 @@ export interface Audition {
   type: audition_types;
   status: audition_statuses;
   archived: boolean;
+  statuses?: StatusChangeData[];
 }
 
 export interface CreateAuditionData {
@@ -33,6 +34,9 @@ export interface CreateAuditionData {
   casting?: Casting[];
 }
 
+export interface FormattedAudition extends Omit<AuditionData, "statuses"> {
+  statuses: FormattedStatus[];
+}
 export interface Casting {
   name?: string;
   role?: string;

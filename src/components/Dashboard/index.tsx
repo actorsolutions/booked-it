@@ -6,7 +6,7 @@ import AddCircle from "@mui/icons-material/AddCircle";
 import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
-import { Audition } from "@/types";
+import { AuditionData } from "@/types";
 import { PieChart } from "./PieChart";
 import { AuditionList } from "@/components/Dashboard/AuditionList";
 import CY_TAGS from "@/support/cypress_tags";
@@ -24,11 +24,11 @@ const { AUTH_MESSAGES, AUDITION_MESSAGES } = RESPONSE_MESSAGES;
 export const Dashboard = () => {
   const { showSnackBar } = useSnackBar();
   const { user } = useUser();
-  const [auditions, setAuditions] = useState<Audition[]>([]);
+  const [auditions, setAuditions] = useState<AuditionData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [filterText, setFilterText] = useState("");
-  const [filteredArray, setFilteredArray] = useState<Audition[]>([]);
+  const [filteredArray, setFilteredArray] = useState<AuditionData[]>([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -65,8 +65,8 @@ export const Dashboard = () => {
    */
 
   const filterByTypeProjectCompany = (
-    auditionArray: Audition[],
-    filterArray: Audition[],
+    auditionArray: AuditionData[],
+    filterArray: AuditionData[],
     filter: string
   ) => {
     auditionArray.filter((audition) => {
@@ -87,8 +87,8 @@ export const Dashboard = () => {
    * @param filter
    */
   const filterByCastingName = (
-    auditionArray: Audition[],
-    filterArray: Audition[],
+    auditionArray: AuditionData[],
+    filterArray: AuditionData[],
     filter: string
   ) => {
     auditionArray.filter((audition) => {
@@ -103,7 +103,7 @@ export const Dashboard = () => {
   useEffect(() => {
     if (filterText.length > 2) {
       const filterAuditions = () => {
-        const returnArray: Audition[] = [];
+        const returnArray: AuditionData[] = [];
         filterByTypeProjectCompany(auditions, returnArray, filterText);
         filterByCastingName(auditions, returnArray, filterText);
         return returnArray;

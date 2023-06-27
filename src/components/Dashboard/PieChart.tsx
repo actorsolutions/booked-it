@@ -1,16 +1,16 @@
 import Grid from "@mui/material/Grid";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { Audition } from "@/types";
+import { AuditionData } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
 interface MetricProps {
-  auditions: Audition[];
+  auditions: AuditionData[];
 }
 export const PieChart = (props: MetricProps) => {
   ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
   const { auditions } = props;
-  const chartAuditions = (auditions: Audition[]) => {
+  const chartAuditions = (auditions: AuditionData[]) => {
     const pieChartLabel: string = "Type Breakdown";
     const typeCount: number[] = [];
     const pieLabels: string[] = [];

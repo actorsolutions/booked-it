@@ -10,20 +10,20 @@ import {
 } from "@mui/material";
 import LensIcon from "@mui/icons-material/Lens";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Audition, Casting } from "@/types";
+import { AuditionData, Casting } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
 import RESPONSE_MESSAGES from "@/support/response_messages";
 import { deleteAudition, updateAudition } from "@/apihelpers/auditions";
 import { LoadingCircle } from "@/components/common/LoadingCircle";
 import { useSnackBar } from "@/context/SnackbarContext";
 import { AddEditAuditionDialog } from "@/components/common/Dialogs/AddEditAuditionDialog";
-import {audition_types} from "@prisma/client";
+import { audition_types } from "@prisma/client";
 
 interface AuditionRowProps {
-  audition: Audition;
+  audition: AuditionData;
   index: number;
-  auditions: Audition[];
-  setAuditions: Dispatch<SetStateAction<Audition[]>>;
+  auditions: AuditionData[];
+  setAuditions: Dispatch<SetStateAction<AuditionData[]>>;
   rowCyTag: string;
   buttonPrefix: string;
 }
@@ -36,9 +36,9 @@ export const AuditionRow = ({
   rowCyTag,
   buttonPrefix,
 }: AuditionRowProps) => {
-    const {showSnackBar} = useSnackBar()
-    const { AUDITIONS_SECTION } = CY_TAGS;
-    const { AUDITION_MESSAGES } = RESPONSE_MESSAGES
+  const { showSnackBar } = useSnackBar();
+  const { AUDITIONS_SECTION } = CY_TAGS;
+  const { AUDITION_MESSAGES } = RESPONSE_MESSAGES;
   const statusColor = (
     status: string
   ): "info" | "secondary" | "warning" | "error" | "success" | "disabled" => {
@@ -58,9 +58,7 @@ export const AuditionRow = ({
     }
   };
 
-  const typeLabel = (
-      type: audition_types
-  ): string => {
+  const typeLabel = (type: audition_types): string => {
     switch (type) {
       case "television":
         return "Television";
@@ -77,11 +75,11 @@ export const AuditionRow = ({
       case "newMedia":
         return "New Media";
       case "voiceOver":
-        return "Voice Over"
+        return "Voice Over";
       default:
         return "Unknown";
     }
-  }
+  };
 
   const casting = audition.casting ? (audition.casting as Array<Casting>) : [];
 
@@ -103,10 +101,9 @@ export const AuditionRow = ({
         (auditionEntry) => auditionEntry !== audition
       );
       setAuditions(updatedAuditions);
-      showSnackBar(AUDITION_MESSAGES.AUDITION_DELETE_SUCCESS, "success")
-
+      showSnackBar(AUDITION_MESSAGES.AUDITION_DELETE_SUCCESS, "success");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       showSnackBar(AUDITION_MESSAGES.AUDITION_DELETE_FAILURE, "error");
     }
   };
@@ -175,9 +172,11 @@ export const AuditionRow = ({
               <LensIcon color={statusColor(audition.status)} fontSize="large" />
             </Grid>
             <Grid item xs={9} md={7}>
-              <div style={{ marginTop: "0.5rem" }}> Project: {audition.project} </div>
+              <div style={{ marginTop: "0.5rem" }}>
+                Project: {audition.project}{" "}
+              </div>
             </Grid>
-            <Grid item xs={3} sx={{marginTop: "0.3rem"}}>
+            <Grid item xs={3} sx={{ marginTop: "0.3rem" }}>
               <Button
                 sx={{ p: 0.5 }}
                 variant="outlined"
@@ -190,9 +189,11 @@ export const AuditionRow = ({
             <Grid
               item
               xs={6}
-              sx={{ display: "flex",
+              sx={{
+                display: "flex",
                 alignItems: "center",
-                justifyContent: "center" }}
+                justifyContent: "center",
+              }}
             >
               <Typography variant="body2">{formattedDate}</Typography>
             </Grid>
@@ -202,7 +203,11 @@ export const AuditionRow = ({
               data-cy={`${AUDITIONS_SECTION.CONTAINERS.ACCORDION_DETAILS}`}
             >
               <Grid container spacing={2}>
-                <Grid item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
+                <Grid
+                  item
+                  xs={4}
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
                   <div> Type: {typeLabel(audition.type)} </div>
                 </Grid>
                 <Grid item xs={4}>
@@ -219,7 +224,7 @@ export const AuditionRow = ({
                     direction={"row"}
                     justifyContent={"space-between"}
                   >
-                    <Grid item sx={{ marginLeft: "0.5rem"}}>
+                    <Grid item sx={{ marginLeft: "0.5rem" }}>
                       <Button
                         onClick={() => {
                           handleEdit();
