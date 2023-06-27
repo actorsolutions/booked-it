@@ -6,18 +6,21 @@ import { Casting } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
 
 interface Props {
-  name: string;
   casting: Casting[];
   // eslint-disable-next-line no-unused-vars
-  onDelete: (index: number) => void;
+  setCasting: (updatedCasting: Casting[]) => void;
   listCyTag: string
 }
 
 export const CastingList = (props: Props) => {
-  const { casting, onDelete, listCyTag } = props;
-  const handleDelete = (index: number) => {
-    onDelete(index);
+  const { casting, setCasting, listCyTag } = props;
+
+  const handleDeleteCastingRow = (index: number) => {
+    const updatedCasting = [...casting];
+    updatedCasting.splice(index, 1);
+    setCasting(updatedCasting);
   };
+
   const { AUDITION_FORM } = CY_TAGS;
 
   return (
@@ -28,6 +31,7 @@ export const CastingList = (props: Props) => {
                   border: "none",
                   fontStyle: "italic",
                   color: "rgba(0, 0, 0, 0.4)",
+                  paddingLeft: "6px"
                 }}
             >
               <p>No Casting Added</p>
@@ -40,7 +44,7 @@ export const CastingList = (props: Props) => {
                   <IconButton
                       edge="end"
                       aria-label="delete"
-                      onClick={() => handleDelete(index)}
+                      onClick={() => handleDeleteCastingRow(index)}
                       data-cy={AUDITION_FORM.BUTTONS.DELETE_CASTING}
                   >
                     <CloseIcon />

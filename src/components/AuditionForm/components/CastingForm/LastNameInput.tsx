@@ -16,7 +16,7 @@ export const LastNameInput = (props: Props<FormValues>) => {
       <Container>
         <FormLabel
           cyTag={CY_TAGS.CASTING_FORM.INPUTS.LABELS.LAST_NAME}
-          labelText="Casting Last Name"
+          labelText="Last Name"
           htmlFor="castingLastName"
         />
       </Container>

@@ -175,13 +175,6 @@ export const AuditionForm = (props: Props) => {
     }
   };
 
-  // TODO - BI-72 Refactor handleDeleteCastingRow to live in CastingList
-  const handleDeleteCastingRow = (index: number) => {
-    const updatedCasting = [...(watchCasting || [])];
-    updatedCasting.splice(index, 1);
-    setValue("casting", updatedCasting);
-  };
-
   const setCasting = (castingArray: Casting[]) => {
     setValue("casting", castingArray);
   };
@@ -253,8 +246,7 @@ export const AuditionForm = (props: Props) => {
               {watchCasting ? (
                   <CastingList
                       casting={watchCasting}
-                      onDelete={handleDeleteCastingRow}
-                      name={""}
+                      setCasting={setCasting}
                       listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
                   />
               ) : null}
