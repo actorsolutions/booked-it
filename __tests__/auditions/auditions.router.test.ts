@@ -88,6 +88,7 @@ describe("Auditions Router integration tests", () => {
       type: "television",
       status: "booked",
       archived: false,
+      statuses: [],
     };
     const expected = {
       callBackDate: null,

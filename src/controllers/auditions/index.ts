@@ -94,7 +94,7 @@ export const updateAudition = async (
   if (audition.userId !== userId) {
     res.status(401).send({ message: "Unauthorized" });
   } else {
-    await audition.save(db);
+    await audition.update(db);
     res.status(200).send(audition);
   }
 };

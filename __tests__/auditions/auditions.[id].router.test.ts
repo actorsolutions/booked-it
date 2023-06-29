@@ -122,6 +122,7 @@ describe("Audition [id] integration tests", () => {
       userId: 0,
       status: "scheduled",
       archived: false,
+      statuses: [],
     };
 
     const res = await request

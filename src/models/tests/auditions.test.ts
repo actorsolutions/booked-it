@@ -91,7 +91,7 @@ describe("It Tests the Auditions Model", () => {
 
     const audition = new Audition(auditionData);
     expect(
-      await audition.save(mockPrisma as unknown as PrismaClient["audition"])
+      await audition.update(mockPrisma as unknown as PrismaClient["audition"])
     ).toEqual(expectedResponse);
   });
   it("Finds all auditions with UserId", async () => {

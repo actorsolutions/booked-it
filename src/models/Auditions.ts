@@ -148,25 +148,43 @@ export class Audition {
    * @param db - instance of database being used
    */
   static async create(
-    createData:
-      | Prisma.AuditionCreateInput
-      | Prisma.AuditionUncheckedCreateInput,
+    createData: Prisma.AuditionUncheckedCreateInput,
     db: PrismaClient["audition"]
   ) {
+    const auditionData = {
+      id: createData.id,
+      callBackDate: createData.callBackDate || undefined,
+      casting: createData.casting || undefined,
+      company: createData.company,
+      date: createData.date,
+      notes: createData.notes,
+      project: createData.project,
+      type: createData.type,
+      status: createData.status,
+      archived: createData.archived,
+      userId: createData.userId,
+    };
     const createdAudition = await db.create({
       data: {
-        ...createData,
+        ...auditionData,
         status: validateEnum(
           audition_statuses,
-          createData.status
+          auditionData.status
         ) as audition_statuses,
-        type: validateEnum(audition_types, createData.type) as audition_types,
+        type: validateEnum(audition_types, auditionData.type) as audition_types,
       },
       include: {
-        statuses: true,
+        statuses: {
+          select: {
+            date: true,
+            id: true,
+            statusId: true,
+            Status: true,
+            auditionId: true,
+          },
+        },
       },
     });
-    // @ts-ignore
     return formatAudition(createdAudition);
   }
 
@@ -174,12 +192,39 @@ export class Audition {
    * Method used to either update or create (upsert) an audition in one step
    * @param db - instance of database being used
    */
-  async save(db: PrismaClient["audition"]) {
-    return db.upsert({
+  async update(db: PrismaClient["audition"]) {
+    const updateAudition = await db.update({
       where: { id: this.id },
-      update: this as Prisma.AuditionUncheckedUpdateInput,
-      create: this as Prisma.AuditionUncheckedCreateInput,
+      data: {
+        id: this.id,
+        userId: this.userId,
+        createdAt: this.createdAt,
+        date: this.date,
+        project: this.project,
+        company: this.company,
+        casting: this.casting || undefined,
+        callBackDate: this.callbackDate || undefined,
+        notes: this.notes,
+        type: this.type,
+        status: this.status,
+        archived: this.archived,
+        statuses: {
+          create: this.statuses,
+        },
+      },
+      include: {
+        statuses: {
+          select: {
+            date: true,
+            id: true,
+            statusId: true,
+            Status: true,
+            auditionId: true,
+          },
+        },
+      },
     });
+    return formatAudition(updateAudition);
   }
 
   /**
