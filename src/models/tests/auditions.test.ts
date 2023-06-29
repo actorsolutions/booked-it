@@ -35,8 +35,9 @@ describe("It Tests the Auditions Model", () => {
     );
     expect(audition).toEqual(expectedResponse);
   });
-  it("Creates and saves an audition", async () => {
-    const auditionData = {
+  it("Updates an audition", async () => {
+    const today = new Date();
+    const updateData = {
       id: 0,
       createdAt: new Date(),
       userId: 0,
@@ -52,47 +53,105 @@ describe("It Tests the Auditions Model", () => {
       statuses: [
         {
           id: 0,
-          auditionId: 0,
           statusId: 0,
           createdAt: new Date(),
           date: 0,
+          type: "submitted",
+        },
+        {
+          id: 0,
+          statusId: 4,
+          createdAt: new Date(),
+          date: 0,
+          type: "booked",
         },
       ],
     };
-    const expectedResponse = {
+    const returnData = {
       id: 0,
+      createdAt: today,
       userId: 0,
       date: 0,
       project: "FakeCompany",
       company: "FakeProject",
       callBackDate: 0,
       casting: [{ name: "FakeCasting", company: "Casting" }],
-      notes: "No notes Added",
+      notes: "Notes",
+      type: "television" as audition_types,
+      status: "scheduled" as audition_statuses,
+      archived: false,
+      statuses: [
+        {
+          id: 0,
+          auditionId: 0,
+          statusId: 0,
+          createdAt: today,
+          date: 0,
+          Status: {
+            type: "submitted",
+            id: 0,
+          },
+        },
+        {
+          id: 1,
+          auditionId: 0,
+          statusId: 4,
+          createdAt: today,
+          date: 0,
+          Status: {
+            type: "booked",
+            id: 4,
+          },
+        },
+      ],
+    };
+
+    const expectedResponse = {
+      id: 0,
+      userId: 0,
+      date: 0,
+      createdAt: today,
+      project: "FakeCompany",
+      company: "FakeProject",
+      callBackDate: 0,
+      casting: [{ name: "FakeCasting", company: "Casting" }],
+      notes: "Notes",
       type: "television",
       status: "scheduled",
       archived: false,
       statuses: [
         {
-          type: "scheduled",
-          date: 0,
-          createdAt: new Date(),
+          id: 0,
           auditionId: 0,
           statusId: 0,
+          createdAt: today,
+          date: 0,
+          type: "submitted",
+        },
+        {
+          type: "booked",
+          date: 0,
+          createdAt: today,
+          auditionId: 0,
+          statusId: 4,
+          id: 1,
         },
       ],
     };
     const mockPrisma = {
-      upsert: async () => {
+      update: async () => {
         return new Promise((resolve) => {
-          resolve(expectedResponse);
+          resolve(returnData);
         });
       },
     };
 
-    const audition = new Audition(auditionData);
-    expect(
-      await audition.update(mockPrisma as unknown as PrismaClient["audition"])
-    ).toEqual(expectedResponse);
+    const updateAudition = Audition.update(
+      updateData.id,
+      updateData as unknown as Prisma.AuditionUncheckedUpdateInput,
+      mockPrisma as unknown as PrismaClient["audition"]
+    );
+    expect(await updateAudition).toEqual(expectedResponse);
   });
   it("Finds all auditions with UserId", async () => {
     const auditions = [

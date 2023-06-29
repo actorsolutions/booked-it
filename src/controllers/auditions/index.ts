@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Audition } from "@/models/Auditions";
 import { getSession } from "@auth0/nextjs-auth0";
 import { prisma } from "@/utils/prisma";
+import { createStatusChange } from "@/utils/adapters";
+import { FormattedStatus } from "@/types/statuschange";
 
 /**
  * Gets all Auditions based on UserID and sends them
@@ -49,10 +51,14 @@ export const addAudition = async (
     callBackDate,
     status,
     archived,
+    statuses,
   } = JSON.parse(req.body);
-  const auditionData = {
+
+  const statusChanges = statuses.map((status: FormattedStatus) => {
+    return createStatusChange(status);
+  });
+  const createAuditionObject = {
     id,
-    userId,
     date,
     project,
     company,
@@ -62,8 +68,14 @@ export const addAudition = async (
     callBackDate,
     status,
     archived,
+    userId,
+    statuses: {
+      createMany: {
+        data: statusChanges,
+      },
+    },
   };
-  const createdAudition = await Audition.create(auditionData, db);
+  const createdAudition = await Audition.create(createAuditionObject, db);
   res.status(200).send(createdAudition);
 };
 
@@ -75,8 +87,11 @@ export const getAudition = async (
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
   const { id } = req.query;
-  const audition = await Audition.findById(parseInt(id as string), db);
-  if (audition?.userId != userId) {
+  const audition = await Audition.getFormattedAuditionByUserId(
+    parseInt(id as string),
+    db
+  );
+  if (audition.userId != userId) {
     return res.status(401).send({ message: "Unauthorized" });
   }
   return res.status(200).send(audition);
@@ -88,13 +103,47 @@ export const updateAudition = async (
   db = prisma.audition
 ) => {
   const session = await getSession(req, res);
-  const userId = parseInt(session?.user.id);
-  const auditionData = JSON.parse(req.body);
-  const audition = new Audition(auditionData);
-  if (audition.userId !== userId) {
+  const sessionUserId = parseInt(session?.user.id);
+  const {
+    id,
+    date,
+    project,
+    company,
+    casting,
+    callBackDate,
+    notes,
+    type,
+    status,
+    archived,
+    statuses,
+    userId,
+  } = JSON.parse(req.body);
+  const statusChanges = statuses.map((status: FormattedStatus) => {
+    return createStatusChange(status);
+  });
+  const updateAuditionObject = {
+    id,
+    date,
+    project,
+    company,
+    casting: casting || [],
+    notes,
+    type,
+    callBackDate,
+    status,
+    archived,
+    userId: sessionUserId,
+    statuses: {
+      createMany: {
+        data: statusChanges,
+      },
+    },
+  };
+  if (userId !== sessionUserId) {
     res.status(401).send({ message: "Unauthorized" });
   } else {
-    await audition.update(db);
+    await prisma.statusChange.deleteMany({ where: { auditionId: id } });
+    const audition = await Audition.update(id, updateAuditionObject, db);
     res.status(200).send(audition);
   }
 };

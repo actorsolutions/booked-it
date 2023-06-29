@@ -88,7 +88,13 @@ describe("Auditions Router integration tests", () => {
       type: "television",
       status: "booked",
       archived: false,
-      statuses: [],
+      statuses: [
+        {
+          id: 1,
+          statusId: 4,
+          date: 0,
+        },
+      ],
     };
     const expected = {
       callBackDate: null,
@@ -102,7 +108,15 @@ describe("Auditions Router integration tests", () => {
       userId: 0,
       status: "booked",
       archived: false,
-      statuses: [],
+      statuses: [
+        {
+          auditionId: 1,
+          date: 0,
+          id: 1,
+          statusId: 4,
+          type: "booked",
+        },
+      ],
     };
     const res = await request
       .post("/")

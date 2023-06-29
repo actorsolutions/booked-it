@@ -70,11 +70,12 @@ export const statusesToStatusChange = (data: FormattedStatus) => {
  */
 
 export const createStatusChange = (data: FormattedStatus) => {
-  const { auditionId, statusId, date } = data;
+  const { auditionId, statusId, date, id } = data;
 
   return {
     auditionId,
     statusId,
     date,
+    id,
   };
 };

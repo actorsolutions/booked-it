@@ -135,6 +135,11 @@ export class Audition {
     });
   };
 
+  /**
+   * Method used to get formatted Auditions
+   * @param userId - ID of audition.userId
+   * @param db - instance of database being used
+   */
   static getFormattedAuditionsByUserId = async (
     userId: number,
     db: PrismaClient["audition"]
@@ -142,37 +147,31 @@ export class Audition {
     const auditions = await Audition.findByUserId(userId, db);
     return formatAuditions(auditions);
   };
+
+  /**
+   * Method used to get formatted Auditions
+   * @param userId - ID of audition.userId
+   * @param db - instance of database being used
+   */
+  static getFormattedAuditionByUserId = async (
+    userId: number,
+    db: PrismaClient["audition"]
+  ) => {
+    const audition = await Audition.findById(userId, db);
+    return formatAudition(audition);
+  };
+
   /**
    * Method used to create a new audition
-   * @param createData - audition data for creation
+   * @param data - audition data for creation
    * @param db - instance of database being used
    */
   static async create(
-    createData: Prisma.AuditionUncheckedCreateInput,
+    data: Prisma.AuditionUncheckedCreateInput,
     db: PrismaClient["audition"]
   ) {
-    const auditionData = {
-      id: createData.id,
-      callBackDate: createData.callBackDate || undefined,
-      casting: createData.casting || undefined,
-      company: createData.company,
-      date: createData.date,
-      notes: createData.notes,
-      project: createData.project,
-      type: createData.type,
-      status: createData.status,
-      archived: createData.archived,
-      userId: createData.userId,
-    };
     const createdAudition = await db.create({
-      data: {
-        ...auditionData,
-        status: validateEnum(
-          audition_statuses,
-          auditionData.status
-        ) as audition_statuses,
-        type: validateEnum(audition_types, auditionData.type) as audition_types,
-      },
+      data,
       include: {
         statuses: {
           select: {
@@ -189,29 +188,19 @@ export class Audition {
   }
 
   /**
-   * Method used to either update or create (upsert) an audition in one step
+   * Method used to update an audition
+   * @param id
+   * @param data
    * @param db - instance of database being used
    */
-  async update(db: PrismaClient["audition"]) {
+  static async update(
+    id: number,
+    data: Prisma.AuditionUncheckedUpdateInput,
+    db: PrismaClient["audition"]
+  ) {
     const updateAudition = await db.update({
-      where: { id: this.id },
-      data: {
-        id: this.id,
-        userId: this.userId,
-        createdAt: this.createdAt,
-        date: this.date,
-        project: this.project,
-        company: this.company,
-        casting: this.casting || undefined,
-        callBackDate: this.callbackDate || undefined,
-        notes: this.notes,
-        type: this.type,
-        status: this.status,
-        archived: this.archived,
-        statuses: {
-          create: this.statuses,
-        },
-      },
+      where: { id },
+      data,
       include: {
         statuses: {
           select: {
