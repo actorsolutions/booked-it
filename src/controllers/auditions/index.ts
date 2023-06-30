@@ -19,7 +19,7 @@ export const getAuditions = async (
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
-  const auditions = await Audition.findByUserId(userId, db);
+  const auditions = await Audition.getFormattedAuditionsByUserId(userId, db);
   if (auditions) {
     res.status(200).send({ auditions });
   } else {
