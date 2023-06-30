@@ -18,7 +18,7 @@ export interface AuditionData {
   type: audition_types;
   status: audition_statuses;
   archived: boolean;
-  statuses?: FormattedStatus[];
+  statuses: FormattedStatus[];
 }
 
 export interface CreateAuditionData {
@@ -32,6 +32,7 @@ export interface CreateAuditionData {
   status: string;
   archived: boolean;
   casting?: Casting[];
+  statuses: FormattedStatus[];
 }
 
 export interface FormattedAudition extends Omit<AuditionData, "statuses"> {

@@ -10,7 +10,7 @@ import {
   shouldContainText,
   shouldNotExist,
   clickCalendarDate,
-  scrollFindClick
+  scrollFindClick,
 } from "../support/e2e";
 
 const { AUDITIONS_SECTION, AUDITION_FORM, CASTING_FORM } = CY_TAGS;
@@ -113,7 +113,7 @@ describe("Add Casting Form E2E tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_CASTING)
+    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_CASTING);
     cy.get(cyTag(CASTING_FORM.CONTAINERS.CASTING_CONTAINER)).within(() => {
       shouldBeVisible(CASTING_FORM.INPUTS.LABELS.FIRST_NAME);
       addToInput(CASTING_FORM.INPUTS.FIRST_NAME, "Ned");
@@ -150,7 +150,7 @@ describe("Add Casting Form E2E tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_CASTING)
+    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_CASTING);
     cy.get(cyTag(CASTING_FORM.CONTAINERS.CASTING_CONTAINER)).within(() => {
       shouldBeVisible(CASTING_FORM.INPUTS.LABELS.FIRST_NAME);
       addToInput(CASTING_FORM.INPUTS.FIRST_NAME, "Ned");

@@ -174,16 +174,15 @@ describe("Add Auditions Form E2E Tests", () => {
 
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
 
-
     selectItem(
-        AUDITION_FORM.DROPDOWNS.TYPE,
-        AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
-        "Television"
+      AUDITION_FORM.DROPDOWNS.TYPE,
+      AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
+      "Television"
     );
     selectItem(
-        AUDITION_FORM.DROPDOWNS.STATUS,
-        AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
-        "Booked"
+      AUDITION_FORM.DROPDOWNS.STATUS,
+      AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
+      "Booked"
     );
 
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
@@ -191,10 +190,9 @@ describe("Add Auditions Form E2E Tests", () => {
     scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(
-        () => {
-          cy.contains("Audition created successfully. Woo!").should("be.visible");
-        });
+    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(() => {
+      cy.contains("Audition created successfully. Woo!").should("be.visible");
+    });
   });
   it("Should show error Snackbar message when audition fails to create", () => {
     cy.task("db:seed");
@@ -209,14 +207,14 @@ describe("Add Auditions Form E2E Tests", () => {
     clickCalendarDate(today.valueOf().toString());
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
-        AUDITION_FORM.DROPDOWNS.TYPE,
-        AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
-        "Television"
+      AUDITION_FORM.DROPDOWNS.TYPE,
+      AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
+      "Television"
     );
     selectItem(
-        AUDITION_FORM.DROPDOWNS.STATUS,
-        AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
-        "Booked"
+      AUDITION_FORM.DROPDOWNS.STATUS,
+      AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
+      "Booked"
     );
 
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
@@ -229,9 +227,10 @@ describe("Add Auditions Form E2E Tests", () => {
 
     scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
 
-    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(
-        () => {
-          cy.contains("Encountered a problem trying to create that audition. Please contact Zach and Tyler.").should("be.visible");
-        });
+    cy.get(cyTag(LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(() => {
+      cy.contains(
+        "Encountered a problem trying to create that audition. Please contact Zach and Tyler."
+      ).should("be.visible");
+    });
   });
 });
