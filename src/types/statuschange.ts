@@ -1,10 +1,10 @@
 import { Status } from "@prisma/client";
 export interface FormattedStatus {
   type: string;
-  auditionId: number;
+  auditionId?: number;
   statusId: number;
   date: number;
-  id: number;
+  id?: number;
 }
 
 export interface StatusChangeData {

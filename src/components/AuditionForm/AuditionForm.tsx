@@ -69,6 +69,7 @@ export const AuditionForm = (props: Props) => {
       type: "",
       status: "",
       archived: false,
+      statuses: [],
     },
   });
 
@@ -124,6 +125,7 @@ export const AuditionForm = (props: Props) => {
       userId: audition.userId,
       createdAt: audition.createdAt,
       callbackDate: audition.callBackDate,
+      statuses: [],
     };
     const response = await updateAudition(updateData as AuditionData);
     const auditionToReplace = auditions.find(
@@ -198,103 +200,113 @@ export const AuditionForm = (props: Props) => {
   }, [editMode, reset]);
 
   return (
-      <Container
-          data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
-          maxWidth="md"
-          id="auditionModal"
-      >
-        <Divider />
-        <Form>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <AuditionDatePicker control={control} register={register} />
-              {errors.date && (
-                  <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.DATE} />
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <Divider style={{ backgroundColor: "#616161" }} />
-              <ProjectInput control={control} register={register} />
-              {errors.project && (
-                  <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.PROJECT} />
-                )}
-            </Grid>
-              <Grid item xs={12}>
-                <StatusDropdown control={control} register={register} />
-                {errors.status && (
-                    <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.STATUS} />
-                )}
-              </Grid>
-              <Grid item xs={12}>
-                <TypeDropdown control={control} register={register} />
-                {errors.type && (
-                    <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.TYPE} />
-                )}
-              </Grid>
-            {watchStatus === "callback" && (
-                <Grid item xs={12}>
-                  <CallbackPicker control={control} register={register} />
-                </Grid>
+    <Container
+      data-cy={AUDITION_FORM.CONTAINERS.FORM_CONTAINER}
+      maxWidth="md"
+      id="auditionModal"
+    >
+      <Divider />
+      <Form>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <AuditionDatePicker control={control} register={register} />
+            {errors.date && (
+              <ValidationRequiredMessage
+                errorCyTag={AUDITION_FORM.ERRORS.DATE}
+              />
             )}
-            <Grid item xs={12}>
-              <CompanyInput control={control} register={register} />
-              {errors.company && (
-                  <ValidationRequiredMessage errorCyTag={AUDITION_FORM.ERRORS.COMPANY} />
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              {watchCasting ? (
-                  <CastingList
-                      casting={watchCasting}
-                      setCasting={setCasting}
-                      listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
-                  />
-              ) : null}
-            </Grid>
-            {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
-                <Grid item container xs={12} justifyContent={"right"}>
-                  <Button
-                      data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
-                      onClick={handleModal}
-                  >
-                    Add Casting
-                  </Button>
-                  <Dialog open={open} onClose={handleModal}>
-                    <DialogContent>
-                      <CastingForm
-                          auditionControl={control}
-                          initialCastingList={getValues().casting}
-                          setCasting={setCasting}
-                          handleClose={handleModal}
-                      />
-                    </DialogContent>
-                  </Dialog>
-                </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider style={{ backgroundColor: "#616161" }} />
+            <ProjectInput control={control} register={register} />
+            {errors.project && (
+              <ValidationRequiredMessage
+                errorCyTag={AUDITION_FORM.ERRORS.PROJECT}
+              />
             )}
+          </Grid>
+          <Grid item xs={12}>
+            <StatusDropdown control={control} register={register} />
+            {errors.status && (
+              <ValidationRequiredMessage
+                errorCyTag={AUDITION_FORM.ERRORS.STATUS}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            <TypeDropdown control={control} register={register} />
+            {errors.type && (
+              <ValidationRequiredMessage
+                errorCyTag={AUDITION_FORM.ERRORS.TYPE}
+              />
+            )}
+          </Grid>
+          {watchStatus === "callback" && (
             <Grid item xs={12}>
-              <Divider style={{ backgroundColor: "#616161" }} />
-              <NotesTextArea control={control} register={register} />
+              <CallbackPicker control={control} register={register} />
             </Grid>
+          )}
+          <Grid item xs={12}>
+            <CompanyInput control={control} register={register} />
+            {errors.company && (
+              <ValidationRequiredMessage
+                errorCyTag={AUDITION_FORM.ERRORS.COMPANY}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            {watchCasting ? (
+              <CastingList
+                casting={watchCasting}
+                setCasting={setCasting}
+                listCyTag={AUDITION_FORM.CASTING.CASTING_LIST}
+              />
+            ) : null}
+          </Grid>
+          {watchCasting && watchCasting.length < MAX_CASTING_ROWS && (
             <Grid item container xs={12} justifyContent={"right"}>
               <Button
-                  data-cy={
-                    editMode
-                        ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
-                        : AUDITION_FORM.BUTTONS.ADD_AUDITION
-                  }
-                  onClick={() => {
-                    clearErrors();
-                    handleClick().then((wasSent) => {
-                      wasSent && handleClose();
-                    });
-                  }}
+                data-cy={AUDITION_FORM.BUTTONS.ADD_CASTING}
+                onClick={handleModal}
               >
-                {editMode ? "Edit Audition" : "Add Audition"}
+                Add Casting
               </Button>
-              {submissionState.loading && <LoadingCircle />}
+              <Dialog open={open} onClose={handleModal}>
+                <DialogContent>
+                  <CastingForm
+                    auditionControl={control}
+                    initialCastingList={getValues().casting}
+                    setCasting={setCasting}
+                    handleClose={handleModal}
+                  />
+                </DialogContent>
+              </Dialog>
             </Grid>
+          )}
+          <Grid item xs={12}>
+            <Divider style={{ backgroundColor: "#616161" }} />
+            <NotesTextArea control={control} register={register} />
           </Grid>
-        </Form>
-      </Container>
+          <Grid item container xs={12} justifyContent={"right"}>
+            <Button
+              data-cy={
+                editMode
+                  ? AUDITION_FORM.BUTTONS.EDIT_AUDITION
+                  : AUDITION_FORM.BUTTONS.ADD_AUDITION
+              }
+              onClick={() => {
+                clearErrors();
+                handleClick().then((wasSent) => {
+                  wasSent && handleClose();
+                });
+              }}
+            >
+              {editMode ? "Edit Audition" : "Add Audition"}
+            </Button>
+            {submissionState.loading && <LoadingCircle />}
+          </Grid>
+        </Grid>
+      </Form>
+    </Container>
   );
 };

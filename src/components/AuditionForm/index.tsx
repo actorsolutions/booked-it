@@ -12,6 +12,7 @@ export interface AuditionFormData extends FieldValues {
   type: string;
   status: string;
   archived: boolean;
+  statuses: [];
 }
 
 export interface FormProps<T extends FieldValues> {

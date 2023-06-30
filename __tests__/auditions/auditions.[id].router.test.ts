@@ -46,6 +46,9 @@ describe("Audition [id] integration tests", () => {
         createdAt: "2023-04-28T21:50:11.638Z",
         status: "scheduled",
         archived: false,
+        statuses: {
+          create: [{ date: 0, id: 2, statusId: 0 }],
+        },
       },
     });
   });
@@ -72,7 +75,15 @@ describe("Audition [id] integration tests", () => {
       userId: 0,
       status: "scheduled",
       archived: false,
-      statuses: [],
+      statuses: [
+        {
+          auditionId: 0,
+          date: 0,
+          id: 2,
+          statusId: 0,
+          type: "submitted",
+        },
+      ],
     };
 
     const res = await request
@@ -111,7 +122,7 @@ describe("Audition [id] integration tests", () => {
     const session = await generateSessionCookie(SESSION_DATA, {
       secret: process.env.AUTH0_SECRET as string,
     });
-    const updatedAudition = {
+    const updateAuditionData = {
       company: "Test Company",
       createdAt: "2023-04-28T21:50:11.638Z",
       date: 0,
@@ -122,6 +133,50 @@ describe("Audition [id] integration tests", () => {
       userId: 0,
       status: "scheduled",
       archived: false,
+      statuses: [
+        {
+          date: 0,
+          id: 2,
+          statusId: 0,
+          type: "submitted",
+        },
+        {
+          id: 48,
+          statusId: 4,
+          date: 0,
+          type: "booked",
+        },
+      ],
+    };
+    const expected = {
+      archived: false,
+      callBackDate: null,
+      casting: [],
+      company: "Test Company",
+      createdAt: "2023-04-28T21:50:11.638Z",
+      date: 0,
+      id: 0,
+      notes: "THIS IS A DIFFERENT NOTE",
+      project: "UPDATED PROJECT",
+      status: "scheduled",
+      statuses: [
+        {
+          auditionId: 0,
+          date: 0,
+          id: 2,
+          statusId: 0,
+          type: "submitted",
+        },
+        {
+          auditionId: 0,
+          date: 0,
+          id: 48,
+          statusId: 4,
+          type: "booked",
+        },
+      ],
+      type: "television",
+      userId: 0,
     };
 
     const res = await request
@@ -129,13 +184,13 @@ describe("Audition [id] integration tests", () => {
       .set("Content-type", "text/plain")
       .set("Accept", "application/json")
       .set("Cookie", [`appSession=${session}`])
-      .send(JSON.stringify(updatedAudition));
+      .send(JSON.stringify(updateAuditionData));
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(updatedAudition);
+    expect(res.body).toEqual(expected);
   });
   it("should throw an error for unauthorized put request", async () => {
-    const updatedAudition = {
+    const updateAuditionData = {
       company: "Test Company",
       createdAt: "2023-04-28T21:50:11.638Z",
       date: 0,
@@ -146,7 +201,22 @@ describe("Audition [id] integration tests", () => {
       userId: 0,
       status: "scheduled",
       archived: false,
+      statuses: [
+        {
+          id: 2,
+          statusId: 0,
+          date: 0,
+          type: "submitted",
+        },
+        {
+          id: 1,
+          statusId: 4,
+          date: 0,
+          type: "booked",
+        },
+      ],
     };
+
     const request = await testClient(AuditionController, {
       id: TEST_AUDITION.id,
     });
@@ -166,7 +236,7 @@ describe("Audition [id] integration tests", () => {
       .set("Content-type", "text/plain")
       .set("Accept", "application/json")
       .set("Cookie", [`appSession=${session}`])
-      .send(JSON.stringify(updatedAudition));
+      .send(JSON.stringify(updateAuditionData));
 
     expect(res.statusCode).toEqual(401);
     expect(res.body).toEqual({

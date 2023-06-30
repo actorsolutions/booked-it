@@ -1,6 +1,6 @@
 import { AuditionData, AuditionsResponse, CreateAuditionData } from "@/types";
 import RESPONSE_MESSAGES from "@/support/response_messages";
-
+import { prismaAuditionAdapter } from "@/utils/adapters";
 // Get Auditions from server, gets userId from session in server
 export const getAuditions = async (): Promise<AuditionsResponse> => {
   const response = await fetch(`/api/auditions`, {
@@ -34,11 +34,10 @@ export const createAudition = async (data: CreateAuditionData) => {
 };
 
 export const updateAudition = async (data: AuditionData) => {
-  //TODO: BI-93- This will be changed when API changes go in effect.
-  delete data.statuses;
+  const formattedData = prismaAuditionAdapter(data);
   const response = await fetch(`/api/auditions/${data.id}`, {
     method: "PUT",
-    body: JSON.stringify(data),
+    body: JSON.stringify(formattedData),
   });
   if (response.status !== 200) {
     throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_UPDATE_FAILURE);

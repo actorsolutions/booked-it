@@ -43,7 +43,7 @@ model Status {
 
 model StatusChange {
   id         Int      @id @default(autoincrement())
-  Audition   Audition @relation(fields: [auditionId], references: [id])
+  Audition   Audition @relation(fields: [auditionId], references: [id],onDelete: Cascade)
   auditionId Int
   Status     Status   @relation(fields: [statusId], references: [id])
   statusId   Int
