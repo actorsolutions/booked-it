@@ -23,6 +23,7 @@ import CY_TAGS from "@/support/cypress_tags";
 import RESPONSE_MESSAGES from "@/support/response_messages";
 import { LoadingCircle, ValidationRequiredMessage } from "@/components/common";
 import { useSnackBar } from "@/context/SnackbarContext";
+import { StatusChangeForm } from "@/components/AuditionForm/components/StatusChange/StatusChange.form";
 
 interface Props {
   audition?: AuditionData;
@@ -226,12 +227,9 @@ export const AuditionForm = (props: Props) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <StatusDropdown control={control} register={register} />
-            {errors.status && (
-              <ValidationRequiredMessage
-                errorCyTag={AUDITION_FORM.ERRORS.STATUS}
-              />
-            )}
+            <Divider />
+            <StatusChangeForm />
+            <Divider />
           </Grid>
           <Grid item xs={12}>
             <TypeDropdown control={control} register={register} />

@@ -58,7 +58,6 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
                 sx={{
                   height: 50,
                 }}
-                defaultValue={""}
               >
                 {menuItems.map((item) => (
                   <MenuItem
