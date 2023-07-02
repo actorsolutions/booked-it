@@ -26,6 +26,7 @@ export const StatusDropdown = (props: FormProps<FormattedStatus>) => {
           menuItems={statusItems}
           dropDownCyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS}
           {...register("status", { required: true })}
+          defaultValue={"submitted"}
         />
       </Container>
     </FormGroupRow>

@@ -37,6 +37,7 @@ export const Status = (props: Props<FormValues>) => {
         justifyContent="center"
         alignItems="center"
         spacing={2}
+        wrap="nowrap" // --> add this line to disable wrap
       >
         <Grid item>
           <StatusDropdown control={control} register={register} />

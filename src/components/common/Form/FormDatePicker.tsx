@@ -34,7 +34,7 @@ export const FormDatePicker = <T extends FieldValues>(props: Props<T>) => {
               <div data-cy={cyTag}>
                 <DatePicker
                   inputRef={ref}
-                  label={"Please Select a  Date"}
+                  defaultValue={dayjs(new Date())}
                   value={value ? dayjs(value) : undefined}
                   onChange={(event: any) => {
                     if (event.$d != null) {

@@ -23,6 +23,7 @@ interface Props<T extends FieldValues> {
   rules?: RegisterOptions;
   labelId: string;
   dropDownCyTag: string;
+  defaultValue?: string;
 }
 
 export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
@@ -35,6 +36,7 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
     labelId,
     menuItems,
     dropDownCyTag,
+    defaultValue,
   } = props;
   return (
     <div>
@@ -47,6 +49,8 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
             <FormControl fullWidth={true}>
               <Select
                 {...field}
+                defaultValue={defaultValue}
+                displayEmpty
                 inputRef={ref}
                 id={inputId}
                 data-cy={cyTag}

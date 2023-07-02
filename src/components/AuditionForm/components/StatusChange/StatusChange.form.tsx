@@ -25,7 +25,7 @@ export const StatusChangeForm = () => {
 
   return (
     <Grid direction="column">
-      <Typography>Status Updates</Typography>
+      <Typography>Status Timeline</Typography>
       <Grid item>
         {fields.map((field, index) => {
           return (
