@@ -1,4 +1,5 @@
 import React from "react";
+import "@/app/setup";
 import { LoginButton } from "@/components/Auth/LoginButton";
 
 describe("<LoginButton />", () => {
