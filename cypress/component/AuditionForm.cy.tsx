@@ -29,6 +29,7 @@ const fakeSetAuditions = () => {
 const handleClose = () => {
   console.log("Should close");
 };
+
 describe("<AuditionForm />", () => {
   it("renders", () => {
     // see: https://on.cypress.io/mounting-react
@@ -108,6 +109,7 @@ describe("<AuditionForm />", () => {
     scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.ERRORS.COMPANY);
   });
+
   it("should allow user to edit an existing audition", () => {
     const TEST_AUDITION = {
       date: 1682924400,
@@ -130,6 +132,7 @@ describe("<AuditionForm />", () => {
         },
       ],
     };
+
     cy.mount(
       setupApp(
         <DashboardWrapper>
@@ -144,10 +147,12 @@ describe("<AuditionForm />", () => {
         </DashboardWrapper>
       )
     );
+
     scrollAndFind(AUDITION_FORM.BUTTONS.EDIT_AUDITION);
     shouldContainText(AUDITION_FORM.DROPDOWNS.STATUS, "Scheduled");
     shouldContainText(AUDITION_FORM.DROPDOWNS.TYPE, "Television");
     checkNestedInput(AUDITION_FORM.INPUTS.PROJECT, "Test Project");
+
     selectItem(
       AUDITION_FORM.DROPDOWNS.STATUS,
       AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
@@ -156,6 +161,7 @@ describe("<AuditionForm />", () => {
     clearNestedInput(AUDITION_FORM.INPUTS.PROJECT);
     findAndClick(AUDITION_FORM.INPUTS.PROJECT);
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "Updated");
+
     shouldContainText(AUDITION_FORM.DROPDOWNS.STATUS, "Booked");
     checkNestedInput(AUDITION_FORM.INPUTS.PROJECT, "Updated");
   });
