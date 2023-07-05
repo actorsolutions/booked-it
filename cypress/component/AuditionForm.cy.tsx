@@ -5,15 +5,19 @@ import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
 import { AuditionData } from "@/types";
 import {
   addToInput,
+  checkNestedInput,
+  clearNestedInput,
   clickCalendarDate,
   cyTag,
   findAndClick,
   scrollAndFind,
   scrollFindClick,
   selectItem,
+  shouldContainText,
   shouldNotExist,
 } from "../support/helperFunctions";
 import CY_TAGS from "../../src/support/cypress_tags";
+import { audition_statuses, audition_types } from "@prisma/client";
 
 const { AUDITION_FORM } = CY_TAGS;
 const today = new Date();
@@ -103,5 +107,56 @@ describe("<AuditionForm />", () => {
 
     scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.ERRORS.COMPANY);
+  });
+  it("should allow user to edit an existing audition", () => {
+    const TEST_AUDITION = {
+      date: 1682924400,
+      id: 0,
+      notes: "Here is a note",
+      project: "Test Project",
+      type: "television" as audition_types,
+      userId: 0,
+      company: "Test Company",
+      createdAt: today,
+      status: "scheduled" as audition_statuses,
+      archived: false,
+      statuses: [
+        {
+          auditionId: 0,
+          date: 0,
+          id: 2,
+          statusId: 0,
+          type: "submitted",
+        },
+      ],
+    };
+    cy.mount(
+      setupApp(
+        <DashboardWrapper>
+          <AuditionForm
+            auditions={[]}
+            setAuditions={
+              fakeSetAuditions as Dispatch<SetStateAction<AuditionData[]>>
+            }
+            audition={TEST_AUDITION}
+            handleClose={handleClose}
+          />
+        </DashboardWrapper>
+      )
+    );
+    scrollAndFind(AUDITION_FORM.BUTTONS.EDIT_AUDITION);
+    shouldContainText(AUDITION_FORM.DROPDOWNS.STATUS, "Scheduled");
+    shouldContainText(AUDITION_FORM.DROPDOWNS.TYPE, "Television");
+    checkNestedInput(AUDITION_FORM.INPUTS.PROJECT, "Test Project");
+    selectItem(
+      AUDITION_FORM.DROPDOWNS.STATUS,
+      AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
+      "Booked"
+    );
+    clearNestedInput(AUDITION_FORM.INPUTS.PROJECT);
+    findAndClick(AUDITION_FORM.INPUTS.PROJECT);
+    addToInput(AUDITION_FORM.INPUTS.PROJECT, "Updated");
+    shouldContainText(AUDITION_FORM.DROPDOWNS.STATUS, "Booked");
+    checkNestedInput(AUDITION_FORM.INPUTS.PROJECT, "Updated");
   });
 });
