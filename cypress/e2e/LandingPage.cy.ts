@@ -1,15 +1,15 @@
 /// <reference types="cypress" />
 import CY_TAGS from "../../src/support/cypress_tags";
+import { login } from "../support/e2e";
 import {
-  findAndClick,
-  login,
-  shouldBeVisible,
-  shouldNotExist,
-  shouldContainText,
   cyTag,
+  findAndClick,
   addToInput,
+  shouldBeVisible,
+  shouldContainText,
+  shouldNotExist,
   clearNestedInput,
-} from "../support/e2e";
+} from "../support/helperFunctions";
 
 const { LANDING_PAGE, AUDITIONS_SECTION, NEEDS_ATTENTION_SECTION } = CY_TAGS;
 
