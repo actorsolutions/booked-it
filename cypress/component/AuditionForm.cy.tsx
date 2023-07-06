@@ -13,6 +13,7 @@ import {
   scrollAndFind,
   scrollFindClick,
   selectItem,
+  shouldBeVisible,
   shouldContainText,
   shouldNotExist,
 } from "../support/helperFunctions";
@@ -45,6 +46,23 @@ describe("<AuditionForm />", () => {
         </DashboardWrapper>
       )
     );
+  });
+
+  it("should show the Audition Form container", () => {
+    cy.mount(
+      setupApp(
+        <DashboardWrapper>
+          <AuditionForm
+            auditions={[]}
+            setAuditions={
+              fakeSetAuditions as Dispatch<SetStateAction<AuditionData[]>>
+            }
+            handleClose={handleClose}
+          />
+        </DashboardWrapper>
+      )
+    );
+    shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
   });
 
   it("should show errors for each unvalidated input", () => {
