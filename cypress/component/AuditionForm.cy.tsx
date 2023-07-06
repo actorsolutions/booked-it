@@ -32,7 +32,6 @@ const handleClose = () => {
 
 describe("<AuditionForm />", () => {
   it("renders", () => {
-    // see: https://on.cypress.io/mounting-react
     cy.mount(
       setupApp(
         <DashboardWrapper>
