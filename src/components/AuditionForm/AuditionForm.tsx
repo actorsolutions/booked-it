@@ -62,14 +62,14 @@ export const AuditionForm = (props: Props) => {
     reset,
   } = useForm<AuditionFormData>({
     defaultValues: {
-      date: new Date().getTime(),
+      date: new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000,
       project: "",
       company: "",
       callbackDate: undefined,
       casting: [],
       notes: "",
       type: "",
-      status: "",
+      status: "submitted",
       archived: false,
       statuses: [EMPTY_STATUS_ROW],
     },
@@ -143,8 +143,8 @@ export const AuditionForm = (props: Props) => {
     setStatusesType(getValues().statuses);
     try {
       console.log(getValues());
-      // const addedAudition = await createAudition(getValues());
-      // auditions.push(addedAudition);
+      const addedAudition = await createAudition(getValues());
+      auditions.push(addedAudition);
       setAuditions(auditions);
       setSubmissionState({
         loading: false,

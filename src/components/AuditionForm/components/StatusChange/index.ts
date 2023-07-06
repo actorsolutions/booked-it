@@ -1,10 +1,10 @@
 import { FormattedStatus } from "@/types/statuschange";
 import { Control, FieldValues, UseFormSetValue } from "react-hook-form";
 
-const today = new Date().setHours(0, 0, 0, 0);
+const today = new Date(new Date().setHours(0, 0, 0, 0));
 export const EMPTY_STATUS_ROW = {
   type: "scheduled",
-  date: today,
+  date: Math.round(today.getTime() / 1000),
   statusId: 0,
 };
 

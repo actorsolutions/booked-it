@@ -7,7 +7,7 @@ import { FormattedStatus } from "@/types/statuschange";
 export const StatusDatePicker = (props: FormProps<FormattedStatus>) => {
   const { control, index, updateStatuses, setValue } = props;
   const setDate = (value: Date) => {
-    const formattedDate = value.getTime() / 1000;
+    const formattedDate = Math.round(value.getTime() / 1000);
     setValue(`statuses.${index}.date`, formattedDate);
     updateStatuses();
   };
