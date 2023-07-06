@@ -6,17 +6,7 @@ import { shouldBeVisible } from "../support/helperFunctions";
 import CY_TAGS from "@/support/cypress_tags";
 
 describe("<CastingForm />", () => {
-  it("renders", () => {
-    cy.mount(
-      setupApp(
-        <DashboardWrapper>
-          <CastingForm />
-        </DashboardWrapper>
-      )
-    );
-  });
-
-  it("should show the Casting Form container", () => {
+  it("should render the Casting Form container", () => {
     cy.mount(
       setupApp(
         <DashboardWrapper>

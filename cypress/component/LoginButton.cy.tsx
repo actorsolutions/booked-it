@@ -6,17 +6,7 @@ import CY_TAGS from "@/support/cypress_tags";
 import { shouldBeVisible } from "../support/helperFunctions";
 
 describe("<LoginButton />", () => {
-  it("renders", () => {
-    // see: https://on.cypress.io/mounting-react
-    cy.mount(
-      setupApp(
-        <DashboardWrapper>
-          <LoginButton />
-        </DashboardWrapper>
-      )
-    );
-  });
-  it("should show the login button", () => {
+  it("should render the login button", () => {
     cy.mount(
       setupApp(
         <DashboardWrapper>

@@ -32,23 +32,7 @@ const handleClose = () => {
 };
 
 describe("<AuditionForm />", () => {
-  it("renders", () => {
-    cy.mount(
-      setupApp(
-        <DashboardWrapper>
-          <AuditionForm
-            auditions={[]}
-            setAuditions={
-              fakeSetAuditions as Dispatch<SetStateAction<AuditionData[]>>
-            }
-            handleClose={handleClose}
-          />
-        </DashboardWrapper>
-      )
-    );
-  });
-
-  it("should show the Audition Form container", () => {
+  it("should render the Audition Form container", () => {
     cy.mount(
       setupApp(
         <DashboardWrapper>
