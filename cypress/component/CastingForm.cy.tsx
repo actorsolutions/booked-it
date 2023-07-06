@@ -1,19 +1,19 @@
 import React from "react";
 import { setupApp } from "@/app/setup";
+import { CastingForm } from "@/components/AuditionForm/components/CastingForm";
 import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
-import { LoginButton } from "@/components/Auth/LoginButton";
-import CY_TAGS from "@/support/cypress_tags";
 import { shouldBeVisible } from "../support/helperFunctions";
+import CY_TAGS from "@/support/cypress_tags";
 
-describe("<LoginButton />", () => {
-  it("should render the login button", () => {
+describe("<CastingForm />", () => {
+  it("should render the Casting Form container", () => {
     cy.mount(
       setupApp(
         <DashboardWrapper>
-          <LoginButton />
+          <CastingForm />
         </DashboardWrapper>
       )
     );
-    shouldBeVisible(CY_TAGS.COMMON.BUTTONS.LOGIN);
+    shouldBeVisible(CY_TAGS.CASTING_FORM.CONTAINERS.CASTING_CONTAINER);
   });
 });
