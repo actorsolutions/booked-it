@@ -6,7 +6,7 @@ export default {
       LOG_OUT: "log-out-button",
     },
     CONTAINERS: {
-      SNACKBAR_CONTAINER: "snackbar-container"
+      SNACKBAR_CONTAINER: "snackbar-container",
     },
     GRAPH: {
       PIE_CHART: "audition-pie-chart",
@@ -18,7 +18,7 @@ export default {
       AUDITIONS_CONTAINER: "auditions-container",
       AUDITION_ROW: "audition-row-",
       ACCORDION_DETAILS: "accordion-details",
-      CASTING_INFO: "casting-info-container"
+      CASTING_INFO: "casting-info-container",
     },
     BUTTONS: {
       PREFIX: "audition-",
@@ -102,23 +102,23 @@ export default {
   },
   CASTING_FORM: {
     CONTAINERS: {
-      CASTING_CONTAINER: "casting-form-container"
+      CASTING_CONTAINER: "casting-form-container",
     },
     INPUTS: {
       LABELS: {
         FIRST_NAME: "first-name-input-label",
-        LAST_NAME: "last-name-input-label"
+        LAST_NAME: "last-name-input-label",
       },
       FIRST_NAME: "first-name-input",
-      LAST_NAME: "last-name-input"
+      LAST_NAME: "last-name-input",
     },
     ERRORS: {
       FIRST_NAME: "first-name-error",
-      LAST_NAME: "last-name-error"
+      LAST_NAME: "last-name-error",
     },
     BUTTONS: {
-      ADD_PERSON: "add-person-button"
-    }
+      ADD_PERSON: "add-person-button",
+    },
   },
   NAV_BAR: {
     CONTAINER: {
@@ -126,6 +126,11 @@ export default {
     },
     BUTTONS: {
       LOGOUT: "log-out-button",
+    },
+  },
+  COMMON: {
+    BUTTONS: {
+      LOGIN: "log-in-button",
     },
   },
 };

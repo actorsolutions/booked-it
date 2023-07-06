@@ -46,6 +46,7 @@ describe("<AuditionForm />", () => {
       )
     );
   });
+
   it("should show errors for each unvalidated input", () => {
     const errorsArray = [
       AUDITION_FORM.ERRORS.STATUS,

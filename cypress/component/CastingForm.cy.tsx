@@ -2,10 +2,11 @@ import React from "react";
 import { setupApp } from "@/app/setup";
 import { CastingForm } from "@/components/AuditionForm/components/CastingForm";
 import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
+import { shouldBeVisible } from "../support/helperFunctions";
+import CY_TAGS from "@/support/cypress_tags";
 
 describe("<CastingForm />", () => {
   it("renders", () => {
-    // see: https://on.cypress.io/mounting-react
     cy.mount(
       setupApp(
         <DashboardWrapper>
@@ -13,5 +14,16 @@ describe("<CastingForm />", () => {
         </DashboardWrapper>
       )
     );
+  });
+
+  it("should show the Casting Form container", () => {
+    cy.mount(
+      setupApp(
+        <DashboardWrapper>
+          <CastingForm />
+        </DashboardWrapper>
+      )
+    );
+    shouldBeVisible(CY_TAGS.CASTING_FORM.CONTAINERS.CASTING_CONTAINER);
   });
 });
