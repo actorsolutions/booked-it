@@ -3,10 +3,8 @@ import {
   AuditionDatePicker,
   NotesTextArea,
   ProjectInput,
-  StatusDropdown,
   TypeDropdown,
   CompanyInput,
-  CallbackPicker,
   CastingList,
 } from "@/components/AuditionForm/components";
 import { AuditionData, Casting } from "@/types/auditions";
@@ -24,6 +22,9 @@ import RESPONSE_MESSAGES from "@/support/response_messages";
 import { LoadingCircle, ValidationRequiredMessage } from "@/components/common";
 import { useSnackBar } from "@/context/SnackbarContext";
 import { StatusChangeForm } from "@/components/AuditionForm/components/StatusChange/StatusChange.form";
+import { FormattedStatus } from "@/types/statuschange";
+import { EMPTY_STATUS_ROW } from "@/components/AuditionForm/components/StatusChange";
+import { audition_statuses } from "@prisma/client";
 
 interface Props {
   audition?: AuditionData;
@@ -61,7 +62,7 @@ export const AuditionForm = (props: Props) => {
     reset,
   } = useForm<AuditionFormData>({
     defaultValues: {
-      date: undefined,
+      date: new Date().getTime(),
       project: "",
       company: "",
       callbackDate: undefined,
@@ -70,7 +71,7 @@ export const AuditionForm = (props: Props) => {
       type: "",
       status: "",
       archived: false,
-      statuses: [],
+      statuses: [EMPTY_STATUS_ROW],
     },
   });
 
@@ -103,7 +104,6 @@ export const AuditionForm = (props: Props) => {
     "status",
   ];
 
-  const watchStatus = watch("status");
   const watchCasting = watch("casting");
 
   const handleModal = () => {
@@ -126,7 +126,7 @@ export const AuditionForm = (props: Props) => {
       userId: audition.userId,
       createdAt: audition.createdAt,
       callbackDate: audition.callBackDate,
-      statuses: [],
+      statuses: audition.statuses,
     };
     const response = await updateAudition(updateData as AuditionData);
     const auditionToReplace = auditions.find(
@@ -140,9 +140,11 @@ export const AuditionForm = (props: Props) => {
    * Handles creating an audition
    */
   const handleCreate = async () => {
+    setStatusesType(getValues().statuses);
     try {
-      const addedAudition = await createAudition(getValues());
-      auditions.push(addedAudition);
+      console.log(getValues());
+      // const addedAudition = await createAudition(getValues());
+      // auditions.push(addedAudition);
       setAuditions(auditions);
       setSubmissionState({
         loading: false,
@@ -180,6 +182,15 @@ export const AuditionForm = (props: Props) => {
 
   const setCasting = (castingArray: Casting[]) => {
     setValue("casting", castingArray);
+  };
+  const setStatuses = (statusesArray: FormattedStatus[]) => {
+    setValue("statuses", statusesArray);
+  };
+
+  const setStatusesType = (statusesArray: FormattedStatus[]) => {
+    statusesArray.forEach((status) => {
+      status.type = Object.values(audition_statuses)[status.statusId];
+    });
   };
   useEffect(() => {
     if (editMode) {
@@ -228,7 +239,10 @@ export const AuditionForm = (props: Props) => {
           </Grid>
           <Grid item xs={12}>
             <Divider />
-            <StatusChangeForm />
+            <StatusChangeForm
+              setStatuses={setStatuses}
+              statuses={getValues("statuses")}
+            />
             <Divider />
           </Grid>
           <Grid item xs={12}>
@@ -239,11 +253,6 @@ export const AuditionForm = (props: Props) => {
               />
             )}
           </Grid>
-          {watchStatus === "callback" && (
-            <Grid item xs={12}>
-              <CallbackPicker control={control} register={register} />
-            </Grid>
-          )}
           <Grid item xs={12}>
             <CompanyInput control={control} register={register} />
             {errors.company && (

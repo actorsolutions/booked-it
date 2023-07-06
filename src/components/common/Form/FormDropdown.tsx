@@ -38,29 +38,26 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
     dropDownCyTag,
     defaultValue,
   } = props;
+
   return (
-    <div>
+    <>
       <Controller
         name={field}
         control={control}
         rules={{ ...props.rules }}
-        render={({ field: { onChange, ref, ...field } }) => {
+        render={({ field: { onChange, ...field } }) => {
           return (
             <FormControl fullWidth={true}>
               <Select
                 {...field}
                 defaultValue={defaultValue}
                 displayEmpty
-                inputRef={ref}
                 id={inputId}
                 data-cy={cyTag}
                 type={inputType}
                 labelId={labelId}
                 onChange={(event: any) => {
                   onChange(event.target.value);
-                }}
-                sx={{
-                  height: 50,
                 }}
               >
                 {menuItems.map((item) => (
@@ -77,6 +74,6 @@ export const FormDropdown = <T extends FieldValues>(props: Props<T>) => {
           );
         }}
       />
-    </div>
+    </>
   );
 };

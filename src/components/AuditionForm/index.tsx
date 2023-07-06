@@ -1,5 +1,6 @@
 import { FieldValues, Control, UseFormRegister } from "react-hook-form";
 import { Casting } from "@/types";
+import { FormattedStatus } from "@/types/statuschange";
 export { AuditionForm } from "./AuditionForm";
 export interface AuditionFormData extends FieldValues {
   id?: number;
@@ -12,7 +13,7 @@ export interface AuditionFormData extends FieldValues {
   type: string;
   status: string;
   archived: boolean;
-  statuses: [];
+  statuses: FormattedStatus[];
 }
 
 export interface FormProps<T extends FieldValues> {
