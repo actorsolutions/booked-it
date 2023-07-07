@@ -141,4 +141,9 @@ export default {
       LOGOUT: "log-out-button",
     },
   },
+  COMMON: {
+    BUTTONS: {
+      LOGIN: "log-in-button",
+    },
+  },
 };

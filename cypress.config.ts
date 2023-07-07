@@ -11,6 +11,7 @@ export default defineConfig({
   env: {
     ...process.env,
   },
+
   e2e: {
     setupNodeEvents(on, config) {
       on(
@@ -62,5 +63,13 @@ export default defineConfig({
     },
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/*.{js,jsx,ts,tsx}",
+  },
+
+  component: {
+    devServer: {
+      framework: "next",
+      bundler: "webpack",
+    },
+    specPattern: "cypress/component/**/*.cy.{js,jsx,ts,tsx}",
   },
 });

@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import CY_TAGS from "../../src/support/cypress_tags";
+import { login } from "../support/e2e";
 import {
-  login,
   cyTag,
   findAndClick,
   addToInput,
@@ -13,7 +13,7 @@ import {
   clearNestedInput,
   scrollAndFind,
   scrollFindClick,
-} from "../support/e2e";
+} from "../support/helperFunctions";
 
 const { AUDITIONS_SECTION, LANDING_PAGE, AUDITION_FORM } = CY_TAGS;
 const today = new Date();
