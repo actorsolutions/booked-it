@@ -167,4 +167,66 @@ describe("Add Casting Form E2E tests", () => {
 
     shouldNotExist(AUDITION_FORM.CASTING.CASTING_ROW + "0");
   });
+  it("should display both Casting personnel entries in the Audition details if more than one exists", () => {
+    cy.task("db:seed");
+    login();
+    cy.visit("/");
+    cy.wait("@Auth0");
+
+    findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
+    shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
+
+    clickCalendarDate(today.valueOf().toString());
+    addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
+    selectItem(
+      AUDITION_FORM.DROPDOWNS.TYPE,
+      AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
+      "Television"
+    );
+    selectItem(
+      AUDITION_FORM.DROPDOWNS.STATUS,
+      AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
+      "Booked"
+    );
+    addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
+    addToInput(AUDITION_FORM.TEXT_AREA.NOTES, "Wally is a good boy");
+
+    findAndClick(AUDITION_FORM.BUTTONS.ADD_CASTING);
+    cy.get(cyTag(CASTING_FORM.CONTAINERS.CASTING_CONTAINER)).within(() => {
+      shouldBeVisible(CASTING_FORM.INPUTS.LABELS.FIRST_NAME);
+      addToInput(CASTING_FORM.INPUTS.FIRST_NAME, "Ned");
+      shouldBeVisible(CASTING_FORM.INPUTS.LABELS.LAST_NAME);
+      addToInput(CASTING_FORM.INPUTS.LAST_NAME, "Flanders");
+      findAndClick(CASTING_FORM.BUTTONS.ADD_PERSON);
+    });
+
+    findAndClick(AUDITION_FORM.BUTTONS.ADD_CASTING);
+    cy.get(cyTag(CASTING_FORM.CONTAINERS.CASTING_CONTAINER)).within(() => {
+      shouldBeVisible(CASTING_FORM.INPUTS.LABELS.FIRST_NAME);
+      addToInput(CASTING_FORM.INPUTS.FIRST_NAME, "Maude");
+      shouldBeVisible(CASTING_FORM.INPUTS.LABELS.LAST_NAME);
+      addToInput(CASTING_FORM.INPUTS.LAST_NAME, "Flanders");
+      findAndClick(CASTING_FORM.BUTTONS.ADD_PERSON);
+    });
+
+    shouldContainText(AUDITION_FORM.CASTING.CASTING_ROW + "0", "Ned Flanders");
+    shouldContainText(
+      AUDITION_FORM.CASTING.CASTING_ROW + "1",
+      "Maude Flanders"
+    );
+
+    scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
+
+    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "1")).within(
+      () => {
+        findAndClick(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE);
+        shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.ACCORDION_DETAILS);
+        shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.CASTING_INFO);
+        shouldContainText(
+          AUDITIONS_SECTION.CONTAINERS.CASTING_INFO,
+          "Ned Flanders, Maude Flanders"
+        );
+      }
+    );
+  });
 });
