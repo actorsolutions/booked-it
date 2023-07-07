@@ -4,6 +4,7 @@ import { getSession } from "@auth0/nextjs-auth0";
 import { prisma } from "@/utils/prisma";
 import { createStatusChange } from "@/utils/adapters";
 import { FormattedStatus } from "@/types/statuschange";
+import { StatusChange } from "@/models/StatusChanges";
 
 /**
  * Gets all Auditions based on UserID and sends them
@@ -100,7 +101,7 @@ export const getAudition = async (
 export const updateAudition = async (
   req: NextApiRequest,
   res: NextApiResponse,
-  db = prisma.audition
+  db = prisma
 ) => {
   const session = await getSession(req, res);
   const sessionUserId = parseInt(session?.user.id);
@@ -119,8 +120,10 @@ export const updateAudition = async (
     userId,
   } = JSON.parse(req.body);
   const statusChanges = statuses.map((status: FormattedStatus) => {
+    status.auditionId = id;
     return createStatusChange(status);
   });
+
   const updateAuditionObject = {
     id,
     date,
@@ -133,17 +136,16 @@ export const updateAudition = async (
     status,
     archived,
     userId: sessionUserId,
-    statuses: {
-      createMany: {
-        data: statusChanges,
-      },
-    },
   };
   if (userId !== sessionUserId) {
     res.status(401).send({ message: "Unauthorized" });
   } else {
-    await prisma.statusChange.deleteMany({ where: { auditionId: id } });
-    const audition = await Audition.update(id, updateAuditionObject, db);
+    await StatusChange.upsertMany(statusChanges, db);
+    const audition = await Audition.updateWithStatus(
+      id,
+      updateAuditionObject,
+      db
+    );
     res.status(200).send(audition);
   }
 };

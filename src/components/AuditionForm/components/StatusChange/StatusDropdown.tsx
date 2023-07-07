@@ -6,7 +6,7 @@ import { FormattedStatus } from "@/types/statuschange";
 import { useEffect } from "react";
 
 export const StatusDropdown = (props: FormProps<FormattedStatus>) => {
-  const { control, index, updateStatuses } = props;
+  const { control, index, updateStatuses, register } = props;
 
   const statusItems = [
     { value: 0, label: "Scheduled" },
@@ -25,13 +25,14 @@ export const StatusDropdown = (props: FormProps<FormattedStatus>) => {
           cyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.STATUS + `${index}`}
           inputId="statusChange-drop-down"
           control={control}
-          field={`statusId`}
+          field={`statuses.${index}.statusId`}
           labelId="statusDropdown"
           menuItems={statusItems}
           dropDownCyTag={
             CY_TAGS.AUDITION_FORM.FORMS.STATUS_CHANGE.STATUS_DROPDOWN
           }
-          defaultValue={"0"}
+          defaultValue={0}
+          {...register(`statuses.${index}.statusId`, { required: true })}
         />
       </Container>
     </FormGroupRow>

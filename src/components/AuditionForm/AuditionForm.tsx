@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   AuditionDatePicker,
   NotesTextArea,
@@ -50,6 +50,10 @@ export const AuditionForm = (props: Props) => {
     return trigger(arrayOfFields as fields[], { shouldFocus: true });
   };
 
+  const transformDateToCalendar = (value: number | undefined) => {
+    return value ? value * 1000 : undefined;
+  };
+
   const {
     getValues,
     control,
@@ -59,19 +63,20 @@ export const AuditionForm = (props: Props) => {
     formState: { errors },
     trigger,
     clearErrors,
-    reset,
   } = useForm<AuditionFormData>({
     defaultValues: {
-      date: new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000,
-      project: "",
-      company: "",
+      date:
+        transformDateToCalendar(audition?.date) ||
+        new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000,
+      project: audition?.project || "",
+      company: audition?.company || "",
       callbackDate: undefined,
-      casting: [],
-      notes: "",
-      type: "",
+      casting: audition?.casting || [],
+      notes: audition?.notes || "",
+      type: audition?.type || "",
       status: "submitted",
-      archived: false,
-      statuses: [EMPTY_STATUS_ROW],
+      archived: audition?.archived || false,
+      statuses: audition?.statuses || [EMPTY_STATUS_ROW],
     },
   });
 
@@ -126,7 +131,7 @@ export const AuditionForm = (props: Props) => {
       userId: audition.userId,
       createdAt: audition.createdAt,
       callbackDate: audition.callBackDate,
-      statuses: audition.statuses,
+      statuses: getValues().statuses,
     };
     const response = await updateAudition(updateData as AuditionData);
     const auditionToReplace = auditions.find(
@@ -140,9 +145,7 @@ export const AuditionForm = (props: Props) => {
    * Handles creating an audition
    */
   const handleCreate = async () => {
-    setStatusesType(getValues().statuses);
     try {
-      console.log(getValues());
       const addedAudition = await createAudition(getValues());
       auditions.push(addedAudition);
       setAuditions(auditions);
@@ -168,6 +171,7 @@ export const AuditionForm = (props: Props) => {
       submitted: false,
     });
     if (await customValidation(createFields as fields[])) {
+      setStatusesType(getValues().statuses);
       editMode ? await handleEdit(audition) : await handleCreate();
       return true;
     } else {
@@ -186,30 +190,15 @@ export const AuditionForm = (props: Props) => {
   const setStatuses = (statusesArray: FormattedStatus[]) => {
     setValue("statuses", statusesArray);
   };
-
+  /**
+   * Takes the statusId and fills in the correct type.
+   * @param statusesArray
+   */
   const setStatusesType = (statusesArray: FormattedStatus[]) => {
     statusesArray.forEach((status) => {
       status.type = Object.values(audition_statuses)[status.statusId];
     });
   };
-  useEffect(() => {
-    if (editMode) {
-      const data = {
-        archived: audition.archived,
-        callbackDate: audition.callBackDate
-          ? audition.callBackDate * 1000
-          : undefined,
-        casting: audition.casting || [],
-        company: audition.company,
-        date: audition.date * 1000,
-        notes: audition.notes,
-        project: audition.project,
-        status: audition.status,
-        type: audition.type,
-      };
-      reset({ ...data });
-    }
-  }, [editMode, reset]);
 
   return (
     <Container

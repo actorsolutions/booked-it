@@ -5,7 +5,8 @@ import CY_TAGS from "@/support/cypress_tags";
 import { FormattedStatus } from "@/types/statuschange";
 
 export const StatusDatePicker = (props: FormProps<FormattedStatus>) => {
-  const { control, index, updateStatuses, setValue } = props;
+  const { register, control, index, updateStatuses, setValue, defaultValue } =
+    props;
   const setDate = (value: Date) => {
     const formattedDate = Math.round(value.getTime() / 1000);
     setValue(`statuses.${index}.date`, formattedDate);
@@ -20,8 +21,10 @@ export const StatusDatePicker = (props: FormProps<FormattedStatus>) => {
           }
           inputId={`statusDatePicker-${index}`}
           control={control}
-          field={`date`}
+          field={`statuses.${index}.date`}
           setDate={setDate}
+          defaultValue={defaultValue}
+          {...register(`statuses.${index}.date`, { required: true })}
         />
       </Container>
     </FormGroupRow>

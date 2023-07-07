@@ -18,7 +18,8 @@ interface Props {
 export const StatusChangeForm = (props: Props) => {
   const { AUDITION_FORM } = CY_TAGS;
   const { setStatuses, statuses } = props;
-  const { control, getValues, setValue } = useForm<FormValues>({
+  console.log(statuses);
+  const { control, getValues, setValue, register } = useForm<FormValues>({
     defaultValues: {
       statuses: statuses,
     },
@@ -31,6 +32,7 @@ export const StatusChangeForm = (props: Props) => {
   const updateStatuses = () => {
     setStatuses(getValues().statuses);
   };
+
   return (
     <Grid direction="column" data-cy={AUDITION_FORM.CONTAINERS.STATUS_CHANGE}>
       <Typography>Status Timeline</Typography>
@@ -47,6 +49,8 @@ export const StatusChangeForm = (props: Props) => {
               remove={remove}
               field={field}
               updateStatuses={updateStatuses}
+              status={statuses[index]}
+              register={register}
             />
           );
         })}

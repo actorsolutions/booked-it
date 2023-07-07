@@ -38,10 +38,10 @@ model Audition {
 model Status {
   id           Int            @id @default(autoincrement())
   type         String         @unique
-  StatusChangeForm StatusChange[]
+  StatusChange StatusChange[]
 }
 
-model StatusChangeForm {
+model StatusChange {
   id         Int      @id @default(autoincrement())
   Audition   Audition @relation(fields: [auditionId], references: [id],onDelete: Cascade)
   auditionId Int

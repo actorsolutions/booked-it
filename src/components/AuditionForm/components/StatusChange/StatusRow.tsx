@@ -7,6 +7,7 @@ import {
   FieldArrayWithId,
   UseFormSetValue,
   UseFormGetValues,
+  UseFormRegister,
 } from "react-hook-form";
 import { FormValues } from "@/components/AuditionForm/components/StatusChange/index";
 import { StatusDatePicker } from "@/components/AuditionForm/components/StatusChange/StatusDatePicker";
@@ -18,7 +19,8 @@ import CY_TAGS from "@/support/cypress_tags";
 import { FormattedStatus } from "@/types/statuschange";
 interface Props<T extends FieldValues> {
   name: Path<T>;
-  control: Control<FormattedStatus, any>;
+  control: Control<FormValues, any>;
+  register: UseFormRegister<FormValues>;
   index: number;
   setValue: UseFormSetValue<T>;
   getValues: UseFormGetValues<T>;
@@ -27,9 +29,18 @@ interface Props<T extends FieldValues> {
   field: FieldArrayWithId<FormValues, "statuses", "id">;
   key: number;
   updateStatuses: () => void;
+  status?: FormattedStatus;
 }
 export const StatusRow = (props: Props<FormValues>) => {
-  const { control, remove, index, setValue, updateStatuses } = props;
+  const {
+    register,
+    control,
+    remove,
+    index,
+    setValue,
+    getValues,
+    updateStatuses,
+  } = props;
   const { AUDITION_FORM } = CY_TAGS;
   return (
     <>
@@ -48,6 +59,7 @@ export const StatusRow = (props: Props<FormValues>) => {
             index={index}
             updateStatuses={updateStatuses}
             setValue={setValue}
+            register={register}
           />
         </Grid>
         <Grid item>
@@ -56,6 +68,8 @@ export const StatusRow = (props: Props<FormValues>) => {
             index={index}
             updateStatuses={updateStatuses}
             setValue={setValue}
+            register={register}
+            defaultValue={getValues().statuses[index].date}
           />
         </Grid>
         <Grid item>

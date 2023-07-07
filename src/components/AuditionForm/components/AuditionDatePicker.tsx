@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 import { useForm } from "react-hook-form";
 export const AuditionDatePicker = (props: FormProps<AuditionFormData>) => {
-  const { setValue } = useForm();
+  const { setValue, getValues } = useForm();
   const { control } = props;
   const setDate = (value: Date) => {
     const formattedDate = value.getTime() / 1000;
@@ -19,6 +19,7 @@ export const AuditionDatePicker = (props: FormProps<AuditionFormData>) => {
           setDate={setDate}
           control={control}
           field="date"
+          defaultValue={getValues().date}
         />
       </Container>
     </FormGroupRow>

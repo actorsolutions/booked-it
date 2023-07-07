@@ -12,11 +12,18 @@ interface Props<T extends FieldValues> {
   rules?: RegisterOptions;
   // eslint-disable-next-line no-unused-vars
   setDate: (V: Date) => void;
+  defaultValue?: number;
 }
 
 export const FormDatePicker = <T extends FieldValues>(props: Props<T>) => {
-  const { cyTag, setDate } = props;
-  const [pickerDate, setPickerDate] = useState(new Date());
+  const { cyTag, setDate, defaultValue } = props;
+  let date;
+  if (defaultValue) {
+    date = new Date(defaultValue * 1000);
+  } else {
+    date = new Date();
+  }
+  const [pickerDate, setPickerDate] = useState(date);
   useEffect(() => {
     setDate(pickerDate);
   }, [pickerDate]);
