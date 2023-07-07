@@ -212,7 +212,9 @@ export const AuditionRow = ({
                 </Grid>
                 <Grid item xs={4}>
                   <div data-cy={AUDITIONS_SECTION.CONTAINERS.CASTING_INFO}>
-                    {casting.length > 0 ? casting[0].name : undefined}
+                    {casting.length > 0
+                      ? casting.map((cast) => cast.name).join(", ")
+                      : undefined}
                   </div>
                 </Grid>
                 <Grid item xs={4}>
