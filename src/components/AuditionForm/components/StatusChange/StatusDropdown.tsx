@@ -9,8 +9,8 @@ export const StatusDropdown = (props: FormProps<FormattedStatus>) => {
   const { control, index, updateStatuses, register } = props;
 
   const statusItems = [
-    { value: 0, label: "Scheduled" },
-    { value: 1, label: "Submitted" },
+    { value: 0, label: "Submitted" },
+    { value: 1, label: "Scheduled" },
     { value: 2, label: "Auditioned" },
     { value: 3, label: "Callback" },
     { value: 4, label: "Booked" },

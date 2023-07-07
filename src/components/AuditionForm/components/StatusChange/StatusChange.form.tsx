@@ -18,7 +18,6 @@ interface Props {
 export const StatusChangeForm = (props: Props) => {
   const { AUDITION_FORM } = CY_TAGS;
   const { setStatuses, statuses } = props;
-  console.log(statuses);
   const { control, getValues, setValue, register } = useForm<FormValues>({
     defaultValues: {
       statuses: statuses,

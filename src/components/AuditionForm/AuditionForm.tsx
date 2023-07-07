@@ -50,10 +50,6 @@ export const AuditionForm = (props: Props) => {
     return trigger(arrayOfFields as fields[], { shouldFocus: true });
   };
 
-  const transformDateToCalendar = (value: number | undefined) => {
-    return value ? value * 1000 : undefined;
-  };
-
   const {
     getValues,
     control,
@@ -66,7 +62,7 @@ export const AuditionForm = (props: Props) => {
   } = useForm<AuditionFormData>({
     defaultValues: {
       date:
-        transformDateToCalendar(audition?.date) ||
+        audition?.date ||
         new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000,
       project: audition?.project || "",
       company: audition?.company || "",
@@ -210,7 +206,12 @@ export const AuditionForm = (props: Props) => {
       <Form>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <AuditionDatePicker control={control} register={register} />
+            <AuditionDatePicker
+              control={control}
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+            />
             {errors.date && (
               <ValidationRequiredMessage
                 errorCyTag={AUDITION_FORM.ERRORS.DATE}

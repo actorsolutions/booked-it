@@ -17,6 +17,10 @@ import { IconButton } from "@mui/material";
 import { RemoveCircle } from "@mui/icons-material";
 import CY_TAGS from "@/support/cypress_tags";
 import { FormattedStatus } from "@/types/statuschange";
+import { deleteStatus } from "@/apihelpers/statuses";
+import { useSnackBar } from "@/context/SnackbarContext";
+import RESPONSE_MESSAGES from "@/support/response_messages";
+
 interface Props<T extends FieldValues> {
   name: Path<T>;
   control: Control<FormValues, any>;
@@ -32,6 +36,8 @@ interface Props<T extends FieldValues> {
   status?: FormattedStatus;
 }
 export const StatusRow = (props: Props<FormValues>) => {
+  const { showSnackBar } = useSnackBar();
+  const { STATUS_MESSAGES } = RESPONSE_MESSAGES;
   const {
     register,
     control,
@@ -42,6 +48,18 @@ export const StatusRow = (props: Props<FormValues>) => {
     updateStatuses,
   } = props;
   const { AUDITION_FORM } = CY_TAGS;
+
+  const handleDelete = async () => {
+    if (getValues().statuses[index].id) {
+      try {
+        await deleteStatus(getValues().statuses[index].id as number);
+        showSnackBar(STATUS_MESSAGES.STATUS_DELETE_SUCCESS, "success");
+        remove(index);
+      } catch {
+        showSnackBar(STATUS_MESSAGES.STATUS_DELETE_FAILURE, "error");
+      }
+    }
+  };
   return (
     <>
       <Grid
@@ -74,9 +92,9 @@ export const StatusRow = (props: Props<FormValues>) => {
         </Grid>
         <Grid item>
           <IconButton
-            data-cy={"placeholder"}
+            data-cy={AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS}
             onClick={() => {
-              remove(index);
+              handleDelete();
             }}
           >
             <RemoveCircle fontSize="small" color="error" />

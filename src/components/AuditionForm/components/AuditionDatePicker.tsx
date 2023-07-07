@@ -2,9 +2,14 @@ import { FormGroupRow, FormDatePicker } from "../../common/Form";
 import { FormProps, AuditionFormData } from "../index";
 import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
-import { useForm } from "react-hook-form";
-export const AuditionDatePicker = (props: FormProps<AuditionFormData>) => {
-  const { setValue, getValues } = useForm();
+import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+
+interface DatePickerProps extends FormProps<AuditionFormData> {
+  setValue: UseFormSetValue<AuditionFormData>;
+  getValues: UseFormGetValues<AuditionFormData>;
+}
+export const AuditionDatePicker = (props: DatePickerProps) => {
+  const { setValue, getValues } = props;
   const { control } = props;
   const setDate = (value: Date) => {
     const formattedDate = value.getTime() / 1000;
