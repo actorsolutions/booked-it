@@ -51,8 +51,7 @@ export default defineConfig({
           return { userSeed, auditionSeed };
         },
         async sanitize() {
-          await cypressSanitize(["audition", "user"]);
-          return true;
+          return await cypressSanitize(["audition", "user"]);
         },
       });
       config.env = {
