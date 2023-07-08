@@ -56,7 +56,7 @@ describe("Add Auditions Form E2E Tests", () => {
     shouldNotExist(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
     // eslint-disable-next-line cypress/unsafe-to-chain-command
-    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "0"))
+    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "1"))
       .scrollIntoView()
       .should("be.visible");
   });
