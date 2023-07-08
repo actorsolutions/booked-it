@@ -45,11 +45,9 @@ export default defineConfig({
         async "db:seed"() {
           await cypressSanitize(["audition", "user"]);
           const userSeed = await prisma.user.create({ data: USER_DATA });
-          // @ts-ignore
           const auditionSeed = await prisma.audition.create({
             data: AUDITION_DATA,
           });
-          await prisma.$disconnect();
           return { userSeed, auditionSeed };
         },
         async sanitize() {
