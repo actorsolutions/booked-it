@@ -52,7 +52,8 @@ export default defineConfig({
           return { userSeed, auditionSeed };
         },
         async "db:sanitize"() {
-          return await cypressSanitize(["audition", "user"]);
+          await cypressSanitize(["audition", "user"]);
+          return true;
         },
       });
       config.env = {
