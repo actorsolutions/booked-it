@@ -43,13 +43,15 @@ export default defineConfig({
       );
       on("task", {
         async "db:seed"() {
-          await cypressSanitize(["audition", "user"]);
-          const userSeed = await prisma.user.create({ data: USER_DATA });
-          const auditionSeed = await prisma.audition.create({
-            data: AUDITION_DATA,
+          cypressSanitize(["audition", "user"]).then(async () => {
+            await prisma.user.create({ data: USER_DATA });
+            await prisma.audition.create({
+              data: AUDITION_DATA,
+            });
           });
+
           await prisma.$disconnect();
-          return { userSeed, auditionSeed };
+          return true;
         },
         async "db:sanitize"() {
           await cypressSanitize(["audition", "user"]);
