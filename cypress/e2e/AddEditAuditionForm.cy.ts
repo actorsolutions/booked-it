@@ -54,9 +54,10 @@ describe("Add Auditions Form E2E Tests", () => {
     findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "1")).should(
-      "be.visible"
-    );
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "1"))
+      .scrollIntoView()
+      .should("be.visible");
   });
 
   it("should exit out of form if clicked out of form", () => {
@@ -139,6 +140,7 @@ describe("Add Auditions Form E2E Tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.EDIT_AUDITION);
     checkNestedInput(AUDITION_FORM.INPUTS.PROJECT, "Updated");
   });
+
   it("Should show success Snackbar message when audition is created", () => {
     cy.task("db:seed");
     login();
@@ -168,6 +170,7 @@ describe("Add Auditions Form E2E Tests", () => {
       RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_SUCCESS
     );
   });
+
   it("Should show error Snackbar message when audition fails to create", () => {
     cy.task("db:seed");
     login();
