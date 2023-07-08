@@ -140,12 +140,6 @@ describe("Audition [id] integration tests", () => {
           statusId: 0,
           type: "submitted",
         },
-        {
-          id: 48,
-          statusId: 4,
-          date: 0,
-          type: "booked",
-        },
       ],
     };
     const expected = {
@@ -166,13 +160,6 @@ describe("Audition [id] integration tests", () => {
           id: 2,
           statusId: 0,
           type: "submitted",
-        },
-        {
-          auditionId: 0,
-          date: 0,
-          id: 48,
-          statusId: 4,
-          type: "booked",
         },
       ],
       type: "television",
