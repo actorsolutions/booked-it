@@ -34,7 +34,7 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("Should add one audition and show on list", () => {
-    cy.task("db:seed");
+    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
