@@ -49,7 +49,7 @@ export default defineConfig({
           const auditionSeed = await prisma.audition.create({
             data: AUDITION_DATA,
           });
-          await prisma.$disconnect();
+          prisma.$disconnect();
           return { userSeed, auditionSeed };
         },
       });
