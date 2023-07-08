@@ -20,5 +20,6 @@ export const cypressSanitize = async (
     toDelete.push(prisma[modelName].deleteMany());
   }
   // creates atomic transaction for tables to remove data from
-  return await prisma.$transaction(toDelete);
+  await prisma.$transaction(toDelete);
+  await prisma.$disconnect();
 };
