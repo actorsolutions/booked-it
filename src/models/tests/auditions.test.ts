@@ -597,7 +597,6 @@ describe("It Tests the Auditions Model", () => {
     const updateAudition = Audition.updateWithStatus(
       updateAuditionData.id,
       updateAuditionData,
-      updateStatusData,
       mockPrisma as unknown as PrismaClient
     );
     expect(await updateAudition).toEqual(expectedResponse);
