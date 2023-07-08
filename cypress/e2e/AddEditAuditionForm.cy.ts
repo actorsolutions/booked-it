@@ -29,9 +29,6 @@ describe("Add Auditions Form E2E Tests", () => {
   afterEach(() => {
     cy.task("db:sanitize");
   });
-  it("Should not show add audition button while not logged in", () => {
-    cy.visit("/");
-  });
 
   it("Should add one audition and show on list", () => {
     // cy.task("db:seed");
