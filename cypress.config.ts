@@ -52,6 +52,10 @@ export default defineConfig({
           await prisma.$disconnect();
           return { userSeed, auditionSeed };
         },
+        async sanitize() {
+          await cypressSanitize(["audition", "user"]);
+          return true;
+        },
       });
       config.env = {
         ...process.env,

@@ -26,6 +26,9 @@ describe("Add Auditions Form E2E Tests", () => {
   // beforeEach(() => {
   //   cy.clock(Date.UTC(2023, 5, 1), ["Date"]);
   // });
+  afterEach(() => {
+    cy.task("sanitize");
+  });
   it("Should not show add audition button while not logged in", () => {
     cy.task("db:seed");
     cy.visit("/");
