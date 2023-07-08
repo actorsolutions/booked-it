@@ -67,10 +67,8 @@ export default {
     PICKERS: {
       LABELS: {
         DATE: "date-picker-label",
-        CALLBACK: "call-back-picker-label",
       },
-      DATE: "date-picker",
-      CALLBACK: "call-back-picker",
+      DATE: "audition-date-picker",
     },
     TEXT_AREA: {
       LABELS: {
@@ -108,7 +106,7 @@ export default {
           DELETE_STATUS: "delete-status-button-",
         },
         STATUS_DROPDOWN: "status-dropdown-",
-        DATE_PICKER: "status-date-picker",
+        DATE_PICKER: "status-date-picker-",
       },
     },
   },

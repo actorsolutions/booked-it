@@ -121,7 +121,7 @@ export const AuditionForm = (props: Props) => {
     const values = getValues();
     const updateData = {
       ...values,
-      date: values.date / 1000,
+      date: values.date,
       casting: watchCasting,
       id: audition.id,
       userId: audition.userId,

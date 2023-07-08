@@ -35,7 +35,10 @@ export const FormDatePicker = <T extends FieldValues>(props: Props<T>) => {
           <DatePicker
             value={dayjs(pickerDate)}
             onChange={(event: any) => {
-              if (event.$d != null) {
+              if (!event || event.$d === "Invalid Date") {
+                // Invalid Date entry auto goes back to today
+                setPickerDate(new Date(new Date().setHours(0, 0, 0, 0)));
+              } else {
                 const epochDate = new Date(event.$d);
                 setPickerDate(epochDate);
               }

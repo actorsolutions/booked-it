@@ -22,7 +22,10 @@ export const StatusDropdown = (props: FormProps<FormattedStatus>) => {
     <FormGroupRow>
       <Container>
         <FormDropdown
-          cyTag={CY_TAGS.AUDITION_FORM.DROPDOWNS.STATUS + `${index}`}
+          cyTag={
+            CY_TAGS.AUDITION_FORM.FORMS.STATUS_CHANGE.STATUS_DROPDOWN +
+            `${index}`
+          }
           inputId="statusChange-drop-down"
           control={control}
           field={`statuses.${index}.statusId`}

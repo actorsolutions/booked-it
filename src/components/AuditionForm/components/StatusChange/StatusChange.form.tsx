@@ -56,7 +56,7 @@ export const StatusChangeForm = (props: Props) => {
       </Grid>
       <Grid item container xs={12} justifyContent={"right"}>
         <IconButton
-          data-cy={"placeholder"}
+          data-cy={AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.ADD_STATUS}
           onClick={() => {
             append(EMPTY_STATUS_ROW);
           }}

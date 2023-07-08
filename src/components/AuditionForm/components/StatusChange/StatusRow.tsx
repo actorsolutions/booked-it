@@ -92,7 +92,10 @@ export const StatusRow = (props: Props<FormValues>) => {
         </Grid>
         <Grid item>
           <IconButton
-            data-cy={AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS}
+            data-cy={
+              AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS +
+              `${index}`
+            }
             onClick={() => {
               handleDelete();
             }}
