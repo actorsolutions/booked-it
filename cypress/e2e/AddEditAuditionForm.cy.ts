@@ -23,12 +23,12 @@ today.setHours(0, 0, 0, 0);
 
 describe("Add Auditions Form E2E Tests", () => {
   // Note : Keeping this in because I'd like to utilize it in the future.
-  // beforeEach(() => {
-  //   cy.clock(Date.UTC(2023, 5, 1), ["Date"]);
-  // });
-  // afterEach(() => {
-  //   cy.task("sanitize");
-  // });
+  beforeEach(() => {
+    cy.task("db:seed");
+  });
+  afterEach(() => {
+    cy.task("sanitize");
+  });
   it("Should not show add audition button while not logged in", () => {
     cy.visit("/");
   });
@@ -64,7 +64,7 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("should exit out of form if clicked out of form", () => {
-    cy.task("db:seed");
+    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -81,7 +81,7 @@ describe("Add Auditions Form E2E Tests", () => {
       AUDITION_FORM.ERRORS.COMPANY,
       AUDITION_FORM.ERRORS.PROJECT,
     ];
-    cy.task("db:seed");
+    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -125,7 +125,7 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("Should edit an audition entry", () => {
-    cy.task("db:seed");
+    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -145,7 +145,7 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("Should show success Snackbar message when audition is created", () => {
-    cy.task("db:seed");
+    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -175,7 +175,7 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("Should show error Snackbar message when audition fails to create", () => {
-    cy.task("db:seed");
+    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -207,7 +207,7 @@ describe("Add Auditions Form E2E Tests", () => {
     );
   });
   it("Should add a statusChange and it persist and delete statusChange and it persist", () => {
-    cy.task("db:seed");
+    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
