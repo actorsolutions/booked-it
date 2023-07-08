@@ -52,6 +52,7 @@ describe("Add Auditions Form E2E Tests", () => {
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
     addToInput(AUDITION_FORM.TEXT_AREA.NOTES, "Wally is a good boy");
     findAndClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
+    cy.wait("@createAudition");
     shouldNotExist(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
     // eslint-disable-next-line cypress/unsafe-to-chain-command
