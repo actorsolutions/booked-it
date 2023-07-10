@@ -43,21 +43,24 @@ export default defineConfig({
       );
       on("task", {
         async "db:seed"() {
-          cypressSanitize(["statusChange", "audition", "user"]).then(
-            async () => {
+          return cypressSanitize(["statusChange", "audition", "user"])
+            .then(async () => {
               await prisma.user.create({ data: USER_DATA });
               await prisma.audition.create({
                 data: AUDITION_DATA,
               });
-            }
-          );
-
-          await prisma.$disconnect();
-          return true;
+            })
+            .then(() => {
+              prisma.$disconnect();
+            })
+            .then(() => {
+              return true;
+            });
         },
         async "db:sanitize"() {
-          await cypressSanitize(["audition", "user"]);
-          return true;
+          return cypressSanitize(["audition", "user"]).then(() => {
+            return true;
+          });
         },
       });
       config.env = {
