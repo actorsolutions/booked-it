@@ -1,6 +1,6 @@
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
-import { Button } from "@mui/material";
+import { Button, Typography, Link } from "@mui/material";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import CY_TAGS from "@/support/cypress_tags";
 import Image from "next/image";
@@ -18,8 +18,8 @@ export const NavBar = () => {
 
   return (
     <Toolbar sx={{ display: "flex" }}>
-      <Grid container data-cy={NAV_BAR.CONTAINER.NAV_BAR}>
-        <Grid item xs={10}>
+      <Grid container data-cy={NAV_BAR.CONTAINER.NAV_BAR} alignItems="center">
+        <Grid item>
           <Image
             alt="headerLogo"
             src="/assets/header-logo.png"
@@ -27,7 +27,22 @@ export const NavBar = () => {
             height="35"
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item sx={{ marginLeft: "16px" }}>
+          <Grid container justifyContent="flex-start" spacing={2}>
+            <Grid item>
+              <Link href={"/"} underline="none" color="inherit">
+                Dashboard
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href={"/reports"} underline="none" color="inherit">
+                <Typography>Reports</Typography>
+              </Link>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item sx={{ flexGrow: 1 }} />{" "}
+        <Grid item>
           <Button onClick={handleLogout} data-cy={NAV_BAR.BUTTONS.LOGOUT}>
             Logout
           </Button>
