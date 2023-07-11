@@ -126,7 +126,12 @@ export default {
     },
     BUTTONS: {
       LOGOUT: "log-out-button",
+      DASHBOARD: "dashboard-button",
+      REPORTS: "reports-button",
     },
+  },
+  REPORTS: {
+    TITLE: "reports-page-title",
   },
   COMMON: {
     BUTTONS: {

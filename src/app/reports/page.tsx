@@ -5,6 +5,7 @@ import { SnackBarProvider } from "@/context/SnackbarContext";
 import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import CY_TAGS from "@/support/cypress_tags";
 import React from "react";
 
 export default function Reports() {
@@ -23,7 +24,7 @@ export default function Reports() {
             }}
           >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <h1>THIS IS THE REPORTS PAGE</h1>
+              <h1 data-cy={CY_TAGS.REPORTS.TITLE}>THIS IS THE REPORTS PAGE</h1>
             </LocalizationProvider>
           </Container>
         </main>

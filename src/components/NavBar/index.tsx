@@ -1,6 +1,6 @@
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
-import { Button, Typography, Link } from "@mui/material";
+import { Button, Link } from "@mui/material";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import CY_TAGS from "@/support/cypress_tags";
 import Image from "next/image";
@@ -27,16 +27,26 @@ export const NavBar = () => {
             height="35"
           />
         </Grid>
-        <Grid item sx={{ marginLeft: "16px" }}>
+        <Grid item sx={{ marginLeft: "21px" }}>
           <Grid container justifyContent="flex-start" spacing={2}>
             <Grid item>
-              <Link href={"/"} underline="none" color="inherit">
+              <Link
+                data-cy={NAV_BAR.BUTTONS.DASHBOARD}
+                href={"/"}
+                underline="none"
+                color="inherit"
+              >
                 Dashboard
               </Link>
             </Grid>
             <Grid item>
-              <Link href={"/reports"} underline="none" color="inherit">
-                <Typography>Reports</Typography>
+              <Link
+                data-cy={NAV_BAR.BUTTONS.REPORTS}
+                href={"/reports"}
+                underline="none"
+                color="inherit"
+              >
+                Reports
               </Link>
             </Grid>
           </Grid>
