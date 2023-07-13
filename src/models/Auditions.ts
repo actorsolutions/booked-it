@@ -235,4 +235,29 @@ export class Audition {
       },
     });
   }
+
+  static async updateWithStatus(
+    id: number,
+    auditionData: Prisma.AuditionUncheckedUpdateInput,
+    db: PrismaClient
+  ) {
+    // eslint-disable-next-line no-unused-vars
+    const auditions = await db.audition.update({
+      where: { id },
+      data: auditionData,
+      include: {
+        statuses: {
+          select: {
+            date: true,
+            id: true,
+            statusId: true,
+            Status: true,
+            auditionId: true,
+          },
+        },
+      },
+    });
+
+    return formatAudition(auditions);
+  }
 }

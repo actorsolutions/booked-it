@@ -117,14 +117,10 @@ describe("It tests the statusChange Model", () => {
       statusId: 3,
       createdAt: new Date(),
     };
-    type mockDeleteArgs = {
-      where: {
-        id?: number;
-      };
-    };
+
     const mockPrisma = {
       // eslint-disable-next-line no-unused-vars
-      $transaction: async (props: any) => {
+      $transaction: async () => {
         return new Promise((resolve) => {
           resolve(expectedResponse);
         });
@@ -135,8 +131,7 @@ describe("It tests the statusChange Model", () => {
             resolve(expectedResponse);
           });
         },
-        delete: async (props: mockDeleteArgs) => {
-          console.log(props);
+        delete: async () => {
           return new Promise((resolve) => {
             resolve(expectedResponse);
           });
@@ -174,7 +169,7 @@ describe("It tests the statusChange Model", () => {
     };
     const mockPrisma = {
       // eslint-disable-next-line no-unused-vars
-      $transaction: async (props: any) => {
+      $transaction: async () => {
         return new Promise((resolve) => {
           resolve(expectedResponse);
         });
@@ -203,5 +198,43 @@ describe("It tests the statusChange Model", () => {
       mockPrisma as unknown as PrismaClient
     );
     expect(createdStatusChange).toEqual(expectedResponse);
+  });
+  it("updates or creates an array of statusChanges", async () => {
+    const arrayOfStatusChanges = [
+      {
+        id: 0,
+        auditionId: 0,
+        statusId: 0,
+        date: 0,
+      },
+      {
+        id: 1,
+        auditionId: 0,
+        statusId: 0,
+        createdAt: new Date(),
+        date: 0,
+      },
+    ];
+
+    const mockPrisma = {
+      // eslint-disable-next-line no-unused-vars
+      $transaction: async () => {
+        return new Promise((resolve) => {
+          resolve(arrayOfStatusChanges);
+        });
+      },
+      statusChange: {
+        upsert: async () => {
+          return new Promise((resolve) => {
+            resolve(arrayOfStatusChanges);
+          });
+        },
+      },
+    };
+    const createdStatusChange = await StatusChange.upsertMany(
+      arrayOfStatusChanges,
+      mockPrisma as unknown as PrismaClient
+    );
+    expect(createdStatusChange).toEqual(arrayOfStatusChanges);
   });
 });

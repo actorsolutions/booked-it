@@ -368,10 +368,24 @@ describe("Audition Controller Tests", () => {
       cookie: `appSession=${session}`,
     };
     const mockDb = {
-      update: async () => {
+      $transaction: async () => {
         return new Promise((resolve) => {
-          resolve(audition);
+          resolve(expected.statuses);
         });
+      },
+      statusChange: {
+        upsert: async () => {
+          return new Promise((resolve) => {
+            resolve(expected.statuses);
+          });
+        },
+      },
+      audition: {
+        update: async () => {
+          return new Promise((resolve) => {
+            resolve(audition);
+          });
+        },
       },
     };
     await updateAudition(

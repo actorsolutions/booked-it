@@ -46,7 +46,7 @@ export class StatusChange {
       data: createData,
     });
   }
-  static async delete(id: number, prisma_cli?: PrismaClient | undefined) {
+  static async delete(id: number, prisma_cli?: PrismaClient) {
     const prisma = prisma_cli || generatePrisma();
     return await prisma.$transaction(async (tx) => {
       const statusToChange = await tx.statusChange.findUnique({
@@ -59,6 +59,33 @@ export class StatusChange {
         throw new Error("Can not delete last Status Change!");
       }
       await prisma.statusChange.delete({ where: { id } });
+      return true;
     });
+  }
+
+  static async upsertMany(
+    upsertData: Prisma.XOR<
+      Prisma.StatusChangeUpdateInput,
+      Prisma.StatusChangeUncheckedCreateInput
+    >[],
+    db: PrismaClient
+  ) {
+    return await db.$transaction(
+      upsertData.map((status) =>
+        db.statusChange.upsert({
+          where: { id: status.id || -1 },
+          update: {
+            statusId: status.statusId,
+            auditionId: status.auditionId,
+            date: status.date,
+          },
+          create: {
+            auditionId: status.auditionId as number,
+            statusId: status.statusId as number,
+            date: status.date as number,
+          },
+        })
+      )
+    );
   }
 }
