@@ -49,7 +49,7 @@ export const prismaAuditionAdapter = (data: AuditionData) => {
 };
 
 /**
- * Converts FormattedStatus to StatusChange
+ * Converts FormattedStatus to StatusChangeForm
  * @param data
  * @returns StatusChange
  */
@@ -64,9 +64,9 @@ export const statusesToStatusChange = (data: FormattedStatus) => {
 };
 
 /**
- * Converts created FormattedStatus into StatusChange
+ * Converts created FormattedStatus into StatusChangeForm
  * @param data
- * @returns @StatusChange
+ * @returns @StatusChangeForm
  */
 
 export const createStatusChange = (data: FormattedStatus) => {
