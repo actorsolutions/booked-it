@@ -7,7 +7,7 @@ import { shouldBeVisible } from "../support/helperFunctions";
 
 describe("<LoginButton />", () => {
   it("should render the login button", () => {
-    const setStatuses = (auditions) => {
+    const setStatuses = (auditions: any) => {
       console.log(auditions);
     };
     const statuses = [
