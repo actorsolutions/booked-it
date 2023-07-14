@@ -58,9 +58,11 @@ export default defineConfig({
             });
         },
         async "db:sanitize"() {
-          return cypressSanitize(["audition", "user"]).then(() => {
-            return true;
-          });
+          return cypressSanitize(["statusChange", "audition", "user"]).then(
+            () => {
+              return true;
+            }
+          );
         },
       });
       config.env = {
