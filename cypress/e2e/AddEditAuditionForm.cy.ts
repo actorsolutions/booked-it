@@ -32,8 +32,6 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("Should add one audition and show on list", () => {
-    cy.task("db:sanitize");
-    cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -124,7 +122,6 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("Should edit an audition entry", () => {
-    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -144,7 +141,6 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("Should show success Snackbar message when audition is created", () => {
-    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -174,7 +170,6 @@ describe("Add Auditions Form E2E Tests", () => {
   });
 
   it("Should show error Snackbar message when audition fails to create", () => {
-    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
@@ -206,7 +201,6 @@ describe("Add Auditions Form E2E Tests", () => {
     );
   });
   it("Should add a statusChange and it persist and delete statusChange and it persist", () => {
-    // cy.task("db:seed");
     login();
     cy.visit("/");
     cy.wait("@Auth0");
