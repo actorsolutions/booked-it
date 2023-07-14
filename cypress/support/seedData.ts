@@ -18,6 +18,6 @@ export const AUDITION_DATA = {
   archived: false,
   casting: [],
   statuses: {
-    create: [{ id: 1, statusId: 0, date: 0 }],
+    create: [{ statusId: 0, date: 0 }],
   },
 };
