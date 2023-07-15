@@ -217,7 +217,7 @@ describe("Landing Page E2E Tests", () => {
       () => {
         cy.get("div").contains("Project:").invoke("text").as("projectName");
         findAndClick(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE);
-        cy.intercept("DELETE", "/api/auditions/0", {
+        cy.intercept("DELETE", "/api/auditions/*", {
           statusCode: 500,
         }).as("deleteAudition");
         findAndClick(AUDITIONS_SECTION.BUTTONS.DELETE_AUDITION);

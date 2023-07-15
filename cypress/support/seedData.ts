@@ -17,4 +17,7 @@ export const AUDITION_DATA = {
   status: "scheduled" as audition_statuses,
   archived: false,
   casting: [],
+  statuses: {
+    create: [{ statusId: 0, date: 0 }],
+  },
 };

@@ -13,7 +13,7 @@ export const cypressSanitize = async (
 ) => {
   const prisma = prisma_cli || generatePrisma();
   const toDelete = [];
-
+  console.log("Deleting" + modelNames);
   // collects all the table transactions into an array
   for (const modelName of modelNames) {
     // @ts-ignore
@@ -21,5 +21,5 @@ export const cypressSanitize = async (
   }
   // creates atomic transaction for tables to remove data from
   await prisma.$transaction(toDelete);
-  await prisma.$disconnect();
+  return await prisma.$disconnect();
 };

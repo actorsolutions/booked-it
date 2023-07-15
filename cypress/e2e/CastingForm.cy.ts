@@ -34,11 +34,6 @@ describe("Add Casting Form E2E tests", () => {
       AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
       "Television"
     );
-    selectItem(
-      AUDITION_FORM.DROPDOWNS.STATUS,
-      AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
-      "Booked"
-    );
 
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
     addToInput(AUDITION_FORM.TEXT_AREA.NOTES, "Wally is a good boy");
@@ -62,18 +57,14 @@ describe("Add Casting Form E2E tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    clickCalendarDate(today.valueOf().toString());
+    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,
       AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
       "Television"
     );
-    selectItem(
-      AUDITION_FORM.DROPDOWNS.STATUS,
-      AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
-      "Booked"
-    );
+
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
     addToInput(AUDITION_FORM.TEXT_AREA.NOTES, "Wally is a good boy");
 
@@ -176,18 +167,14 @@ describe("Add Casting Form E2E tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    clickCalendarDate(today.valueOf().toString());
+    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,
       AUDITION_FORM.DROPDOWNS.OPTIONS.TYPE,
       "Television"
     );
-    selectItem(
-      AUDITION_FORM.DROPDOWNS.STATUS,
-      AUDITION_FORM.DROPDOWNS.OPTIONS.STATUS,
-      "Booked"
-    );
+
     addToInput(AUDITION_FORM.INPUTS.COMPANY, "WallyCorp");
     addToInput(AUDITION_FORM.TEXT_AREA.NOTES, "Wally is a good boy");
 

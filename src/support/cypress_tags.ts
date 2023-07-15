@@ -47,6 +47,7 @@ export default {
     TITLE: "audition-form-title",
     CONTAINERS: {
       FORM_CONTAINER: "audition-form-container",
+      STATUS_CHANGE: "audition-form-status-change-container",
     },
     ERRORS: {
       COMPANY: "audition-company-error",
@@ -66,10 +67,8 @@ export default {
     PICKERS: {
       LABELS: {
         DATE: "date-picker-label",
-        CALLBACK: "call-back-picker-label",
       },
-      DATE: "date-picker",
-      CALLBACK: "call-back-picker",
+      DATE: "audition-date-picker",
     },
     TEXT_AREA: {
       LABELS: {
@@ -99,7 +98,19 @@ export default {
       CASTING_LIST: "casting-list",
       CASTING_ROW: "casting-row-",
     },
+    FORMS: {
+      STATUS_CHANGE: {
+        STATUS_ROW: "status-row-",
+        BUTTONS: {
+          ADD_STATUS: "add-status-button",
+          DELETE_STATUS: "delete-status-button-",
+        },
+        STATUS_DROPDOWN: "status-dropdown-",
+        DATE_PICKER: "status-date-picker-",
+      },
+    },
   },
+
   CASTING_FORM: {
     CONTAINERS: {
       CASTING_CONTAINER: "casting-form-container",

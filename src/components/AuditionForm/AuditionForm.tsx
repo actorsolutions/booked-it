@@ -1,12 +1,10 @@
-import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   AuditionDatePicker,
   NotesTextArea,
   ProjectInput,
-  StatusDropdown,
   TypeDropdown,
   CompanyInput,
-  CallbackPicker,
   CastingList,
 } from "@/components/AuditionForm/components";
 import { AuditionData, Casting } from "@/types/auditions";
@@ -23,6 +21,10 @@ import CY_TAGS from "@/support/cypress_tags";
 import RESPONSE_MESSAGES from "@/support/response_messages";
 import { LoadingCircle, ValidationRequiredMessage } from "@/components/common";
 import { useSnackBar } from "@/context/SnackbarContext";
+import { StatusChangeForm } from "@/components/AuditionForm/components/StatusChange/StatusChange.form";
+import { FormattedStatus } from "@/types/statuschange";
+import { EMPTY_STATUS_ROW } from "@/components/AuditionForm/components/StatusChange";
+import { audition_statuses } from "@prisma/client";
 
 interface Props {
   audition?: AuditionData;
@@ -57,19 +59,20 @@ export const AuditionForm = (props: Props) => {
     formState: { errors },
     trigger,
     clearErrors,
-    reset,
   } = useForm<AuditionFormData>({
     defaultValues: {
-      date: undefined,
-      project: "",
-      company: "",
+      date:
+        audition?.date ||
+        new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000,
+      project: audition?.project || "",
+      company: audition?.company || "",
       callbackDate: undefined,
-      casting: [],
-      notes: "",
-      type: "",
-      status: "",
-      archived: false,
-      statuses: [],
+      casting: audition?.casting || [],
+      notes: audition?.notes || "",
+      type: audition?.type || "",
+      status: "submitted",
+      archived: audition?.archived || false,
+      statuses: audition?.statuses || [EMPTY_STATUS_ROW],
     },
   });
 
@@ -102,7 +105,6 @@ export const AuditionForm = (props: Props) => {
     "status",
   ];
 
-  const watchStatus = watch("status");
   const watchCasting = watch("casting");
 
   const handleModal = () => {
@@ -119,13 +121,13 @@ export const AuditionForm = (props: Props) => {
     const values = getValues();
     const updateData = {
       ...values,
-      date: values.date / 1000,
+      date: values.date,
       casting: watchCasting,
       id: audition.id,
       userId: audition.userId,
       createdAt: audition.createdAt,
       callbackDate: audition.callBackDate,
-      statuses: [],
+      statuses: getValues().statuses,
     };
     const response = await updateAudition(updateData as AuditionData);
     const auditionToReplace = auditions.find(
@@ -165,6 +167,7 @@ export const AuditionForm = (props: Props) => {
       submitted: false,
     });
     if (await customValidation(createFields as fields[])) {
+      setStatusesType(getValues().statuses);
       editMode ? await handleEdit(audition) : await handleCreate();
       return true;
     } else {
@@ -180,24 +183,18 @@ export const AuditionForm = (props: Props) => {
   const setCasting = (castingArray: Casting[]) => {
     setValue("casting", castingArray);
   };
-  useEffect(() => {
-    if (editMode) {
-      const data = {
-        archived: audition.archived,
-        callbackDate: audition.callBackDate
-          ? audition.callBackDate * 1000
-          : undefined,
-        casting: audition.casting || [],
-        company: audition.company,
-        date: audition.date * 1000,
-        notes: audition.notes,
-        project: audition.project,
-        status: audition.status,
-        type: audition.type,
-      };
-      reset({ ...data });
-    }
-  }, [editMode, reset]);
+  const setStatuses = (statusesArray: FormattedStatus[]) => {
+    setValue("statuses", statusesArray);
+  };
+  /**
+   * Takes the statusId and fills in the correct type.
+   * @param statusesArray
+   */
+  const setStatusesType = (statusesArray: FormattedStatus[]) => {
+    statusesArray.forEach((status) => {
+      status.type = Object.values(audition_statuses)[status.statusId];
+    });
+  };
 
   return (
     <Container
@@ -209,7 +206,12 @@ export const AuditionForm = (props: Props) => {
       <Form>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <AuditionDatePicker control={control} register={register} />
+            <AuditionDatePicker
+              control={control}
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+            />
             {errors.date && (
               <ValidationRequiredMessage
                 errorCyTag={AUDITION_FORM.ERRORS.DATE}
@@ -226,12 +228,12 @@ export const AuditionForm = (props: Props) => {
             )}
           </Grid>
           <Grid item xs={12}>
-            <StatusDropdown control={control} register={register} />
-            {errors.status && (
-              <ValidationRequiredMessage
-                errorCyTag={AUDITION_FORM.ERRORS.STATUS}
-              />
-            )}
+            <Divider />
+            <StatusChangeForm
+              setStatuses={setStatuses}
+              statuses={getValues("statuses")}
+            />
+            <Divider />
           </Grid>
           <Grid item xs={12}>
             <TypeDropdown control={control} register={register} />
@@ -241,11 +243,6 @@ export const AuditionForm = (props: Props) => {
               />
             )}
           </Grid>
-          {watchStatus === "callback" && (
-            <Grid item xs={12}>
-              <CallbackPicker control={control} register={register} />
-            </Grid>
-          )}
           <Grid item xs={12}>
             <CompanyInput control={control} register={register} />
             {errors.company && (
