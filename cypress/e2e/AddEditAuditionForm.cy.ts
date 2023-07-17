@@ -15,6 +15,7 @@ import {
   scrollAndFind,
   scrollFindClick,
   checkTextInSnackbar,
+  shouldBeVisible,
 } from "../support/helperFunctions";
 
 const { AUDITIONS_SECTION, AUDITION_FORM } = CY_TAGS;
@@ -200,6 +201,7 @@ describe("Add Auditions Form E2E Tests", () => {
       RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE
     );
   });
+
   it("Should add a statusChange and it persist and delete statusChange and it persist", () => {
     login();
     cy.visit("/");
@@ -234,5 +236,27 @@ describe("Add Auditions Form E2E Tests", () => {
     scrollFindClick(AUDITION_FORM.BUTTONS.EDIT_AUDITION);
     findAndClick(AUDITIONS_SECTION.BUTTONS.EDIT_AUDITION);
     shouldNotExist(`${AUDITION_FORM.FORMS.STATUS_CHANGE.STATUS_ROW}1`);
+  });
+
+  it("Should not show a Status Change delete button when there is only one status", () => {
+    login();
+    cy.visit("/");
+    cy.wait("@Auth0");
+    findAndClick(AUDITIONS_SECTION.BUTTONS.EXPAND_MORE);
+    findAndClick(AUDITIONS_SECTION.BUTTONS.EDIT_AUDITION);
+    shouldNotExist(
+      AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS + "0"
+    );
+    findAndClick(AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.ADD_STATUS);
+    shouldBeVisible(
+      AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS + "0"
+    );
+    shouldBeVisible(
+      AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS + "1"
+    );
+    findAndClick(AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS + "1");
+    shouldNotExist(
+      AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS + "0"
+    );
   });
 });

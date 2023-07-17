@@ -34,6 +34,7 @@ interface Props<T extends FieldValues> {
   key: number;
   updateStatuses: () => void;
   status?: FormattedStatus;
+  numberOfStatuses: number;
 }
 export const StatusRow = (props: Props<FormValues>) => {
   const { showSnackBar } = useSnackBar();
@@ -46,18 +47,21 @@ export const StatusRow = (props: Props<FormValues>) => {
     setValue,
     getValues,
     updateStatuses,
+    numberOfStatuses,
   } = props;
   const { AUDITION_FORM } = CY_TAGS;
-
   const handleDelete = async () => {
     if (getValues().statuses[index].id) {
       try {
         await deleteStatus(getValues().statuses[index].id as number);
         showSnackBar(STATUS_MESSAGES.STATUS_DELETE_SUCCESS, "success");
-        remove(index);
+        return true;
       } catch {
         showSnackBar(STATUS_MESSAGES.STATUS_DELETE_FAILURE, "error");
+        return false;
       }
+    } else {
+      return true;
     }
   };
   return (
@@ -91,17 +95,21 @@ export const StatusRow = (props: Props<FormValues>) => {
           />
         </Grid>
         <Grid item>
-          <IconButton
-            data-cy={
-              AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS +
-              `${index}`
-            }
-            onClick={() => {
-              handleDelete();
-            }}
-          >
-            <RemoveCircle fontSize="small" color="error" />
-          </IconButton>
+          {numberOfStatuses > 1 && (
+            <IconButton
+              data-cy={
+                AUDITION_FORM.FORMS.STATUS_CHANGE.BUTTONS.DELETE_STATUS +
+                `${index}`
+              }
+              onClick={() => {
+                handleDelete().then(() => {
+                  remove(index);
+                });
+              }}
+            >
+              <RemoveCircle fontSize="small" color="error" />
+            </IconButton>
+          )}
         </Grid>
       </Grid>
     </>
