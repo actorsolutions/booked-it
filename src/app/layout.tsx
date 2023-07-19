@@ -8,6 +8,11 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { NavBar } from "@/components/NavBar";
 import { Container } from "@mui/system";
 import { Typography } from "@mui/material";
+import { theme } from "@/support/MaterialUITheme";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ThemeProvider } from "@mui/material/styles";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { SnackBarProvider } from "@/context/SnackbarContext";
 
 export default function RootLayout({
   children,
@@ -23,13 +28,19 @@ export default function RootLayout({
       <title>Booked It</title>
       <head />
       <body>
-        <UserProvider>
-          <NavBar />
-        </UserProvider>
-        {children}
-        <Container>
-          <Typography variant="subtitle1">Booked-It MVP</Typography>
-        </Container>
+        <ThemeProvider theme={theme}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <SnackBarProvider>
+              <UserProvider>
+                <NavBar />
+                {children}
+                <Container>
+                  <Typography variant="subtitle1">Booked-It MVP</Typography>
+                </Container>
+              </UserProvider>
+            </SnackBarProvider>
+          </LocalizationProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
