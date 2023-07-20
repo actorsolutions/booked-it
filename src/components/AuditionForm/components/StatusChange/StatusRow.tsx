@@ -75,7 +75,7 @@ export const StatusRow = (props: Props<FormValues>) => {
         wrap="nowrap"
         data-cy={AUDITION_FORM.FORMS.STATUS_CHANGE.STATUS_ROW + `${index}`}
       >
-        <Grid item>
+        <Grid item xs={12}>
           <StatusDropdown
             control={control}
             index={index}
