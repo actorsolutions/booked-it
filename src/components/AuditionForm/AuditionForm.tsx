@@ -24,7 +24,7 @@ import { useSnackBar } from "@/context/SnackbarContext";
 import { StatusChangeForm } from "@/components/AuditionForm/components/StatusChange/StatusChange.form";
 import { FormattedStatus } from "@/types/statuschange";
 import { EMPTY_STATUS_ROW } from "@/components/AuditionForm/components/StatusChange";
-import { audition_statuses } from "@prisma/client";
+import { AUDITION_STATUSES } from "./";
 
 interface Props {
   audition?: AuditionData;
@@ -189,7 +189,7 @@ export const AuditionForm = (props: Props) => {
    */
   const setStatusesType = (statusesArray: FormattedStatus[]) => {
     statusesArray.forEach((status) => {
-      status.type = Object.values(audition_statuses)[status.statusId];
+      status.type = AUDITION_STATUSES[status.statusId];
     });
   };
 

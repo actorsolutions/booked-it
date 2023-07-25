@@ -161,6 +161,7 @@ export class Audition {
     data: Prisma.AuditionUncheckedCreateInput,
     db: PrismaClient["audition"]
   ) {
+    delete data.status;
     const createdAudition = await db.create({
       data,
       include: {

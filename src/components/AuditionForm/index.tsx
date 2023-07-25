@@ -20,3 +20,10 @@ export interface FormProps<T extends FieldValues> {
   control: Control<T>;
   register: UseFormRegister<T>;
 }
+
+export const AUDITION_STATUSES = [
+  "submitted",
+  "scheduled",
+  "callback",
+  "booked",
+];
