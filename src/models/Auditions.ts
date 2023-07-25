@@ -1,9 +1,4 @@
-import {
-  PrismaClient,
-  Prisma,
-  audition_types,
-  audition_statuses,
-} from "@prisma/client";
+import { PrismaClient, Prisma, audition_types } from "@prisma/client";
 import type { StatusChange as PrismaStatusChange } from "@prisma/client";
 import {
   formatAuditions,
@@ -52,7 +47,6 @@ export class Audition {
   notes?: string;
   type: audition_types;
   createdAt?: Date | null;
-  status?: audition_statuses;
   archived: boolean;
   statuses: PrismaStatusChange[];
 

@@ -55,6 +55,7 @@ describe("Auditions Router integration tests", () => {
           project: "Test Project",
           type: "television",
           userId: 0,
+          status: null,
           createdAt: "2023-04-28T21:50:11.638Z",
           archived: false,
           statuses: [],
@@ -103,6 +104,7 @@ describe("Auditions Router integration tests", () => {
       project: "Created Project",
       type: "television",
       userId: 0,
+      status: null,
       archived: false,
       statuses: [
         {
