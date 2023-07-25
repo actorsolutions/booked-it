@@ -19,7 +19,6 @@ export const prismaAuditionAdapter = (data: AuditionData) => {
     callBackDate,
     notes,
     type,
-    status,
     archived,
     statuses,
   } = data;
@@ -42,7 +41,6 @@ export const prismaAuditionAdapter = (data: AuditionData) => {
     casting: casting,
     notes: notes,
     type,
-    status,
     archived,
     statuses: adaptedStatus,
   };
