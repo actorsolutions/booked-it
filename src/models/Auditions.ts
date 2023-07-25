@@ -68,7 +68,6 @@ export class Audition {
       notes,
       createdAt,
       archived,
-      status,
       type,
       statuses,
     } = data;
@@ -83,10 +82,6 @@ export class Audition {
     this.createdAt = createdAt;
     this.archived = archived;
     this.statuses = statuses;
-
-    this.status =
-      (validateEnum(audition_statuses, status) as audition_statuses) ||
-      undefined;
     this.type = validateEnum(audition_types, type) as audition_types;
   }
 
