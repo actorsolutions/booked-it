@@ -50,7 +50,6 @@ export const addAudition = async (
     notes,
     type,
     callBackDate,
-    status,
     archived,
     statuses,
   } = JSON.parse(req.body);
@@ -67,7 +66,6 @@ export const addAudition = async (
     notes,
     type,
     callBackDate,
-    status,
     archived,
     userId,
     statuses: {
@@ -114,7 +112,6 @@ export const updateAudition = async (
     callBackDate,
     notes,
     type,
-    status,
     archived,
     statuses,
     userId,
@@ -133,7 +130,6 @@ export const updateAudition = async (
     notes,
     type,
     callBackDate,
-    status,
     archived,
     userId: sessionUserId,
   };

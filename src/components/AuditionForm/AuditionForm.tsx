@@ -70,7 +70,6 @@ export const AuditionForm = (props: Props) => {
       casting: audition?.casting || [],
       notes: audition?.notes || "",
       type: audition?.type || "",
-      status: "submitted",
       archived: audition?.archived || false,
       statuses: audition?.statuses || [EMPTY_STATUS_ROW],
     },
@@ -92,8 +91,7 @@ export const AuditionForm = (props: Props) => {
     | "company"
     | "callbackDate"
     | "notes"
-    | "type"
-    | "status";
+    | "type";
 
   const createFields = [
     "date",
@@ -102,7 +100,6 @@ export const AuditionForm = (props: Props) => {
     "callbackDate",
     "notes",
     "type",
-    "status",
   ];
 
   const watchCasting = watch("casting");

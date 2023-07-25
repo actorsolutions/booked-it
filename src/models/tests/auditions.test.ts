@@ -1,10 +1,5 @@
 import { Audition } from "../Auditions";
-import {
-  PrismaClient,
-  Prisma,
-  audition_types,
-  audition_statuses,
-} from "@prisma/client";
+import { PrismaClient, Prisma, audition_types } from "@prisma/client";
 
 describe("It Tests the Auditions Model", () => {
   it("returns an audition with id", async () => {
@@ -18,7 +13,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "This is a note",
       type: "film" as audition_types,
-      status: "scheduled" as audition_statuses,
       archived: false,
     };
     const mockPrisma = {
@@ -48,7 +42,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "Notes",
       type: "television" as audition_types,
-      status: "scheduled" as audition_statuses,
       archived: false,
       statuses: [
         {
@@ -78,7 +71,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "Notes",
       type: "television" as audition_types,
-      status: "scheduled" as audition_statuses,
       archived: false,
       statuses: [
         {
@@ -117,7 +109,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "Notes",
       type: "television",
-      status: "scheduled",
       archived: false,
       statuses: [
         {
@@ -165,7 +156,6 @@ describe("It Tests the Auditions Model", () => {
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
         type: "film",
-        status: "scheduled",
         archived: false,
         statuses: [
           {
@@ -191,7 +181,6 @@ describe("It Tests the Auditions Model", () => {
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
         type: "theater",
-        status: "scheduled",
         archived: false,
         statuses: [
           {
@@ -234,7 +223,6 @@ describe("It Tests the Auditions Model", () => {
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
         type: "film",
-        status: "scheduled",
         archived: false,
         statuses: [
           {
@@ -259,7 +247,6 @@ describe("It Tests the Auditions Model", () => {
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
         type: "theater",
-        status: "scheduled",
         archived: false,
         statuses: [
           {
@@ -286,7 +273,6 @@ describe("It Tests the Auditions Model", () => {
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
         type: "film",
-        status: "scheduled",
         archived: false,
         statuses: [
           {
@@ -308,7 +294,6 @@ describe("It Tests the Auditions Model", () => {
         casting: [{ name: "Test testerson", company: "Tester Casting" }],
         notes: "Notes!",
         type: "theater",
-        status: "scheduled",
         archived: false,
         statuses: [
           {
@@ -346,7 +331,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "Test testerson", company: "Tester Casting" }],
       notes: "Notes!",
       type: "film",
-      status: "scheduled",
       archived: false,
     };
 
@@ -375,7 +359,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "No notes Added",
       type: "television",
-      status: "scheduled",
       archived: false,
     };
     const auditionData = {
@@ -388,7 +371,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: undefined,
       type: "television",
-      status: "scheduled",
       archived: false,
     };
     const mockPrisma = {
@@ -416,7 +398,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "No notes Added",
       type: "television",
-      status: "scheduled",
       archived: false,
       statuses: [
         {
@@ -438,7 +419,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "No notes Added",
       type: "television",
-      status: "scheduled",
       archived: false,
       statuses: [
         {
@@ -480,7 +460,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "Notes",
       type: "television" as audition_types,
-      status: "scheduled" as audition_statuses,
       archived: false,
     };
     const updateStatusData = [
@@ -512,7 +491,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "Notes",
       type: "television" as audition_types,
-      status: "scheduled" as audition_statuses,
       archived: false,
       statuses: [
         {
@@ -551,7 +529,6 @@ describe("It Tests the Auditions Model", () => {
       casting: [{ name: "FakeCasting", company: "Casting" }],
       notes: "Notes",
       type: "television",
-      status: "scheduled",
       archived: false,
       statuses: [
         {

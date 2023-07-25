@@ -52,7 +52,7 @@ export class Audition {
   notes?: string;
   type: audition_types;
   createdAt?: Date | null;
-  status: audition_statuses;
+  status?: audition_statuses;
   archived: boolean;
   statuses: PrismaStatusChange[];
 
@@ -84,7 +84,9 @@ export class Audition {
     this.archived = archived;
     this.statuses = statuses;
 
-    this.status = validateEnum(audition_statuses, status) as audition_statuses;
+    this.status =
+      (validateEnum(audition_statuses, status) as audition_statuses) ||
+      undefined;
     this.type = validateEnum(audition_types, type) as audition_types;
   }
 

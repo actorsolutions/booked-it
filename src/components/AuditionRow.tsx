@@ -169,7 +169,12 @@ export const AuditionRow = ({
               item
               xs={2}
             >
-              <LensIcon color={statusColor(audition.status)} fontSize="large" />
+              <LensIcon
+                color={statusColor(
+                  audition.statuses[audition.statuses.length].type
+                )}
+                fontSize="large"
+              />
             </Grid>
             <Grid item xs={9} md={7}>
               <div style={{ marginTop: "0.5rem" }}>

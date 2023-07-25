@@ -20,7 +20,7 @@ const statusToStatusChange = async () => {
       const statusChangeData = {
         auditionId,
         statusId: status.id,
-        date: new Date(audition.date).getTime() / 1000,
+        date: new Date(new Date().setHours(0, 0, 0, 0)).getTime() / 1000,
       };
       prisma.statusChange.create({ data: statusChangeData }).then(() => {
         console.log(statusChangeData + " Added");
