@@ -70,6 +70,7 @@ describe("Audition [id] integration tests", () => {
       notes: "Here is a note",
       project: "Test Project",
       type: "television",
+      status: null,
       userId: 0,
       archived: false,
       statuses: [
@@ -148,6 +149,7 @@ describe("Audition [id] integration tests", () => {
       id: 0,
       notes: "THIS IS A DIFFERENT NOTE",
       project: "UPDATED PROJECT",
+      status: null,
       statuses: [
         {
           auditionId: 0,
