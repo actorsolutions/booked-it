@@ -17,7 +17,6 @@ const TEST_AUDITION = {
   userId: 0,
   company: "Test Company",
   createdAt: "2023-04-28T21:50:11.638Z",
-  status: "scheduled",
   archived: false,
 };
 
@@ -44,7 +43,6 @@ describe("Audition [id] integration tests", () => {
         userId: 0,
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
-        status: "scheduled",
         archived: false,
         statuses: {
           create: [{ date: 0, id: 2, statusId: 0 }],
@@ -72,8 +70,8 @@ describe("Audition [id] integration tests", () => {
       notes: "Here is a note",
       project: "Test Project",
       type: "television",
+      status: null,
       userId: 0,
-      status: "scheduled",
       archived: false,
       statuses: [
         {
@@ -131,7 +129,6 @@ describe("Audition [id] integration tests", () => {
       project: "UPDATED PROJECT",
       type: "television",
       userId: 0,
-      status: "scheduled",
       archived: false,
       statuses: [
         {
@@ -152,7 +149,7 @@ describe("Audition [id] integration tests", () => {
       id: 0,
       notes: "THIS IS A DIFFERENT NOTE",
       project: "UPDATED PROJECT",
-      status: "scheduled",
+      status: null,
       statuses: [
         {
           auditionId: 0,
@@ -186,7 +183,6 @@ describe("Audition [id] integration tests", () => {
       project: "UPDATED PROJECT",
       type: "television",
       userId: 0,
-      status: "scheduled",
       archived: false,
       statuses: [
         {
@@ -258,7 +254,6 @@ describe("Audition [id] integration tests", () => {
       userId: 0,
       company: "BAD Company",
       createdAt: "2023-04-28T21:50:11.638Z",
-      status: "Scheduled",
       archived: false,
     };
 

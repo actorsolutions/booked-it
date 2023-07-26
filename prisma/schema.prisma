@@ -6,8 +6,11 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  // This is for Vercel migration, trying to figure out a better way, for now commenting
+  // directUrl         = env("DATABASE_URL_NON_POOLING")
+  // shadowDatabaseUrl = env("DATABASE_URL_NON_POOLING")
 }
 
 model User {
@@ -30,7 +33,7 @@ model Audition {
   casting      Json?
   notes        String?
   type         audition_types
-  status       audition_statuses
+  status       audition_statuses?
   archived     Boolean           @default(false)
   statuses     StatusChange[]
 }

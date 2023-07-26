@@ -7,7 +7,7 @@ import {
   tearDown,
 } from "@/utils/testSetup";
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
-import { audition_types, audition_statuses } from "@prisma/client";
+import { audition_types } from "@prisma/client";
 describe("Auditions Router integration tests", () => {
   let test: IntegrationTestParams;
 
@@ -31,7 +31,6 @@ describe("Auditions Router integration tests", () => {
         userId: 0,
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
-        status: "booked" as audition_statuses,
         archived: false,
       },
     });
@@ -56,8 +55,8 @@ describe("Auditions Router integration tests", () => {
           project: "Test Project",
           type: "television",
           userId: 0,
+          status: null,
           createdAt: "2023-04-28T21:50:11.638Z",
-          status: "booked",
           archived: false,
           statuses: [],
         },
@@ -86,7 +85,6 @@ describe("Auditions Router integration tests", () => {
       notes: "Here is a note",
       project: "Created Project",
       type: "television",
-      status: "booked",
       archived: false,
       statuses: [
         {
@@ -106,7 +104,7 @@ describe("Auditions Router integration tests", () => {
       project: "Created Project",
       type: "television",
       userId: 0,
-      status: "booked",
+      status: null,
       archived: false,
       statuses: [
         {

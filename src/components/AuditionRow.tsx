@@ -134,7 +134,7 @@ export const AuditionRow = ({
   if (loading) {
     return <LoadingCircle />;
   }
-
+  const currentStatus = audition.statuses[audition.statuses.length - 1];
   return (
     <Card
       sx={{
@@ -169,11 +169,14 @@ export const AuditionRow = ({
               item
               xs={2}
             >
-              <LensIcon color={statusColor(audition.status)} fontSize="large" />
+              <LensIcon
+                color={statusColor(currentStatus.type)}
+                fontSize="large"
+              />
             </Grid>
             <Grid item xs={9} md={7}>
               <div style={{ marginTop: "0.5rem" }}>
-                Project: {audition.project}{" "}
+                Project: {audition.project}
               </div>
             </Grid>
             <Grid item xs={3} sx={{ marginTop: "0.3rem" }}>

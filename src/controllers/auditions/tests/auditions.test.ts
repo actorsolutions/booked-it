@@ -208,7 +208,6 @@ describe("Audition Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "Television",
-      status: "Scheduled",
       archived: false,
       statuses: [
         {
@@ -230,7 +229,6 @@ describe("Audition Controller Tests", () => {
       id: 0,
       notes: "Here is a note",
       project: "Test Project",
-      status: "Scheduled",
       statuses: [
         {
           auditionId: 0,
@@ -292,7 +290,6 @@ describe("Audition Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "television",
-      status: "scheduled",
       archived: false,
       statuses: [
         {
@@ -323,7 +320,6 @@ describe("Audition Controller Tests", () => {
       date: 0,
       notes: "Here is a note",
       project: "Test Project",
-      status: "scheduled",
       statuses: [
         {
           auditionId: 0,
@@ -406,7 +402,6 @@ describe("Audition Controller Tests", () => {
       casting: undefined,
       notes: "Here is a note",
       type: "Television",
-      status: "Scheduled",
       archived: false,
     };
 

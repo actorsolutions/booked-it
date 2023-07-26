@@ -78,7 +78,7 @@ describe("<AuditionForm />", () => {
       scrollAndFind(tag);
     });
 
-    clickCalendarDate(today.valueOf().toString());
+    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
 
     scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.ERRORS.DATE);

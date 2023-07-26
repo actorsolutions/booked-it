@@ -24,7 +24,7 @@ import { useSnackBar } from "@/context/SnackbarContext";
 import { StatusChangeForm } from "@/components/AuditionForm/components/StatusChange/StatusChange.form";
 import { FormattedStatus } from "@/types/statuschange";
 import { EMPTY_STATUS_ROW } from "@/components/AuditionForm/components/StatusChange";
-import { audition_statuses } from "@prisma/client";
+import { AUDITION_STATUSES } from "./";
 
 interface Props {
   audition?: AuditionData;
@@ -70,7 +70,6 @@ export const AuditionForm = (props: Props) => {
       casting: audition?.casting || [],
       notes: audition?.notes || "",
       type: audition?.type || "",
-      status: "submitted",
       archived: audition?.archived || false,
       statuses: audition?.statuses || [EMPTY_STATUS_ROW],
     },
@@ -92,8 +91,7 @@ export const AuditionForm = (props: Props) => {
     | "company"
     | "callbackDate"
     | "notes"
-    | "type"
-    | "status";
+    | "type";
 
   const createFields = [
     "date",
@@ -102,7 +100,6 @@ export const AuditionForm = (props: Props) => {
     "callbackDate",
     "notes",
     "type",
-    "status",
   ];
 
   const watchCasting = watch("casting");
@@ -192,7 +189,7 @@ export const AuditionForm = (props: Props) => {
    */
   const setStatusesType = (statusesArray: FormattedStatus[]) => {
     statusesArray.forEach((status) => {
-      status.type = Object.values(audition_statuses)[status.statusId];
+      status.type = AUDITION_STATUSES[status.statusId];
     });
   };
 
