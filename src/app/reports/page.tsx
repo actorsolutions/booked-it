@@ -1,34 +1,46 @@
 "use client";
-import { ThemeProvider } from "@mui/material/styles";
-import { theme } from "@/support/MaterialUITheme";
-import { SnackBarProvider } from "@/context/SnackbarContext";
+import React, { useState, useEffect } from "react";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { getAuditions } from "@/apihelpers/auditions";
 import { Container } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import CY_TAGS from "@/support/cypress_tags";
-import React from "react";
+import { LifetimeAuditions } from "@/components/Reports/LifetimeAuditions";
+import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
+import { AuditionData } from "@/types";
 
 export default function Reports() {
+  const { user } = useUser();
+  const [auditions, setAuditions] = useState<AuditionData[]>([]);
+
+  useEffect(() => {
+    if (user) {
+      getAuditions()
+        .then((response) => {
+          setAuditions(response.auditions);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [user]);
+
   return (
-    <ThemeProvider theme={theme}>
-      <SnackBarProvider>
-        <main>
-          <Container
-            id={"MainContainer"}
-            maxWidth={false}
-            sx={{
-              minHeight: "100vh",
-              bgcolor: "#caccce",
-              mt: "1rem",
-              pb: "2rem",
-            }}
-          >
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <h1 data-cy={CY_TAGS.REPORTS.TITLE}>THIS IS THE REPORTS PAGE</h1>
-            </LocalizationProvider>
-          </Container>
-        </main>
-      </SnackBarProvider>
-    </ThemeProvider>
+    <main>
+      <Container
+        id={"MainContainer"}
+        maxWidth={false}
+        sx={{
+          minHeight: "100vh",
+          bgcolor: "#caccce",
+          mt: "1rem",
+          pb: "2rem",
+        }}
+      >
+        <h1 data-cy={CY_TAGS.REPORTS.TITLE}>THIS IS THE REPORTS PAGE</h1>
+        <DashboardWrapper>
+          <LifetimeAuditions auditions={auditions} />
+        </DashboardWrapper>
+      </Container>
+    </main>
   );
 }
