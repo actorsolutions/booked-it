@@ -15,11 +15,12 @@ export const AuditionBarChart = (props: BarProps) => {
     const barChartLabel: string = "Auditions by Type by Month";
     const typeCount: number[] = [];
     const barLabels: string[] = [];
-    const currentMonth = new Date().getMonth();
-    const filteredAuditions = auditions.filter(
-      (audition) => new Date(audition.date).getMonth() === currentMonth
-    );
   };
+
+  const currentMonth = new Date().getMonth();
+  const filteredAuditions = auditions.filter(
+    (audition) => new Date(audition.date).getMonth() === currentMonth
+  );
 };
 
 // Step 4: Process auditions to count occurrences of each type using the audition_types enum

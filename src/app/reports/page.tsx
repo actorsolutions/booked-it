@@ -5,7 +5,7 @@ import { getAuditions } from "@/apihelpers/auditions";
 import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 import { LifetimeAuditions } from "@/components/Reports/LifetimeAuditions";
-import { AuditionBarChart } from "@/components/Reports/AuditionsByMonth";
+import { AuditionBarChart } from "@/components/Reports/AuditionsBarChart";
 import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
 import { AuditionData } from "@/types";
 
