@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { login } from "../../../cypress/support/e2e";
 
 const loginToActorsAccess = async () => {
   const actorsAccessLoginURL =
@@ -10,8 +9,8 @@ const loginToActorsAccess = async () => {
     const formData = new FormData();
     formData.append("timezoneOffset", "420");
     formData.append("pageURL", "/index.cfm");
-    formData.append("username", "zdenardi");
-    formData.append("password", "zd911372");
+    formData.append("username", process.env.AA_USERNAME as string);
+    formData.append("password", process.env.AA_PW as string);
     return formData;
   };
 

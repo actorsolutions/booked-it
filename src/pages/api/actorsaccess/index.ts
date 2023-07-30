@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { RouteHandler } from "@/middleware/handlers";
-import { getSession } from "@auth0/nextjs-auth0";
 import { getActorAccessSubmissions } from "@/controllers";
 
 /**
@@ -9,7 +8,7 @@ import { getActorAccessSubmissions } from "@/controllers";
  * @param res
  * @constructor
  */
-const AuditionsController = async (
+const ActorsAccessController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -18,4 +17,4 @@ const AuditionsController = async (
   });
 };
 
-export default AuditionsController;
+export default ActorsAccessController;
