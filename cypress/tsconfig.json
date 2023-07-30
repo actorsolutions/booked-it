@@ -14,13 +14,10 @@
     }
   },
   "exclude": [
-    "../src/**/*.test.ts"
+    "../src/**/*.test.ts",
+    "../**/*.ts"
   ],
   "include": [
-    "../../src/**/*.ts",
-    "../../src/**/*.js",
-    "../**/*.ts",
-    "../**/*.js",
     "../cypress-commands.d.ts",
     "../cypress"],
 
