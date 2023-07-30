@@ -10,10 +10,9 @@ import { useEffect, useState } from "react";
 import { scrapeAuditions } from "@/apihelpers/actorsAccess";
 
 export default function Reports() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   useEffect(() => {
     scrapeAuditions().then((auditions) => {
-      console.log(auditions);
       setData(auditions.data);
     });
   }, []);

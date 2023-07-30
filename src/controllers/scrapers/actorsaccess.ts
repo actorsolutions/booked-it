@@ -32,7 +32,7 @@ export const auditionScraper = (html: string) => {
     role: string;
     casting: string;
     link: string;
-    date: string;
+    date: number;
   }
   const auditions: ActorsAccessAudition[] = [];
   const $ = cheerio.load(html);
@@ -52,7 +52,7 @@ export const auditionScraper = (html: string) => {
       role,
       casting,
       link,
-      date,
+      date: Date.parse(`${date} 2023`),
     };
     auditions.push(auditionObj);
   }
