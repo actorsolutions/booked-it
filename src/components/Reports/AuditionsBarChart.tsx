@@ -1,90 +1,138 @@
-import React from "react";
+import React, { useState } from "react";
+import Grid from "@mui/material/Grid";
+import {
+  Chart as ChartJS,
+  BarElement,
+  Tooltip,
+  Legend,
+  Title,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { AuditionData } from "@/types";
-import { audition_types } from "@prisma/client";
-import { Chart as ChartJS, Tooltip, Legend, Title } from "chart.js";
+import CY_TAGS from "@/support/cypress_tags";
+import { FormDatePicker } from "@/components/common/Form";
 
-interface BarProps {
+interface MetricProps {
   auditions: AuditionData[];
 }
-export const AuditionBarChart = (props: BarProps) => {
-  ChartJS.register(Tooltip, Legend, Title);
-  const { auditions } = props;
 
-  const barChartAuditions = (auditions: AuditionData[]) => {
-    const barChartLabel: string = "Auditions by Type by Month";
-    const typeCount: number[] = [];
-    const barLabels: string[] = [];
+export const AuditionBarChart = (props: MetricProps) => {
+  ChartJS.register(
+    BarElement,
+    CategoryScale,
+    LinearScale,
+    Tooltip,
+    Legend,
+    Title
+  ); // Register BarElement for the bar chart
+
+  const [selectedMonth, setSelectedMonth] = useState<Date | null>(null);
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedMonth(date);
   };
 
-  const currentMonth = new Date().getMonth();
-  const filteredAuditions = auditions.filter(
-    (audition) => new Date(audition.date).getMonth() === currentMonth
+  const chartAuditions = (auditions: AuditionData[]) => {
+    const barChartLabel: string = "Type Breakdown"; // Change label for the bar chart
+    const typeCount: number[] = [];
+    const barLabels: string[] = [];
+
+    const capitalize = (text: string): string =>
+      (text && text[0].toUpperCase() + text.slice(1)) || "";
+
+    const filteredAuditions = selectedMonth
+      ? auditions.filter(
+          (audition) =>
+            new Date(audition.date).getFullYear() ===
+              selectedMonth.getFullYear() &&
+            new Date(audition.date).getMonth() === selectedMonth.getMonth()
+        )
+      : auditions;
+
+    filteredAuditions.forEach((audition) => {
+      const label = capitalize(audition.type);
+      if (!barLabels.includes(label)) {
+        barLabels.push(label);
+        const filterByType = filteredAuditions.filter(
+          (filteredAudition) => filteredAudition.type === audition.type
+        );
+        typeCount.push(filterByType.length);
+      }
+    });
+
+    const barChartData = {
+      labels: barLabels,
+      datasets: [
+        {
+          label: barChartLabel,
+          data: typeCount,
+          backgroundColor: [
+            "rgba(50, 150, 132, 0.8)",
+            "rgba(54, 162, 235, 0.8)",
+            "rgba(255, 206, 86, 0.8)",
+            "rgba(75, 192, 192, 0.8)",
+            "rgba(153, 102, 255, 0.8)",
+            "rgba(255, 159, 64, 0.8)",
+            "rgba(255, 25, 100, 0.8)",
+          ],
+          borderColor: [
+            "rgba(15, 10, 222, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+            "rgba(255, 5, 64, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+
+    return { barChartData };
+  };
+
+  const { barChartData } = chartAuditions(props.auditions);
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom" as const,
+      },
+      title: {
+        display: true,
+        text: "Breakdown by Type",
+      },
+    },
+  };
+
+  return (
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Grid
+        item
+        sx={{
+          maxHeight: "30rem",
+        }}
+      >
+        <FormDatePicker setDate={handleDateChange} />
+        <Bar // Use Bar component for the bar chart
+          data-cy={CY_TAGS.LANDING_PAGE.GRAPH.BAR_CHART} // Adjust data-cy tag if needed
+          data={barChartData} // Use barChartData instead of pieChartData
+          options={options}
+        />
+        <p>Number of Auditions - {props.auditions.length}</p>
+      </Grid>
+    </Grid>
   );
 };
-
-// Step 4: Process auditions to count occurrences of each type using the audition_types enum
-// const typeCounts: { [type in keyof typeof audition_types]: number } = {
-//   television: 0,
-//   film: 0,
-//   student: 0,
-//   theater: 0,
-//   industrial: 0,
-//   commercial: 0,
-//   newMedia: 0,
-//   voiceOver: 0,
-// };
-//
-// auditions.forEach((audition) => {
-//   const { type } = audition;
-//   if (type in audition_types) {
-//     typeCounts[type] += 1;
-//   }
-// });
-//
-// // Step 5: Prepare data for the bar chart using audition_types enum
-// const barChartData = {
-//   labels: Object.values(audition_types), // Use the type names as labels
-//   datasets: [
-//     {
-//       label: "Audition Types",
-//       data: Object.values(typeCounts), // Use the typeCounts object values
-//       backgroundColor: "rgba(54, 162, 235, 0.2)",
-//       borderColor: "rgba(54, 162, 235, 1)",
-//       borderWidth: 1,
-//     },
-//   ],
-// };
-//
-// // Step 6: Options for the bar chart, including tooltip, legend, and title (same as before)
-// const options = {
-//   responsive: true,
-//   plugins: {
-//     tooltip: {
-//       mode: "index",
-//       intersect: false,
-//     },
-//     legend: {
-//       position: "right" as const,
-//     },
-//     title: {
-//       display: true,
-//       text: "Audition Types for Current Month",
-//     },
-//   },
-//   scales: {
-//     x: {
-//       stacked: true,
-//     },
-//     y: {
-//       stacked: true,
-//       beginAtZero: true,
-//     },
-//   },
-// };
-//
-// return (
-//   <div>
-//     <Bar data={barChartData} options={options} />
-//   </div>
-// );

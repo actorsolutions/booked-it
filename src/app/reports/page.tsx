@@ -40,6 +40,7 @@ export default function Reports() {
         <h1 data-cy={CY_TAGS.REPORTS.TITLE}>THIS IS THE REPORTS PAGE</h1>
         <DashboardWrapper>
           <LifetimeAuditions auditions={auditions} />
+          <br />
           <AuditionBarChart auditions={auditions} />
         </DashboardWrapper>
       </Container>
