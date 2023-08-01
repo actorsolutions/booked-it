@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
+import { Grid, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import {
   Chart as ChartJS,
   BarElement,
@@ -12,7 +12,6 @@ import {
 import { Bar } from "react-chartjs-2";
 import { AuditionData } from "@/types";
 import CY_TAGS from "@/support/cypress_tags";
-import { FormDatePicker } from "@/components/common/Form";
 
 interface MetricProps {
   auditions: AuditionData[];
@@ -28,10 +27,15 @@ export const AuditionBarChart = (props: MetricProps) => {
     Title
   ); // Register BarElement for the bar chart
 
-  const [selectedMonth, setSelectedMonth] = useState<Date | null>(null);
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
-  const handleDateChange = (date: Date | null) => {
-    setSelectedMonth(date);
+  const handleMonthChange = (event: SelectChangeEvent<number>) => {
+    setSelectedMonth(event.target.value as number);
+  };
+
+  const handleYearChange = (event: SelectChangeEvent<number>) => {
+    setSelectedYear(event.target.value as number);
   };
 
   const chartAuditions = (auditions: AuditionData[]) => {
@@ -42,14 +46,14 @@ export const AuditionBarChart = (props: MetricProps) => {
     const capitalize = (text: string): string =>
       (text && text[0].toUpperCase() + text.slice(1)) || "";
 
-    const filteredAuditions = selectedMonth
-      ? auditions.filter(
-          (audition) =>
-            new Date(audition.date).getFullYear() ===
-              selectedMonth.getFullYear() &&
-            new Date(audition.date).getMonth() === selectedMonth.getMonth()
-        )
-      : auditions;
+    const filteredAuditions =
+      selectedMonth && selectedYear
+        ? auditions.filter(
+            (audition) =>
+              new Date(audition.date).getFullYear() === selectedYear &&
+              new Date(audition.date).getMonth() === selectedMonth
+          )
+        : auditions;
 
     filteredAuditions.forEach((audition) => {
       const label = capitalize(audition.type);
@@ -125,7 +129,28 @@ export const AuditionBarChart = (props: MetricProps) => {
           maxHeight: "30rem",
         }}
       >
-        <FormDatePicker setDate={handleDateChange} />
+        <div>
+          <Select
+            label="Select Month"
+            value={selectedMonth || ""}
+            onChange={handleMonthChange}
+          >
+            <MenuItem value={0}>January</MenuItem>
+            <MenuItem value={1}>February</MenuItem>
+            <MenuItem value={2}>March</MenuItem>
+            {/* Add other months */}
+          </Select>
+          <Select
+            label="Select Year"
+            value={selectedYear || ""}
+            onChange={handleYearChange}
+          >
+            <MenuItem value={2021}>2021</MenuItem>
+            <MenuItem value={2022}>2022</MenuItem>
+            <MenuItem value={2023}>2023</MenuItem>
+            {/* Add other years */}
+          </Select>
+        </div>
         <Bar // Use Bar component for the bar chart
           data-cy={CY_TAGS.LANDING_PAGE.GRAPH.BAR_CHART} // Adjust data-cy tag if needed
           data={barChartData} // Use barChartData instead of pieChartData
