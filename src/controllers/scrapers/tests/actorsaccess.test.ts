@@ -143,7 +143,7 @@ describe("Actor Access Scraper Tools tests", () => {
     const expected: any = [
       {
         casting: "Stefanie Seifer & Hailey Giles",
-        date: 1688022000000,
+        date: 1687996800000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26657171&result_id=401031",
         project: "BEYOND BELIEF: FACT OR FICTION #5 “Life Sentence”",
         role: "TRAVIS",
@@ -151,7 +151,7 @@ describe("Actor Access Scraper Tools tests", () => {
       },
       {
         casting: "Lesley Wolff",
-        date: 1686207600000,
+        date: 1686182400000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26423968&result_id=396627",
         project: "",
         role: "BACHELOR",
@@ -159,7 +159,7 @@ describe("Actor Access Scraper Tools tests", () => {
       },
       {
         casting: "John Papsidera",
-        date: 1685948400000,
+        date: 1685923200000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26393009&result_id=396083",
         project: "",
         role: "LORNE MICHAELS",
@@ -167,7 +167,7 @@ describe("Actor Access Scraper Tools tests", () => {
       },
       {
         casting: "Lesley Wolff",
-        date: 1685084400000,
+        date: 1685059200000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26308226&result_id=394567",
         project: "",
         role: "PENDING",
@@ -175,7 +175,7 @@ describe("Actor Access Scraper Tools tests", () => {
       },
       {
         casting: "Feldstein / Paris Casting",
-        date: 1685084400000,
+        date: 1685059200000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=25985762&result_id=388346",
         project: "UNT. MARVEL FEATURE FILM (ATL) (4 Roles)",
         role: "LAB TECH",

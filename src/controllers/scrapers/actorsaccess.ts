@@ -52,7 +52,7 @@ export const auditionScraper = (html: string) => {
       role,
       casting,
       link,
-      date: Date.parse(`${date} 2023 ` + "T00:00:00.000Z"),
+      date: Date.parse(`${date} 2023 00:00:00 UTC`),
     };
     auditions.push(auditionObj);
   }
