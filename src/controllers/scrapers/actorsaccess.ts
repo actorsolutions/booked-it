@@ -45,13 +45,14 @@ export const auditionScraper = (html: string) => {
     const casting = $(cells).find(".quicksheet-casting-name").text();
     const date = $(cells).find(".quicksheet-future-date").text().slice(1, 13);
     const link = "https://actorsaccess.com" + $(row).attr("href");
+
     const auditionObj = {
       status,
       project,
       role,
       casting,
       link,
-      date: new Date(Date.parse(`${date} 2023`)).setHours(0, 0, 0, 0),
+      date: Date.parse(`${date} 2023 ` + "T00:00:00.000Z"),
     };
     auditions.push(auditionObj);
   }
