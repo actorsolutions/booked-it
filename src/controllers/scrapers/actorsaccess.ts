@@ -51,7 +51,7 @@ export const auditionScraper = (html: string) => {
       role,
       casting,
       link,
-      date: Date.parse(`${date} 2023`),
+      date: new Date(Date.parse(`${date} 2023`)).setHours(0, 0, 0, 0),
     };
     auditions.push(auditionObj);
   }
