@@ -27,8 +27,35 @@ export const AuditionBarChart = (props: MetricProps) => {
     Title
   ); // Register BarElement for the bar chart
 
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(
+    currentMonth
+  );
+  const [selectedYear, setSelectedYear] = useState<number | null>(currentYear);
+
+  const getUniqueMonths = (auditions: AuditionData[]): number[] => {
+    const uniqueMonths = new Set<number>();
+    auditions.forEach((audition) => {
+      const month = new Date(audition.date).getMonth();
+      uniqueMonths.add(month);
+    });
+    return Array.from(uniqueMonths);
+  };
+
+  const getUniqueYears = (auditions: AuditionData[]): number[] => {
+    const uniqueYears = new Set<number>();
+    auditions.forEach((audition) => {
+      const year = new Date(audition.date).getFullYear();
+      uniqueYears.add(year);
+    });
+    return Array.from(uniqueYears);
+  };
+
+  const uniqueMonths = getUniqueMonths(props.auditions);
+  const uniqueYears = getUniqueYears(props.auditions);
 
   const handleMonthChange = (event: SelectChangeEvent<number>) => {
     setSelectedMonth(event.target.value as number);
@@ -102,6 +129,7 @@ export const AuditionBarChart = (props: MetricProps) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false, // Make the chart responsive to parent container size
     plugins: {
       legend: {
         position: "bottom" as const,
@@ -109,6 +137,23 @@ export const AuditionBarChart = (props: MetricProps) => {
       title: {
         display: true,
         text: "Breakdown by Type",
+      },
+    },
+    layout: {
+      padding: {
+        top: 30, // Increase top padding to make room for the title
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          autoSkip: false, // Prevent automatic skipping of labels
+          maxRotation: 45, // Rotate x-axis labels for better visibility
+          minRotation: 45,
+        },
+      },
+      y: {
+        beginAtZero: true, // Start y-axis at 0
       },
     },
   };
@@ -126,7 +171,7 @@ export const AuditionBarChart = (props: MetricProps) => {
       <Grid
         item
         sx={{
-          maxHeight: "30rem",
+          maxHeight: "35rem",
         }}
       >
         <div>
@@ -135,20 +180,22 @@ export const AuditionBarChart = (props: MetricProps) => {
             value={selectedMonth || ""}
             onChange={handleMonthChange}
           >
-            <MenuItem value={0}>January</MenuItem>
-            <MenuItem value={1}>February</MenuItem>
-            <MenuItem value={2}>March</MenuItem>
-            {/* Add other months */}
+            {uniqueMonths.map((month, index) => (
+              <MenuItem key={index} value={month}>
+                {month}
+              </MenuItem>
+            ))}
           </Select>
           <Select
             label="Select Year"
             value={selectedYear || ""}
             onChange={handleYearChange}
           >
-            <MenuItem value={2021}>2021</MenuItem>
-            <MenuItem value={2022}>2022</MenuItem>
-            <MenuItem value={2023}>2023</MenuItem>
-            {/* Add other years */}
+            {uniqueYears.map((year, index) => (
+              <MenuItem key={index} value={year}>
+                {year}
+              </MenuItem>
+            ))}
           </Select>
         </div>
         <Bar // Use Bar component for the bar chart

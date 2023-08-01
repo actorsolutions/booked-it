@@ -6,7 +6,7 @@ import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 import { LifetimeAuditions } from "@/components/Reports/LifetimeAuditions";
 import { AuditionBarChart } from "@/components/Reports/AuditionsBarChart";
-import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
+// import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
 import { AuditionData } from "@/types";
 
 export default function Reports() {
@@ -38,11 +38,9 @@ export default function Reports() {
         }}
       >
         <h1 data-cy={CY_TAGS.REPORTS.TITLE}>THIS IS THE REPORTS PAGE</h1>
-        <DashboardWrapper>
-          <LifetimeAuditions auditions={auditions} />
-          <br />
-          <AuditionBarChart auditions={auditions} />
-        </DashboardWrapper>
+        <LifetimeAuditions auditions={auditions} />
+        <br />
+        <AuditionBarChart auditions={auditions} />
       </Container>
     </main>
   );
