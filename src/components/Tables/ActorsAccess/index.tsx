@@ -65,7 +65,7 @@ export const ActorsAccessGrid = () => {
     const date = params.data.date;
     return new Date(date).toLocaleDateString("en-US");
   }
-  const [columnDefs] = useState([
+  const columnDefs = [
     { field: "project" },
     { field: "role" },
     { field: "casting" },
@@ -76,7 +76,7 @@ export const ActorsAccessGrid = () => {
       editable: false,
     },
     { field: "date", valueFormatter: dateFormatter, editable: false },
-  ]);
+  ];
 
   const defaultColDef = useMemo(() => {
     return {
