@@ -3,7 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { scrapeAuditions } from "@/apihelpers/actorsAccess";
 import { SelectTypeRenderer } from "@/components/Tables/ActorsAccess/CustomSelectCell";
-import { IRowNode, ValueFormatterParams } from "ag-grid-community";
+import { ColDef, IRowNode, ValueFormatterParams } from "ag-grid-community";
 import { CreateAuditionData } from "@/types";
 
 interface ActorsAccessData {
@@ -65,17 +65,21 @@ export const ActorsAccessGrid = () => {
     const date = params.data.date;
     return new Date(date).toLocaleDateString("en-US");
   }
-  const columnDefs = [
+  const columnDefs: ColDef<any> = [
     { field: "project" },
     { field: "role" },
     { field: "casting" },
     {
       field: "type",
       cellRenderer: SelectTypeRenderer,
-      suppressClickEdit: true,
       editable: false,
     },
-    { field: "date", valueFormatter: dateFormatter, editable: false },
+    {
+      field: "date",
+      valueFormatter: dateFormatter,
+      editable: false,
+      sortingOrder: ["asc", "desc"],
+    },
   ];
 
   const defaultColDef = useMemo(() => {
@@ -83,6 +87,7 @@ export const ActorsAccessGrid = () => {
       flex: 1,
       resizable: true,
       editable: true,
+      sortable: true,
     };
   }, []);
 
