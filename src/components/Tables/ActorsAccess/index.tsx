@@ -2,8 +2,9 @@ import CY_TAGS from "@/support/cypress_tags";
 import { AgGridReact } from "ag-grid-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { scrapeAuditions } from "@/apihelpers/actorsAccess";
-import { IRowNode } from "ag-grid-community";
+import { ColDef, IRowNode, ValueFormatterParams } from "ag-grid-community";
 import { CreateAuditionData } from "@/types";
+import { SelectTypeRenderer } from "@/components/Tables/ActorsAccess/CustomSelectCell";
 
 interface ActorsAccessData {
   status: string;
@@ -12,7 +13,9 @@ interface ActorsAccessData {
   casting: string;
   project: string;
   type?: string;
+  role: string;
 }
+
 export const ActorsAccessGrid = () => {
   const gridRef = useRef<AgGridReact>(null);
 
@@ -60,33 +63,27 @@ export const ActorsAccessGrid = () => {
    * Formats date for AG-Grid Purposes
    * @param params
    */
-  // function dateFormatter(params: ValueFormatterParams) {
-  //   const date = params.data.date;
-  //   return new Date(date).toLocaleDateString("en-US");
-  // }
-  // interface IData {
-  //   project: string;
-  //   role: string;
-  //   casting: number;
-  //   type: string;
-  //   date: Date;
-  // }
-  // const columnDefs: ColDef<IData>[] = [
-  //   { field: "project" },
-  //   { field: "role" },
-  //   { field: "casting" },
-  //   {
-  //     field: "type",
-  //     cellRenderer: SelectTypeRenderer,
-  //     editable: false,
-  //   },
-  //   {
-  //     field: "date",
-  //     valueFormatter: dateFormatter,
-  //     editable: false,
-  //     sortingOrder: ["asc", "desc"],
-  //   },
-  // ];
+  function dateFormatter(params: ValueFormatterParams) {
+    const date = params.data.date;
+    return new Date(date).toLocaleDateString("en-US");
+  }
+
+  const columnDefs: ColDef<ActorsAccessData>[] = [
+    { field: "project" },
+    { field: "role" },
+    { field: "casting" },
+    {
+      field: "type",
+      cellRenderer: SelectTypeRenderer,
+      editable: false,
+    },
+    {
+      field: "date",
+      valueFormatter: dateFormatter,
+      editable: false,
+      sortingOrder: ["asc", "desc"],
+    },
+  ];
 
   const defaultColDef = useMemo(() => {
     return {
@@ -107,7 +104,7 @@ export const ActorsAccessGrid = () => {
         <AgGridReact
           ref={gridRef}
           rowData={rowData}
-          // columnDefs={columnDefs}
+          columnDefs={columnDefs}
           defaultColDef={defaultColDef}
         ></AgGridReact>
         <button onClick={handleSubmit}>Import</button>
