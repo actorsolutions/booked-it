@@ -45,7 +45,6 @@ export const auditionScraper = (html: string) => {
     const casting = $(cells).find(".quicksheet-casting-name").text();
     const date = $(cells).find(".quicksheet-future-date").text().slice(1, 13);
     const link = "https://actorsaccess.com" + $(row).attr("href");
-
     const auditionObj = {
       status,
       project,

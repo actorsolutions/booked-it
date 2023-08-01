@@ -47,9 +47,7 @@ const mockHTML = `
         <p class="quicksheet-casting-name quicksheet-table-long-cell">Stefanie Seifer &amp; Hailey Giles</p>
     </div>
     <div class="quicksheet-table-cell">
-        <p class="quicksheet-future-date">
-            Thu, Jun 29
-            @ 4:00 <span class="quicksheet-am-pm">PM</span>
+        <p class="quicksheet-future-date">Thu, Jun 29 @ 4:00<span class="quicksheet-am-pm">PM</span>
         </p>
     </div>
 </a>
@@ -70,9 +68,7 @@ const mockHTML = `
         <p class="quicksheet-casting-name quicksheet-table-long-cell">Lesley Wolff</p>
     </div>
     <div class="quicksheet-table-cell">
-        <p class="quicksheet-future-date">
-            Thu, Jun 08
-            @ 5:00 <span class="quicksheet-am-pm">PM</span>
+        <p class="quicksheet-future-date">Thu, Jun 08 @ 5:00<span class="quicksheet-am-pm">PM</span>
         </p>
     </div>
 </a>
@@ -93,9 +89,7 @@ const mockHTML = `
         <p class="quicksheet-casting-name quicksheet-table-long-cell">John Papsidera</p>
     </div>
     <div class="quicksheet-table-cell">
-        <p class="quicksheet-future-date">
-            Mon, Jun 05
-            @ 6:00 <span class="quicksheet-am-pm">PM</span>
+        <p class="quicksheet-future-date">Mon, Jun 05 @ 6:00<span class="quicksheet-am-pm">PM</span>
         </p>
     </div>
 </a>
@@ -116,9 +110,7 @@ const mockHTML = `
         <p class="quicksheet-casting-name quicksheet-table-long-cell">Lesley Wolff</p>
     </div>
     <div class="quicksheet-table-cell">
-        <p class="quicksheet-future-date">
-            Fri, May 26
-            @ 8:00 <span class="quicksheet-am-pm">PM</span>
+        <p class="quicksheet-future-date">Fri, May 26 @ 8:00<span class="quicksheet-am-pm">PM</span>
         </p>
     </div>
 </a>
@@ -139,9 +131,7 @@ const mockHTML = `
         <p class="quicksheet-casting-name quicksheet-table-long-cell">Feldstein / Paris Casting</p>
     </div>
     <div class="quicksheet-table-cell">
-        <p class="quicksheet-future-date">
-            Fri, May 26
-            @ 9:00 <span class="quicksheet-am-pm">AM</span>
+        <p class="quicksheet-future-date">Fri, May 26 @ 9:00 <span class="quicksheet-am-pm">AM</span>
         </p>
     </div>
 </a>
@@ -153,7 +143,7 @@ describe("Actor Access Scraper Tools tests", () => {
     const expected: any = [
       {
         casting: "Stefanie Seifer & Hailey Giles",
-        date: 1672560000000,
+        date: 1688022000000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26657171&result_id=401031",
         project: "BEYOND BELIEF: FACT OR FICTION #5 “Life Sentence”",
         role: "TRAVIS",
@@ -161,7 +151,7 @@ describe("Actor Access Scraper Tools tests", () => {
       },
       {
         casting: "Lesley Wolff",
-        date: 1672560000000,
+        date: 1686207600000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26423968&result_id=396627",
         project: "",
         role: "BACHELOR",
@@ -169,7 +159,7 @@ describe("Actor Access Scraper Tools tests", () => {
       },
       {
         casting: "John Papsidera",
-        date: 1672560000000,
+        date: 1685948400000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26393009&result_id=396083",
         project: "",
         role: "LORNE MICHAELS",
@@ -177,7 +167,7 @@ describe("Actor Access Scraper Tools tests", () => {
       },
       {
         casting: "Lesley Wolff",
-        date: 1672560000000,
+        date: 1685084400000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26308226&result_id=394567",
         project: "",
         role: "PENDING",
@@ -185,7 +175,7 @@ describe("Actor Access Scraper Tools tests", () => {
       },
       {
         casting: "Feldstein / Paris Casting",
-        date: 1672560000000,
+        date: 1685084400000,
         link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=25985762&result_id=388346",
         project: "UNT. MARVEL FEATURE FILM (ATL) (4 Roles)",
         role: "LAB TECH",
