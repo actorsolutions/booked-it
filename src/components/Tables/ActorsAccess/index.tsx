@@ -3,7 +3,12 @@ import { AgGridReact } from "ag-grid-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { scrapeAuditions } from "@/apihelpers/actorsAccess";
 import { SelectTypeRenderer } from "@/components/Tables/ActorsAccess/CustomSelectCell";
-import { ColDef, IRowNode, ValueFormatterParams } from "ag-grid-community";
+import {
+  ColDef,
+  ColGroupDef,
+  IRowNode,
+  ValueFormatterParams,
+} from "ag-grid-community";
 import { CreateAuditionData } from "@/types";
 
 interface ActorsAccessData {
@@ -65,7 +70,7 @@ export const ActorsAccessGrid = () => {
     const date = params.data.date;
     return new Date(date).toLocaleDateString("en-US");
   }
-  const columnDefs: ColDef<any>[] = [
+  const columnDefs: ColDef[] | ColGroupDef = [
     { field: "project" },
     { field: "role" },
     { field: "casting" },
