@@ -1,39 +1,43 @@
 import CY_TAGS from "@/support/cypress_tags";
 import { AgGridReact } from "ag-grid-react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { scrapeAuditions } from "@/apihelpers/actorsAccess";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  SelectTypeRenderer,
+  SelectTypeDropdown,
+} from "@/components/Tables/ActorsAccess/CustomSelectCell";
 
 export const ActorsAccessGrid = (props: any) => {
-  const { data } = props;
-  const colors = ["Red", "Green", "Blue"];
+  const gridRef = useRef();
+
   const [rowData, setRowData] = useState([]);
 
   useEffect(() => {
-    scrapeAuditions().then((auditions) => {
-      setRowData(auditions.data);
+    scrapeAuditions().then((response) => {
+      const auditionArray = response.data;
+      auditionArray.forEach((audition) => (audition.type = "television"));
+      setRowData(auditionArray);
     });
   }, []);
-
-  const testComponent = () => {
-    const typeItems = [
-      { value: "television", label: "Television" },
-      { value: "film", label: "Film" },
-      { value: "student", label: "Student" },
-      { value: "theater", label: "Theater" },
-      { value: "industrial", label: "Industrial" },
-      { value: "commercial", label: "Commercial" },
-      { value: "newMedia", label: "New Media" },
-      { value: "voiceOver", label: "Voiceover" },
-    ];
-    return (
-      <select>
-        {typeItems.map((item) => (
-          <option value={item.value}> {item.label} </option>
-        ))}
-      </select>
-    );
+  const createAuditionObject = (node) => {
+    const { status, date, link, project, casting, type } = node.data;
+    return {
+      statuses: [{ type: "auditioned", date: date / 1000 }],
+      casting: [casting],
+      project: project,
+      date: date / 1000,
+      notes: `URL: ${link}, imported from Actors Access`,
+      archived: true,
+    };
   };
+  const handleSubmit = () => {
+    const auditions = [];
+    gridRef.current.api.forEachNode((node) =>
+      auditions.push(createAuditionObject(node))
+    );
+    console.log(auditions);
+  };
+
   function dateFormatter(params) {
     const date = params.data.date;
     return new Date(date).toLocaleDateString("en-US");
@@ -42,16 +46,13 @@ export const ActorsAccessGrid = (props: any) => {
     { field: "project" },
     { field: "role" },
     { field: "casting" },
-    { field: "link" },
-    { field: "date", valueFormatter: dateFormatter },
+    // { field: "link" },
     {
       field: "type",
-      cellRenderer: testComponent,
-      cellEditor: "agSelectCellEditor",
-      cellEditorParams: {
-        values: colors,
-      },
+      cellRenderer: SelectTypeRenderer,
+      suppressClickEdit: true,
     },
+    { field: "date", valueFormatter: dateFormatter, editable: false },
   ]);
 
   const defaultColDef = useMemo(() => {
@@ -70,10 +71,12 @@ export const ActorsAccessGrid = (props: any) => {
         style={{ height: "50vh", width: "100%" }}
       >
         <AgGridReact
+          ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
         ></AgGridReact>
+        <button onClick={handleSubmit}>Submit</button>
       </div>
     </>
   );
