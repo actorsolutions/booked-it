@@ -1,25 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { getAuditions } from "@/apihelpers/auditions";
 import { SignUpOrSignIn } from "@/apihelpers/auth";
-import { AgGridReact } from "ag-grid-react";
 
 export const LandingPage = () => {
   const { user } = useUser();
 
-  const [auditions, setAuditions] = useState([]);
-  const [columnDefs] = useState([
-    { field: "project", filter: true },
-    { field: "company", filter: true },
-    { field: "type" },
-  ]);
   useEffect(() => {
-    SignUpOrSignIn().then(() => {
-      getAuditions().then((response: any) => {
-        setAuditions(response.auditions);
-      });
-    });
+    SignUpOrSignIn().then(() => {});
   }, [user]);
   if (user) {
     return (
@@ -27,12 +15,6 @@ export const LandingPage = () => {
         <h1>Welcome {user.name}</h1>
         <p>Email - {user.email}</p>
         <a href={"/api/auth/logout"}>Logout</a>
-        <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
-          <AgGridReact
-            rowData={auditions}
-            columnDefs={columnDefs}
-          ></AgGridReact>
-        </div>
       </>
     );
   }
