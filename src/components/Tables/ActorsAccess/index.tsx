@@ -65,7 +65,7 @@ export const ActorsAccessGrid = () => {
     const date = params.data.date;
     return new Date(date).toLocaleDateString("en-US");
   }
-  const columnDefs: ColDef<any> = [
+  const columnDefs: ColDef<any>[] = [
     { field: "project" },
     { field: "role" },
     { field: "casting" },
