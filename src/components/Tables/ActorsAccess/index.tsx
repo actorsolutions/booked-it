@@ -69,8 +69,6 @@ export const ActorsAccessGrid = () => {
     { field: "project" },
     { field: "role" },
     { field: "casting" },
-    // Keeping this here for dev notes, might want to do something with Link later
-    // { field: "link" },
     {
       field: "type",
       cellRenderer: SelectTypeRenderer,
