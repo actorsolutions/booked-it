@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { ICellRendererParams } from "ag-grid-community";
 
 interface CustomSelectCell extends ICellRendererParams {
@@ -17,11 +17,10 @@ export const SelectTypeRenderer = (params: CustomSelectCell) => {
     { value: "newMedia", label: "New Media" },
     { value: "voiceOver", label: "Voiceover" },
   ];
-  const { value, setValue } = params;
-  const handleChange = (e) => {
+  const { setValue } = params;
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setValue(e.target.value);
   };
-  const type = typeItems.find((item) => item.value === value);
   return (
     <select data-cy={"holder"} onChange={handleChange}>
       {typeItems.map((item) => (

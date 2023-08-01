@@ -2,43 +2,66 @@ import CY_TAGS from "@/support/cypress_tags";
 import { AgGridReact } from "ag-grid-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { scrapeAuditions } from "@/apihelpers/actorsAccess";
-import {
-  SelectTypeRenderer,
-  SelectTypeDropdown,
-} from "@/components/Tables/ActorsAccess/CustomSelectCell";
+import { SelectTypeRenderer } from "@/components/Tables/ActorsAccess/CustomSelectCell";
+import { IRowNode, ValueFormatterParams } from "ag-grid-community";
+import { CreateAuditionData } from "@/types";
 
-export const ActorsAccessGrid = (props: any) => {
-  const gridRef = useRef();
+interface ActorsAccessData {
+  status: string;
+  date: Date;
+  link: string;
+  casting: string;
+  project: string;
+  type?: string;
+}
+export const ActorsAccessGrid = () => {
+  const gridRef = useRef<AgGridReact>(null);
 
   const [rowData, setRowData] = useState([]);
 
   useEffect(() => {
     scrapeAuditions().then((response) => {
       const auditionArray = response.data;
-      auditionArray.forEach((audition) => (audition.type = "television"));
+      auditionArray.forEach((audition: ActorsAccessData) => {
+        if (audition.project === "") {
+          audition.project = "UNKNOWN";
+        }
+        audition.type = "television";
+      });
       setRowData(auditionArray);
     });
   }, []);
-  const createAuditionObject = (node) => {
-    const { status, date, link, project, casting, type } = node.data;
+
+  /**
+   * Creates Data Object which can be sent to the API
+   * @param node
+   */
+  const createAuditionObject = (node: IRowNode) => {
+    const { date, link, project, casting, type } = node.data;
     return {
-      statuses: [{ type: "auditioned", date: date / 1000 }],
+      statuses: [{ type: "auditioned", date: date / 1000, statusId: 2 }],
       casting: [casting],
       project: project,
       date: date / 1000,
       notes: `URL: ${link}, imported from Actors Access`,
       archived: true,
+      company: "UNKNOWN",
+      type,
     };
   };
   const handleSubmit = () => {
-    const auditions = [];
-    gridRef.current.api.forEachNode((node) =>
+    const auditions: CreateAuditionData[] = [];
+    gridRef.current?.api.forEachNode((node) =>
       auditions.push(createAuditionObject(node))
     );
     console.log(auditions);
   };
 
-  function dateFormatter(params) {
+  /**
+   * Formats date for AG-Grid Purposes
+   * @param params
+   */
+  function dateFormatter(params: ValueFormatterParams) {
     const date = params.data.date;
     return new Date(date).toLocaleDateString("en-US");
   }
@@ -46,11 +69,13 @@ export const ActorsAccessGrid = (props: any) => {
     { field: "project" },
     { field: "role" },
     { field: "casting" },
+    // Keeping this here for dev notes, might want to do something with Link later
     // { field: "link" },
     {
       field: "type",
       cellRenderer: SelectTypeRenderer,
       suppressClickEdit: true,
+      editable: false,
     },
     { field: "date", valueFormatter: dateFormatter, editable: false },
   ]);
@@ -76,7 +101,7 @@ export const ActorsAccessGrid = (props: any) => {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
         ></AgGridReact>
-        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleSubmit}>Import</button>
       </div>
     </>
   );

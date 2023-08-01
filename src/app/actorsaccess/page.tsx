@@ -6,16 +6,8 @@ import { Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { ActorsAccessGrid } from "@/components/Tables/ActorsAccess";
-import { useEffect, useState } from "react";
-import { scrapeAuditions } from "@/apihelpers/actorsAccess";
 
-export default function Reports() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    scrapeAuditions().then((auditions) => {
-      setData(auditions.data);
-    });
-  }, []);
+export default function ActorsAccess() {
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>
@@ -31,7 +23,7 @@ export default function Reports() {
             }}
           >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <ActorsAccessGrid data={data} />
+              <ActorsAccessGrid />
             </LocalizationProvider>
           </Container>
         </main>
