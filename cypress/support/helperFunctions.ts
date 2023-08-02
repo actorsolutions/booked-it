@@ -104,6 +104,15 @@ export const clearNestedInput = (pickerTag: string) => {
   });
 };
 
+/**
+ * Validates value of input field
+ * @param inputTag
+ * @param expectedText
+ */
+export const validateInputValue = (inputTag: string, expectedText: string) => {
+  cy.get(cyTag(inputTag)).find("input").should("have.value", expectedText);
+};
+
 export const checkTextInSnackbar = (message: string) => {
   cy.get(cyTag(CY_TAGS.LANDING_PAGE.CONTAINERS.SNACKBAR_CONTAINER)).within(
     () => {

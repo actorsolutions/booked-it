@@ -31,7 +31,7 @@ export default function ActorsAccess() {
             }}
           >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <h1 data-cy={CY_TAGS.REPORTS.TITLE}>Actors Access</h1>
+              <h1 data-cy={ACTORS_ACCESS_IMPORT.TITLE}>Actors Access</h1>
               <DashboardWrapper>
                 <ConnectForm setImportData={setImportData} />
               </DashboardWrapper>

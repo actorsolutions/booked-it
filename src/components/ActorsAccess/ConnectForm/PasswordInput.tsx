@@ -22,7 +22,7 @@ export const PasswordInput = (props: Props<FormValues>) => {
     >
       <Grid item>
         <FormInput
-          cyTag={CY_TAGS.CASTING_FORM.INPUTS.FIRST_NAME}
+          cyTag={CY_TAGS.ACTORS_ACCESS_IMPORT.USER_FORM.INPUTS.PASSWORD_INPUT}
           inputId="actors-access-password"
           control={control}
           field="password"

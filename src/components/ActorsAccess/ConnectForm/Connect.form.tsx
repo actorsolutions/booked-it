@@ -52,6 +52,7 @@ export const ConnectForm = (props: Props) => {
         </Grid>
         <Grid item xs={6}>
           <Button
+            data-cy={ACTORS_ACCESS_IMPORT.BUTTON}
             size="large"
             variant="contained"
             color="success"
