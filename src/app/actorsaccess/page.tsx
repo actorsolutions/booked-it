@@ -2,9 +2,7 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/support/MaterialUITheme";
 import { SnackBarProvider } from "@/context/SnackbarContext";
-import { Container } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Container, Grid } from "@mui/material";
 import { ActorsAccessImportTable } from "@/components/ActorsAccess";
 import CY_TAGS from "@/support/cypress_tags";
 import React, { useState } from "react";
@@ -30,15 +28,19 @@ export default function ActorsAccess() {
               pb: "2rem",
             }}
           >
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <h1 data-cy={ACTORS_ACCESS_IMPORT.TITLE}>Actors Access</h1>
-              <DashboardWrapper>
-                <ConnectForm setImportData={setImportData} />
-              </DashboardWrapper>
-              <DashboardWrapper>
-                <ActorsAccessImportTable rowData={importData} />
-              </DashboardWrapper>
-            </LocalizationProvider>
+            <h1 data-cy={ACTORS_ACCESS_IMPORT.TITLE}>Actors Access</h1>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <DashboardWrapper>
+                  <ConnectForm setImportData={setImportData} />
+                </DashboardWrapper>
+              </Grid>
+              <Grid item xs={12}>
+                <DashboardWrapper>
+                  <ActorsAccessImportTable rowData={importData} />
+                </DashboardWrapper>
+              </Grid>
+            </Grid>
           </Container>
         </main>
       </SnackBarProvider>
