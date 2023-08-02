@@ -13,7 +13,7 @@ const ActorsAccessController = async (
   res: NextApiResponse
 ) => {
   await RouteHandler(req, res, {
-    GET: getActorAccessSubmissions,
+    POST: getActorAccessSubmissions,
   });
 };
 

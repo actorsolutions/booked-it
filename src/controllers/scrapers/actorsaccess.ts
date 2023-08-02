@@ -2,21 +2,22 @@ import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import * as cheerio from "cheerio";
 
-const loginToActorsAccess = async () => {
+const loginToActorsAccess = async (userName: string, password: string) => {
+  console.log(userName, password);
   const actorsAccessLoginURL =
     "https://actorsaccess.com/visitor/service.cfm?method=login";
-  const createLoginFormData = () => {
+  const createLoginFormData = (userName: string, password: string) => {
     const formData = new FormData();
     formData.append("timezoneOffset", "420");
     formData.append("pageURL", "/index.cfm");
-    formData.append("username", process.env.AA_USERNAME as string);
-    formData.append("password", process.env.AA_PW as string);
+    formData.append("username", userName);
+    formData.append("password", password);
     return formData;
   };
 
   const cookieAndHeaders = await axios.post(
     actorsAccessLoginURL,
-    createLoginFormData()
+    createLoginFormData(userName, password)
   );
   const setCookieData = cookieAndHeaders.headers["set-cookie"];
   // @ts-ignore
@@ -63,7 +64,8 @@ export const getActorAccessSubmissions = async (
   res: NextApiResponse
 ) => {
   const getAuditions = async () => {
-    const { BDSSID, AAUID } = await loginToActorsAccess();
+    const { userName, password } = JSON.parse(req.body);
+    const { BDSSID, AAUID } = await loginToActorsAccess(userName, password);
 
     const auditionFormData = () => {
       const formData = new FormData();
