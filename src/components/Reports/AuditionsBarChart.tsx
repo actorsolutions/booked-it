@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Grid, Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import {
+  Grid,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
 import {
   Chart as ChartJS,
   BarElement,
@@ -25,62 +31,67 @@ export const AuditionBarChart = (props: MetricProps) => {
     Tooltip,
     Legend,
     Title
-  ); // Register BarElement for the bar chart
-
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
-
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(
-    currentMonth
   );
-  const [selectedYear, setSelectedYear] = useState<number | null>(currentYear);
 
-  const getUniqueMonths = (auditions: AuditionData[]): number[] => {
-    const uniqueMonths = new Set<number>();
+  const [selectedMonthYear, setSelectedMonthYear] = useState<string | null>(
+    null
+  );
+
+  const getUniqueMonthYears = (auditions: AuditionData[]): string[] => {
+    const uniqueMonthYears = new Set<string>();
     auditions.forEach((audition) => {
-      const month = new Date(audition.date).getMonth();
-      uniqueMonths.add(month);
+      const date = new Date(audition.date);
+      const monthYear = `${date.toLocaleString("default", {
+        month: "long",
+      })} ${date.getFullYear()}`;
+      uniqueMonthYears.add(monthYear);
     });
-    return Array.from(uniqueMonths);
+    return Array.from(uniqueMonthYears);
   };
 
-  const getUniqueYears = (auditions: AuditionData[]): number[] => {
-    const uniqueYears = new Set<number>();
-    auditions.forEach((audition) => {
-      const year = new Date(audition.date).getFullYear();
-      uniqueYears.add(year);
-    });
-    return Array.from(uniqueYears);
+  const uniqueMonthYears = getUniqueMonthYears(props.auditions);
+
+  const handleMonthYearChange = (event: SelectChangeEvent<string>) => {
+    setSelectedMonthYear(event.target.value);
   };
 
-  const uniqueMonths = getUniqueMonths(props.auditions);
-  const uniqueYears = getUniqueYears(props.auditions);
+  const chartAuditions = (selectedMonthYear: string | null) => {
+    if (!selectedMonthYear) {
+      return null;
+    }
 
-  const handleMonthChange = (event: SelectChangeEvent<number>) => {
-    setSelectedMonth(event.target.value as number);
-  };
+    const [selectedMonth, selectedYear] = selectedMonthYear.split(" ");
 
-  const handleYearChange = (event: SelectChangeEvent<number>) => {
-    setSelectedYear(event.target.value as number);
-  };
-
-  const chartAuditions = (auditions: AuditionData[]) => {
-    const barChartLabel: string = "Type Breakdown"; // Change label for the bar chart
+    const barChartLabel: string = "Type Breakdown";
     const typeCount: number[] = [];
     const barLabels: string[] = [];
 
     const capitalize = (text: string): string =>
       (text && text[0].toUpperCase() + text.slice(1)) || "";
 
-    const filteredAuditions =
-      selectedMonth && selectedYear
-        ? auditions.filter(
-            (audition) =>
-              new Date(audition.date).getFullYear() === selectedYear &&
-              new Date(audition.date).getMonth() === selectedMonth
-          )
-        : auditions;
+    const monthToNumber = (month: string): number => {
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      return monthNames.indexOf(month);
+    };
+
+    const filteredAuditions = props.auditions.filter(
+      (audition) =>
+        new Date(audition.date).getFullYear() === parseInt(selectedYear) &&
+        new Date(audition.date).getMonth() === monthToNumber(selectedMonth)
+    );
 
     filteredAuditions.forEach((audition) => {
       const label = capitalize(audition.type);
@@ -125,11 +136,26 @@ export const AuditionBarChart = (props: MetricProps) => {
     return { barChartData };
   };
 
-  const { barChartData } = chartAuditions(props.auditions);
+  const { barChartData } = chartAuditions(selectedMonthYear) || {};
+
+  const formattedData = barChartData
+    ? {
+        labels: barChartData.labels,
+        datasets: [
+          {
+            label: barChartData.datasets[0].label,
+            data: barChartData.datasets[0].data,
+            backgroundColor: barChartData.datasets[0].backgroundColor,
+            borderColor: barChartData.datasets[0].borderColor,
+            borderWidth: barChartData.datasets[0].borderWidth,
+          },
+        ],
+      }
+    : undefined;
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Make the chart responsive to parent container size
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "bottom" as const,
@@ -141,19 +167,22 @@ export const AuditionBarChart = (props: MetricProps) => {
     },
     layout: {
       padding: {
-        top: 30, // Increase top padding to make room for the title
+        top: 30,
+        left: 20,
+        right: 20,
+        bottom: 60,
       },
     },
     scales: {
       x: {
         ticks: {
-          autoSkip: false, // Prevent automatic skipping of labels
-          maxRotation: 45, // Rotate x-axis labels for better visibility
+          autoSkip: false,
+          maxRotation: 45,
           minRotation: 45,
         },
       },
       y: {
-        beginAtZero: true, // Start y-axis at 0
+        beginAtZero: true,
       },
     },
   };
@@ -166,44 +195,48 @@ export const AuditionBarChart = (props: MetricProps) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        position: "relative",
       }}
     >
       <Grid
         item
+        xs={12}
         sx={{
           maxHeight: "35rem",
         }}
       >
         <div>
-          <Select
-            label="Select Month"
-            value={selectedMonth || ""}
-            onChange={handleMonthChange}
+          <Typography
+            variant="h6"
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              margin: "1rem",
+            }}
           >
-            {uniqueMonths.map((month, index) => (
-              <MenuItem key={index} value={month}>
-                {month}
-              </MenuItem>
-            ))}
-          </Select>
+            Auditions by Month
+          </Typography>
           <Select
-            label="Select Year"
-            value={selectedYear || ""}
-            onChange={handleYearChange}
+            label="Select Month and Year"
+            value={selectedMonthYear || ""}
+            onChange={handleMonthYearChange}
+            sx={{ width: "200px" }}
           >
-            {uniqueYears.map((year, index) => (
-              <MenuItem key={index} value={year}>
-                {year}
+            {uniqueMonthYears.map((monthYear, index) => (
+              <MenuItem key={index} value={monthYear}>
+                {monthYear}
               </MenuItem>
             ))}
           </Select>
         </div>
-        <Bar // Use Bar component for the bar chart
-          data-cy={CY_TAGS.LANDING_PAGE.GRAPH.BAR_CHART} // Adjust data-cy tag if needed
-          data={barChartData} // Use barChartData instead of pieChartData
-          options={options}
-        />
-        <p>Number of Auditions - {props.auditions.length}</p>
+        {formattedData && (
+          <Bar
+            data-cy={CY_TAGS.LANDING_PAGE.GRAPH.BAR_CHART}
+            data={formattedData}
+            options={options}
+          />
+        )}
       </Grid>
     </Grid>
   );

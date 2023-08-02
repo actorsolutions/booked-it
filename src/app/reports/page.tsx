@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { getAuditions } from "@/apihelpers/auditions";
-import { Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 import { LifetimeAuditions } from "@/components/Reports/LifetimeAuditions";
 import { AuditionBarChart } from "@/components/Reports/AuditionsBarChart";
 // import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
 import { AuditionData } from "@/types";
+import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
 
 export default function Reports() {
   const { user } = useUser();
@@ -37,10 +38,18 @@ export default function Reports() {
           pb: "2rem",
         }}
       >
-        <h1 data-cy={CY_TAGS.REPORTS.TITLE}>THIS IS THE REPORTS PAGE</h1>
-        <LifetimeAuditions auditions={auditions} />
-        <br />
-        <AuditionBarChart auditions={auditions} />
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <DashboardWrapper>
+              <LifetimeAuditions auditions={auditions} />
+            </DashboardWrapper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <DashboardWrapper>
+              <AuditionBarChart auditions={auditions} />
+            </DashboardWrapper>
+          </Grid>
+        </Grid>
       </Container>
     </main>
   );
