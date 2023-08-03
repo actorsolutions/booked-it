@@ -578,4 +578,66 @@ describe("It Tests the Auditions Model", () => {
     );
     expect(await updateAudition).toEqual(expectedResponse);
   });
+  it("Creates multiple auditions with statuses and returns the count", async () => {
+    const auditionsArray = [
+      {
+        statuses: {
+          create: {
+            date: 0,
+            Status: {
+              connect: {
+                id: 1,
+              },
+            },
+          },
+        },
+        casting: ["Doro/Sherwood Casting ."],
+        project: "THE WEATHERMAN",
+        date: 1676592000,
+        notes:
+          "URL: https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=25135869&result_id=372056, imported from Actors Access",
+        archived: true,
+        company: "UNKNOWN",
+        type: "television" as audition_types,
+        id: 0,
+        userId: 0,
+      },
+      {
+        statuses: {
+          create: {
+            date: 0,
+            Status: {
+              connect: {
+                id: 1,
+              },
+            },
+          },
+        },
+        casting: ["Doro/Sherwood Casting ."],
+        project: "THE WEATHERMAN",
+        date: 1676592000,
+        notes:
+          "URL: https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=25135869&result_id=372056, imported from Actors Access",
+        archived: true,
+        company: "UNKNOWN",
+        type: "television" as audition_types,
+        id: 0,
+        userId: 0,
+      },
+    ];
+    const expected = { count: 2 };
+    const mockPrisma = {
+      createMany: async () => {
+        return new Promise((resolve) => {
+          resolve(expected);
+        });
+      },
+    };
+
+    const updateAudition = Audition.createMany(
+      auditionsArray,
+      mockPrisma as unknown as PrismaClient["audition"]
+    );
+    expect(await updateAudition).toEqual(expected);
+  });
 });
