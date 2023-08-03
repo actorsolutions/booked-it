@@ -1,38 +1,17 @@
-import CY_TAGS from "@/support/cypress_tags";
 import { AgGridReact } from "ag-grid-react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { scrapeAuditions } from "@/apihelpers/actorsAccess";
+import React, { useMemo, useRef } from "react";
 import { ColDef, IRowNode, ValueFormatterParams } from "ag-grid-community";
 import { CreateAuditionData } from "@/types";
-import { SelectTypeRenderer } from "@/components/Tables/ActorsAccess/CustomSelectCell";
+import { SelectTypeRenderer } from "@/components/ActorsAccess/CustomSelectCell";
+import { ActorsAccessData } from "@/components/ActorsAccess/index";
 
-interface ActorsAccessData {
-  status: string;
-  date: Date;
-  link: string;
-  casting: string;
-  project: string;
-  type?: string;
-  role: string;
+interface Props {
+  rowData: ActorsAccessData[];
 }
 
-export const ActorsAccessGrid = () => {
+export const ActorsAccessImportTable = (props: Props) => {
+  const { rowData } = props;
   const gridRef = useRef<AgGridReact>(null);
-
-  const [rowData, setRowData] = useState([]);
-
-  useEffect(() => {
-    scrapeAuditions().then((response) => {
-      const auditionArray = response.data;
-      auditionArray.forEach((audition: ActorsAccessData) => {
-        if (audition.project === "") {
-          audition.project = "UNKNOWN";
-        }
-        audition.type = "television";
-      });
-      setRowData(auditionArray);
-    });
-  }, []);
 
   /**
    * Creates Data Object which can be sent to the API
@@ -96,7 +75,6 @@ export const ActorsAccessGrid = () => {
 
   return (
     <>
-      <h1 data-cy={CY_TAGS.REPORTS.TITLE}>Actors Access</h1>
       <div
         className="ag-theme-alpine"
         style={{ height: "50vh", width: "100%" }}

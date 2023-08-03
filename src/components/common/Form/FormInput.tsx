@@ -14,10 +14,11 @@ interface Props<T extends FieldValues> {
   control: Control<T>;
   field: Path<T>;
   rules?: RegisterOptions;
+  label?: string;
 }
 
 export const FormInput = <T extends FieldValues>(props: Props<T>) => {
-  const { cyTag, inputId, control, field, inputType } = props;
+  const { label, cyTag, inputId, control, field, inputType } = props;
   return (
     <div>
       <Controller
@@ -33,6 +34,7 @@ export const FormInput = <T extends FieldValues>(props: Props<T>) => {
                 data-cy={cyTag}
                 onChange={onChange}
                 type={inputType}
+                label={label}
               />
             </FormControl>
           );

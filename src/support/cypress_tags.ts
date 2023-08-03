@@ -1,5 +1,16 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
+  ACTORS_ACCESS_IMPORT: {
+    TITLE: "actors-access-link-title",
+    USER_FORM: {
+      USER_FORM_CONTAINER: "user-form-container",
+      INPUTS: {
+        USERNAME_INPUT: "user-form-user-name-input",
+        PASSWORD_INPUT: "user-form-password-input",
+      },
+    },
+    BUTTON: "actors-access-link-button",
+  },
   LANDING_PAGE: {
     BUTTONS: {
       LOG_IN: "log-in-button",

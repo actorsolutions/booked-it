@@ -53,6 +53,7 @@ export const login = () => {
   cy.intercept("GET", "/api/auditions").as("getAuditions");
   cy.intercept("PUT", "/api/auditions/**").as("updateAudition");
   cy.intercept("POST", "/api/auditions").as("createAudition");
+  cy.intercept("POST", "/api/actorsaccess").as("linkActorsAccess");
   cy.generateSession().then((data: string) => {
     cy.setCookie("appSession", data);
   });
