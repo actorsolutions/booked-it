@@ -5,6 +5,7 @@ import { prisma } from "@/utils/prisma";
 import { createStatusChange } from "@/utils/adapters";
 import { FormattedStatus } from "@/types/statuschange";
 import { StatusChange } from "@/models/StatusChanges";
+import { AuditionData } from "@/types";
 
 /**
  * Gets all Auditions based on UserID and sends them
@@ -165,4 +166,26 @@ export const deleteAudition = async (
   } else {
     return res.status(500).send({ message: "Failed to delete" });
   }
+};
+
+/**
+ * Creates auditions in bulk
+ * @param req
+ * @param res
+ * @param db
+ */
+export const addAuditions = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  db = prisma.audition
+) => {
+  const session = await getSession(req, res);
+  const userId = parseInt(session?.user.id);
+  const { data } = JSON.parse(req.body);
+  data.forEach((audition: AuditionData) => {
+    audition.userId = userId;
+  });
+
+  const createdAuditions = await Audition.createMany(data, db);
+  res.status(200).send(createdAuditions);
 };

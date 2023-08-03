@@ -252,4 +252,18 @@ export class Audition {
 
     return formatAudition(auditions);
   }
+
+  /**
+   * Creates many auditions
+   * @param data
+   * @param db
+   */
+  static async createMany(
+    data: Prisma.AuditionUncheckedCreateInput[],
+    db: PrismaClient["audition"]
+  ) {
+    return db.createMany({
+      data,
+    });
+  }
 }

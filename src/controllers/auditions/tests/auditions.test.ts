@@ -4,6 +4,7 @@ import {
   getAudition,
   updateAudition,
   deleteAudition,
+  addAuditions,
 } from "@/controllers";
 import { NextApiRequest, NextApiResponse } from "next";
 import { SESSION_DATA } from "@/utils/testSetup";
@@ -442,6 +443,88 @@ describe("Audition Controller Tests", () => {
       mockDb as never
     );
     expect(finalBody).toEqual({ message: "Deleted!" });
+    expect(finalStatusCode).toEqual(200);
+  });
+});
+
+describe("Bulk Audition Controller Tests", () => {
+  it("Should return an array of auditions", async () => {
+    const auditionsArray = [
+      {
+        statuses: [
+          {
+            type: "auditioned",
+            date: 1676592000,
+            statusId: 2,
+          },
+        ],
+        casting: ["Doro/Sherwood Casting ."],
+        project: "THE WEATHERMAN",
+        date: 1676592000,
+        notes:
+          "URL: https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=25135869&result_id=372056, imported from Actors Access",
+        archived: true,
+        company: "UNKNOWN",
+        type: "television",
+      },
+      {
+        statuses: [
+          {
+            type: "auditioned",
+            date: 1676592000,
+            statusId: 2,
+          },
+        ],
+        casting: ["Doro/Sherwood Casting ."],
+        project: "THE WEATHERMAN",
+        date: 1676592000,
+        notes:
+          "URL: https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=25135869&result_id=372056, imported from Actors Access",
+        archived: true,
+        company: "UNKNOWN",
+        type: "television",
+      },
+    ];
+    const expected = {
+      count: 3,
+    };
+    const session = await generateSessionCookie(SESSION_DATA, {
+      secret: process.env.AUTH0_SECRET as string,
+    });
+    const fakeReq = {
+      method: "POST",
+      headers: { cookie: `appSession=${session}` },
+      body: JSON.stringify({ data: auditionsArray }),
+    };
+    const fakeResp = {
+      json: (json: any) => json,
+      send: (send: any) => send,
+      status: (code: any) => {
+        finalStatusCode = code;
+        return {
+          send: (body: any) => {
+            finalBody = body;
+          },
+        };
+      },
+      getHeader: (header: any) => header,
+      setHeader: (header: any) => header,
+      cookie: `appSession=${session}`,
+    };
+    const mockDb = {
+      createMany: async () => {
+        return new Promise((resolve) => {
+          resolve({ count: 3 });
+        });
+      },
+    };
+    await addAuditions(
+      fakeReq as never as NextApiRequest,
+      fakeResp as never as NextApiResponse,
+      mockDb as never
+    );
+    // @ts-ignore
+    expect(finalBody).toEqual(expected);
     expect(finalStatusCode).toEqual(200);
   });
 });
