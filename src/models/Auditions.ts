@@ -262,8 +262,10 @@ export class Audition {
     data: Prisma.AuditionUncheckedCreateInput[],
     db: PrismaClient["audition"]
   ) {
-    return db.createMany({
+    const count = await db.createMany({
       data,
+      skipDuplicates: true, // Skip 'Bobo'
     });
+    return count;
   }
 }

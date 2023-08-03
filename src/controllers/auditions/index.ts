@@ -5,7 +5,6 @@ import { prisma } from "@/utils/prisma";
 import { createStatusChange } from "@/utils/adapters";
 import { FormattedStatus } from "@/types/statuschange";
 import { StatusChange } from "@/models/StatusChanges";
-import { AuditionData } from "@/types";
 
 /**
  * Gets all Auditions based on UserID and sends them
@@ -182,10 +181,41 @@ export const addAuditions = async (
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
   const { data } = JSON.parse(req.body);
-  data.forEach((audition: AuditionData) => {
-    audition.userId = userId;
-  });
+  const createdAuditions = [];
+  for (const audition of data) {
+    const {
+      id,
+      date,
+      project,
+      company,
+      casting,
+      notes,
+      type,
+      callBackDate,
+      archived,
+      statuses,
+    } = audition;
+    const createAuditionObject = {
+      id,
+      date,
+      project,
+      company,
+      casting: casting || [],
+      notes,
+      type,
+      callBackDate,
+      archived,
+      userId,
+      statuses: {
+        createMany: {
+          data: statuses,
+        },
+      },
+    };
 
-  const createdAuditions = await Audition.createMany(data, db);
-  res.status(200).send(createdAuditions);
+    const createdAudition = await Audition.create(createAuditionObject, db);
+    createdAuditions.push(createdAudition);
+  }
+
+  res.status(200).send({ count: createdAuditions.length });
 };

@@ -9,7 +9,7 @@ import { getSession } from "@auth0/nextjs-auth0";
  * @param res
  * @constructor
  */
-const AuditionsController = async (
+export const BulkAuditionsController = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -22,4 +22,4 @@ const AuditionsController = async (
   });
 };
 
-export default AuditionsController;
+export default BulkAuditionsController;
