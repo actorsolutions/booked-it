@@ -14,6 +14,7 @@ export default {
     AUDITION_CREATE_VALIDATION_ERROR:
       "Failed to add audition. Make sure all fields are properly completed.",
     AUDITION_UPDATE_FAILURE: "Failed to update audition",
+    AUDITION_IMPORT_SUCCESS: "entries have been added!",
   },
   STATUS_MESSAGES: {
     STATUS_DELETE_SUCCESS: "Status successfully deleted!",

@@ -195,6 +195,7 @@ export const addAuditions = async (
       archived,
       statuses,
     } = audition;
+
     const createAuditionObject = {
       id,
       date,
@@ -207,8 +208,13 @@ export const addAuditions = async (
       archived,
       userId,
       statuses: {
-        createMany: {
-          data: statuses,
+        create: {
+          date: statuses[0].date,
+          Status: {
+            connect: {
+              id: statuses[0].statusId,
+            },
+          },
         },
       },
     };

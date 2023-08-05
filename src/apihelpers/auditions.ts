@@ -60,3 +60,23 @@ export const deleteAudition = async (data: AuditionData) => {
       throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_DELETE_FAILURE);
     });
 };
+
+export const createManyAuditions = async (data: CreateAuditionData[]) => {
+  console.log(data);
+  return await fetch("/api/auditions/createmany", {
+    method: "POST",
+    body: JSON.stringify({ data }),
+  })
+    .then((response) => {
+      if (response.status !== 200) {
+        throw Error(
+          RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE
+        );
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
+      throw Error(RESPONSE_MESSAGES.AUDITION_MESSAGES.AUDITION_CREATE_FAILURE);
+    });
+};

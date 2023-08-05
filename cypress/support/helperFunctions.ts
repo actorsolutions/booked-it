@@ -1,6 +1,7 @@
 // Import commands.js using ES2015 syntax:
 import "./commands";
 import CY_TAGS from "../../src/support/cypress_tags";
+import { Method } from "cypress/types/net-stubbing";
 
 /*
   Helper method to make getting cyTags easier
@@ -119,4 +120,17 @@ export const checkTextInSnackbar = (message: string) => {
       cy.contains(message).should("be.visible");
     }
   );
+};
+
+export const mockRequest = (
+  method: Method,
+  route: string,
+  data: any,
+  alias: string
+) => {
+  cy.intercept(method, route, (req) => {
+    req.reply({
+      ...data,
+    });
+  }).as(alias);
 };

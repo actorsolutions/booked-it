@@ -5,9 +5,10 @@ import {
   shouldBeVisible,
   validateInputValue,
   findAndClick,
+  mockRequest,
 } from "../support/helperFunctions";
 import { login } from "../support/e2e";
-
+import { successfulIntegration } from "../support/mockData/mockActorsAccess";
 const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
 
 describe("Actors Access Link", () => {
@@ -17,6 +18,12 @@ describe("Actors Access Link", () => {
   });
   it("should add a username and password into the inputs and hit correct API", () => {
     login();
+    mockRequest(
+      "POST",
+      "/api/actorsaccess",
+      successfulIntegration,
+      "linkActorsAccess"
+    );
     cy.visit("/actorsaccess");
     const expectedValues = {
       userName: "username",

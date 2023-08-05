@@ -34,21 +34,17 @@ describe("Auditions Router integration tests", () => {
     const body = {
       data: [
         {
-          statuses: {
-            create: {
+          statuses: [
+            {
+              type: "auditioned",
               date: 0,
-              Status: {
-                connect: {
-                  id: 2,
-                },
-              },
+              statusId: 2,
             },
-          },
+          ],
           casting: ["Doro/Sherwood Casting ."],
           project: "THE WEATHERMAN",
           date: 1676592000,
-          notes:
-            "URL: https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=25135869&result_id=372056, imported from Actors Access",
+          notes: "Imported from Actors Access",
           archived: true,
           company: "UNKNOWN",
           type: "television" as audition_types,
