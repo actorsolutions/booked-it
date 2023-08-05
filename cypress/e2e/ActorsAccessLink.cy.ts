@@ -17,7 +17,7 @@ describe("Actors Access Link", () => {
     cy.visit("/actorsaccess");
     shouldBeVisible(ACTORS_ACCESS_IMPORT.TITLE);
   });
-  it("should add a username and password into the inputs and hit correct API", () => {
+  it("should link to AA endpoint and table should populate", () => {
     login();
     mockRequest(
       "POST",
@@ -50,14 +50,16 @@ describe("Actors Access Link", () => {
     findAndClick(ACTORS_ACCESS_IMPORT.BUTTON);
     cy.wait("@linkActorsAccess");
     const expectedCellValues = {
-      project: successfulIntegration.data[0].project,
-      role: successfulIntegration.data[0].role,
-      casting: successfulIntegration.data[0].casting,
       date: "12/31/1969",
     };
-    validateCellText(0, "project", expectedCellValues.project);
-    validateCellText(0, "role", expectedCellValues.role);
-    validateCellText(0, "casting", expectedCellValues.casting);
+    validateCellText(0, "project", successfulIntegration.data[0].project);
+    validateCellText(0, "role", successfulIntegration.data[0].role);
+    validateCellText(0, "casting", successfulIntegration.data[0].casting);
     validateCellText(0, "date", expectedCellValues.date);
+
+    validateCellText(1, "project", successfulIntegration.data[1].project);
+    validateCellText(1, "role", successfulIntegration.data[1].role);
+    validateCellText(1, "casting", successfulIntegration.data[1].casting);
+    validateCellText(1, "date", expectedCellValues.date);
   });
 });
