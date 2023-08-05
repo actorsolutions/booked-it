@@ -122,6 +122,13 @@ export const checkTextInSnackbar = (message: string) => {
   );
 };
 
+/**
+ * Creates intercept and mock data for Cypress
+ * @param method
+ * @param route
+ * @param data
+ * @param alias
+ */
 export const mockRequest = (
   method: Method,
   route: string,
@@ -133,4 +140,14 @@ export const mockRequest = (
       ...data,
     });
   }).as(alias);
+};
+
+export const validateCellText = (
+  rowId: number,
+  colId: string,
+  expectedText: string
+) => {
+  cy.get(`[row-id="${rowId}"`)
+    .find(`[col-id="${colId}"]`)
+    .should("have.text", expectedText);
 };

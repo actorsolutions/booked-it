@@ -6,6 +6,7 @@ import {
   validateInputValue,
   findAndClick,
   mockRequest,
+  validateCellText,
 } from "../support/helperFunctions";
 import { login } from "../support/e2e";
 import { successfulIntegration } from "../support/mockData/mockActorsAccess";
@@ -48,5 +49,15 @@ describe("Actors Access Link", () => {
     );
     findAndClick(ACTORS_ACCESS_IMPORT.BUTTON);
     cy.wait("@linkActorsAccess");
+    const expectedCellValues = {
+      project: successfulIntegration.data[0].project,
+      role: successfulIntegration.data[0].role,
+      casting: successfulIntegration.data[0].casting,
+      date: "12/31/1969",
+    };
+    validateCellText(0, "project", expectedCellValues.project);
+    validateCellText(0, "role", expectedCellValues.role);
+    validateCellText(0, "casting", expectedCellValues.casting);
+    validateCellText(0, "date", expectedCellValues.date);
   });
 });
