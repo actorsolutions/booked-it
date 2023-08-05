@@ -9,7 +9,10 @@ export default {
         PASSWORD_INPUT: "user-form-password-input",
       },
     },
-    BUTTON: "actors-access-link-button",
+    BUTTONS: {
+      LINK_BUTTON: "actors-access-link-button",
+      IMPORT_BUTTON: "actors-access-import-button",
+    },
   },
   LANDING_PAGE: {
     BUTTONS: {

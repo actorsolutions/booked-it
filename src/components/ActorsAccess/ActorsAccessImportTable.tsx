@@ -9,12 +9,13 @@ import { createManyAuditions } from "@/apihelpers/auditions";
 import { useRouter } from "next/navigation";
 import { useSnackBar } from "@/context/SnackbarContext";
 import RESPONSE_MESSAGES from "@/support/response_messages";
-
+import CY_TAGS from "@/support/cypress_tags";
 interface Props {
   rowData: ActorsAccessData[];
 }
 
 export const ActorsAccessImportTable = (props: Props) => {
+  const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
   const { push } = useRouter();
   const { showSnackBar } = useSnackBar();
   const { rowData } = props;
@@ -102,7 +103,11 @@ export const ActorsAccessImportTable = (props: Props) => {
         ></AgGridReact>
       </div>
 
-      <Button variant="contained" onClick={handleSubmit}>
+      <Button
+        data-cy={ACTORS_ACCESS_IMPORT.BUTTONS.IMPORT_BUTTON}
+        variant="contained"
+        onClick={handleSubmit}
+      >
         Import
       </Button>
     </Grid>

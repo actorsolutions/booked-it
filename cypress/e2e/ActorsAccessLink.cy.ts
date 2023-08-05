@@ -7,17 +7,25 @@ import {
   findAndClick,
   mockRequest,
   validateCellText,
+  cyTag,
 } from "../support/helperFunctions";
 import { login } from "../support/e2e";
 import { successfulIntegration } from "../support/mockData/mockActorsAccess";
-const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
+const { ACTORS_ACCESS_IMPORT, AUDITIONS_SECTION } = CY_TAGS;
 
 describe("Actors Access Link", () => {
+  beforeEach(() => {
+    cy.task("db:seed");
+  });
+  afterEach(() => {
+    cy.task("db:sanitize");
+  });
   it("should navigate to the Actors Access Link page", () => {
     cy.visit("/actorsaccess");
+    login();
     shouldBeVisible(ACTORS_ACCESS_IMPORT.TITLE);
   });
-  it("should link to AA endpoint and table should populate", () => {
+  it("should link to AA endpoint and table should populate and add two auditions to auditions container", () => {
     login();
     mockRequest(
       "POST",
@@ -47,7 +55,7 @@ describe("Actors Access Link", () => {
       ACTORS_ACCESS_IMPORT.USER_FORM.INPUTS.PASSWORD_INPUT,
       expectedValues.password
     );
-    findAndClick(ACTORS_ACCESS_IMPORT.BUTTON);
+    findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.LINK_BUTTON);
     cy.wait("@linkActorsAccess");
     const expectedCellValues = {
       date: "12/31/1969",
@@ -61,5 +69,18 @@ describe("Actors Access Link", () => {
     validateCellText(1, "role", successfulIntegration.data[1].role);
     validateCellText(1, "casting", successfulIntegration.data[1].casting);
     validateCellText(1, "date", expectedCellValues.date);
+
+    findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.IMPORT_BUTTON);
+    shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER);
+
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "1"))
+      .scrollIntoView()
+      .should("be.visible");
+
+    // eslint-disable-next-line cypress/unsafe-to-chain-command
+    cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "2"))
+      .scrollIntoView()
+      .should("be.visible");
   });
 });
