@@ -29,17 +29,15 @@ export const ConnectForm = (props: Props) => {
     const { userName, password } = getValues();
     scrapeAuditions(userName, password)
       .then((response) => {
-        if (response.status === 401) {
-          const auditionArray = response.data;
-          auditionArray.forEach((audition: ActorsAccessData) => {
-            if (audition.project === "") {
-              audition.project = "UNKNOWN";
-            }
-            // This sets a default type for the data object since we can't get the Type yet from AA.
-            audition.type = "television";
-          });
-          setImportData(auditionArray);
-        }
+        const auditionArray = response.data;
+        auditionArray.forEach((audition: ActorsAccessData) => {
+          if (audition.project === "") {
+            audition.project = "UNKNOWN";
+          }
+          // This sets a default type for the data object since we can't get the Type yet from AA.
+          audition.type = "television";
+        });
+        setImportData(auditionArray);
       })
       .catch((error) => {
         console.log(error);

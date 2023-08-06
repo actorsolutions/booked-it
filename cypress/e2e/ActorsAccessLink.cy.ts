@@ -69,7 +69,6 @@ describe("Actors Access Link", () => {
     validateCellText(
       0,
       "date",
-
       new Date(successfulIntegration.data[0].date).toLocaleDateString("en-US")
     );
 
