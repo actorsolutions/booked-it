@@ -57,18 +57,25 @@ describe("Actors Access Link", () => {
     );
     findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.LINK_BUTTON);
     cy.wait("@linkActorsAccess");
-    const expectedCellValues = {
-      date: "12/31/1969",
-    };
+
     validateCellText(0, "project", successfulIntegration.data[0].project);
     validateCellText(0, "role", successfulIntegration.data[0].role);
     validateCellText(0, "casting", successfulIntegration.data[0].casting);
-    validateCellText(0, "date", expectedCellValues.date);
+    validateCellText(
+      0,
+      "date",
+
+      new Date(successfulIntegration.data[0].date).toLocaleDateString("en-US")
+    );
 
     validateCellText(1, "project", successfulIntegration.data[1].project);
     validateCellText(1, "role", successfulIntegration.data[1].role);
     validateCellText(1, "casting", successfulIntegration.data[1].casting);
-    validateCellText(1, "date", expectedCellValues.date);
+    validateCellText(
+      1,
+      "date",
+      new Date(successfulIntegration.data[1].date).toLocaleDateString("en-US")
+    );
 
     findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.IMPORT_BUTTON);
     shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER);
