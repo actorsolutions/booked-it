@@ -14,11 +14,14 @@ const loginToActorsAccess = async (userName: string, password: string) => {
     return formData;
   };
 
-  const cookieAndHeaders = await axios.post(
+  const response = await axios.post(
     actorsAccessLoginURL,
     createLoginFormData(userName, password)
   );
-  const setCookieData = cookieAndHeaders.headers["set-cookie"];
+  if (response.data.status === "error") {
+    return false;
+  }
+  const setCookieData = response.headers["set-cookie"];
   // @ts-ignore
   const BDSSID = setCookieData[1];
   // @ts-ignore
@@ -62,10 +65,7 @@ export const getActorAccessSubmissions = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
-  const getAuditions = async () => {
-    const { userName, password } = JSON.parse(req.body);
-    const { BDSSID, AAUID } = await loginToActorsAccess(userName, password);
-
+  const getAuditions = async (BDSSID: string, AAUID: string) => {
     const auditionFormData = () => {
       const formData = new FormData();
       formData.append("results_period", "past");
@@ -91,8 +91,17 @@ export const getActorAccessSubmissions = async (
     return auditionScraper(response.data);
   };
 
-  res.status(200).send({
-    message: "success",
-    data: await getAuditions(),
-  });
+  const { userName, password } = JSON.parse(req.body);
+  const loginResponse = await loginToActorsAccess(userName, password);
+  if (!loginResponse) {
+    res.status(401).send({
+      message: "failure",
+    });
+  } else {
+    const { BDSSID, AAUID } = await loginResponse;
+    res.status(200).send({
+      message: "success",
+      data: await getAuditions(BDSSID, AAUID),
+    });
+  }
 };

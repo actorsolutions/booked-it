@@ -21,4 +21,7 @@ export default {
     STATUS_DELETE_FAILURE:
       "Failed to delete audition. Please contact Zach and Tyler",
   },
+  ACTORS_ACCESS_MESSAGES: {
+    LOGIN_FAILURE: "Actors Access Login Failure, please try again.",
+  },
 };
