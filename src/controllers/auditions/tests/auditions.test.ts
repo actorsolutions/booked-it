@@ -486,7 +486,7 @@ describe("Bulk Audition Controller Tests", () => {
       },
     ];
     const expected = {
-      count: 3,
+      count: 2,
     };
     const session = await generateSessionCookie(SESSION_DATA, {
       secret: process.env.AUTH0_SECRET as string,
@@ -512,9 +512,9 @@ describe("Bulk Audition Controller Tests", () => {
       cookie: `appSession=${session}`,
     };
     const mockDb = {
-      createMany: async () => {
+      create: async () => {
         return new Promise((resolve) => {
-          resolve({ count: 3 });
+          resolve({ count: 2 });
         });
       },
     };
