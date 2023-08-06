@@ -4,14 +4,23 @@ import { ColDef, IRowNode, ValueFormatterParams } from "ag-grid-community";
 import { CreateAuditionData } from "@/types";
 import { SelectTypeRenderer } from "@/components/ActorsAccess/CustomSelectCell";
 import { ActorsAccessData } from "@/components/ActorsAccess/index";
-
+import { Button, Grid } from "@mui/material";
+import { createManyAuditions } from "@/apihelpers/auditions";
+import { useRouter } from "next/navigation";
+import { useSnackBar } from "@/context/SnackbarContext";
+import RESPONSE_MESSAGES from "@/support/response_messages";
+import CY_TAGS from "@/support/cypress_tags";
 interface Props {
   rowData: ActorsAccessData[];
 }
 
 export const ActorsAccessImportTable = (props: Props) => {
+  const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
+  const { push } = useRouter();
+  const { showSnackBar } = useSnackBar();
   const { rowData } = props;
   const gridRef = useRef<AgGridReact>(null);
+  const { AUDITION_MESSAGES } = RESPONSE_MESSAGES;
 
   /**
    * Creates Data Object which can be sent to the API
@@ -20,7 +29,7 @@ export const ActorsAccessImportTable = (props: Props) => {
   const createAuditionObject = (node: IRowNode) => {
     const { date, link, project, casting, type } = node.data;
     return {
-      statuses: [{ type: "auditioned", date: date / 1000, statusId: 2 }],
+      statuses: [{ date: date / 1000, statusId: 2, type: "auditioned" }],
       casting: [casting],
       project: project,
       date: date / 1000,
@@ -30,12 +39,19 @@ export const ActorsAccessImportTable = (props: Props) => {
       type,
     };
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const auditions: CreateAuditionData[] = [];
     gridRef.current?.api.forEachNode((node) =>
       auditions.push(createAuditionObject(node))
     );
-    console.log(auditions);
+    const count = await createManyAuditions(auditions);
+    if (count) {
+      showSnackBar(
+        auditions.length + " " + AUDITION_MESSAGES.AUDITION_IMPORT_SUCCESS,
+        "success"
+      );
+      push("/");
+    }
   };
 
   /**
@@ -74,7 +90,7 @@ export const ActorsAccessImportTable = (props: Props) => {
   }, []);
 
   return (
-    <>
+    <Grid container direction="column">
       <div
         className="ag-theme-alpine"
         style={{ height: "50vh", width: "100%" }}
@@ -85,8 +101,15 @@ export const ActorsAccessImportTable = (props: Props) => {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
         ></AgGridReact>
-        <button onClick={handleSubmit}>Import</button>
       </div>
-    </>
+
+      <Button
+        data-cy={ACTORS_ACCESS_IMPORT.BUTTONS.IMPORT_BUTTON}
+        variant="contained"
+        onClick={handleSubmit}
+      >
+        Import
+      </Button>
+    </Grid>
   );
 };

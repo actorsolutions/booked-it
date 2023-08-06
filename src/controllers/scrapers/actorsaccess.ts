@@ -3,7 +3,6 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 
 const loginToActorsAccess = async (userName: string, password: string) => {
-  console.log(userName, password);
   const actorsAccessLoginURL =
     "https://actorsaccess.com/visitor/service.cfm?method=login";
   const createLoginFormData = (userName: string, password: string) => {

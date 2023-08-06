@@ -166,3 +166,62 @@ export const deleteAudition = async (
     return res.status(500).send({ message: "Failed to delete" });
   }
 };
+
+/**
+ * Creates auditions in bulk
+ * @param req
+ * @param res
+ * @param db
+ */
+export const addAuditions = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  db = prisma.audition
+) => {
+  const session = await getSession(req, res);
+  const userId = parseInt(session?.user.id);
+  const { data } = JSON.parse(req.body);
+  const createdAuditions = [];
+  for (const audition of data) {
+    const {
+      id,
+      date,
+      project,
+      company,
+      casting,
+      notes,
+      type,
+      callBackDate,
+      archived,
+      statuses,
+    } = audition;
+
+    const createAuditionObject = {
+      id,
+      date,
+      project,
+      company,
+      casting: casting || [],
+      notes,
+      type,
+      callBackDate,
+      archived,
+      userId,
+      statuses: {
+        create: {
+          date: statuses[0].date,
+          Status: {
+            connect: {
+              id: statuses[0].statusId,
+            },
+          },
+        },
+      },
+    };
+
+    const createdAudition = await Audition.create(createAuditionObject, db);
+    createdAuditions.push(createdAudition);
+  }
+
+  res.status(200).send({ count: createdAuditions.length });
+};

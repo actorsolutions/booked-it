@@ -2,7 +2,7 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@/support/MaterialUITheme";
 import { SnackBarProvider } from "@/context/SnackbarContext";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { ActorsAccessImportTable } from "@/components/ActorsAccess";
 import CY_TAGS from "@/support/cypress_tags";
 import React, { useState } from "react";
@@ -37,6 +37,10 @@ export default function ActorsAccess() {
               </Grid>
               <Grid item xs={12}>
                 <DashboardWrapper>
+                  <Typography variant="h5">Important Note!</Typography>
+                  <Typography variant="body1" gutterBottom>
+                    Make sure you edit the type of each entry!
+                  </Typography>
                   <ActorsAccessImportTable rowData={importData} />
                 </DashboardWrapper>
               </Grid>
