@@ -22,6 +22,8 @@ export default {
       "Failed to delete audition. Please contact Zach and Tyler",
   },
   ACTORS_ACCESS_MESSAGES: {
+    NO_AUDITIONS: "No Auditions to import!",
+    LOADED_SUCCESS: "Auditions Loaded!",
     LOGIN_FAILURE: "Actors Access Login Failure, please try again.",
   },
 };
