@@ -14,9 +14,10 @@ interface Props {
   setImportData: Dispatch<SetStateAction<never[]>>;
 }
 export const ConnectForm = (props: Props) => {
-  const { showSnackBar } = useSnackBar();
-
   const { setImportData } = props;
+  const { showSnackBar } = useSnackBar();
+  const { ACTORS_ACCESS_MESSAGES } = RESPONSE_MESSAGES;
+
   const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
   const { control, getValues, register } = useForm<FormValues>({
     defaultValues: {
@@ -26,20 +27,22 @@ export const ConnectForm = (props: Props) => {
   });
   const handleClick = () => {
     const { userName, password } = getValues();
-    scrapeAuditions(userName, password).then((response) => {
-      const auditionArray = response.data;
-      auditionArray.forEach((audition: ActorsAccessData) => {
-        if (audition.project === "") {
-          audition.project = "UNKNOWN";
-        }
-        // This sets a default type for the data object since we can't get the Type yet from AA.
-        audition.type = "television";
+    scrapeAuditions(userName, password)
+      .then((response) => {
+        const auditionArray = response.data;
+        auditionArray.forEach((audition: ActorsAccessData) => {
+          if (audition.project === "") {
+            audition.project = "UNKNOWN";
+          }
+          // This sets a default type for the data object since we can't get the Type yet from AA.
+          audition.type = "television";
+        });
+        setImportData(auditionArray);
+      })
+      .catch((error) => {
+        console.log(error);
+        showSnackBar(ACTORS_ACCESS_MESSAGES.LOGIN_FAILURE, "error");
       });
-      setImportData(auditionArray);
-      if (auditionArray.length === 0) {
-        showSnackBar(AUDITION_MESSAGES.AUDITION_IMPORT_SUCCESS, "error");
-      }
-    });
   };
   return (
     <Container data-cy={ACTORS_ACCESS_IMPORT.USER_FORM.USER_FORM_CONTAINER}>
@@ -64,6 +67,7 @@ export const ConnectForm = (props: Props) => {
             variant="contained"
             color="success"
             onClick={handleClick}
+            type={"submit"}
           >
             Link!
           </Button>

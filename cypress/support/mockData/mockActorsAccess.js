@@ -20,5 +20,6 @@ export const successfulIntegration = {
   ],
 };
 export const unsuccessfullIntegration = {
+  statusCode: 401,
   message: "failure",
 };

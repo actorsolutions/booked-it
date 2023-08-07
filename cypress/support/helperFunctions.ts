@@ -147,7 +147,7 @@ export const validateCellText = (
   colId: string,
   expectedText: string
 ) => {
-  cy.get(`[row-id="${rowId}"`)
+  cy.get(`[row-id="${rowId}"]`)
     .find(`[col-id="${colId}"]`)
     .should("have.text", expectedText);
 };

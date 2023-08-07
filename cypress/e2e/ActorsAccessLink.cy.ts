@@ -8,9 +8,14 @@ import {
   mockRequest,
   validateCellText,
   cyTag,
+  checkTextInSnackbar,
 } from "../support/helperFunctions";
 import { login } from "../support/e2e";
-import { successfulIntegration } from "../support/mockData/mockActorsAccess";
+import {
+  successfulIntegration,
+  unsuccessfullIntegration,
+} from "../support/mockData/mockActorsAccess";
+import RESPONSE_MESSAGES from "../../src/support/response_messages";
 const { ACTORS_ACCESS_IMPORT, AUDITIONS_SECTION } = CY_TAGS;
 
 describe("Actors Access Link", () => {
@@ -64,7 +69,6 @@ describe("Actors Access Link", () => {
     validateCellText(
       0,
       "date",
-
       new Date(successfulIntegration.data[0].date).toLocaleDateString("en-US")
     );
 
@@ -89,5 +93,29 @@ describe("Actors Access Link", () => {
     cy.get(cyTag(AUDITIONS_SECTION.CONTAINERS.AUDITION_ROW + "2"))
       .scrollIntoView()
       .should("be.visible");
+  });
+  it("should show a snackbar message when AA fails to link", () => {
+    login();
+    mockRequest(
+      "POST",
+      "/api/actorsaccess",
+      unsuccessfullIntegration,
+      "linkActorsAccess"
+    );
+    cy.visit("/actorsaccess");
+
+    shouldBeVisible(ACTORS_ACCESS_IMPORT.TITLE);
+    addToInput(
+      ACTORS_ACCESS_IMPORT.USER_FORM.INPUTS.USERNAME_INPUT,
+      "username"
+    );
+    addToInput(
+      ACTORS_ACCESS_IMPORT.USER_FORM.INPUTS.PASSWORD_INPUT,
+      "password"
+    );
+
+    findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.LINK_BUTTON);
+    cy.wait("@linkActorsAccess");
+    checkTextInSnackbar(RESPONSE_MESSAGES.ACTORS_ACCESS_MESSAGES.LOGIN_FAILURE);
   });
 });
