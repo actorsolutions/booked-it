@@ -7,11 +7,15 @@ import { FormValues } from "@/components/ActorsAccess/ConnectForm/index";
 import CY_TAGS from "@/support/cypress_tags";
 import { scrapeAuditions } from "@/apihelpers/actorsAccess";
 import { ActorsAccessData } from "@/components/ActorsAccess";
+import { useSnackBar } from "@/context/SnackbarContext";
+import RESPONSE_MESSAGES from "@/support/response_messages";
 
 interface Props {
   setImportData: Dispatch<SetStateAction<never[]>>;
 }
 export const ConnectForm = (props: Props) => {
+  const { showSnackBar } = useSnackBar();
+
   const { setImportData } = props;
   const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
   const { control, getValues, register } = useForm<FormValues>({
@@ -32,6 +36,9 @@ export const ConnectForm = (props: Props) => {
         audition.type = "television";
       });
       setImportData(auditionArray);
+      if (auditionArray.length === 0) {
+        showSnackBar(AUDITION_MESSAGES.AUDITION_IMPORT_SUCCESS, "error");
+      }
     });
   };
   return (
