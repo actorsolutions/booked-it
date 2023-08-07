@@ -38,6 +38,9 @@ export const ConnectForm = (props: Props) => {
           audition.type = "television";
         });
         setImportData(auditionArray);
+        if (auditionArray.length === 0) {
+          showSnackBar(ACTORS_ACCESS_MESSAGES.NO_AUDITIONS, "error");
+        }
       })
       .catch((error) => {
         console.log(error);

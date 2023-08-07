@@ -23,3 +23,8 @@ export const unsuccessfullIntegration = {
   statusCode: 401,
   message: "failure",
 };
+
+export const noAuditions = {
+  message: "success",
+  data: [],
+};

@@ -14,6 +14,7 @@ import { login } from "../support/e2e";
 import {
   successfulIntegration,
   unsuccessfullIntegration,
+  noAuditions,
 } from "../support/mockData/mockActorsAccess";
 import RESPONSE_MESSAGES from "../../src/support/response_messages";
 const { ACTORS_ACCESS_IMPORT, AUDITIONS_SECTION } = CY_TAGS;
@@ -117,5 +118,24 @@ describe("Actors Access Link", () => {
     findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.LINK_BUTTON);
     cy.wait("@linkActorsAccess");
     checkTextInSnackbar(RESPONSE_MESSAGES.ACTORS_ACCESS_MESSAGES.LOGIN_FAILURE);
+  });
+  it("should show a snackbar message when api returns no auditions", () => {
+    login();
+    mockRequest("POST", "/api/actorsaccess", noAuditions, "linkActorsAccess");
+    cy.visit("/actorsaccess");
+
+    shouldBeVisible(ACTORS_ACCESS_IMPORT.TITLE);
+    addToInput(
+      ACTORS_ACCESS_IMPORT.USER_FORM.INPUTS.USERNAME_INPUT,
+      "username"
+    );
+    addToInput(
+      ACTORS_ACCESS_IMPORT.USER_FORM.INPUTS.PASSWORD_INPUT,
+      "password"
+    );
+
+    findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.LINK_BUTTON);
+    cy.wait("@linkActorsAccess");
+    checkTextInSnackbar(RESPONSE_MESSAGES.ACTORS_ACCESS_MESSAGES.NO_AUDITIONS);
   });
 });
