@@ -1,10 +1,27 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import * as cheerio from "cheerio";
+/**
+ * @file This file creates integration with Actors Access to be able to grab scrape the data that is useful.
+ * This is done in two steps
+ *  1. Logs in dynamically with an actual Actors Access username and password and saves the BDSSID and AAUID
+ *  2. Using the BDDSID and AAUID as headers for Auth, access the Auditions Table.
+ */
 
+/**
+ * Authenticates with Actors Access and returns BDSSID and AAUID if successful.
+ * @param userName
+ * @param password
+ */
 const loginToActorsAccess = async (userName: string, password: string) => {
   const actorsAccessLoginURL =
     "https://actorsaccess.com/visitor/service.cfm?method=login";
+
+  /**
+   *  Creates formatted FormData object
+   * @param userName
+   * @param password
+   */
   const createLoginFormData = (userName: string, password: string) => {
     const formData = new FormData();
     formData.append("timezoneOffset", "420");
@@ -28,6 +45,10 @@ const loginToActorsAccess = async (userName: string, password: string) => {
   const AAUID = setCookieData[2];
   return { BDSSID, AAUID };
 };
+/** Scrapes HTML from Actors Access's Audition Grid.
+ *
+ * @param html
+ */
 export const auditionScraper = (html: string) => {
   interface ActorsAccessAudition {
     status: string;
@@ -61,11 +82,19 @@ export const auditionScraper = (html: string) => {
   }
   return auditions;
 };
+/**
+ * Handles Actors Access Integration Request
+ * @param req
+ * @param res
+ */
 export const getActorAccessSubmissions = async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
   const getAuditions = async (BDSSID: string, AAUID: string) => {
+    /**
+     * Creates FormData for Actors Access's Grid API
+     */
     const auditionFormData = () => {
       const formData = new FormData();
       formData.append("results_period", "past");
