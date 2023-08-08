@@ -136,8 +136,16 @@ export const mockRequest = (
   alias: string
 ) => {
   cy.intercept(method, route, (req) => {
-    req.reply({
-      ...data,
+    return new Promise((resolve) => {
+      setTimeout(
+        () =>
+          resolve(
+            req.reply({
+              ...data,
+            })
+          ),
+        1000
+      ); // delay by 5 seconds
     });
   }).as(alias);
 };
