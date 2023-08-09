@@ -9,11 +9,12 @@ import React, { useState } from "react";
 import { ConnectForm } from "src/components/ActorsAccess/ConnectForm";
 
 import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function ActorsAccess() {
   const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
   const [importData, setImportData] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>
@@ -32,7 +33,10 @@ export default function ActorsAccess() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <DashboardWrapper>
-                  <ConnectForm setImportData={setImportData} />
+                  <ConnectForm
+                    setImportData={setImportData}
+                    setLoading={setLoading}
+                  />
                 </DashboardWrapper>
               </Grid>
               <Grid item xs={12}>
@@ -41,7 +45,14 @@ export default function ActorsAccess() {
                   <Typography variant="body1" gutterBottom>
                     Make sure you edit the type of each entry!
                   </Typography>
-                  <ActorsAccessImportTable rowData={importData} />
+                  {loading ? (
+                    <CircularProgress
+                      data-cy={ACTORS_ACCESS_IMPORT.LOADING_CIRCLE}
+                      color="success"
+                    />
+                  ) : (
+                    <ActorsAccessImportTable rowData={importData} />
+                  )}
                 </DashboardWrapper>
               </Grid>
             </Grid>
