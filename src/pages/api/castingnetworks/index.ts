@@ -3,7 +3,7 @@ import { RouteHandler } from "@/middleware/handlers";
 import { getCastingNetworksSubmissions } from "@/controllers";
 
 /**
- * Controller for root route of /api/auditions
+ * Controller for root route of /api/NAMEHERE
  * @param req
  * @param res
  * @constructor
