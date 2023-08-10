@@ -35,7 +35,7 @@ export const getCastingNetworksSubmissions = async (
     console.log(accessToken);
 
     res.status(200).send({
-      message: "Got that damn token",
+      message: "Token received",
       data: accessToken,
     });
   } catch (error) {
