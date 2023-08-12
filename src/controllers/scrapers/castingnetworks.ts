@@ -4,6 +4,11 @@ import * as process from "process";
 
 const castingNetworksGraphQL = "https://app.castingnetworks.com/api-gw/graphql";
 
+/**
+ * Sends user account info for authentication, sets bearer token, sends second request for user's list of auditions
+ * @param req
+ * @param res
+ */
 export const getCastingNetworksSubmissions = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -35,53 +40,126 @@ export const getCastingNetworksSubmissions = async (
 
   const fetchHeaders = {
     "content-type": "application/json",
-    Authorization: `"${accessToken}"`,
-    Host: "",
+    Authorization: `Bearer ${accessToken}`,
   };
 
   const fetchQuery = {
-    query: `query MyAccount {
-    myAccount {
-        accountOrganizationDivisionsAccessCount
-        accountStatusId
-        countryId
-        created
-        email
-        emailResetToken
-        emailToReset
-        firstName
-        former
+    query: `query YOUR_AUDITIONS($page: SearchPageInputWf, $sortOptions: [AuditionsSearchSortOptionsInput!]) {
+  auditions(searchPage: $page, sortOptions: $sortOptions) {
+    __typename
+    page
+    totalCount
+    totalPages
+    after
+    isBasic
+    data {
+      __typename
+      id
+      status
+      repliedAt
+      project {
+        __typename
+        name
+        castingCompany
+      }
+      role {
+        __typename
+        name
+        description
+      }
+      dueDateTimeZone {
+        __typename
         id
-        isAccountIPC
-        isAdmin
-        isCCD
-        isInPCContext
-        isIPC
-        languageLocaleId
-        lastArtistId
-        lastLogin
-        lastName
-        legacyEmail
-        legacyInstance
-        legacyLogin
-        linkedAccountDivisionCount
-        linkedOrganization
-        linkedToAccountId
-        loginAttemptCount
-        loginAttemptFailedAt
-        organizationDivisionsCount
-        passwordHash
+        abbreviation
+        standardName
+      }
+      profile {
+        __typename
+        isRepresented
+        isPersonal
+        email
         phone
-        rosterInvitationToken
-        systemRoles
-        systemRolesIds
-        termsOfUse
-        updated
+        profileMainOrganization {
+          __typename
+          id
+          name
+        }
+        profileMainDivision {
+          __typename
+          id
+          name
+        }
+        profileStatus {
+          __typename
+          code
+        }
+      }
+      mediaList {
+        __typename
+        id
+        isAdditional
+        media {
+          __typename
+          ...WorkflowMedia
+        }
+        __typename
+      }
     }
+  }
+}
+
+fragment WorkflowMedia on WfMedia {
+  __typename
+  ...BaseWorkflowMedia
+  thumbnail {
+    __typename
+    ...BaseWorkflowMedia
+  }
+}
+
+fragment BaseWorkflowMedia on WfMedia {
+  __typename
+  id: mediaId
+  guid
+  mediaId
+  fileKey
+  thumbnailUrl
+  name
+  url
+  tag
+  mediaStorageStatus {
+    __typename
+    id
+    code
+  }
+  fileType {
+    __typename
+    id
+    code
+    name
+  }
+  mediaType {
+    __typename
+    id
+    code
+  }
+  mediaStatus {
+    __typename
+    id
+    code
+  }
+  transformation {
+    __typename
+    xAxis
+    yAxis
+    width
+    height
+    rotate
+  }
 }`,
   };
 
-  const getAccountInfo = async () => {
+  const getAuditionInfo = async () => {
     const response = await axios({
       url: castingNetworksGraphQL,
       method: "post",
@@ -89,15 +167,15 @@ export const getCastingNetworksSubmissions = async (
       data: fetchQuery,
     });
 
-    return response.data.data.myAccount;
+    return response.data.data;
   };
 
-  const myAccount = await getAccountInfo();
+  const myAuditions = await getAuditionInfo();
 
-  console.log(myAccount);
+  console.log(myAuditions);
 
   res.status(200).send({
     message: "Account information acquired",
-    data: myAccount,
+    data: myAuditions,
   });
 };
