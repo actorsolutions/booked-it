@@ -172,7 +172,6 @@ fragment BaseWorkflowMedia on WfMedia {
 
   const myAuditions = await getAuditionInfo();
 
-  console.log(myAuditions);
 
   res.status(200).send({
     message: "Account information acquired",
