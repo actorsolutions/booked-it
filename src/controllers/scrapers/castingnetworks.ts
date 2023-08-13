@@ -36,7 +36,7 @@ export const getCastingNetworksSubmissions = async (
 
   const accessToken = await authenticateAndGetAccessToken();
 
-  console.log(accessToken);
+  
 
   const fetchHeaders = {
     "content-type": "application/json",
