@@ -34,7 +34,7 @@ export const getCastingNetworksSubmissions = async (
 
   const accessToken = await authenticateAndGetAccessToken();
 
-  console.log(accessToken);
+  
 
   const fetchHeaders = {
     "content-type": "application/json",
@@ -58,7 +58,6 @@ export const getCastingNetworksSubmissions = async (
 
   const myAuditions = await getAuditionInfo();
 
-  console.log(myAuditions);
 
   res.status(200).send({
     message: "Account information acquired",
