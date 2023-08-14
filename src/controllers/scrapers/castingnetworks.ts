@@ -1,8 +1,8 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import * as process from "process";
+import CN_SUPPORT from "@/support/casting_networks_support";
 
-const castingNetworksGraphQL = "https://app.castingnetworks.com/api-gw/graphql";
+const { CN_GRAPHQL_ENDPOINT, QUERIES } = CN_SUPPORT;
 
 /**
  * Sends user account info for authentication, sets bearer token, sends second request for user's list of auditions
@@ -18,14 +18,12 @@ export const getCastingNetworksSubmissions = async (
   };
 
   const authQuery = {
-    query: `query VerifyAccount {
-    verifyAccount(input: {name: "${process.env.CN_USERNAME}", password: "${process.env.CN_PASSWORD}"})
-}`,
+    query: QUERIES.CN_AUTH_QUERY,
   };
 
   const authenticateAndGetAccessToken = async () => {
     const response = await axios({
-      url: castingNetworksGraphQL,
+      url: CN_GRAPHQL_ENDPOINT,
       method: "post",
       headers: authHeaders,
       data: authQuery,
@@ -44,124 +42,12 @@ export const getCastingNetworksSubmissions = async (
   };
 
   const fetchQuery = {
-    query: `query YOUR_AUDITIONS($page: SearchPageInputWf, $sortOptions: [AuditionsSearchSortOptionsInput!]) {
-  auditions(searchPage: $page, sortOptions: $sortOptions) {
-    __typename
-    page
-    totalCount
-    totalPages
-    after
-    isBasic
-    data {
-      __typename
-      id
-      status
-      repliedAt
-      project {
-        __typename
-        name
-        castingCompany
-      }
-      role {
-        __typename
-        name
-        description
-      }
-      dueDateTimeZone {
-        __typename
-        id
-        abbreviation
-        standardName
-      }
-      profile {
-        __typename
-        isRepresented
-        isPersonal
-        email
-        phone
-        profileMainOrganization {
-          __typename
-          id
-          name
-        }
-        profileMainDivision {
-          __typename
-          id
-          name
-        }
-        profileStatus {
-          __typename
-          code
-        }
-      }
-      mediaList {
-        __typename
-        id
-        isAdditional
-        media {
-          __typename
-          ...WorkflowMedia
-        }
-        __typename
-      }
-    }
-  }
-}
-
-fragment WorkflowMedia on WfMedia {
-  __typename
-  ...BaseWorkflowMedia
-  thumbnail {
-    __typename
-    ...BaseWorkflowMedia
-  }
-}
-
-fragment BaseWorkflowMedia on WfMedia {
-  __typename
-  id: mediaId
-  guid
-  mediaId
-  fileKey
-  thumbnailUrl
-  name
-  url
-  tag
-  mediaStorageStatus {
-    __typename
-    id
-    code
-  }
-  fileType {
-    __typename
-    id
-    code
-    name
-  }
-  mediaType {
-    __typename
-    id
-    code
-  }
-  mediaStatus {
-    __typename
-    id
-    code
-  }
-  transformation {
-    __typename
-    xAxis
-    yAxis
-    width
-    height
-    rotate
-  }
-}`,
+    query: QUERIES.CN_FETCH_AUDITIONS_QUERY,
   };
 
   const getAuditionInfo = async () => {
     const response = await axios({
-      url: castingNetworksGraphQL,
+      url: CN_GRAPHQL_ENDPOINT,
       method: "post",
       headers: fetchHeaders,
       data: fetchQuery,
