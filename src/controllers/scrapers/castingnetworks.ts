@@ -1,9 +1,14 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import * as process from "process";
+import CN_SUPPORT from "@/support/casting_networks_support";
 
-const castingNetworksGraphQL = "https://app.castingnetworks.com/api-gw/graphql";
+const { CN_GRAPHQL_ENDPOINT, QUERIES } = CN_SUPPORT;
 
+/**
+ * Sends user account info for authentication, sets bearer token, sends second request for user's list of auditions
+ * @param req
+ * @param res
+ */
 export const getCastingNetworksSubmissions = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -13,32 +18,49 @@ export const getCastingNetworksSubmissions = async (
   };
 
   const authQuery = {
-    query: `query VerifyAccount {
-    verifyAccount(input: {name: "${process.env.CN_USERNAME}", password: "${process.env.CN_PASSWORD}"})
-}`,
+    query: QUERIES.CN_AUTH_QUERY,
   };
 
-  try {
-    const authenticateAndGetAccessToken = async () => {
-      const response = await axios({
-        url: castingNetworksGraphQL,
-        method: "post",
-        headers: authHeaders,
-        data: authQuery,
-      });
-
-      return response.data.data.verifyAccount.token.access;
-    };
-
-    const accessToken = await authenticateAndGetAccessToken();
-
-    console.log(accessToken);
-
-    res.status(200).send({
-      message: "Token received",
-      data: accessToken,
+  const authenticateAndGetAccessToken = async () => {
+    const response = await axios({
+      url: CN_GRAPHQL_ENDPOINT,
+      method: "post",
+      headers: authHeaders,
+      data: authQuery,
     });
-  } catch (error) {
-    console.error("Error:", error);
-  }
+
+    return response.data.data.verifyAccount.token.access;
+  };
+
+  const accessToken = await authenticateAndGetAccessToken();
+
+  
+
+  const fetchHeaders = {
+    "content-type": "application/json",
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  const fetchQuery = {
+    query: QUERIES.CN_FETCH_AUDITIONS_QUERY,
+  };
+
+  const getAuditionInfo = async () => {
+    const response = await axios({
+      url: CN_GRAPHQL_ENDPOINT,
+      method: "post",
+      headers: fetchHeaders,
+      data: fetchQuery,
+    });
+
+    return response.data.data;
+  };
+
+  const myAuditions = await getAuditionInfo();
+
+
+  res.status(200).send({
+    message: "Account information acquired",
+    data: myAuditions,
+  });
 };
