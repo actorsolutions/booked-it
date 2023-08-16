@@ -2,6 +2,7 @@
 export default {
   ACTORS_ACCESS_IMPORT: {
     TITLE: "actors-access-link-title",
+    DIALOG: "actors-access-dialog",
     USER_FORM: {
       USER_FORM_CONTAINER: "user-form-container",
       INPUTS: {
@@ -12,6 +13,8 @@ export default {
     BUTTONS: {
       LINK_BUTTON: "actors-access-link-button",
       IMPORT_BUTTON: "actors-access-import-button",
+      YES_BUTTON: "actors-access-yes-button",
+      NO_BUTTON: "actors-access-no-button",
     },
   },
   LANDING_PAGE: {
