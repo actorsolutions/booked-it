@@ -103,7 +103,11 @@ export const ActorsAccessImportTable = (props: Props) => {
     };
     return (
       <Dialog onClose={handleClose} open={open}>
-        <Container maxWidth={false} data-cy={ACTORS_ACCESS_IMPORT.DIALOG}>
+        <Container
+          maxWidth={false}
+          data-cy={ACTORS_ACCESS_IMPORT.DIALOG}
+          sx={{ p: 2 }}
+        >
           <Grid
             container
             direction="row"
