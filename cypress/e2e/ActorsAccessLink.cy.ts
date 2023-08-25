@@ -85,6 +85,8 @@ describe("Actors Access Link", () => {
     );
 
     findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.IMPORT_BUTTON);
+
+    findAndClick(ACTORS_ACCESS_IMPORT.BUTTONS.YES_BUTTON);
     shouldBeVisible(AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER);
 
     // eslint-disable-next-line cypress/unsafe-to-chain-command

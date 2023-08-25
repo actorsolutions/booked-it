@@ -1,15 +1,17 @@
 import { AgGridReact } from "ag-grid-react";
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { ColDef, IRowNode, ValueFormatterParams } from "ag-grid-community";
 import { CreateAuditionData } from "@/types";
 import { SelectTypeRenderer } from "@/components/ActorsAccess/CustomSelectCell";
 import { ActorsAccessData } from "@/components/ActorsAccess/index";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { createManyAuditions } from "@/apihelpers/auditions";
 import { useRouter } from "next/navigation";
 import { useSnackBar } from "@/context/SnackbarContext";
 import RESPONSE_MESSAGES from "@/support/response_messages";
 import CY_TAGS from "@/support/cypress_tags";
+import Dialog from "@mui/material/Dialog";
+import { Container } from "@mui/system";
 interface Props {
   rowData: ActorsAccessData[];
 }
@@ -21,6 +23,7 @@ export const ActorsAccessImportTable = (props: Props) => {
   const { rowData } = props;
   const gridRef = useRef<AgGridReact>(null);
   const { AUDITION_MESSAGES } = RESPONSE_MESSAGES;
+  const [open, setOpen] = useState(false);
 
   /**
    * Creates Data Object which can be sent to the API
@@ -39,6 +42,10 @@ export const ActorsAccessImportTable = (props: Props) => {
       type,
     };
   };
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
   const handleSubmit = async () => {
     const auditions: CreateAuditionData[] = [];
     gridRef.current?.api.forEachNode((node) =>
@@ -52,6 +59,7 @@ export const ActorsAccessImportTable = (props: Props) => {
       );
       push("/");
     }
+    handleOpen();
   };
 
   /**
@@ -89,6 +97,52 @@ export const ActorsAccessImportTable = (props: Props) => {
     };
   }, []);
 
+  const ConfirmationDialog = () => {
+    const handleClose = () => {
+      setOpen(false);
+    };
+    return (
+      <Dialog onClose={handleClose} open={open}>
+        <Container
+          maxWidth={false}
+          data-cy={ACTORS_ACCESS_IMPORT.DIALOG}
+          sx={{ p: 2 }}
+        >
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid item>
+              <Typography variant="h6" gutterBottom>
+                Did you make sure you set the type for each audition?
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                data-cy={ACTORS_ACCESS_IMPORT.BUTTONS.YES_BUTTON}
+                onClick={handleSubmit}
+                variant="contained"
+              >
+                You know it!
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                data-cy={ACTORS_ACCESS_IMPORT.BUTTONS.NO_BUTTON}
+                onClick={handleClose}
+                variant="contained"
+              >
+                No...
+              </Button>
+            </Grid>
+          </Grid>
+        </Container>
+      </Dialog>
+    );
+  };
   return (
     <Grid container direction="column">
       <div
@@ -106,10 +160,11 @@ export const ActorsAccessImportTable = (props: Props) => {
       <Button
         data-cy={ACTORS_ACCESS_IMPORT.BUTTONS.IMPORT_BUTTON}
         variant="contained"
-        onClick={handleSubmit}
+        onClick={handleOpen}
       >
         Import
       </Button>
+      <ConfirmationDialog />
     </Grid>
   );
 };
