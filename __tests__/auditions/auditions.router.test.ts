@@ -32,6 +32,8 @@ describe("Auditions Router integration tests", () => {
         company: "Test Company",
         createdAt: "2023-04-28T21:50:11.638Z",
         archived: false,
+        AA_ID: 0,
+        CN_ID: "id-0",
       },
     });
   });
@@ -127,5 +129,48 @@ describe("Auditions Router integration tests", () => {
 
     delete createdAudition.createdAt;
     expect(createdAudition).toEqual(expected);
+  });
+  it("Should fail creating an audition", async () => {
+    const session = await generateSessionCookie(SESSION_DATA, {
+      secret: process.env.AUTH0_SECRET as string,
+    });
+    const request = await testClient(AuditionsController);
+    const body = {
+      callBackDate: null,
+      casting: null,
+      company: "Test Company",
+      date: 0,
+      id: 1,
+      notes: "Here is a note",
+      project: "Created Project",
+      type: "television",
+      archived: false,
+      statuses: [
+        {
+          id: 1,
+          statusId: 4,
+          date: 0,
+        },
+      ],
+    };
+
+    const audition1 = { ...body, AA_ID: 0 };
+    const audition2 = { ...body, CN_ID: "id-0" };
+    const resAA_ID = await request
+      .post("/")
+      .set("Content-type", "text/plain")
+      .set("Accept", "application/json")
+      .set("Cookie", [`appSession=${session}`])
+      .send(JSON.stringify(audition1));
+
+    const resCN_ID = await request
+      .post("/")
+      .set("Content-type", "text/plain")
+      .set("Accept", "application/json")
+      .set("Cookie", [`appSession=${session}`])
+      .send(JSON.stringify(audition2));
+
+    expect(resAA_ID.status).toEqual(500);
+    expect(resCN_ID.status).toEqual(500);
   });
 });

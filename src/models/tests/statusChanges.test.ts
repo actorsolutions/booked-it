@@ -149,7 +149,7 @@ describe("It tests the statusChange Model", () => {
     );
     expect(createdStatusChange).toEqual(expectedResponse);
   });
-  it("returns an errors statusChange and returns an error because one statusChange in array", async () => {
+  it("returns an error because one statusChange in array", async () => {
     const arrayOfStatusChanges = [
       {
         id: 0,

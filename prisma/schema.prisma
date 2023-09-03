@@ -36,6 +36,8 @@ model Audition {
   status       audition_statuses?
   archived     Boolean           @default(false)
   statuses     StatusChange[]
+  AA_ID        Int?              @unique
+  CN_ID        String?              @unique
 }
 
 model Status {

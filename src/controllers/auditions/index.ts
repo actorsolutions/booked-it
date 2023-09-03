@@ -52,6 +52,8 @@ export const addAudition = async (
     callBackDate,
     archived,
     statuses,
+    AA_ID,
+    CN_ID,
   } = JSON.parse(req.body);
 
   const statusChanges = statuses.map((status: FormattedStatus) => {
@@ -68,6 +70,8 @@ export const addAudition = async (
     callBackDate,
     archived,
     userId,
+    AA_ID,
+    CN_ID,
     statuses: {
       createMany: {
         data: statusChanges,
@@ -194,6 +198,8 @@ export const addAuditions = async (
       callBackDate,
       archived,
       statuses,
+      AA_ID,
+      CN_ID,
     } = audition;
 
     const createAuditionObject = {
@@ -207,6 +213,8 @@ export const addAuditions = async (
       callBackDate,
       archived,
       userId,
+      AA_ID,
+      CN_ID,
       statuses: {
         create: {
           date: statuses[0].date,
