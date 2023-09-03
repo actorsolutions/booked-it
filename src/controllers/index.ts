@@ -9,3 +9,4 @@ export {
 } from "./auditions";
 export { registerOrSignInUser } from "./users";
 export { getActorAccessSubmissions } from "./scrapers/actorsaccess";
+export { getCastingNetworksSubmissions } from "./scrapers/castingnetworks";

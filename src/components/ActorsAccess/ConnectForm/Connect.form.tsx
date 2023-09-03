@@ -12,9 +12,10 @@ import RESPONSE_MESSAGES from "@/support/response_messages";
 
 interface Props {
   setImportData: Dispatch<SetStateAction<never[]>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 export const ConnectForm = (props: Props) => {
-  const { setImportData } = props;
+  const { setImportData, setLoading } = props;
   const { showSnackBar } = useSnackBar();
   const { ACTORS_ACCESS_MESSAGES } = RESPONSE_MESSAGES;
 
@@ -25,7 +26,9 @@ export const ConnectForm = (props: Props) => {
       password: "",
     },
   });
-  const handleClick = () => {
+  const handleClick = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
     const { userName, password } = getValues();
     scrapeAuditions(userName, password)
       .then((response) => {
@@ -41,41 +44,45 @@ export const ConnectForm = (props: Props) => {
         if (auditionArray.length === 0) {
           showSnackBar(ACTORS_ACCESS_MESSAGES.NO_AUDITIONS, "error");
         }
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log(error);
         showSnackBar(ACTORS_ACCESS_MESSAGES.LOGIN_FAILURE, "error");
       });
   };
   return (
     <Container data-cy={ACTORS_ACCESS_IMPORT.USER_FORM.USER_FORM_CONTAINER}>
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        spacing={1}
-        wrap="nowrap"
-      >
-        <Grid item xs={6}>
-          <UserNameInput control={control} register={register} />
+      <form onSubmit={handleClick}>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+          wrap="nowrap"
+        >
+          <Grid item xs={6}>
+            <UserNameInput control={control} register={register} />
+          </Grid>
+          <Grid item xs={6}>
+            <PasswordInput control={control} register={register} />
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              data-cy={ACTORS_ACCESS_IMPORT.BUTTONS.LINK_BUTTON}
+              size="large"
+              variant="contained"
+              color="success"
+              onClick={handleClick}
+              type={"submit"}
+            >
+              Link!
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <PasswordInput control={control} register={register} />
-        </Grid>
-        <Grid item xs={6}>
-          <Button
-            data-cy={ACTORS_ACCESS_IMPORT.BUTTONS.LINK_BUTTON}
-            size="large"
-            variant="contained"
-            color="success"
-            onClick={handleClick}
-            type={"submit"}
-          >
-            Link!
-          </Button>
-        </Grid>
-      </Grid>
+      </form>
     </Container>
   );
 };
