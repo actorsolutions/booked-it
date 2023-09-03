@@ -20,6 +20,8 @@ describe("Tests formatting auditions to AuditionData", () => {
       type: "film" as audition_types,
       status: "scheduled" as audition_statuses,
       archived: false,
+      AA_ID: null,
+      CN_ID: null,
       statuses: [
         {
           id: 0,
@@ -47,6 +49,8 @@ describe("Tests formatting auditions to AuditionData", () => {
       type: "film",
       status: "scheduled",
       archived: false,
+      AA_ID: null,
+      CN_ID: null,
       statuses: [
         {
           id: 0,
@@ -76,6 +80,8 @@ describe("Tests formatting auditions to AuditionData", () => {
         type: "film" as audition_types,
         status: "scheduled" as audition_statuses,
         archived: false,
+        AA_ID: null,
+        CN_ID: null,
         statuses: [
           {
             id: 0,
@@ -102,6 +108,8 @@ describe("Tests formatting auditions to AuditionData", () => {
         type: "film" as audition_types,
         status: "scheduled" as audition_statuses,
         archived: false,
+        AA_ID: null,
+        CN_ID: null,
         statuses: [
           {
             id: 0,
@@ -131,6 +139,8 @@ describe("Tests formatting auditions to AuditionData", () => {
         type: "film",
         status: "scheduled",
         archived: false,
+        AA_ID: null,
+        CN_ID: null,
         statuses: [
           {
             id: 0,
@@ -154,6 +164,8 @@ describe("Tests formatting auditions to AuditionData", () => {
         type: "film",
         status: "scheduled",
         archived: false,
+        AA_ID: null,
+        CN_ID: null,
         statuses: [
           {
             id: 0,

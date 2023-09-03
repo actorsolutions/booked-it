@@ -60,6 +60,8 @@ describe("Auditions Router integration tests", () => {
           status: null,
           createdAt: "2023-04-28T21:50:11.638Z",
           archived: false,
+          AA_ID: 0,
+          CN_ID: "id-0",
           statuses: [],
         },
       ],
@@ -108,6 +110,8 @@ describe("Auditions Router integration tests", () => {
       userId: 0,
       status: null,
       archived: false,
+      AA_ID: null,
+      CN_ID: null,
       statuses: [
         {
           auditionId: 1,

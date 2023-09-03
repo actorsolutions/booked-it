@@ -684,7 +684,7 @@ describe("It Tests the Auditions Model", () => {
       notes: undefined,
       type: "television",
       archived: false,
-      CN_ID: 0,
+      CN_ID: "id-0",
     };
     const errorMsg = "Unable to create audition!";
     const mockPrisma = {
