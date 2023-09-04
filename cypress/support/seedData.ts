@@ -16,6 +16,8 @@ export const AUDITION_DATA = {
   createdAt: "2023-04-28T21:50:11.638Z",
   status: "scheduled" as audition_statuses,
   archived: false,
+  AA_ID: 0,
+  CN_ID: "id-0",
   casting: [],
   statuses: {
     create: [{ statusId: 0, date: 0 }],

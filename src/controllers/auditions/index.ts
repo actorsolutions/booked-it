@@ -227,8 +227,12 @@ export const addAuditions = async (
       },
     };
 
-    const createdAudition = await Audition.create(createAuditionObject, db);
-    createdAuditions.push(createdAudition);
+    try {
+      const createdAudition = await Audition.create(createAuditionObject, db);
+      createdAuditions.push(createdAudition);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   res.status(200).send({ count: createdAuditions.length });
