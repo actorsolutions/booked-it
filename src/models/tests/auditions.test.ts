@@ -640,4 +640,68 @@ describe("It Tests the Auditions Model", () => {
     );
     expect(await updateAudition).toEqual(expected);
   });
+  it("Fails to create audition with matching AA_ID", async () => {
+    const auditionData = {
+      id: 1,
+      userId: 0,
+      date: 0,
+      project: "FakeCompany",
+      company: "FakeProject",
+      callbackDate: 0,
+      casting: [{ name: "FakeCasting", company: "Casting" }],
+      notes: undefined,
+      type: "television",
+      archived: false,
+      AA_ID: 0,
+    };
+    const errorMsg = "Unable to create audition!";
+    const mockPrisma = {
+      create: async () => {
+        return new Promise(() => {
+          throw Error(errorMsg);
+        });
+      },
+    };
+
+    try {
+      await Audition.create(
+        auditionData as Prisma.AuditionUncheckedCreateInput,
+        mockPrisma as unknown as PrismaClient["audition"]
+      );
+    } catch (err: any) {
+      expect(err.message).toEqual("Unable to create audition!");
+    }
+  });
+  it("Fails to create audition with matching CN_ID", async () => {
+    const auditionData = {
+      id: 1,
+      userId: 0,
+      date: 0,
+      project: "FakeCompany",
+      company: "FakeProject",
+      callbackDate: 0,
+      casting: [{ name: "FakeCasting", company: "Casting" }],
+      notes: undefined,
+      type: "television",
+      archived: false,
+      CN_ID: "id-0",
+    };
+    const errorMsg = "Unable to create audition!";
+    const mockPrisma = {
+      create: async () => {
+        return new Promise(() => {
+          throw Error(errorMsg);
+        });
+      },
+    };
+
+    try {
+      await Audition.create(
+        auditionData as Prisma.AuditionUncheckedCreateInput,
+        mockPrisma as unknown as PrismaClient["audition"]
+      );
+    } catch (err: any) {
+      expect(err.message).toEqual("Unable to create audition!");
+    }
+  });
 });

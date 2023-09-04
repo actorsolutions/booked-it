@@ -31,6 +31,8 @@ export const ActorsAccessImportTable = (props: Props) => {
    */
   const createAuditionObject = (node: IRowNode) => {
     const { date, link, project, casting, type } = node.data;
+    const urlParams = new URLSearchParams(link);
+    const AA_ID = urlParams.get("result_id");
     return {
       statuses: [{ date: date / 1000, statusId: 2, type: "auditioned" }],
       casting: [casting],
@@ -40,6 +42,7 @@ export const ActorsAccessImportTable = (props: Props) => {
       archived: true,
       company: "UNKNOWN",
       type,
+      AA_ID: AA_ID ? parseInt(AA_ID) : null,
     };
   };
 
@@ -51,10 +54,11 @@ export const ActorsAccessImportTable = (props: Props) => {
     gridRef.current?.api.forEachNode((node) =>
       auditions.push(createAuditionObject(node))
     );
-    const count = await createManyAuditions(auditions);
-    if (count) {
+    const response = await createManyAuditions(auditions);
+    if (response) {
+      console.log(response);
       showSnackBar(
-        auditions.length + " " + AUDITION_MESSAGES.AUDITION_IMPORT_SUCCESS,
+        response.count + " " + AUDITION_MESSAGES.AUDITION_IMPORT_SUCCESS,
         "success"
       );
       push("/");

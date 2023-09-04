@@ -62,7 +62,6 @@ export const deleteAudition = async (data: AuditionData) => {
 };
 
 export const createManyAuditions = async (data: CreateAuditionData[]) => {
-  console.log(data);
   return await fetch("/api/auditions/createmany", {
     method: "POST",
     body: JSON.stringify({ data }),

@@ -49,6 +49,8 @@ export class Audition {
   createdAt?: Date | null;
   archived: boolean;
   statuses: PrismaStatusChange[];
+  AA_ID?: number;
+  CN_ID?: string;
 
   constructor(data: AuditionWithStatuses) {
     const {
@@ -64,6 +66,8 @@ export class Audition {
       archived,
       type,
       statuses,
+      AA_ID,
+      CN_ID,
     } = data;
     this.id = id;
     this.userId = userId;
@@ -77,6 +81,8 @@ export class Audition {
     this.archived = archived;
     this.statuses = statuses;
     this.type = validateEnum(audition_types, type) as audition_types;
+    this.AA_ID = AA_ID || undefined;
+    this.CN_ID = CN_ID || undefined;
   }
 
   /**

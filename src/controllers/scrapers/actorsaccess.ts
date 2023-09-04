@@ -4,7 +4,7 @@ import * as cheerio from "cheerio";
 /**
  * @file This file creates integration with Actors Access to be able to grab scrape the data that is useful.
  * This is done in two steps
- *  1. Logs in dynamically with an actual Actors Access username and password and saves the BDSSID and AAUID
+ *  1. Logs in dynamically with an actual Actors Access username and password and saves the BDDSID and AAUID
  *  2. Using the BDDSID and AAUID as headers for Auth, access the Auditions Table.
  */
 

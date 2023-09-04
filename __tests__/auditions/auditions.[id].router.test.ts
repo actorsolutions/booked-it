@@ -73,6 +73,8 @@ describe("Audition [id] integration tests", () => {
       status: null,
       userId: 0,
       archived: false,
+      AA_ID: null,
+      CN_ID: null,
       statuses: [
         {
           auditionId: 0,
@@ -150,6 +152,8 @@ describe("Audition [id] integration tests", () => {
       notes: "THIS IS A DIFFERENT NOTE",
       project: "UPDATED PROJECT",
       status: null,
+      AA_ID: null,
+      CN_ID: null,
       statuses: [
         {
           auditionId: 0,
