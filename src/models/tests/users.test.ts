@@ -53,7 +53,7 @@ describe("It Tests the Users Model", () => {
       firstName: "Zac",
     };
     const mockPrisma = {
-      update: async () => {
+      findUnique: async () => {
         return new Promise((resolve) => {
           resolve(TEST_USER);
         });
