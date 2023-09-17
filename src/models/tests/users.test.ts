@@ -24,7 +24,7 @@ describe("It Tests the Users Model", () => {
     );
     expect(user).toEqual(expectedResponse);
   });
-  it("updates a user", async () => {
+  it("returns a user from id", async () => {
     const expectedResponse = {
       id: 0,
       sid: "FakeSid",
