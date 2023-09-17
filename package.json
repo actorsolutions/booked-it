@@ -58,6 +58,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
+    "simple-crypto-js": "^3.0.1",
     "ts-jest": "^29.0.5",
     "typescript": "4.9.5",
     "webpack": "^5.82.1"
