@@ -19,6 +19,13 @@ model User {
   email     String     @unique @db.VarChar(255)
   createdAt DateTime   @default(now()) @db.Timestamp(6)
   Audition  Audition[]
+  firstName  String?
+  lastName  String?
+  representation      Json?
+  CN_UN String?
+  CN_PW String?
+  AA_UN String?
+  AA_PW String?
 }
 
 model Audition {
