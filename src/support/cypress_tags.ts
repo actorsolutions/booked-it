@@ -149,6 +149,26 @@ export default {
       ADD_PERSON: "add-person-button",
     },
   },
+  PROFILE_FORM: {
+    TITLE: "profile-form-title",
+    CONTAINERS: {},
+    INPUT: {
+      LABELS: {
+        FIRST_NAME: "first-name-label",
+        LAST_NAME: "last-name-label",
+        AA_UN: "actors-access-username-label",
+        AA_PW: "actors-access-password-label",
+        CN_UN: "casting-network-username-label",
+        CN_PW: "casting-network-password-label",
+      },
+      FIRST_NAME: "first-name-input",
+      LAST_NAME: "last-name-input",
+      AA_UN: "actors-access-username-input",
+      AA_PW: "actors-access-password-input",
+      CN_UN: "casting-network-username-input",
+      CN_PW: "casting-network-password-input",
+    },
+  },
   NAV_BAR: {
     CONTAINER: {
       NAV_BAR: "nav-bar-container",
