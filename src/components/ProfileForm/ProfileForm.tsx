@@ -20,7 +20,6 @@ interface Props {
   AA_PW?: string;
 }
 export const ProfileForm = (props: Props) => {
-  const [checkPassword, setCheckPassword] = useState(false);
   const { id, email, firstName, lastName, AA_UN, AA_PW } = props;
   const { PROFILE_FORM } = CY_TAGS;
   const {
