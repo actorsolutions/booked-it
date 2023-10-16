@@ -2,7 +2,7 @@ import { FormGroupRow, FormLabel, FormInput } from "../../common/Form";
 import { FormProps, ProfileFormData } from "../index";
 import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
-export const CompanyInput = (props: FormProps<ProfileFormData>) => {
+export const AAPasswordInput = (props: FormProps<ProfileFormData>) => {
   const { control, register } = props;
 
   return (
@@ -20,6 +20,7 @@ export const CompanyInput = (props: FormProps<ProfileFormData>) => {
           inputId="AA_PW"
           control={control}
           field="AA_PW"
+          inputType={"password"}
           {...register("AA_PW")}
         />
       </Container>

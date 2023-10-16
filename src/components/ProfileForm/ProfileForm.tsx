@@ -1,12 +1,15 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { ProfileFormData } from "@/components/ProfileForm/index";
-import { CreateProfileData } from "@/types/profile";
 
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/common/Form";
 import Grid from "@mui/material/Grid";
 import { Button, Container, Divider } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
+import { FirstNameInput } from "@/components/ProfileForm/components/FirstNameInput";
+import { LastNameInput } from "@/components/ProfileForm/components/LastNameInput";
+import { AAUserNameInput } from "@/components/ProfileForm/components/AAUserNameInput";
+import { AAPasswordInput } from "@/components/ProfileForm/components/AAPasswordInput";
 
 interface Props {
   id: number;
@@ -17,6 +20,7 @@ interface Props {
   AA_PW?: string;
 }
 export const ProfileForm = (props: Props) => {
+  const [checkPassword, setCheckPassword] = useState(false);
   const { id, email, firstName, lastName, AA_UN, AA_PW } = props;
   const { PROFILE_FORM } = CY_TAGS;
   const {
@@ -38,6 +42,10 @@ export const ProfileForm = (props: Props) => {
     },
   });
 
+  const handleClick = () => {
+    const values = getValues();
+    console.log(values);
+  };
   return (
     <Container
       data-cy={PROFILE_FORM.CONTAINERS.FORM_CONTAINER}
@@ -48,7 +56,14 @@ export const ProfileForm = (props: Props) => {
       <Form>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            Test!
+            <FirstNameInput control={control} register={register} />
+            <LastNameInput control={control} register={register} />
+            <AAUserNameInput control={control} register={register} />
+            <AAPasswordInput control={control} register={register} />
+            <Divider />
+            <Button onClick={handleClick} variant={"contained"}>
+              Save Profile
+            </Button>
           </Grid>
         </Grid>
       </Form>
