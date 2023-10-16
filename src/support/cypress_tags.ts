@@ -128,7 +128,6 @@ export default {
       },
     },
   },
-
   CASTING_FORM: {
     CONTAINERS: {
       CASTING_CONTAINER: "casting-form-container",
@@ -151,7 +150,9 @@ export default {
   },
   PROFILE_FORM: {
     TITLE: "profile-form-title",
-    CONTAINERS: {},
+    CONTAINERS: {
+      FORM_CONTAINER: "profile-form-container",
+    },
     INPUT: {
       LABELS: {
         FIRST_NAME: "first-name-label",
@@ -177,6 +178,7 @@ export default {
       LOGOUT: "log-out-button",
       DASHBOARD: "dashboard-button",
       REPORTS: "reports-button",
+      PROFILE: "profile-button",
     },
   },
   REPORTS: {

@@ -7,3 +7,10 @@ export interface CreateUserData {
 export interface User extends CreateUserData {
   id: number;
 }
+
+export interface Representation {
+  firstName: string;
+  lastName: string;
+  role: string;
+}
+// TODO: Role to ENUM Talent/Manager
