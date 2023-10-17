@@ -23,7 +23,7 @@ interface Props {
 }
 export const ProfileForm = (props: Props) => {
   const { user } = useUser();
-  const { id, email, firstName, lastName, AA_UN, AA_PW } = props;
+  const { email, firstName, lastName, AA_UN, AA_PW } = props;
   const { PROFILE_FORM } = CY_TAGS;
   const {
     getValues,
@@ -43,7 +43,6 @@ export const ProfileForm = (props: Props) => {
       AA_PW: AA_PW || "",
     },
   });
-
   const handleClick = async () => {
     const updateData = getValues();
     if (user) {

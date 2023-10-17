@@ -93,7 +93,7 @@ export const updateUser = async (
     const userProfile = await Users.update(session.user.id, updateData, db);
     await updateSession(req, res, {
       ...session,
-      user: { ...session.user, id: userProfile.id },
+      user: { ...session.user, ...userProfile },
     });
     res.status(200).send(userProfile);
   }
