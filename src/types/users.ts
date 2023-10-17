@@ -1,11 +1,11 @@
-export interface CreateUserData {
-  id?: number;
+export interface UpdateUserData {
+  id: number;
   email: string;
   sid: string;
-}
-
-export interface User extends CreateUserData {
-  id: number;
+  firstName?: string;
+  lastName?: string;
+  AA_UN?: string;
+  AA_PW?: string;
 }
 
 export interface Representation {

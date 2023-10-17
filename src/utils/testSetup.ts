@@ -9,7 +9,7 @@ interface User {
   name: string;
   sid: string;
   email: string;
-  id: string;
+  id: number;
 }
 
 interface AuthConfig {
@@ -25,7 +25,7 @@ export const SESSION_DATA: AuthConfig = {
     name: "Test User",
     sid: "0000000",
     email: "test@test.com",
-    id: "0",
+    id: 0,
   },
   accessToken: "somanytokens",
   accessTokenScope: "openid profile email",
@@ -60,7 +60,7 @@ const sanitizeDB = async (
   const prisma = prisma_cli || generatePrisma();
   const toDelete = [];
 
-  // collects all of the table transactions into an array
+  // collects all  the table transactions into an array
   for (const modelName of modelNames) {
     // @ts-ignore
     toDelete.push(prisma[modelName].deleteMany());
@@ -79,15 +79,12 @@ export const setup = async (
 ): Promise<IntegrationTestParams> => {
   const prisma = generatePrisma();
   await sanitizeDB(clearTables, prisma);
-  return {prisma} ;
+  return { prisma };
 };
 export type IntegrationTestParams = {
   prisma: PrismaClient;
 };
 
-export const tearDown = async(
-    _test : IntegrationTestParams
-)=>{
+export const tearDown = async (_test: IntegrationTestParams) => {
   await _test.prisma.$disconnect();
-}
-
+};

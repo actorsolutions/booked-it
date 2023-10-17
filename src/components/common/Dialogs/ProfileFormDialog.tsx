@@ -1,7 +1,7 @@
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import React,  from "react";
+import React from "react";
 
 import CY_TAGS from "@/support/cypress_tags";
 import { ProfileForm } from "@/components/ProfileForm/ProfileForm";

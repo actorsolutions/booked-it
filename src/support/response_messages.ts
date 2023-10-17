@@ -26,4 +26,8 @@ export default {
     LOADED_SUCCESS: "Auditions Loaded!",
     LOGIN_FAILURE: "Actors Access Login Failure, please try again.",
   },
+  PROFILE_MESSAGES: {
+    SAVE_ERROR: "There was an error updating your user profile",
+    SAVE_SUCCESS: "Profile Information updated!",
+  },
 };

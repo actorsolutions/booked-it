@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { ProfileFormData } from "@/components/ProfileForm/index";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/common/Form";
@@ -10,6 +11,7 @@ import { FirstNameInput } from "@/components/ProfileForm/components/FirstNameInp
 import { LastNameInput } from "@/components/ProfileForm/components/LastNameInput";
 import { AAUserNameInput } from "@/components/ProfileForm/components/AAUserNameInput";
 import { AAPasswordInput } from "@/components/ProfileForm/components/AAPasswordInput";
+import { updateProfile } from "@/apihelpers/profile";
 
 interface Props {
   id: number;
@@ -20,6 +22,7 @@ interface Props {
   AA_PW?: string;
 }
 export const ProfileForm = (props: Props) => {
+  const { user } = useUser();
   const { id, email, firstName, lastName, AA_UN, AA_PW } = props;
   const { PROFILE_FORM } = CY_TAGS;
   const {
@@ -41,9 +44,15 @@ export const ProfileForm = (props: Props) => {
     },
   });
 
-  const handleClick = () => {
-    const values = getValues();
-    console.log(values);
+  const handleClick = async () => {
+    const updateData = getValues();
+    if (user) {
+      await updateProfile({
+        ...updateData,
+        sid: user.sid as string,
+        id: user.id as number,
+      });
+    }
   };
   return (
     <Container

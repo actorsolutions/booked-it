@@ -85,11 +85,16 @@ export const updateUser = async (
     res.status(500).send({ message: "Please sign in" });
   } else {
     const updateData = JSON.parse(req.body);
-    const registeredUser = await Users.update(updateData.id, updateData, db);
+    if (updateData.id != session.user.id) {
+      res
+        .status(500)
+        .send({ message: "There was a problem with your request" });
+    }
+    const userProfile = await Users.update(session.user.id, updateData, db);
     await updateSession(req, res, {
       ...session,
-      user: { ...session?.user, id: registeredUser.id },
+      user: { ...session.user, id: userProfile.id },
     });
-    res.status(200).send(registeredUser);
+    res.status(200).send(userProfile);
   }
 };
