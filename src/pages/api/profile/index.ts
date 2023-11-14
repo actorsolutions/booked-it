@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { RouteHandler } from "@/middleware/handlers";
-import { updateUser } from "@/controllers/users";
+import { updateUser, getProfile } from "@/controllers/profile";
 
 /**
  * Controller for root route of /api/auditions
@@ -11,6 +11,7 @@ import { updateUser } from "@/controllers/users";
 const UserController = async (req: NextApiRequest, res: NextApiResponse) => {
   await RouteHandler(req, res, {
     PUT: updateUser,
+    GET: getProfile,
   });
 };
 

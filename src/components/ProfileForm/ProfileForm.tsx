@@ -12,6 +12,8 @@ import { LastNameInput } from "@/components/ProfileForm/components/LastNameInput
 import { AAUserNameInput } from "@/components/ProfileForm/components/AAUserNameInput";
 import { AAPasswordInput } from "@/components/ProfileForm/components/AAPasswordInput";
 import { updateProfile } from "@/apihelpers/profile";
+import { decryptEntry } from "@/models/utils/UserUtils";
+import SimpleCrypto from "simple-crypto-js";
 
 interface Props {
   id: number;
@@ -21,9 +23,11 @@ interface Props {
   AA_UN?: string;
   AA_PW?: string;
 }
-export const ProfileForm = (props: Props) => {
+export const ProfileForm = () => {
+  const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
+  const simpleCrypto = new SimpleCrypto(secretKey);
   const { user } = useUser();
-  const { email, firstName, lastName, AA_UN, AA_PW } = props;
+  console.log(user);
   const { PROFILE_FORM } = CY_TAGS;
   const {
     getValues,
@@ -36,11 +40,11 @@ export const ProfileForm = (props: Props) => {
     clearErrors,
   } = useForm<ProfileFormData>({
     defaultValues: {
-      email: email || "",
-      firstName: firstName || "",
-      lastName: lastName || "",
-      AA_UN: AA_UN || "",
-      AA_PW: AA_PW || "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      AA_UN: "",
+      AA_PW: "",
     },
   });
   const handleClick = async () => {

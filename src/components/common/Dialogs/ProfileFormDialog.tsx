@@ -22,7 +22,7 @@ export const ProfileFormDialog = (props: Props) => {
         <DialogTitle data-cy={CY_TAGS.PROFILE_FORM.TITLE}>
           {"Profile"}
         </DialogTitle>
-        <ProfileForm id={0} email="email" />
+        <ProfileForm />
       </DialogContent>
     </Dialog>
   );
