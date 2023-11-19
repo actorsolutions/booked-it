@@ -1,6 +1,6 @@
 import React from "react";
 import { ProfileFormData } from "@/components/ProfileForm/index";
-import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/common/Form";
@@ -13,16 +13,11 @@ import { AAUserNameInput } from "@/components/ProfileForm/components/AAUserNameI
 import { AAPasswordInput } from "@/components/ProfileForm/components/AAPasswordInput";
 import { updateProfile } from "@/apihelpers/profile";
 import { decryptEntry } from "@/models/utils/UserUtils";
+import { Profile } from "@/types/profile";
 
-interface Profile extends UserProfile {
-  firstName?: string;
-  lastName?: string;
-  AA_UN?: string;
-  AA_PW?: string;
-}
 export const ProfileForm = () => {
   const { user } = useUser();
-  const profile: Profile = user;
+  const profile: Profile | undefined = user;
 
   const { PROFILE_FORM } = CY_TAGS;
   const { getValues, control, register } = useForm<ProfileFormData>({
