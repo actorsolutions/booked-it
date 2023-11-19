@@ -19,7 +19,6 @@ export const getAuditions = async (
   db = prisma.audition
 ) => {
   const session = await getSession(req, res);
-
   const userId = parseInt(session?.user.id);
   const auditions = await Audition.getFormattedAuditionsByUserId(userId, db);
   if (auditions) {

@@ -21,6 +21,7 @@ export const updateUser = async (
     res.status(500).send({ message: "Please sign in" });
   } else {
     const updateData = JSON.parse(req.body);
+    console.log(updateData);
     if (updateData.id != session.user.id) {
       res
         .status(500)
