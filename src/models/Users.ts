@@ -68,6 +68,15 @@ export class Users {
   }
 
   /**
+   * Method for finding a particular User record by its sid
+   * @param sid - email of sought after user record
+   * @param db - instance of database being used
+   */
+  static async findBySid(sid: string, db: PrismaClient["user"]) {
+    return db.findUnique({ where: { sid: sid } });
+  }
+
+  /**
    * Signs up / Returns user based on email.
    * @param data - user data for query
    * @param db - instance of database being used

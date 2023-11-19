@@ -8,7 +8,7 @@ import { UpdateUserData } from "@/types/users";
 
 export const updateProfile = async (props: UpdateUserData) => {
   console.log(props);
-  const response = await fetch(`/api/user`, {
+  const response = await fetch(`/api/profile`, {
     method: "PUT",
     body: JSON.stringify(props),
   });

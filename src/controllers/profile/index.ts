@@ -17,6 +17,7 @@ export const updateUser = async (
 ) => {
   const session = await getSession(req, res);
   if (!session) {
+    console.log("No session");
     res.status(500).send({ message: "Please sign in" });
   } else {
     const updateData = JSON.parse(req.body);

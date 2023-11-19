@@ -49,6 +49,7 @@ export const ProfileForm = () => {
   });
   const handleClick = async () => {
     const updateData = getValues();
+
     if (user) {
       await updateProfile({
         ...updateData,
