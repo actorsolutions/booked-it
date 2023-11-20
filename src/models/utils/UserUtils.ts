@@ -1,7 +1,7 @@
 import SimpleCrypto from "simple-crypto-js";
 import { Prisma } from "@prisma/client";
 
-const secretKey = process.env.SECRET_KEY;
+const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
 const simpleCrypto = new SimpleCrypto(secretKey);
 /**
  * salts string

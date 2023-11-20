@@ -31,6 +31,7 @@ jobs:
       AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET}}
       AUTH0_HOOK_SECRET: ${{ secrets.AUTH0_HOOK_SECRET}}
       SECRET_KEY: ${{ secrets.SECRET_KEY}}
+      NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY}}
     timeout-minutes: 6
     steps:
       - uses: actions/checkout@v3
@@ -74,6 +75,7 @@ jobs:
       AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET}}
       AUTH0_HOOK_SECRET: ${{ secrets.AUTH0_HOOK_SECRET}}
       SECRET_KEY: ${{ secrets.SECRET_KEY}}
+      NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY}}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3

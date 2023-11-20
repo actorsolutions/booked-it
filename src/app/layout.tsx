@@ -5,6 +5,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 
 import React from "react";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { SessionProvider } from "next-auth/react";
 import { NavBar } from "@/components/NavBar";
 import { Container } from "@mui/system";
 import { Typography } from "@mui/material";
@@ -31,13 +32,15 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <SnackBarProvider>
-              <UserProvider>
-                <NavBar />
-                {children}
-                <Container>
-                  <Typography variant="subtitle1">Booked-It MVP</Typography>
-                </Container>
-              </UserProvider>
+              <SessionProvider>
+                <UserProvider>
+                  <NavBar />
+                  {children}
+                  <Container>
+                    <Typography variant="subtitle1">Booked-It MVP</Typography>
+                  </Container>
+                </UserProvider>
+              </SessionProvider>
             </SnackBarProvider>
           </LocalizationProvider>
         </ThemeProvider>
