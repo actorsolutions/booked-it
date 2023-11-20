@@ -22,7 +22,7 @@ export const ProfileFormDialog = (props: Props) => {
         <DialogTitle data-cy={CY_TAGS.PROFILE_FORM.TITLE}>
           {"Profile"}
         </DialogTitle>
-        <ProfileForm />
+        <ProfileForm handleClose={handleClose} />
       </DialogContent>
     </Dialog>
   );

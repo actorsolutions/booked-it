@@ -15,10 +15,13 @@ import { updateProfile } from "@/apihelpers/profile";
 import { decryptEntry } from "@/models/utils/UserUtils";
 import { Profile } from "@/types/profile";
 
-export const ProfileForm = () => {
+interface ProfileFormProps {
+  handleClose: () => void;
+}
+export const ProfileForm = (props: ProfileFormProps) => {
+  const { handleClose } = props;
   const { user } = useUser();
   const profile: Profile | undefined = user;
-
   const { PROFILE_FORM } = CY_TAGS;
   const { getValues, control, register } = useForm<ProfileFormData>({
     defaultValues: {
@@ -31,15 +34,17 @@ export const ProfileForm = () => {
   });
   const handleClick = async () => {
     const updateData = getValues();
-
     if (user) {
       await updateProfile({
         ...updateData,
-        sid: user.sid as string,
-        id: user.id as number,
+        sid: profile?.sid as string,
+        id: profile?.id as number,
+      }).then(() => {
+        handleClose();
       });
     }
   };
+  console.log(profile);
   return (
     <Container
       data-cy={PROFILE_FORM.CONTAINERS.FORM_CONTAINER}
