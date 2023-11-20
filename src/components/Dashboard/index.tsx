@@ -5,6 +5,7 @@ import { IconButton, Grid, Typography } from "@mui/material";
 import AddCircle from "@mui/icons-material/AddCircle";
 import { SignUpOrSignIn } from "@/apihelpers/auth";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useSession } from "next-auth/react";
 import { getAuditions } from "@/apihelpers/auditions";
 import { AuditionData } from "@/types";
 import { PieChart } from "./PieChart";
@@ -24,6 +25,8 @@ const { AUTH_MESSAGES, AUDITION_MESSAGES } = RESPONSE_MESSAGES;
 export const Dashboard = () => {
   const { showSnackBar } = useSnackBar();
   const { user } = useUser();
+  const { update: updateSession } = useSession();
+
   const [auditions, setAuditions] = useState<AuditionData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -34,6 +37,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     if (user) {
+      console.log(user);
       SignUpOrSignIn()
         .then(() => {
           setLoading(true);
@@ -54,7 +58,7 @@ export const Dashboard = () => {
         });
     }
     setLoading(false);
-  }, [user]);
+  }, [user, updateSession]);
 
   /**
    * This takes an auditionArray and filters by text for Type,Project and Company and pushes into another
