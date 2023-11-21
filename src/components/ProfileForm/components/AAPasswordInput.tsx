@@ -16,7 +16,7 @@ export const AAPasswordInput = (props: FormProps<ProfileFormData>) => {
       </Container>
       <Container>
         <FormInput
-          cyTag={CY_TAGS.PROFILE_FORM.INPUT.LAST_NAME}
+          cyTag={CY_TAGS.PROFILE_FORM.INPUT.AA_PW}
           inputId="AA_PW"
           control={control}
           field="AA_PW"

@@ -11,6 +11,7 @@ interface Props {
 }
 export const ProfileFormDialog = (props: Props) => {
   const { handleClose, open } = props;
+
   return (
     <Dialog
       open={open}

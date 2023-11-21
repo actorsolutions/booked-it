@@ -21,20 +21,12 @@ export const updateUser = async (
     res.status(500).send({ message: "Please sign in" });
   } else {
     const updateData = JSON.parse(req.body);
-    console.log(updateData);
-    if (updateData.id != session.user.id) {
-      console.log("Error!");
-      res
-        .status(500)
-        .send({ message: "There was a problem with your request" });
-    } else {
-      const userProfile = await Users.update(session.user.id, updateData, db);
-      await updateSession(req, res, {
-        ...session,
-        user: { ...session.user, ...userProfile },
-      });
-      res.status(200).send(userProfile);
-    }
+    const userProfile = await Users.update(session.user.id, updateData, db);
+    await updateSession(req, res, {
+      ...session,
+      user: { ...session.user, ...userProfile },
+    });
+    res.status(200).send(userProfile);
   }
 };
 

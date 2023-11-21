@@ -12,7 +12,7 @@ import { LastNameInput } from "@/components/ProfileForm/components/LastNameInput
 import { AAUserNameInput } from "@/components/ProfileForm/components/AAUserNameInput";
 import { AAPasswordInput } from "@/components/ProfileForm/components/AAPasswordInput";
 import { updateProfile } from "@/apihelpers/profile";
-import { decryptEntry } from "@/models/utils/UserUtils";
+import { decryptEntry, encryptEntry } from "@/models/utils/UserUtils";
 import { Profile } from "@/types/profile";
 
 interface ProfileFormProps {
@@ -40,11 +40,14 @@ export const ProfileForm = (props: ProfileFormProps) => {
         sid: profile?.sid as string,
         id: profile?.id as number,
       }).then(() => {
+        user.firstName = updateData.firstName;
+        user.lastName = updateData.lastName;
+        user.AA_UN = encryptEntry(updateData.AA_UN as string);
+        user.AA_PW = encryptEntry(updateData.AA_PW as string);
         handleClose();
       });
     }
   };
-  console.log(profile);
   return (
     <Container
       data-cy={PROFILE_FORM.CONTAINERS.FORM_CONTAINER}
@@ -60,7 +63,11 @@ export const ProfileForm = (props: ProfileFormProps) => {
             <AAUserNameInput control={control} register={register} />
             <AAPasswordInput control={control} register={register} />
             <Divider />
-            <Button onClick={handleClick} variant={"contained"}>
+            <Button
+              data-cy={PROFILE_FORM.BUTTON.SAVE_BUTTON}
+              onClick={handleClick}
+              variant={"contained"}
+            >
               Save Profile
             </Button>
           </Grid>

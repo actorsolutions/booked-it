@@ -169,6 +169,9 @@ export default {
       CN_UN: "casting-network-username-input",
       CN_PW: "casting-network-password-input",
     },
+    BUTTON: {
+      SAVE_BUTTON: "profile-save-button",
+    },
   },
   NAV_BAR: {
     CONTAINER: {
