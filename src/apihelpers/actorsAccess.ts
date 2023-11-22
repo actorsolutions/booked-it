@@ -1,5 +1,4 @@
 import RESPONSE_MESSAGES from "@/support/response_messages";
-// import { mockSession } from "next-auth/client/__tests__/helpers/mocks";
 // Get Auditions from server, gets userId from session in server
 export const scrapeAuditions = async (userName: string, password: string) => {
   const data = { userName, password };

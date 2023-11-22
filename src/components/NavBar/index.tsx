@@ -4,17 +4,23 @@ import { Button, Link } from "@mui/material";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import CY_TAGS from "@/support/cypress_tags";
 import Image from "next/image";
+import { useState } from "react";
+import { ProfileFormDialog } from "@/components/common/Dialogs/ProfileFormDialog";
 
 export const NavBar = () => {
   const { user } = useUser();
   const { NAV_BAR } = CY_TAGS;
-
+  const [showProfileForm, setShowProfileForm] = useState(false);
   const handleLogout = () => {
     window.location = "/api/auth/logout" as unknown as Location;
   };
   if (!user) {
     return null;
   }
+
+  const handleProfile = () => {
+    setShowProfileForm(!showProfileForm);
+  };
 
   return (
     <Toolbar sx={{ display: "flex" }}>
@@ -51,7 +57,16 @@ export const NavBar = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item sx={{ flexGrow: 1 }} />{" "}
+        <Grid item sx={{ flexGrow: 1 }} />
+        <Grid item>
+          <Button onClick={handleProfile} data-cy={NAV_BAR.BUTTONS.PROFILE}>
+            Profile
+          </Button>
+          <ProfileFormDialog
+            handleClose={handleProfile}
+            open={showProfileForm}
+          />
+        </Grid>
         <Grid item>
           <Button onClick={handleLogout} data-cy={NAV_BAR.BUTTONS.LOGOUT}>
             Logout

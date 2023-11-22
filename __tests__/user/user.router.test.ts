@@ -1,4 +1,4 @@
-import UserController from "@/pages/api/user";
+import UserController from "@/pages/api/profile";
 import {
   IntegrationTestParams,
   setup,
