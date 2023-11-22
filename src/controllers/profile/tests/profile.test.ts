@@ -12,13 +12,13 @@ describe("Profile controller tests", () => {
       sid: "0000000",
     };
 
-    const session = generateSessionCookie(SESSION_DATA, {
+    const session = await generateSessionCookie(SESSION_DATA, {
       secret: process.env.AUTH0_SECRET as string,
     });
     const fakeReq = {
       method: "GET",
       headers: { cookie: `appSession=${session}` },
-      body: user,
+      body: JSON.stringify(user),
       query: { id: 0 },
     };
     const fakeResp = {
@@ -41,6 +41,9 @@ describe("Profile controller tests", () => {
         return new Promise((resolve) => {
           resolve(user);
         });
+      },
+      update: async () => {
+        return user;
       },
     };
     await updateUser(
