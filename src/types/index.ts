@@ -5,4 +5,5 @@ export type {
   Casting,
 } from "./auditions";
 
-export type { User, CreateUserData } from "./users";
+export type { Profile } from "./profile";
+export type { UpdateUserData } from "./users";
