@@ -59,8 +59,11 @@ export const auditionScraper = async (BDSSID: string, AAUID: string) => {
     link: string;
     date: number;
   }
-  // Go to first auditions page
   const URL = "https://actorsaccess.com/projects/index.cfm?view=quicksheet";
+  /**
+   * Accesses table on AA depending on the page number and returns auditons
+   * @param pageNumber
+   */
   const getAuditionsResponse = async (pageNumber: number) => {
     /**
      * Creates FormData for Actors Access's Grid API
