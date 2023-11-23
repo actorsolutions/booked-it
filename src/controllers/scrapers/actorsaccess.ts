@@ -70,7 +70,6 @@ export const auditionScraper = async (BDSSID: string, AAUID: string) => {
      * Creates FormData for Actors Access's Grid API
      */
     const createFormData = (pageNumber: number) => {
-      console.log("Creating formdata for number:" + pageNumber);
       const today = new Date().toLocaleDateString();
 
       const formData = new FormData();
