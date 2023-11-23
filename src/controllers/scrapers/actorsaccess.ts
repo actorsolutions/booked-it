@@ -47,9 +47,10 @@ const loginToActorsAccess = async (userName: string, password: string) => {
 };
 /** Scrapes HTML from Actors Access's Audition Grid.
  *
- * @param html
+ * @param BDSSID
+ * @param AAUID
  */
-export const auditionScraper = (html: string) => {
+export const auditionScraper = async (BDSSID: string, AAUID: string) => {
   interface ActorsAccessAudition {
     status: string;
     project: string;
@@ -58,44 +59,14 @@ export const auditionScraper = (html: string) => {
     link: string;
     date: number;
   }
-  const auditions: ActorsAccessAudition[] = [];
-  const $ = cheerio.load(html);
-  const rows = $(".quicksheet-table-row");
-  for (const row of rows) {
-    const cells = $(row).children(".quicksheet-table-cell");
-    const status = $(cells).find(".quicksheet-status").text();
-    const project = $(cells).find(".quicksheet-project-name").text();
-    const role = $(cells).find(".quicksheet-role-name").text();
-    const casting = $(cells).find(".quicksheet-casting-name").text();
-    const date = $(cells).find(".quicksheet-future-date").text().slice(1, 13);
-    const link = "https://actorsaccess.com" + $(row).attr("href");
-
-    const auditionObj = {
-      status,
-      project,
-      role,
-      casting,
-      link,
-      date: Date.parse(`${date} 2023 00:00:00 UTC`),
-    };
-    auditions.push(auditionObj);
-  }
-  return auditions;
-};
-/**
- * Handles Actors Access Integration Request
- * @param req
- * @param res
- */
-export const getActorAccessSubmissions = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
-  const getAuditions = async (BDSSID: string, AAUID: string) => {
+  // Go to first auditions page
+  const URL = "https://actorsaccess.com/projects/index.cfm?view=quicksheet";
+  const getAuditionsResponse = async (pageNumber: number) => {
     /**
      * Creates FormData for Actors Access's Grid API
      */
-    const auditionFormData = () => {
+    const createFormData = (pageNumber: number) => {
+      console.log("Creating formdata for number:" + pageNumber);
       const today = new Date().toLocaleDateString();
 
       const formData = new FormData();
@@ -108,18 +79,77 @@ export const getActorAccessSubmissions = async (
       formData.append("filter_search_for", "");
       formData.append("filter_start_date", "1/01/2023");
       formData.append("filter_end_date", today);
+      formData.append("filter_page_number", pageNumber.toString());
+      formData.append("filter_show_mine", "all");
       return formData;
     };
-
-    const URL = "https://actorsaccess.com/projects/index.cfm?view=quicksheet";
+    const formData = createFormData(pageNumber);
     const response = await axios.get(URL, {
-      data: auditionFormData(),
+      data: formData,
       headers: {
-        Cookie: BDSSID + AAUID,
+        Cookie: BDSSID,
+        AAUID,
       },
     });
+    return response.data;
+  };
 
-    return auditionScraper(response.data);
+  const auditions: ActorsAccessAudition[] = [];
+  let amountOfPages = 1;
+
+  const firstPageHTML = await getAuditionsResponse(1);
+  const cheerio$ = cheerio.load(firstPageHTML);
+  const lastButton = cheerio$(".pagination-last")[0];
+  if (lastButton) {
+    const onClickText = lastButton.attribs["onclick"];
+    amountOfPages = parseInt(
+      onClickText.substring(
+        onClickText.indexOf("(") + 1,
+        onClickText.lastIndexOf(")")
+      )
+    );
+  }
+  let currentHtml = firstPageHTML;
+  let i = 1;
+  while (i < amountOfPages + 1) {
+    const $ = cheerio.load(currentHtml);
+    const rows = $(".quicksheet-table-row");
+    for (const row of rows) {
+      const cells = $(row).children(".quicksheet-table-cell");
+      const status = $(cells).find(".quicksheet-status").text();
+      const project = $(cells).find(".quicksheet-project-name").text();
+      const role = $(cells).find(".quicksheet-role-name").text();
+      const casting = $(cells).find(".quicksheet-casting-name").text();
+      const date = $(cells).find(".quicksheet-future-date").text().slice(1, 13);
+      const link = "https://actorsaccess.com" + $(row).attr("href");
+
+      const auditionObj = {
+        status,
+        project,
+        role,
+        casting,
+        link,
+        date: Date.parse(`${date} 2023 00:00:00 UTC`),
+      };
+      auditions.push(auditionObj);
+    }
+    currentHtml = await getAuditionsResponse(i + 1);
+    i++;
+  }
+
+  return auditions;
+};
+/**
+ * Handles Actors Access Integration Request
+ * @param req
+ * @param res
+ */
+export const getActorAccessSubmissions = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  const getAuditions = async (BDSSID: string, AAUID: string) => {
+    return await auditionScraper(BDSSID, AAUID);
   };
 
   const { userName, password } = JSON.parse(req.body);
