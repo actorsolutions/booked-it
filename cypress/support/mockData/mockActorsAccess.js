@@ -37,7 +37,7 @@ export const alreadyAddedIntegration = {
       project: "Totally Real Project",
       role: "Wally",
       casting: "Amica",
-      link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26393009&result_id=0",
+      link: "https://actorsaccess.com/virtualaudition/?fromqs=1&qs_results_period=past&qs_filter_type=all&action=read&msg=26393009&result_id=1",
       date: 0,
     },
   ],

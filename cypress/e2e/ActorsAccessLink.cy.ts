@@ -196,7 +196,7 @@ describe("Actors Access Link", () => {
       new Date(successfulIntegration.data[1].date).toLocaleDateString("en-US")
     );
   });
-  it("should not add an audition with a AA_ID of 0", () => {
+  it("should not add an audition with a AA_ID of 1", () => {
     login();
     mockRequest(
       "POST",
