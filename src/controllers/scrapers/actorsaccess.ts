@@ -96,6 +96,8 @@ export const getActorAccessSubmissions = async (
      * Creates FormData for Actors Access's Grid API
      */
     const auditionFormData = () => {
+      const today = new Date().toLocaleDateString();
+
       const formData = new FormData();
       formData.append("results_period", "past");
       formData.append("filter_sort_column", "date");
@@ -105,7 +107,7 @@ export const getActorAccessSubmissions = async (
       formData.append("filter_select_status_input", "All");
       formData.append("filter_search_for", "");
       formData.append("filter_start_date", "1/01/2023");
-      formData.append("filter_end_date", "7/28/2023");
+      formData.append("filter_end_date", today);
       return formData;
     };
 
