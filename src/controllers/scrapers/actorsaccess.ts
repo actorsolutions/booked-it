@@ -62,7 +62,7 @@ const loginToActorsAccess = async (userName: string, password: string) => {
 export const auditionScraper = async (BDSSID: string, AAUID: string) => {
   const URL = "https://actorsaccess.com/projects/index.cfm?view=quicksheet";
   /**
-   * Accesses table on AA depending on the page number and returns auditons
+   * Accesses tableHTML on AA depending on the page number
    * @param pageNumber
    */
   const getAuditionsPage = async (pageNumber: number) => {
@@ -117,7 +117,7 @@ export const auditionScraper = async (BDSSID: string, AAUID: string) => {
   let i = 1;
   while (i < amountOfPages + 1) {
     const parsedAuditions = parseAuditions(currentHtml);
-    auditions.concat(parsedAuditions);
+    auditions.push(...parsedAuditions);
     currentHtml = await getAuditionsPage(i + 1);
     i++;
   }
@@ -128,7 +128,7 @@ export const auditionScraper = async (BDSSID: string, AAUID: string) => {
  * Parses Auditions from HTML
  * @param html
  */
-export const parseAuditions = (html: string) => {
+export const parseAuditions = (html: string): ActorsAccessAudition[] => {
   const auditions: ActorsAccessAudition[] = [];
   const $ = cheerio.load(html);
   const rows = $(".quicksheet-table-row");
