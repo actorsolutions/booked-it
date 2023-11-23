@@ -1,6 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import * as cheerio from "cheerio";
+
+interface ActorsAccessAudition {
+  status: string;
+  project: string;
+  role: string;
+  casting: string;
+  link: string;
+  date: number;
+}
 /**
  * @file This file creates integration with Actors Access to be able to grab scrape the data that is useful.
  * This is done in two steps
@@ -51,20 +60,12 @@ const loginToActorsAccess = async (userName: string, password: string) => {
  * @param AAUID
  */
 export const auditionScraper = async (BDSSID: string, AAUID: string) => {
-  interface ActorsAccessAudition {
-    status: string;
-    project: string;
-    role: string;
-    casting: string;
-    link: string;
-    date: number;
-  }
   const URL = "https://actorsaccess.com/projects/index.cfm?view=quicksheet";
   /**
    * Accesses table on AA depending on the page number and returns auditons
    * @param pageNumber
    */
-  const getAuditionsResponse = async (pageNumber: number) => {
+  const getAuditionsPage = async (pageNumber: number) => {
     /**
      * Creates FormData for Actors Access's Grid API
      */
@@ -100,7 +101,7 @@ export const auditionScraper = async (BDSSID: string, AAUID: string) => {
   const auditions: ActorsAccessAudition[] = [];
   let amountOfPages = 1;
 
-  const firstPageHTML = await getAuditionsResponse(1);
+  const firstPageHTML = await getAuditionsPage(1);
   const cheerio$ = cheerio.load(firstPageHTML);
   const lastButton = cheerio$(".pagination-last")[0];
   if (lastButton) {
@@ -115,33 +116,44 @@ export const auditionScraper = async (BDSSID: string, AAUID: string) => {
   let currentHtml = firstPageHTML;
   let i = 1;
   while (i < amountOfPages + 1) {
-    const $ = cheerio.load(currentHtml);
-    const rows = $(".quicksheet-table-row");
-    for (const row of rows) {
-      const cells = $(row).children(".quicksheet-table-cell");
-      const status = $(cells).find(".quicksheet-status").text();
-      const project = $(cells).find(".quicksheet-project-name").text();
-      const role = $(cells).find(".quicksheet-role-name").text();
-      const casting = $(cells).find(".quicksheet-casting-name").text();
-      const date = $(cells).find(".quicksheet-future-date").text().slice(1, 13);
-      const link = "https://actorsaccess.com" + $(row).attr("href");
-
-      const auditionObj = {
-        status,
-        project,
-        role,
-        casting,
-        link,
-        date: Date.parse(`${date} 2023 00:00:00 UTC`),
-      };
-      auditions.push(auditionObj);
-    }
-    currentHtml = await getAuditionsResponse(i + 1);
+    const parsedAuditions = parseAuditions(currentHtml);
+    auditions.concat(parsedAuditions);
+    currentHtml = await getAuditionsPage(i + 1);
     i++;
   }
-
   return auditions;
 };
+
+/**
+ * Parses Auditions from HTML
+ * @param html
+ */
+export const parseAuditions = (html: string) => {
+  const auditions: ActorsAccessAudition[] = [];
+  const $ = cheerio.load(html);
+  const rows = $(".quicksheet-table-row");
+  for (const row of rows) {
+    const cells = $(row).children(".quicksheet-table-cell");
+    const status = $(cells).find(".quicksheet-status").text();
+    const project = $(cells).find(".quicksheet-project-name").text();
+    const role = $(cells).find(".quicksheet-role-name").text();
+    const casting = $(cells).find(".quicksheet-casting-name").text();
+    const date = $(cells).find(".quicksheet-future-date").text().slice(1, 13);
+    const link = "https://actorsaccess.com" + $(row).attr("href");
+
+    const auditionObj = {
+      status,
+      project,
+      role,
+      casting,
+      link,
+      date: Date.parse(`${date} 2023 00:00:00 UTC`),
+    };
+    auditions.push(auditionObj);
+  }
+  return auditions;
+};
+
 /**
  * Handles Actors Access Integration Request
  * @param req

@@ -1,4 +1,4 @@
-import { auditionScraper } from "../actorsaccess";
+import { parseAuditions } from "../actorsaccess";
 
 const mockHTML = `
 <div class="quicksheet-results">
@@ -182,7 +182,7 @@ describe("Actor Access Scraper Tools tests", () => {
         status: "Submitted",
       },
     ];
-    const auditions = auditionScraper(mockHTML);
+    const auditions = parseAuditions(mockHTML);
     expect(auditions).toEqual(expected);
   });
 });
