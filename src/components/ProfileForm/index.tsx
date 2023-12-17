@@ -1,4 +1,9 @@
-import { Control, FieldValues, UseFormRegister } from "react-hook-form";
+import {
+  ChangeHandler,
+  Control,
+  FieldValues,
+  UseFormRegister,
+} from "react-hook-form";
 import { Representation } from "@/types/users";
 
 export interface ProfileFormData extends FieldValues {
@@ -16,4 +21,5 @@ export interface ProfileFormData extends FieldValues {
 export interface FormProps<T extends FieldValues> {
   control: Control<T>;
   register: UseFormRegister<T>;
+  customOnBlur?: ChangeHandler;
 }

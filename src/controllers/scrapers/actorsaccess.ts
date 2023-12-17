@@ -134,3 +134,17 @@ export const getActorAccessSubmissions = async (
     });
   }
 };
+
+export const checkAALogin = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  const { userName, password } = JSON.parse(req.body);
+  const loginResponse = await loginToActorsAccess(userName, password);
+  if (!loginResponse) {
+    res.status(401).send({
+      message: "failure",
+    });
+  }
+  res.status(200).send({ message: "success" });
+};

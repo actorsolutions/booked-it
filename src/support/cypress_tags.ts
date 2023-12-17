@@ -171,6 +171,7 @@ export default {
     },
     BUTTON: {
       SAVE_BUTTON: "profile-save-button",
+      AA_CHECK_BUTTON: "profile-check-actors-access",
     },
   },
   NAV_BAR: {

@@ -8,5 +8,8 @@ export {
   addAuditions,
 } from "./auditions";
 export { registerOrSignInUser } from "./users";
-export { getActorAccessSubmissions } from "./scrapers/actorsaccess";
+export {
+  getActorAccessSubmissions,
+  checkAALogin,
+} from "./scrapers/actorsaccess";
 export { getCastingNetworksSubmissions } from "./scrapers/castingnetworks";

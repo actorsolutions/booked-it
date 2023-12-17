@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { ProfileFormData } from "@/components/ProfileForm/index";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/common/Form";
 import Grid from "@mui/material/Grid";
-import { Button, Container, Divider } from "@mui/material";
+import { Button, Container, Divider, Typography } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 import { FirstNameInput } from "@/components/ProfileForm/components/FirstNameInput";
 import { LastNameInput } from "@/components/ProfileForm/components/LastNameInput";
@@ -14,11 +14,13 @@ import { AAPasswordInput } from "@/components/ProfileForm/components/AAPasswordI
 import { updateProfile } from "@/apihelpers/profile";
 import { decryptEntry, encryptEntry } from "@/models/utils/UserUtils";
 import { Profile } from "@/types/profile";
-
+import DoneIcon from "@mui/icons-material/Done";
+import { checkAA } from "@/apihelpers/actorsAccess";
 interface ProfileFormProps {
   handleClose: () => void;
 }
 export const ProfileForm = (props: ProfileFormProps) => {
+  const [aaCheck, setAACheck] = useState(false);
   const { handleClose } = props;
   const { user } = useUser();
   const profile: Profile | undefined = user;
@@ -32,6 +34,22 @@ export const ProfileForm = (props: ProfileFormProps) => {
       AA_PW: profile?.AA_PW ? (decryptEntry(profile.AA_PW) as string) : "",
     },
   });
+  const checkUNandPW = async () => {
+    const userName = getValues("AA_UN");
+    const password = getValues("AA_PW");
+    if (userName && password) {
+      const response = await checkAA(userName, password);
+      if (response) {
+        setAACheck(true);
+      } else {
+        setAACheck(false);
+      }
+    } else {
+      setAACheck(false);
+    }
+    return true;
+  };
+
   const handleClick = async () => {
     const updateData = getValues();
     if (user) {
@@ -60,8 +78,26 @@ export const ProfileForm = (props: ProfileFormProps) => {
           <Grid item xs={12}>
             <FirstNameInput control={control} register={register} />
             <LastNameInput control={control} register={register} />
-            <AAUserNameInput control={control} register={register} />
-            <AAPasswordInput control={control} register={register} />
+            <Divider />
+            <AAUserNameInput
+              control={control}
+              register={register}
+              customOnBlur={checkUNandPW}
+            />
+            <AAPasswordInput
+              control={control}
+              register={register}
+              customOnBlur={checkUNandPW}
+            />
+
+            {aaCheck && (
+              <Container>
+                <Typography variant="caption">
+                  Username and Password verified!
+                </Typography>
+                <DoneIcon color="primary" />
+              </Container>
+            )}
             <Divider />
             <Button
               data-cy={PROFILE_FORM.BUTTON.SAVE_BUTTON}
