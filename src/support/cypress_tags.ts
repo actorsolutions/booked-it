@@ -153,6 +153,7 @@ export default {
     CONTAINERS: {
       FORM_CONTAINER: "profile-form-container",
     },
+    AA_CHECK: "profile-aa-check",
     INPUT: {
       LABELS: {
         FIRST_NAME: "first-name-label",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProfileFormData } from "@/components/ProfileForm/index";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
@@ -66,6 +66,10 @@ export const ProfileForm = (props: ProfileFormProps) => {
       });
     }
   };
+
+  useEffect(() => {
+    checkUNandPW();
+  }, []);
   return (
     <Container
       data-cy={PROFILE_FORM.CONTAINERS.FORM_CONTAINER}
@@ -91,7 +95,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
             />
 
             {aaCheck && (
-              <Container>
+              <Container data-cy={PROFILE_FORM.AA_CHECK}>
                 <Typography variant="caption">
                   Username and Password verified!
                 </Typography>

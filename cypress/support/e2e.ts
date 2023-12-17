@@ -35,6 +35,7 @@ export const login = () => {
       id: 3,
     },
   }).as("Auth0");
+
   cy.intercept("GET", "/api/auth/me", {
     statusCode: 200,
     body: {
