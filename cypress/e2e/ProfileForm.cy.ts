@@ -6,6 +6,7 @@ import {
   cyTag,
   findAndClick,
   shouldBeVisible,
+  shouldNotExist,
   validateInputValue,
 } from "../support/helperFunctions";
 
@@ -91,6 +92,6 @@ describe("Profile Modal E2E tests", () => {
     addToInput(PROFILE_FORM.INPUT.AA_PW, fakeUser.AA_PW);
     // Forces blur
     cy.get(cyTag(PROFILE_FORM.TITLE)).click();
-    shouldBeVisible(PROFILE_FORM.AA_CHECK);
+    shouldNotExist(PROFILE_FORM.AA_CHECK);
   });
 });
