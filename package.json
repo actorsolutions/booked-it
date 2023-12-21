@@ -9,15 +9,16 @@
     "lint": "next lint",
     "cypress": "cypress open",
     "cypress:run": "cypress run -headless",
-    "seed": "dotenv -e .env.local ts-node src/utils/seedDb.ts",
+    "seed": "dotenv -e .env.local tsx src/utils/seedDb.ts",
     "migrate": "npx prisma migrate dev --schema ./prisma/schema.prisma",
     "generate": "npx prisma generate --schema ./prisma/schema.prisma",
     "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev",
-    "seed:test": "dotenv -e .env.test ts-node src/utils/seedDb.ts",
+    "seed:test": "dotenv -e .env.test tsx src/utils/seedDb.ts",
     "test": "DOTENV_CONFIG_PATH=./.env.test jest --setupFiles dotenv/config",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "db:seed": "prisma db seed"
   },
+  "type": "module",
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.2.1",
     "@emotion/react": "^11.11.0",
@@ -75,7 +76,7 @@
     "prisma": "^4.10.1",
     "supertest": "^6.3.3",
     "ts-loader": "^9.4.2",
-    "ts-node": "^10.9.1"
+    "tsx": "^4.7.0"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
