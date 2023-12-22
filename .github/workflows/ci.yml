@@ -99,6 +99,7 @@ jobs:
           build: yarn build
           start: yarn start
           timeout-minutes: 7
+          browser: chrome
         env:
          CYPRESS_AUTH0_SECRET: ${{ secrets.AUTH0_SECRET }}
          CYPRESS_AUTH0_BASE_URL: ${{ secrets.AUTH0_BASE_URL}}
