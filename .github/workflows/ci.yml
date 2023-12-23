@@ -94,7 +94,7 @@ jobs:
       - run: yarn generate
 
       - name: Install and run cypress
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           build: yarn build
           start: yarn start
