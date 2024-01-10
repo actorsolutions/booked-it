@@ -79,10 +79,7 @@ export const clickCalendarDate = (
   dataTimeStamp: string
 ) => {
   // eslint-disable-next-line cypress/unsafe-to-chain-command
-  cy.get(cyTag(parentCyTag))
-    .scrollIntoView()
-    .find(`[data-testid='CalendarIcon']`)
-    .click();
+  cy.get(cyTag(parentCyTag)).scrollIntoView().find(`button`).click();
   cy.get(`[data-timestamp="${dataTimeStamp}"]`).click();
 };
 
