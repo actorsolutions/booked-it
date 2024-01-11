@@ -39,7 +39,7 @@ describe("Add Auditions Form E2E Tests", () => {
 
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
-
+    cy.wait(4000);
     clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
 
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
