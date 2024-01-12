@@ -9,7 +9,7 @@ import {
   shouldBeVisible,
   shouldContainText,
   shouldNotExist,
-  clickCalendarDate,
+  fillCalendarDate,
   scrollFindClick,
 } from "../support/helperFunctions";
 
@@ -57,7 +57,7 @@ describe("Add Casting Form E2E tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
+    fillCalendarDate(AUDITION_FORM.PICKERS.DATE, today.toLocaleDateString());
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,
@@ -167,7 +167,7 @@ describe("Add Casting Form E2E tests", () => {
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     shouldBeVisible(AUDITION_FORM.CONTAINERS.FORM_CONTAINER);
 
-    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
+    fillCalendarDate(AUDITION_FORM.PICKERS.DATE, today.toLocaleDateString());
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,

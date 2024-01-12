@@ -8,7 +8,7 @@ import {
   addToInput,
   selectItem,
   shouldNotExist,
-  clickCalendarDate,
+  fillCalendarDate,
   shouldContainText,
   checkNestedInput,
   clearNestedInput,
@@ -39,8 +39,7 @@ describe("Add Auditions Form E2E Tests", () => {
 
     findAndClick(AUDITIONS_SECTION.BUTTONS.CREATE_AUDITION);
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
-    cy.wait(4000);
-    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
+    fillCalendarDate(AUDITION_FORM.PICKERS.DATE, today.toLocaleDateString());
 
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
@@ -92,7 +91,7 @@ describe("Add Auditions Form E2E Tests", () => {
       scrollAndFind(tag);
     });
 
-    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
+    fillCalendarDate(AUDITION_FORM.PICKERS.DATE, today.toLocaleDateString());
 
     scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
 
@@ -150,7 +149,7 @@ describe("Add Auditions Form E2E Tests", () => {
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
 
-    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
+    fillCalendarDate(AUDITION_FORM.PICKERS.DATE, today.toLocaleDateString());
 
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
 
@@ -179,7 +178,7 @@ describe("Add Auditions Form E2E Tests", () => {
 
     cy.get(cyTag(AUDITION_FORM.CONTAINERS.FORM_CONTAINER)).should("be.visible");
 
-    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
+    fillCalendarDate(AUDITION_FORM.PICKERS.DATE, today.toLocaleDateString());
     addToInput(AUDITION_FORM.INPUTS.PROJECT, "WallyWorld");
     selectItem(
       AUDITION_FORM.DROPDOWNS.TYPE,
