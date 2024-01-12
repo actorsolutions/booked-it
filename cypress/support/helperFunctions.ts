@@ -78,6 +78,7 @@ export const fillCalendarDate = (parentCyTag: string, date: string) => {
   // eslint-disable-next-line cypress/unsafe-to-chain-command
   cy.get(cyTag(parentCyTag))
     .scrollIntoView()
+    .wait(2000)
     .find(`input`)
     .scrollIntoView()
     .type(date, { force: true });
