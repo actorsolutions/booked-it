@@ -79,6 +79,7 @@ export const fillCalendarDate = (parentCyTag: string, date: string) => {
   cy.get(cyTag(parentCyTag))
     .scrollIntoView()
     .find(`input`)
+    .scrollIntoView()
     .type(date, { force: true });
 };
 
