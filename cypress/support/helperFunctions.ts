@@ -76,7 +76,10 @@ export const shouldContainText = (tag: string, text: string) => {
  */
 export const fillCalendarDate = (parentCyTag: string, date: string) => {
   // eslint-disable-next-line cypress/unsafe-to-chain-command
-  cy.get(cyTag(parentCyTag)).scrollIntoView().find(`input`).type(date);
+  cy.get(cyTag(parentCyTag))
+    .scrollIntoView()
+    .find(`input`)
+    .type(date, { force: true });
 };
 
 /*
