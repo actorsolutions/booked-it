@@ -11,3 +11,14 @@ export const scrapeAuditions = async (userName: string, password: string) => {
   }
   return await response.json();
 };
+export const checkAA = async (userName: string, password: string) => {
+  const data = { userName, password };
+  const response = await fetch(`/api/actorsaccess/checkpassword`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+  if (response.status !== 200) {
+    return false;
+  }
+  return response.json();
+};

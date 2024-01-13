@@ -13,7 +13,7 @@ export const cypressSanitize = async (
 ) => {
   const prisma = prisma_cli || generatePrisma();
   const toDelete = [];
-  console.log("Deleting" + modelNames);
+  console.log("Deleting [" + modelNames + " ]");
   // collects all the table transactions into an array
   for (const modelName of modelNames) {
     // @ts-ignore

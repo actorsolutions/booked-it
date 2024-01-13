@@ -3,7 +3,7 @@ import { FormProps, ProfileFormData } from "../index";
 import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 export const AAPasswordInput = (props: FormProps<ProfileFormData>) => {
-  const { control, register } = props;
+  const { control, register, customOnBlur } = props;
 
   return (
     <FormGroupRow>
@@ -21,7 +21,7 @@ export const AAPasswordInput = (props: FormProps<ProfileFormData>) => {
           control={control}
           field="AA_PW"
           inputType={"password"}
-          {...register("AA_PW")}
+          {...register("AA_PW", { onBlur: customOnBlur })}
         />
       </Container>
     </FormGroupRow>

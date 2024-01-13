@@ -153,6 +153,7 @@ export default {
     CONTAINERS: {
       FORM_CONTAINER: "profile-form-container",
     },
+    AA_CHECK: "profile-aa-check",
     INPUT: {
       LABELS: {
         FIRST_NAME: "first-name-label",
@@ -171,6 +172,7 @@ export default {
     },
     BUTTON: {
       SAVE_BUTTON: "profile-save-button",
+      AA_CHECK_BUTTON: "profile-check-actors-access",
     },
   },
   NAV_BAR: {

@@ -72,18 +72,15 @@ export const shouldContainText = (tag: string, text: string) => {
 /**
   Selects date from MaterialUI Date Picker
   @param parentCyTag - Parent container that picker is in
-  @param dataTimeStamp - Timestamp you want to pick (Located in Picker HTML)
+  @param date - date you want to have in the calendar input (Located in Picker HTML)
  */
-export const clickCalendarDate = (
-  parentCyTag: string,
-  dataTimeStamp: string
-) => {
+export const fillCalendarDate = (parentCyTag: string, date: string) => {
   // eslint-disable-next-line cypress/unsafe-to-chain-command
   cy.get(cyTag(parentCyTag))
     .scrollIntoView()
-    .find(`[data-testid='CalendarIcon']`)
-    .click();
-  cy.get(`[data-timestamp="${dataTimeStamp}"]`).click();
+    .find(`input`)
+    .scrollIntoView()
+    .type(date, { force: true });
 };
 
 /*

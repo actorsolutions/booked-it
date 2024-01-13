@@ -3,7 +3,7 @@ import { FormProps, ProfileFormData } from "../index";
 import { Container } from "@mui/material";
 import CY_TAGS from "@/support/cypress_tags";
 export const AAUserNameInput = (props: FormProps<ProfileFormData>) => {
-  const { control, register } = props;
+  const { control, register, customOnBlur } = props;
 
   return (
     <FormGroupRow>
@@ -20,7 +20,7 @@ export const AAUserNameInput = (props: FormProps<ProfileFormData>) => {
           inputId="AA_UN"
           control={control}
           field="AA_UN"
-          {...register("AA_UN")}
+          {...register("AA_UN", { onBlur: customOnBlur })}
         />
       </Container>
     </FormGroupRow>

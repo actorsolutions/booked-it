@@ -7,7 +7,7 @@ import {
   addToInput,
   checkNestedInput,
   clearNestedInput,
-  clickCalendarDate,
+  fillCalendarDate,
   cyTag,
   findAndClick,
   scrollAndFind,
@@ -78,7 +78,7 @@ describe("<AuditionForm />", () => {
       scrollAndFind(tag);
     });
 
-    clickCalendarDate(AUDITION_FORM.PICKERS.DATE, today.valueOf().toString());
+    fillCalendarDate(AUDITION_FORM.PICKERS.DATE, today.toLocaleDateString());
 
     scrollFindClick(AUDITION_FORM.BUTTONS.ADD_AUDITION);
     shouldNotExist(AUDITION_FORM.ERRORS.DATE);

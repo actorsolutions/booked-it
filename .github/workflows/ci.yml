@@ -34,12 +34,12 @@ jobs:
       NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY}}
     timeout-minutes: 6
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Cache Dependencies
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           cache: 'yarn'
           node-version: 18
@@ -94,11 +94,11 @@ jobs:
       - run: yarn generate
 
       - name: Install and run cypress
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           build: yarn build
           start: yarn start
-          timeout-minutes: 7
+          timeout-minutes: 10
         env:
          CYPRESS_AUTH0_SECRET: ${{ secrets.AUTH0_SECRET }}
          CYPRESS_AUTH0_BASE_URL: ${{ secrets.AUTH0_BASE_URL}}
