@@ -2,6 +2,7 @@ import { FormGroupRow, FormLabel, FormInput } from "../../../common/Form";
 import { FormValues } from "./index";
 import { Container } from "@mui/material";
 import { Control, FieldValues } from "react-hook-form";
+import CY_TAGS from "@/support/cypress_tags";
 
 export interface Props<T extends FieldValues> {
   control: Control<T>;
@@ -12,11 +13,15 @@ export const RoleInput = (props: Props<FormValues>) => {
   return (
     <FormGroupRow>
       <Container>
-        <FormLabel cyTag="rep-role-label" labelText="Role" htmlFor="repRole" />
+        <FormLabel
+          cyTag={CY_TAGS.REP_FORM.INPUTS.LABELS.ROLE}
+          labelText="Role"
+          htmlFor="repRole"
+        />
       </Container>
       <Container>
         <FormInput
-          cyTag="rep-input-role"
+          cyTag={CY_TAGS.REP_FORM.INPUTS.ROLE}
           inputId="rep-role"
           control={control}
           field="role"
