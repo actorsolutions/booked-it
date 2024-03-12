@@ -175,6 +175,27 @@ export default {
       AA_CHECK_BUTTON: "profile-check-actors-access",
     },
   },
+  REP_FORM: {
+    TITLE: "rep-form",
+    CONTAINERS: {
+      FORM_CONTAINER: "rep-form-container",
+    },
+    INPUTS: {
+      LABELS: {
+        FIRST_NAME: "first-name-label",
+        LAST_NAME: "last-name-label",
+        COMPANY: "company-label",
+        ROLE: "role-label",
+      },
+      FIRST_NAME: "first-name-input",
+      LAST_NAME: "last-name-input",
+      COMPANY: "company-input",
+      ROLE: "role-input",
+    },
+    BUTTON: {
+      ADD_BUTTON: "add-rep-button",
+    },
+  },
   NAV_BAR: {
     CONTAINER: {
       NAV_BAR: "nav-bar-container",

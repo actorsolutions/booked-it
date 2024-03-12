@@ -10,7 +10,9 @@ export interface Profile extends UserProfile {
   representation?: Representation[];
 }
 export interface Representation {
-  name?: string;
+  fName?: string;
+  lName?: string;
   role?: string;
   company?: string;
 }
+// TODO: Role to ENUM Talent/Manager

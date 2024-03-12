@@ -4,7 +4,7 @@ import {
   FieldValues,
   UseFormRegister,
 } from "react-hook-form";
-import { Representation } from "@/types/users";
+import { Representation } from "@/types/profile";
 
 export interface ProfileFormData extends FieldValues {
   firstName: string;

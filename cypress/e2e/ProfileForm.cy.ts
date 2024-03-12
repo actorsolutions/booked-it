@@ -69,7 +69,7 @@ describe("Profile Modal E2E tests", () => {
     cy.get(cyTag(PROFILE_FORM.TITLE)).click();
     shouldBeVisible(PROFILE_FORM.AA_CHECK);
   });
-  it("Doesn't  show the UN validation ", () => {
+  it("Doesn't show the UN validation ", () => {
     cy.intercept("POST", "/api/actorsaccess/checkpassword", {
       statusCode: 401,
       body: {

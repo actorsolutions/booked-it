@@ -81,5 +81,3 @@ enum audition_statuses {
   callback
   booked
 }
-
-
