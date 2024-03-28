@@ -46,6 +46,9 @@ export default {
       ARCHIVE_AUDITION: "audition-archive-button",
       EDIT_AUDITION: "audition-edit-button",
     },
+    MESSAGES: {
+      NO_AUDITIONS: "no_auditions_message",
+    },
     SEARCH_INPUT: "audition-list-search-input",
   },
   NEEDS_ATTENTION_SECTION: {

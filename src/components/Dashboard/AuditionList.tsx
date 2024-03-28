@@ -4,6 +4,7 @@ import { AuditionRow } from "@/components/AuditionRow";
 import { Stack } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
 import { Container } from "@mui/system";
+import CY_TAGS from "@/support/cypress_tags";
 
 interface AuditionListProps {
   auditions: AuditionData[];
@@ -21,10 +22,15 @@ export const AuditionList = ({
   buttonPrefix,
 }: AuditionListProps) => {
   return (
-    <Container sx={{ m: 0, p: 0, maxHeight: "20rem", overflow: "auto" }}>
+    <Container
+      sx={{ m: 0, p: 0, maxHeight: "20rem", overflow: "auto" }}
+      data-cy={CY_TAGS.AUDITIONS_SECTION.CONTAINERS.AUDITIONS_CONTAINER}
+    >
       <Stack rowGap={3} data-cy={listCyTag}>
         {auditions.length === 0 ? (
-          <p>No Auditions Added</p>
+          <p data-cy={CY_TAGS.AUDITIONS_SECTION.MESSAGES.NO_AUDITIONS}>
+            No Auditions Added
+          </p>
         ) : (
           auditions.map((audition: AuditionData, index: number) => {
             return (

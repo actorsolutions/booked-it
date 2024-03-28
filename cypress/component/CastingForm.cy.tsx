@@ -1,4 +1,3 @@
-import React from "react";
 import { setupApp } from "@/app/setup";
 import { CastingForm } from "@/components/AuditionForm/components/CastingForm";
 import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
