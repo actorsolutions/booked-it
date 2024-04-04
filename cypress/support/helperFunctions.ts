@@ -2,6 +2,9 @@
 import "./commands";
 import CY_TAGS from "../../src/support/cypress_tags";
 import { Method } from "cypress/types/net-stubbing";
+import { ReactComponent } from "ag-grid-react/lib/shared/reactComponent";
+import { setupApp } from "@/app/setup";
+import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
 
 /*
   Helper method to make getting cyTags easier
@@ -155,4 +158,8 @@ export const validateCellText = (
   cy.get(`[row-id="${rowId}"]`)
     .find(`[col-id="${colId}"]`)
     .should("have.text", expectedText);
+};
+
+export const mountComponent = (component: ReactComponent) => {
+  setupApp(<DashboardWrapper>{component}</DashboardWrapper>);
 };

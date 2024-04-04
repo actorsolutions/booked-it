@@ -37,12 +37,14 @@
 // }
 
 import { generateSessionCookie } from "@auth0/nextjs-auth0/testing";
+import { mount } from "cypress/react";
 
 declare global {
   // eslint-disable-next-line no-unused-vars
   namespace Cypress {
     interface Chainable {
       generateSession(): Promise<string>;
+      mount: typeof mount;
     }
   }
 }
@@ -62,5 +64,3 @@ Cypress.Commands.add("generateSession", () => {
     return data;
   });
 });
-
-
