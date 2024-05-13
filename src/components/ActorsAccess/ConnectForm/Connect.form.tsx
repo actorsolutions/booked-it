@@ -1,9 +1,9 @@
 import { Button, Container, Grid } from "@mui/material";
 import { UserNameInput } from "@/components/ActorsAccess/ConnectForm/UserNameInput";
 import { PasswordInput } from "@/components/ActorsAccess/ConnectForm/PasswordInput";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { FormValues } from "@/components/ActorsAccess/ConnectForm/index";
+import { ConnectFormValues } from "@/components/ActorsAccess/ConnectForm/index";
 import CY_TAGS from "@/support/cypress_tags";
 import { scrapeAuditions } from "@/apihelpers/actorsAccess";
 import { ActorsAccessData } from "@/components/ActorsAccess";
@@ -13,19 +13,27 @@ import RESPONSE_MESSAGES from "@/support/response_messages";
 interface Props {
   setImportData: Dispatch<SetStateAction<never[]>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  UN?: string;
+  PW?: string;
+  profileLoading: boolean;
 }
 export const ConnectForm = (props: Props) => {
-  const { setImportData, setLoading } = props;
+  const { setImportData, setLoading, UN, PW, profileLoading } = props;
   const { showSnackBar } = useSnackBar();
   const { ACTORS_ACCESS_MESSAGES } = RESPONSE_MESSAGES;
-
   const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
-  const { control, getValues, register } = useForm<FormValues>({
+  const { control, getValues, register, reset } = useForm<ConnectFormValues>({
     defaultValues: {
-      userName: "",
-      password: "",
+      userName: UN,
+      password: PW,
     },
   });
+  useEffect(() => {
+    reset({
+      userName: UN,
+      password: PW,
+    });
+  }, [profileLoading, UN, PW, reset]);
   const handleClick = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
