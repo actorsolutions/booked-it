@@ -10,11 +10,19 @@ import { ConnectForm } from "src/components/ActorsAccess/ConnectForm";
 
 import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { Profile } from "@/types";
+import { decryptEntry } from "@/models/utils/UserUtils";
 
 export default function ActorsAccess() {
   const { ACTORS_ACCESS_IMPORT } = CY_TAGS;
   const [importData, setImportData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user, isLoading } = useUser();
+  const profile: Profile | undefined = user;
+  const UN = profile?.AA_UN ? (decryptEntry(profile.AA_UN) as string) : "";
+  const PW = profile?.AA_PW ? (decryptEntry(profile.AA_PW) as string) : "";
+
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>
@@ -36,6 +44,9 @@ export default function ActorsAccess() {
                   <ConnectForm
                     setImportData={setImportData}
                     setLoading={setLoading}
+                    UN={UN}
+                    PW={PW}
+                    profileLoading={isLoading}
                   />
                 </DashboardWrapper>
               </Grid>
