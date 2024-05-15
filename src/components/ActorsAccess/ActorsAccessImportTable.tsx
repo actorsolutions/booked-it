@@ -56,7 +56,6 @@ export const ActorsAccessImportTable = (props: Props) => {
     );
     const response = await createManyAuditions(auditions);
     if (response) {
-      console.log(response);
       showSnackBar(
         response.count + " " + AUDITION_MESSAGES.AUDITION_IMPORT_SUCCESS,
         "success"

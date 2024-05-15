@@ -1,5 +1,5 @@
 import { FormInput } from "../../common/Form";
-import { FormValues } from "./index";
+import { ConnectFormValues } from "./index";
 import { Grid } from "@mui/material";
 import { Control, FieldValues, UseFormRegister } from "react-hook-form";
 import CY_TAGS from "@/support/cypress_tags";
@@ -8,7 +8,7 @@ export interface Props<T extends FieldValues> {
   control: Control<T>;
   register: UseFormRegister<T>;
 }
-export const UserNameInput = (props: Props<FormValues>) => {
+export const UserNameInput = (props: Props<ConnectFormValues>) => {
   const { control, register } = props;
 
   return (
