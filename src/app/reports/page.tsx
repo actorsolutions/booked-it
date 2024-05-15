@@ -9,6 +9,7 @@ import CY_TAGS from "@/support/cypress_tags";
 import React from "react";
 import { DashboardWrapper } from "@/components/common/Layout/DashboardWrapper";
 import { ReportsCard } from "@/components/Reports/ReportsCard";
+import { ReportsChart } from "@/components/Reports/ReportsChart";
 
 export default function Reports() {
   return (
@@ -40,12 +41,12 @@ export default function Reports() {
                           <p>Out of 100 Archived Auditions</p>
                           <p>85 are Submitted</p>
                           <p>10 are Auditioned</p>
-                          <p>8 were calledback</p>
+                          <p>8 were called back</p>
                           <p>2 were booked</p>
                         </Grid>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        Graph
+                        <ReportsChart />
                       </Grid>
                     </Grid>
                   </Container>

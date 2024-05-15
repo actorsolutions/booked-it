@@ -188,6 +188,7 @@ export default {
   },
   REPORTS: {
     TITLE: "reports-page-title",
+    PIE: "report-page-pie-chart",
   },
   COMMON: {
     BUTTONS: {
