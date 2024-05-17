@@ -5,5 +5,9 @@ interface Props {
   children: ReactNode;
 }
 export const DashboardWrapper = ({ children }: Props) => {
-  return <Paper variant={"dashboardWrapper"}>{children}</Paper>;
+  return (
+    <Paper className={"m-2"} variant={"dashboardWrapper"}>
+      {children}
+    </Paper>
+  );
 };
