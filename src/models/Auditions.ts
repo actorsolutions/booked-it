@@ -133,6 +133,30 @@ export class Audition {
   };
 
   /**
+   * Method for finding archived auditions associated with a particular user
+   * @param userId - id of user within sought after audition records
+   * @param db - instance of database being used
+   */
+  static findArchivedByUserId = async (
+    userId: number,
+    db: PrismaClient["audition"]
+  ) => {
+    return db.findMany({
+      where: { userId: userId, archived: true },
+      include: {
+        statuses: {
+          select: {
+            date: true,
+            id: true,
+            statusId: true,
+            Status: true,
+            auditionId: true,
+          },
+        },
+      },
+    });
+  };
+  /**
    * Method used to get formatted Auditions
    * @param userId - ID of audition.userId
    * @param db - instance of database being used
@@ -142,6 +166,19 @@ export class Audition {
     db: PrismaClient["audition"]
   ) => {
     const auditions = await Audition.findByUserId(userId, db);
+    return formatAuditions(auditions);
+  };
+
+  /**
+   * Method used to get formatted Auditions
+   * @param userId - ID of audition.userId
+   * @param db - instance of database being used
+   */
+  static getFormattedArchivedAuditionsByUserId = async (
+    userId: number,
+    db: PrismaClient["audition"]
+  ) => {
+    const auditions = await Audition.findArchivedByUserId(userId, db);
     return formatAuditions(auditions);
   };
 
