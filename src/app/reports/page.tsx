@@ -12,6 +12,28 @@ import { ReportsCard } from "@/components/Reports/ReportsCard";
 import { ReportsChart } from "@/components/Reports/ReportsChart";
 
 export default function Reports() {
+  type Report = {
+    total: number;
+    topCasting: string;
+    topType: string;
+    totalByType: {
+      totalSubmitted: number;
+      totalAuditioned: number;
+      totalCallback: number;
+      totalBooked: number;
+    };
+  };
+  const mockReport: Report = {
+    total: 100,
+    topCasting: "Wally Casting",
+    topType: "Film",
+    totalByType: {
+      totalSubmitted: 85,
+      totalAuditioned: 10,
+      totalCallback: 4,
+      totalBooked: 1,
+    },
+  };
   return (
     <ThemeProvider theme={theme}>
       <SnackBarProvider>
@@ -29,20 +51,25 @@ export default function Reports() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <Container maxWidth={"md"}>
                 <h1 data-cy={CY_TAGS.REPORTS.TITLE}>Reports</h1>
-                <ReportsCard text={"Total Auditions - 100"} />
-                <ReportsCard text={"Top Casting - Wally Casting"} />
-                <ReportsCard text={"Top Type - Film"} />
+                <ReportsCard text={"Total Auditions -" + mockReport.total} />
+                <ReportsCard text={"Top Casting -" + mockReport.topCasting} />
+                <ReportsCard text={"Top Type - " + mockReport.topType} />
                 <DashboardWrapper>
                   <Container>
                     <Grid container spacing={3}>
                       <Grid item xs={12} sm={6}>
                         From - To
                         <Grid item xs={12} sm={8}>
-                          <p>Out of 100 Archived Auditions</p>
-                          <p>85 are Submitted</p>
-                          <p>10 are Auditioned</p>
-                          <p>8 were called back</p>
-                          <p>2 were booked</p>
+                          <p>{`Out of ${mockReport.total} Archived Auditions`}</p>
+                          <p>{`${mockReport.totalByType.totalSubmitted} are Submitted`}</p>
+                          <p>{`${mockReport.totalByType.totalAuditioned} are Auditioned`}</p>
+                          <p>
+                            {`${mockReport.totalByType.totalCallback} were called
+                            back`}
+                          </p>
+                          <p>
+                            {`${mockReport.totalByType.totalBooked} were booked`}
+                          </p>
                         </Grid>
                       </Grid>
                       <Grid item xs={12} sm={6}>
