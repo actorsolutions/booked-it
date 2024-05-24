@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/utils/prisma";
 import { getSession } from "@auth0/nextjs-auth0";
-import { Audition } from "@/models/Auditions";
+import { Report } from "@/models/Report";
 
 export const getReport = async (
   req: NextApiRequest,
@@ -10,13 +10,11 @@ export const getReport = async (
 ) => {
   const session = await getSession(req, res);
   const userId = parseInt(session?.user.id);
-  const { id } = req.query;
-  const audition = await Audition.getFormattedAuditionByUserId(
-    parseInt(id as string),
-    db
-  );
-  if (audition.userId != userId) {
-    return res.status(401).send({ message: "Unauthorized" });
+  try {
+    const reports = await Report.getReportsByUserId(userId, db);
+    return res.status(200).send(reports);
+  } catch (e) {
+    console.log(e);
+    return res.status(500);
   }
-  return res.status(200);
 };
